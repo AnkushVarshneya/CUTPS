@@ -8,4 +8,6 @@ int main(int argc, char *argv[])
     w.show();
     "Hello this is a test lolol"
     return a.exec(); // its changed!!!!!!!!!!
+
+    // more coments!!!!!!!
 }

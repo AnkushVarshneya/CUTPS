@@ -7,5 +7,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     "Hello this is a test lolol"
-    return a.exec();
+    return a.exec(); // this is wirrd
 }

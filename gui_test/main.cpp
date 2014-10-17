@@ -24,13 +24,4 @@ int main(int argc, char *argv[])
 
     //"Hello this is a test lolol"
     return a.exec(); // its changed!!!!!!!!!!
-    //I hate soccer
-
-
-    // more coments!!!!!!!!234 ankush was here
-
-    // this is a change
-    // wait what???
-    // a change????
-
 }

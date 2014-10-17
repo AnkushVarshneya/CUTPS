@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 2.8.1, 2014-10-17T14:41:18. -->
+=======
+<!-- Written by QtCreator 2.8.1, 2014-10-17T15:16:15. -->
+>>>>>>> 0fd39315a1bf1e2448828ae9441a26fc2caf8162
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
-  <value type="int">0</value>
+  <value type="int">-1</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>
@@ -49,6 +53,7 @@
   <valuemap type="QVariantMap"/>
  </data>
  <data>
+<<<<<<< HEAD
   <variable>ProjectExplorer.Project.Target.0</variable>
   <valuemap type="QVariantMap">
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop</value>
@@ -243,8 +248,10 @@
   </valuemap>
  </data>
  <data>
+=======
+>>>>>>> 0fd39315a1bf1e2448828ae9441a26fc2caf8162
   <variable>ProjectExplorer.Project.TargetCount</variable>
-  <value type="int">1</value>
+  <value type="int">0</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.EnvironmentId</variable>

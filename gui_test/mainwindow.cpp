@@ -11,5 +11,5 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-    //hi
+    //hi there pardner
 }

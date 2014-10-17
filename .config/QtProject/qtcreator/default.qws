@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE QtCreatorSession>
+<!-- Written by QtCreator 2.8.1, 2014-10-17T15:26:02. -->
+<qtcreator>
+ <data>
+  <variable>Color</variable>
+  <value type="QString">#666666</value>
+ </data>
+ <data>
+  <variable>EditorSettings</variable>
+  <value type="QByteArray">AAAAD0VkaXRvck1hbmFnZXJWNAAAAAEAAABGAC8AaABvAG0AZQAvAGEAZABtAGkAbgAvAGcAdQBpAF8AdABlAHMAdAAvAG0AYQBpAG4AdwBpAG4AZABvAHcALgBjAHAAcAAAAAwAAAAAGAAAAAEAAAAAAAAAAAAAAA4AAAAnAAAAAAAAAAEAAABGAC8AaABvAG0AZQAvAGEAZABtAGkAbgAvAGcAdQBpAF8AdABlAHMAdAAvAG0AYQBpAG4AdwBpAG4AZABvAHcALgBjAHAAcAAAABwAbQBhAGkAbgB3AGkAbgBkAG8AdwAuAGMAcABwAAAAE0NwcEVkaXRvci5DKytFZGl0b3IAAAChAAAADWN1cnJlbnRlZGl0b3IAAABGAC8AaABvAG0AZQAvAGEAZABtAGkAbgAvAGcAdQBpAF8AdABlAHMAdAAvAG0AYQBpAG4AdwBpAG4AZABvAHcALgBjAHAAcAAAACYAQwBwAHAARQBkAGkAdABvAHIALgBDACsAKwBFAGQAaQB0AG8AcgAAABgAAAABAAAAAAAAAAAAAAAOAAAAJwAAAAA=</value>
+ </data>
+ <data>
+  <variable>OpenEditors</variable>
+  <value type="int">1</value>
+ </data>
+ <data>
+  <variable>ProjectDependencies</variable>
+  <valuemap type="QVariantMap"/>
+ </data>
+ <data>
+  <variable>ProjectList</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">/home/admin/gui_test/gui_test.pro</value>
+  </valuelist>
+ </data>
+ <data>
+  <variable>StartupProject</variable>
+  <value type="QString">/home/admin/gui_test/gui_test.pro</value>
+ </data>
+ <data>
+  <variable>value-ActiveMode</variable>
+  <value type="QString">Edit</value>
+ </data>
+ <data>
+  <variable>value-Breakpoints</variable>
+  <valuelist type="QVariantList"/>
+ </data>
+ <data>
+  <variable>value-DebuggerToolTips</variable>
+  <value type="QString"></value>
+ </data>
+ <data>
+  <variable>value-DefaultFormats</variable>
+  <valuemap type="QVariantMap"/>
+ </data>
+ <data>
+  <variable>value-ProjectTree.ExpandData</variable>
+  <valuelist type="QVariantList"/>
+ </data>
+ <data>
+  <variable>value-Watchers</variable>
+  <valuelist type="QVariantList"/>
+ </data>
+ <data>
+  <variable>valueKeys</variable>
+  <valuelist type="QVariantList">
+   <value type="QString">ActiveMode</value>
+   <value type="QString">Breakpoints</value>
+   <value type="QString">DebuggerToolTips</value>
+   <value type="QString">DefaultFormats</value>
+   <value type="QString">ProjectTree.ExpandData</value>
+   <value type="QString">Watchers</value>
+  </valuelist>
+ </data>
+</qtcreator>

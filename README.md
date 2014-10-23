@@ -25,3 +25,16 @@ input: Student    output: modified student with BillingInformation
 input: Student, BillingInfo   output: void
 
 **saveBillingInformation(Student, BillingInformation)**
+
+
+### ContentManager API Calls ###
+
+createTextbook()
+
+createCourse()
+
+linkTextbook(Textbook,Course)
+
+viewAllTextbooks(term)
+
+viewCourses(term)

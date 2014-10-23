@@ -1,6 +1,6 @@
 Starting point of API Calls we need in D2 (Based on occurrences of accessing the storage in the sequence diagrams):
 
-*Student API Calls:*
+### *Student API Calls:* ###
 
 input: Student, Term    output: a list of textbooks 
 

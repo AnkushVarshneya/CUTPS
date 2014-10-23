@@ -4,11 +4,12 @@ Student API Calls:
 
 studentViewTextbooks (student, term)
 
-viewTextbookDetails (textbook)
+viewTextbookBasicDetails (textbook)
+
+viewTextbookChaptersAndSections (textbook)
 
 viewShoppingCart (student)
 
 addContent(student,purchasableItem,quantity) 
 
 emptyShoppingCart(Student)
-

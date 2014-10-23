@@ -17,3 +17,10 @@ input: student, PurchasableItem, quantity of item   output: void
 input: Student     output: void
 
 **emptyShoppingCart(Student)**
+
+input: Student    output: modified student with BillingInformation
+
+**getExistingBillingInfo (Student)**
+
+input: Student, BillingInfo   output: void
+**saveBillingInformation(Student, BillingInformation)**

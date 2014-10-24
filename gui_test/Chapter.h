@@ -6,20 +6,20 @@
 #ifndef CHAPTER_H
 #define CHAPTER_H
 
-#include <string>
+#include <QString>
 
 class Chapter : public PurchasableItem{
 public:
     Chapter();
     ~Chapter();
 
-    string getChapterTitle();
+    QString getChapterTitle();
     QList<Section*>& getChapterSections();
 
-    void setChapterTitle(string);
+    void setChapterTitle(QString);
 
 private:
-    string title;
+    QString title;
     QList<Section*> sections;
 
 

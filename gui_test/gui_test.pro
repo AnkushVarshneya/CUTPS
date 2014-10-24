@@ -29,6 +29,8 @@ HEADERS  += mainwindow.h \
     Chapter.h \
     Section.h \
     ShoppingCart.h \
-    connectionmanager.h
+    connectionmanager.h \
+    Term.h \
+
 
 FORMS    += mainwindow.ui

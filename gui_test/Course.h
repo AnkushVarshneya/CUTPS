@@ -10,14 +10,10 @@ public:
 private:
     string courseCode;
     string section;
-    string term;
+    QList<Term> terms;
     string instructor;
-    QList<Student> students;
-    QList<Textbook> textbooks;
-
-
-
-
+    QList<Student*> students;
+    QList<Textbook*> requiredTextbooks;
 
 };
 

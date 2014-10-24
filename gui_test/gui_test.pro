@@ -32,6 +32,7 @@ HEADERS  += mainwindow.h \
     ShoppingCart.h \
     connectionmanager.h \
     Term.h \
+    CUtpsDataObject.h
 
 
 FORMS    += mainwindow.ui

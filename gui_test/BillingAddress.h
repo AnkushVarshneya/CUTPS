@@ -12,13 +12,15 @@
 #include <string>
 #include <QObject>
 #include <QString>
+#include <QDataStream>
+
 
 class BillingAddress : public QObject
 {
     Q_OBJECT
 public:
-    BillingAddress();
-    ~BillingAddress();
+    explicit BillingAddress(QObject *parent = 0);
+   // ~BillingAddress();
     QString getName();
     int getHouseNumber();
     QString getStreetName();
@@ -28,6 +30,7 @@ public:
 
     void setAddress(QString,int,QString,QString,QString,QString);
     void setAddress(const BillingAddress&);
+    void insertToDataStream(QDataStream& dataStream);
 
 private:
     QString name;
@@ -36,6 +39,11 @@ private:
     QString city;
     QString province;
     QString postalCode;
+    static const quint32 streamHeader;
+    static const quint16 classVersion;
 };
+
+QDataStream& operator<<( QDataStream& dataStream, const BillingAddress& billingAddress );
+
 
 #endif // BILLINGADDRESS_H

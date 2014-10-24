@@ -1,4 +1,5 @@
 #include "connectionmanager.h"
+#include "BillingAddress.h"
 
 ConnectionManager::ConnectionManager(QObject *parent) :
     QObject(parent),
@@ -17,3 +18,13 @@ void ConnectionManager::connectToHost(QHostAddress host, int port) {
 void ConnectionManager::readyRead() {
 
 }
+
+void ConnectionManager::insertToStream(BillingAddress *address) {
+    address->insertToDataStream(dataStream);
+}
+
+void ConnectionManager::checkDataStream() {
+    qDebug() << this->dataStream.status();
+}
+
+//make base class for all our classes with insertToDataStream??

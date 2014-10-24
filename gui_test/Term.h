@@ -8,7 +8,7 @@ public:
 private:
     string startDate;
     string endDate;
-    QList<Course> courses;
+    QList<Course*> courses;
 };
 
 #endif // TERM_H

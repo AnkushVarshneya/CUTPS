@@ -1,13 +1,13 @@
 #ifndef TERM_H
 #define TERM_H
 
-#include <string>
+#include <QString>
 
 class Term{
 public:
 private:
-    string startDate;
-    string endDate;
+    QString startDate;
+    QString endDate;
     QList<Course*> courses;
 };
 

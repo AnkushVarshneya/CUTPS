@@ -5,7 +5,6 @@
 #ifndef SHOPPINGCART_H
 #define SHOPPINGCART_H
 
-#include <string>
 #include "PurchasableItem.h"
 
 class ShoppingCart{

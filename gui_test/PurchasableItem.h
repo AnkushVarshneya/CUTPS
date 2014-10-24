@@ -1,7 +1,7 @@
 #ifndef PURCHASABLEITEM_H
 #define PURCHASABLEITEM_H
 
-#include <string>
+#include <QString>
 #include <QList>
 
 class PurchasableItem{
@@ -9,7 +9,7 @@ class PurchasableItem{
 public:
     PurchasableItem();
 private:
-    string itemID;
+    QString itemID;
     int price;
     bool availability;
 };

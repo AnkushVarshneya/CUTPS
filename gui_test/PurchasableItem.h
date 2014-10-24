@@ -5,6 +5,7 @@
 #include <QList>
 
 class PurchasableItem{
+
 public:
     PurchasableItem();
 private:

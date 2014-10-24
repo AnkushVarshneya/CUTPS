@@ -21,6 +21,12 @@ HEADERS  += mainwindow.h \
     ContentManager.h \
     PaymentInformation.h \
     BillingAddress.h \
-    CreditCardInformation.h
+    CreditCardInformation.h \
+    Course.h \
+    Textbook.h \
+    PurchasableItem.h \
+    Chapter.h \
+    Section.h \
+    ShoppingCart.h
 
 FORMS    += mainwindow.ui

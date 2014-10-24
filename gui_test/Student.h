@@ -4,11 +4,6 @@
  *
  */
 
-/*Student header class
- *date last modified: 10/24/2014
- *Need Course and ShoppingCart classes defined to complete definition
- *Need to know implementation of QList for containing a list of registered courses
- */
 #ifndef STUDENT_H
 #define STUDENT_H
 

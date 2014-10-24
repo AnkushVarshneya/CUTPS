@@ -6,7 +6,7 @@
 class ShoppingCart{
 public:
 private:
-    Student stu;
+    Student* stu;
     QList<PurchasableItem> items;
 };
 

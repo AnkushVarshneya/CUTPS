@@ -27,6 +27,7 @@ HEADERS  += mainwindow.h \
     PurchasableItem.h \
     Chapter.h \
     Section.h \
-    ShoppingCart.h
+    ShoppingCart.h \
+    Term.h
 
 FORMS    += mainwindow.ui

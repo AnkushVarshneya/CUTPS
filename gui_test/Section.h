@@ -6,6 +6,9 @@
 class Section : public PurchasableItem{
 public:
     Section();
+    string getSectionTitle();
+    void setTitle(string);
+
 private:
     string title;
 };

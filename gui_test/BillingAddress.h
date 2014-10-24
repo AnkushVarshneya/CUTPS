@@ -10,28 +10,32 @@
 #define BILLINGADDRESS_H
 
 #include <string>
+#include <QObject>
+#include <QString>
 
-class BillingAddress{
+class BillingAddress : public QObject
+{
+    Q_OBJECT
 public:
     BillingAddress();
     ~BillingAddress();
-    string getName();
+    QString getName();
     int getHouseNumber();
-    string getStreetName();
-    string getCity();
-    string getProvince();
-    string getPostalCode();
+    QString getStreetName();
+    QString getCity();
+    QString getProvince();
+    QString getPostalCode();
 
-    void setAddress(string,int,string,string,string,string);
+    void setAddress(QString,int,QString,QString,QString,QString);
     void setAddress(const BillingAddress&);
 
 private:
-    string name;
+    QString name;
     int houseNumber;
-    string streetName;
-    string city;
-    string province;
-    string postalCode;
+    QString streetName;
+    QString city;
+    QString province;
+    QString postalCode;
 };
 
 #endif // BILLINGADDRESS_H

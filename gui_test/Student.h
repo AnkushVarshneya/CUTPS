@@ -17,17 +17,17 @@ class Student : public User {
 
 public:
     Student();
-    string getStudentNum();
-    string getcMail();
+    QString getStudentNum();
+    QString getcMail();
     PaymentInformation getpayInfo();
-    void setStudentNum(string);
-    void setcMail(string);
+    void setStudentNum(QString);
+    void setcMail(QString);
     void setPayInfo(const PaymentInformation&);
 
 
 private:
-    string studentNum;
-    string cMail;
+    QString studentNum;
+    QString cMail;
     PaymentInformation payInfo;
     QList<Course*> registeredCourses;
     ShoppingCart shoppingCart;

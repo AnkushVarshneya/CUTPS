@@ -7,25 +7,25 @@
 #ifndef USER_H
 #define USER_H
 
-#include <string>
+#include <QString>
 
 class User {
 
 public:
     User();
-    string getUserID();
-    string getFirstName();
-    string getLastName();
-    virtual void setUserID(string) = 0;
-    void setFirstName(string);
-    void setLastName(string);
+    QString getUserID();
+    QString getFirstName();
+    QString getLastName();
+    virtual void setUserID(QString) = 0;
+    void setFirstName(QString);
+    void setLastName(QString);
 
 
 protected:
-    string userID;
-    string password;
-    string firstName;
-    string lastName;
+    QString userID;
+    QString password;
+    QString firstName;
+    QString lastName;
 
 };
 

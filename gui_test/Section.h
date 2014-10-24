@@ -1,16 +1,16 @@
 #ifndef SECTION_H
 #define SECTION_H
 
-#include <string>
+#include <QString>
 
 class Section : public PurchasableItem{
 public:
     Section();
-    string getSectionTitle();
-    void setTitle(string);
+    QString getSectionTitle();
+    void setTitle(QString);
 
 private:
-    string title;
+    QString title;
 };
 
 #endif // SECTION_H

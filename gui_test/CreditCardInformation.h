@@ -9,23 +9,23 @@
 #ifndef CREDITCARDINFORMATION_H
 #define CREDITCARDINFORMATION_H
 
-#include <string>
+#include <QString>
 class CreditCardInformation{
 public:
     CreditCardInformation();
     ~CreditCardInformation();
-    string getCreditCardNo();
-    string getCVV();
-    string getExpDate();
-    string getCardType();
-    string getNameOnCard();
+    QString getCreditCardNo();
+    QString getCVV();
+    QString getExpDate();
+    QString getCardType();
+    QString getNameOnCard();
 
 private:
-    string creditCardNo;
-    string CVV;
-    string expDate;
-    string cardType;
-    string nameOnCard;
+    QString creditCardNo;
+    QString CVV;
+    QString expDate;
+    QString cardType;
+    QString nameOnCard;
 };
 
 #endif // CREDITCARDINFORMATION_H

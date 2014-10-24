@@ -1,4 +1,5 @@
 /*User class header file
+ *Date last modified 10/23/2014
  *Inherited by Student and ContentManager classes
  *Author Rob
  */

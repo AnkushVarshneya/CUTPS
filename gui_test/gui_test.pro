@@ -18,6 +18,15 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     User.h \
     Student.h \
-    ContentManager.h
+    ContentManager.h \
+    PaymentInformation.h \
+    BillingAddress.h \
+    CreditCardInformation.h \
+    Course.h \
+    Textbook.h \
+    PurchasableItem.h \
+    Chapter.h \
+    Section.h \
+    ShoppingCart.h
 
 FORMS    += mainwindow.ui

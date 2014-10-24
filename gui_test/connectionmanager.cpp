@@ -5,7 +5,7 @@ ConnectionManager::ConnectionManager(QObject *parent) :
     QObject(parent),
     tcpConnection(new QTcpSocket(this))
 {
-
+    this->dataStream.setDevice(tcpConnection); //sets the i/o device of the data stream
 }
 
 void ConnectionManager::connectToHost(QHostAddress host, int port) {
@@ -27,4 +27,3 @@ void ConnectionManager::checkDataStream() {
     qDebug() << this->dataStream.status();
 }
 
-//make base class for all our classes with insertToDataStream??

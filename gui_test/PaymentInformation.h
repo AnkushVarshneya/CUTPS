@@ -14,14 +14,14 @@ public:
     PaymentInformation();
     ~PaymentInformation();
 
-    BillingAddress getBillInfo();
-    CreditCardInformation getCreditCardInfo();
-    setBillInfo(const BillingAddress&);
-    setCreditCardInfo(const CreditCardInformation&);
+    BillingAddress                 getBillInfo();
+    CreditCardInformation          getCreditCardInfo();
+    void                           setBillInfo(const BillingAddress&);
+    void                           setCreditCardInfo(const CreditCardInformation&);
 
 private:
-    BillingAddress billAddress;
-    CreditCardInformation creditCardInfo;
+    BillingAddress                 billAddress;
+    CreditCardInformation          creditCardInfo;
 };
 
 #endif // PAYMENTINFORMATION_H

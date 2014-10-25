@@ -7,6 +7,7 @@
 #define CHAPTER_H
 
 #include <QString>
+#include "Section.h"
 
 class Chapter : public PurchasableItem{
 public:

@@ -12,12 +12,13 @@
 class User {
 
 public:
-    User();
+    User(QString,QString,QString,QString);
     ~User();
     QString         getUserID();
     QString         getFirstName();
     QString         getLastName();
     void            setUserID(QString);
+    void            setPass(QString);
     void            setFirstName(QString);
     void            setLastName(QString);
 

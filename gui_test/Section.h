@@ -1,3 +1,6 @@
+/*Section header class
+ *Date last modified: 24/10/2014
+ */
 #ifndef SECTION_H
 #define SECTION_H
 
@@ -6,11 +9,13 @@
 class Section : public PurchasableItem{
 public:
     Section();
-    QString getSectionTitle();
-    void setTitle(QString);
+    ~Section();
+
+    QString     getSectionTitle();
+    void        setTitle(QString);
 
 private:
-    QString title;
+    QString     title;
 };
 
 #endif // SECTION_H

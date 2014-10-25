@@ -9,6 +9,7 @@
 #include <QList>
 #include "Student.h"
 #include "Textbook.h"
+#include "Term.h"
 
 class Course{
 public:
@@ -23,12 +24,12 @@ public:
     QList<Textbook*>&    getRequiredTextbooks();
 
 private:
-    QString courseCode;
-    QString section;
-    Term term;
-    QString instructor;
-    QList<Student*> students;
-    QList<Textbook*> requiredTextbooks;
+    QString              courseCode;
+    QString              section;
+    Term                 term;
+    QString              instructor;
+    QList<Student*>      students;
+    QList<Textbook*>     requiredTextbooks;
 
 };
 

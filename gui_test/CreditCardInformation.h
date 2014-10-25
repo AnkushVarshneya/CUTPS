@@ -10,22 +10,31 @@
 #define CREDITCARDINFORMATION_H
 
 #include <QString>
+#include <QDate>
 class CreditCardInformation{
+
 public:
     CreditCardInformation();
     ~CreditCardInformation();
-    QString getCreditCardNo();
-    QString getCVV();
-    QString getExpDate();
-    QString getCardType();
-    QString getNameOnCard();
+    QString         getCreditCardNo();
+    QString         getCVV();
+    QDate           getExpDate();
+    QString         getCardType();
+    QString         getNameOnCard();
+
+    void            setCreditCardNo(QString);
+    void            setCVV(QString);
+    void            setExpDate(int,int,int);
+    void            setCardType(QString);
+    void            setNameOnCard(QString);
+
 
 private:
-    QString creditCardNo;
-    QString CVV;
-    QString expDate;
-    QString cardType;
-    QString nameOnCard;
+    QString         creditCardNo;
+    QString         CVV;
+    QDate           expDate;
+    QString         cardType;
+    QString         nameOnCard;
 };
 
 #endif // CREDITCARDINFORMATION_H

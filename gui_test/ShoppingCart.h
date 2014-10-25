@@ -12,10 +12,10 @@ class ShoppingCart{
 public:
     ShoppingCart();
     ~ShoppingCart();
-    QList<PurchasableItem*>& getItems();
+    QList<PurchasableItem*>&    getItems();
 
 private:
-    QList<PurchasableItem*> items;
+    QList<PurchasableItem*>     items;
 };
 
 #endif // SHOPPINGCART_H

@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-QT       += sql
+QT       += core gui sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,8 +13,25 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    connectionmanager.cpp \
+    BillingAddress.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    User.h \
+    Student.h \
+    ContentManager.h \
+    PaymentInformation.h \
+    BillingAddress.h \
+    CreditCardInformation.h \
+    Course.h \
+    Textbook.h \
+    PurchasableItem.h \
+    Chapter.h \
+    Section.h \
+    ShoppingCart.h \
+    connectionmanager.h \
+    Term.h \
+
 
 FORMS    += mainwindow.ui

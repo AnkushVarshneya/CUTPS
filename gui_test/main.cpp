@@ -25,11 +25,5 @@ int main(int argc, char *argv[])
     //"Hello this is a test lolol"
     return a.exec(); // its changed!!!!!!!!!!
 
-    // more coments!!!!!!!!234 ankush was here
-    //more comments
-
-    //Init yadadadaa
-    //Skeleton comments
-    //Testing for pull requests
-
+    //"Graham is a big fat dumb dumb" - Ankush
 }

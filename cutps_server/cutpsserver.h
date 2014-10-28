@@ -13,6 +13,7 @@ public:
 
 private:
     QTcpSocket *tcpConnection;
+    qint64 bytes;
 
 signals:
 

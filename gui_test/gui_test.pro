@@ -12,10 +12,13 @@ TARGET = gui_test
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
+SOURCES +=\
         mainwindow.cpp \
     connectionmanager.cpp \
-    BillingAddress.cpp
+    BillingAddress.cpp \
+    CUtpsDataObject.cpp \
+    main.cpp \
+    origmain2.cpp
 
 HEADERS  += mainwindow.h \
     User.h \

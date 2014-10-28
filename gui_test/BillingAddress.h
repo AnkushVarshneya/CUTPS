@@ -10,12 +10,12 @@
 #define BILLINGADDRESS_H
 
 #include <string>
-#include <QObject>
+#include "CUtpsDataObject.h"
 #include <QString>
 #include <QDataStream>
 
 
-class BillingAddress : public QObject
+class BillingAddress : public CUtpsDataObject
 {
     Q_OBJECT
 public:

@@ -1,29 +1,28 @@
 #include "mainwindow.h"
+#include "connectionmanager.h"
+#include "CUtpsDataObject.h"
+#include "BillingAddress.h"
 #include <QApplication>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
+    const QString & testaddress = "0.0.0.0";
+    const int port = 1234;
+    QHostAddress address = QHostAddress(testaddress);
     w.show();
-
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setHostName("HostName");
-    db.setDatabaseName("testDB");
-    db.setUserName("rab");
-    db.setPassword("test");
-    db.open();
-    db.transaction();
-    QSqlQuery query;
-    query.exec("INSERT INTO test(x,y,z)"
-               "VALUES(10101, 'test', 'test2'");
-    query.exec("SELECT * FROM test");
-    db.commit();
-
-    //"Hello this is a test lolol"
-    return a.exec(); // its changed!!!!!!!!!!
-
-    //"Graham is a big fat dumb dumb" - Ankush
+    ConnectionManager *conMan = new ConnectionManager(&w);
+    BillingAddress *adr = new BillingAddress(&w);
+    qDebug() << adr->getName();
+    qDebug() << adr->getCity();
+    conMan->connectToHost(address, port);
+    conMan->checkDataStream(); // 0 = operating normally
+    conMan->insertToStream(adr);
+    return a.exec();
 }
+

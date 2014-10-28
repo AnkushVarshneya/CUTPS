@@ -41,11 +41,17 @@ void CutpsServer::readyRead() {
     qDebug() << "initial bytes available: " << this->tcpConnection->bytesAvailable() << "\n";  //to read
     qDebug() << "can read line: " << this->tcpConnection->canReadLine() << "\n";
     while(this->tcpConnection->canReadLine()) {
-        qDebug() << this->tcpConnection->readLine();
         qDebug() << "bytes available: " << this->tcpConnection->bytesAvailable() << "\n";  //to read
+        qDebug() << this->tcpConnection->readLine();
+
     }
+    this->bytes = this->tcpConnection->bytesAvailable();
+    qDebug() << "bytes avail: " << this->bytes << "\n";  //to read
+    QByteArray data = this->tcpConnection->read(bytes);
+    qDebug() << data.data();
     //test writing to client process
-    this->tcpConnection->write("testing data transfer to client...\n");
+    this->tcpConnection->write("test name \n");
+    this->tcpConnection->write("testcity \n");
 }
 
 void CutpsServer::disconnected(){

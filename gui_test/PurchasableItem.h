@@ -15,6 +15,7 @@
 class PurchasableItem{
 
 public:
+    PurchasableItem();
     PurchasableItem(QString, float, bool);
     ~PurchasableItem();
 

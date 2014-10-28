@@ -8,6 +8,7 @@
 
 #include <QString>
 #include "Section.h"
+#include <QVariant>
 
 class Chapter : public PurchasableItem{
 public:
@@ -16,12 +17,17 @@ public:
 
     QString getChapterTitle();
     QList<Section*>& getChapterSections();
+    QVariant getChapterNumber();
+    Section* getSection(QVariant);
+    QString getItemTitle();
 
     void setChapterTitle(QString);
+    //void addSection(Section*);
 
 private:
     QString title;
     QList<Section*> sections;
+    QVariant chapterNumber;
 
 
 };

@@ -1,11 +1,26 @@
 
 
 #include "Term.h"
+#include "Chapter.h"
+#include "PurchasableItem.h"
+#include "Textbook.h"
+#include <iostream>
 
-int main(int argc, char *argv[])
-{
+using namespace std;
 
+int main(int argc, char *argv[]){
+    QDate date = QDate(1,1,1);
 
+  //  cout << date.toString();
+    cout << date.toString().toStdString() << endl;
 
- return 0;
+/*
+    Textbook textbook;
+    Chapter* chapter = new Chapter();
+    Section* section = new Section();
+
+    textbook.addChapter(chapter);
+    textbook.getChapter(chapter->getChapterNumber());
+*/
+    return 0;
 }

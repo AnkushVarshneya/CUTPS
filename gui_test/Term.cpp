@@ -6,6 +6,12 @@ Term::Term()
 
 }
 
+Term::Term(QDate a, QDate b)
+{
+    startDate = a;
+    endDate = b;
+}
+
 QDate Term::getStartDate()
 {
     return startDate;

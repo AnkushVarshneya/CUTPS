@@ -14,13 +14,17 @@ public:
 
     Textbook();
     ~Textbook();
-    QString             getTitle();
+    QString             getTextbookTitle();
     QString             getAuthor();
     QString             getEdition();
     QString             getPublisher();
     QString             getISBN();
     QString             getDesc();
     QList<Chapter*>&    getChapterList();
+    Chapter*            getChapter(QVariant); //use int instead?
+    QString             getItemTitle();
+
+    void                addChapter(Chapter*);
 
 
 private:

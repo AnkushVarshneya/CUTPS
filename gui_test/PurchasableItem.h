@@ -1,6 +1,7 @@
 /*PurchasableItem class header
- *Date last modified: 24/10/2014
+ *Date last modified: 28/10/2014
  *
+ *Traceability: EO-10 of Entity Class DataDictionary in Deliverable 1
  *TODO: Must inherit QObject? Or create super super class CUTPSDataObject for serializing
  */
 
@@ -9,19 +10,25 @@
 
 #include <QList>
 #include <QObject>
+#include <QString>
 
 class PurchasableItem{
 
 public:
-    PurchasableItem();
+    PurchasableItem(QString, float, bool);
     ~PurchasableItem();
 
-    float    getPrice();
-    bool     isAvailable();
-    void     setPrice(float);
-    void     setAvailability(bool);
+    QString             getItemID();
+    float               getPrice();
+    bool                isAvailable();
+    void                setItemID(QString);
+    void                setPrice(float);
+    void                setAvailability(bool);
+    virtual QString     getItemTitle() = 0;
+    virtual void        setItemTitle(QString) = 0;
 
 private:
+    QString  itemID;
     float    price;
     bool     availability;
 };

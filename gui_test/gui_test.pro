@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,7 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     test.cpp \
-    Term.cpp
+    Term.cpp \
+    connectionmanager.cpp \
+    BillingAddress.cpp \
+    User.cpp \
+    PurchasableItem.cpp
+
 
 HEADERS  += mainwindow.h \
     User.h \
@@ -30,6 +35,8 @@ HEADERS  += mainwindow.h \
     Chapter.h \
     Section.h \
     ShoppingCart.h \
-    Term.h
+    connectionmanager.h \
+    Term.h \
+
 
 FORMS    += mainwindow.ui

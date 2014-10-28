@@ -1,38 +1,39 @@
 /*Student class header file
  *Inherited from User class
- *
+ *Date Last modified: 24/10/2014
  *
  */
 
-/*Student header class
- *date last modified: 10/24/2014
- *Need Course and ShoppingCart classes defined to complete definition
- *
- */
 #ifndef STUDENT_H
 #define STUDENT_H
 
 #include "User.h"
 #include "PaymentInformation.h"
+#include "Course.h"
+#include "ShoppingCart.h"
 
+#include <QList>
 class Student : public User {
 
 public:
     Student();
-    string getStudentNum();
-    string getcMail();
-    PaymentInformation getpayInfo();
-    void setStudentNum(string);
-    void setcMail(string);
-    void setPayInfo(PaymentInformation);
+    ~Student();
+    QString                 getStudentNum();
+    QString                 getcMail();
+    PaymentInformation      getpayInfo();
+    QList<Course*>&         getRegisteredCourses();
+    void                    setStudentNum(QString);
+    void                    setcMail(QString);
+    void                    setPayInfo(const PaymentInformation&);
 
 
 private:
-    string studentNum;
-    string cMail;
-    PaymentInformation payInfo;
-    //Course array composition here
-    //ShoppingCart composition here
+    QString                 studentNum;
+    QString                 cMail;
+    PaymentInformation      payInfo;
+    QList<Course*>          registeredCourses;
+    ShoppingCart            shoppingCart;
+
 
 };
 #endif // STUDENT_H

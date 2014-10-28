@@ -11,6 +11,8 @@
 #include "Textbook.h"
 #include "Term.h"
 
+class Term;
+
 class Course{
 public:
     Course();
@@ -18,7 +20,7 @@ public:
 
     QString              getCourseCode();
     QString              getSection();
-    Term                 getTerm();
+    Term*                getTerm();
     QString              getInstructor();
     QList<Student*>&     getRegisteredStudents();
     QList<Textbook*>&    getRequiredTextbooks();
@@ -26,7 +28,7 @@ public:
 private:
     QString              courseCode;
     QString              section;
-    Term                 term;
+    Term*                term;
     QString              instructor;
     QList<Student*>      students;
     QList<Textbook*>     requiredTextbooks;

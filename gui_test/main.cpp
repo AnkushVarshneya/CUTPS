@@ -1,3 +1,4 @@
+/*
 #include "mainwindow.h"
 #include <QApplication>
 #include <QSqlDatabase>
@@ -27,3 +28,5 @@ int main(int argc, char *argv[])
 
     //"Graham is a big fat dumb dumb" - Ankush
 }
+
+*/

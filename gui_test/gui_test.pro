@@ -14,10 +14,17 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
+    test.cpp \
+    Term.cpp \
     connectionmanager.cpp \
     BillingAddress.cpp \
     User.cpp \
-    PurchasableItem.cpp
+    PurchasableItem.cpp \
+    Course.cpp \
+    Textbook.cpp \
+    Chapter.cpp \
+    Section.cpp
+
 
 HEADERS  += mainwindow.h \
     User.h \
@@ -33,7 +40,7 @@ HEADERS  += mainwindow.h \
     Section.h \
     ShoppingCart.h \
     connectionmanager.h \
-    Term.h \
+    Term.h
 
 
 FORMS    += mainwindow.ui

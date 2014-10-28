@@ -19,7 +19,11 @@ SOURCES += main.cpp\
     connectionmanager.cpp \
     BillingAddress.cpp \
     User.cpp \
-    PurchasableItem.cpp
+    PurchasableItem.cpp \
+    Course.cpp \
+    Textbook.cpp \
+    Chapter.cpp \
+    Section.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -36,7 +40,7 @@ HEADERS  += mainwindow.h \
     Section.h \
     ShoppingCart.h \
     connectionmanager.h \
-    Term.h \
+    Term.h
 
 
 FORMS    += mainwindow.ui

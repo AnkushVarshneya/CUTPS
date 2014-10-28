@@ -12,6 +12,8 @@
 #include "Course.h"
 #include "ShoppingCart.h"
 
+class Course;
+
 #include <QList>
 class Student : public User {
 

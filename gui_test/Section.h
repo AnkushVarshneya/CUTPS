@@ -5,10 +5,12 @@
 #define SECTION_H
 
 #include <QString>
+#include "PurchasableItem.h"
 
 class Section : public PurchasableItem{
 public:
     Section();
+    Section(QString);
     ~Section();
 
     QString     getSectionTitle();

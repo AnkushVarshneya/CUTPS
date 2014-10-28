@@ -5,9 +5,6 @@
 #ifndef TERM_H
 #define TERM_H
 
-
-using namespace std;
-
 #include <QString>
 #include <QDate>
 #include "Course.h"

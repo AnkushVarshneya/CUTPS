@@ -1,21 +1,33 @@
 
 #include "Term.h"
-#include <string>
 
-Term::Term(string a,string b){
-    startDate = a;
-    endDate = b;
+Term::Term()
+{
+
 }
 
-int Term::setStartDate(string a){
-    startDate = a;
-    return 0;
+QDate Term::getStartDate()
+{
+    return startDate;
 }
-int Term::setEndDate(string a){
-    endDate = a;
-    return 0;
+
+QDate Term::getEndDate()
+{
+    return endDate;
 }
-int Term::addCourse(Course* aCourse){
-    courses << aCourse;
-    return 0;
+
+QList<Course*>& Term::getTermCourses()
+{
+    return courses;
+    //return &courses?
+}
+
+void Term::setStartDate(int year, int month, int day)
+{
+    startDate.setDate(year, month, day);
+}
+
+void Term::setEndDate(int year, int month, int day)
+{
+    endDate.setDate(year, month, day);
 }

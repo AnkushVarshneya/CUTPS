@@ -4,6 +4,8 @@
 #include <string>
 #include <QList>
 
+using namespace std;
+
 class Course{
 public:
 

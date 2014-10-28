@@ -13,7 +13,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    test.cpp \
+    Term.cpp
 
 HEADERS  += mainwindow.h \
     User.h \

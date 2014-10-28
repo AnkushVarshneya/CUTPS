@@ -14,6 +14,12 @@
 #include "PurchasableItem.h"
 
 
+//Default constructor
+PurchasableItem::PurchasableItem(){
+    setItemID("");
+    setPrice(0);
+    setAvailability(false);
+}
 
 //Constructor taking in a QString itemID, float-type for price, and boolean
 //type for availability

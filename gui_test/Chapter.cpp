@@ -1,5 +1,6 @@
 #include "Chapter.h"
 
+Chapter::Chapter(){}
 
 //maybe delete later
 QString Chapter::getChapterTitle()
@@ -12,15 +13,19 @@ QList<Section*>& Chapter::getChapterSections()
     return sections;
 }
 
-QVariant Chapter::getChapterNumber()
+qint32 Chapter::getChapterNumber()
 {
     return chapterNumber;
 }
 
-//Section* Chapter::getSection(QVariant )
+//Section* Chapter::getSection(qint32 )
 
 QString Chapter::getItemTitle(){
     return getChapterTitle();
+}
+
+void Chapter::setItemTitle(QString a){
+    setChapterTitle(a);
 }
 
 void Chapter::setChapterTitle(QString a)

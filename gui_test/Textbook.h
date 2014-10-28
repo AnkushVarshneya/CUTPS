@@ -21,9 +21,11 @@ public:
     QString             getISBN();
     QString             getDesc();
     QList<Chapter*>&    getChapterList();
-    Chapter*            getChapter(QVariant); //use int instead?
+    Chapter*            getChapter(qint32); //use int instead?
     QString             getItemTitle();
 
+    void                setItemTitle(QString);
+    void                setTextbookTitle(QString);
     void                addChapter(Chapter*);
 
 

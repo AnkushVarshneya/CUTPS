@@ -5,7 +5,6 @@
 #define SECTION_H
 
 #include <QString>
-#include <QVariant>
 #include "PurchasableItem.h"
 
 class Section : public PurchasableItem{
@@ -16,11 +15,13 @@ public:
     QString     getSectionTitle();
     QString     getItemTitle();
 
+    void        setItemTitle(QString);
+    void        setSectionTitle(QString);
     void        setTitle(QString);
 
 private:
     QString     title;
-    QVariant    sectionNumber;
+    qint32      sectionNumber;
 };
 
 #endif // SECTION_H

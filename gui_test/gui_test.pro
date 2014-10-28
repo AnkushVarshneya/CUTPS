@@ -14,6 +14,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
+    test.cpp \
     Term.cpp \
     connectionmanager.cpp \
     BillingAddress.cpp \

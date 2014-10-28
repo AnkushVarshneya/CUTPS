@@ -12,6 +12,7 @@
 class Term{
 public:
     Term();
+    Term(QDate,QDate);
     ~Term();
     QDate           getStartDate();
     QDate           getEndDate();

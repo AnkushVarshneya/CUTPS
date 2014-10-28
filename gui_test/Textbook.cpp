@@ -1,16 +1,11 @@
 #include "Textbook.h"
 
-Textbook::Textbook()
-{
+Textbook::Textbook(){}
 
-}
+Textbook::~Textbook(){}
 
-Textbook::~Textbook()
-{
 
-}
-
-QString Textbook::getTitle()
+QString Textbook::getTextbookTitle()
 {
     return title;
 }
@@ -43,4 +38,29 @@ QString Textbook::getDesc()
 QList<Chapter*>& Textbook::getChapterList()
 {
     return chapters;
+}
+
+Chapter* Textbook::getChapter(qint32 num)
+{
+    return chapters.at(num);
+}
+
+QString Textbook::getItemTitle(){
+    return getTextbookTitle();
+}
+
+void Textbook::setItemTitle(QString a){
+    setTextbookTitle(a);
+}
+
+void Textbook::setTextbookTitle(QString a){
+    title = a;
+}
+
+void Textbook::addChapter(Chapter* chapter)
+{
+
+    chapters.insert(chapter->getChapterNumber(), chapter);
+    //check this
+
 }

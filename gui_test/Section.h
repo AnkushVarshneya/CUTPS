@@ -10,14 +10,18 @@
 class Section : public PurchasableItem{
 public:
     Section();
-    Section(QString);
     ~Section();
 
     QString     getSectionTitle();
+    QString     getItemTitle();
+
+    void        setItemTitle(QString);
+    void        setSectionTitle(QString);
     void        setTitle(QString);
 
 private:
     QString     title;
+    qint32      sectionNumber;
 };
 
 #endif // SECTION_H

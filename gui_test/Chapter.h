@@ -16,12 +16,18 @@ public:
 
     QString getChapterTitle();
     QList<Section*>& getChapterSections();
+    qint32 getChapterNumber();
+    Section* getSection(qint32);
+    QString getItemTitle();
 
+    void setItemTitle(QString);
     void setChapterTitle(QString);
+    //void addSection(Section*);
 
 private:
     QString title;
     QList<Section*> sections;
+    qint32 chapterNumber;
 
 
 };

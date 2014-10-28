@@ -15,7 +15,9 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     connectionmanager.cpp \
-    BillingAddress.cpp
+    BillingAddress.cpp \
+    User.cpp \
+    PurchasableItem.cpp
 
 HEADERS  += mainwindow.h \
     User.h \

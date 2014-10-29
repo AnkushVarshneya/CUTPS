@@ -14,28 +14,17 @@
 #include "PurchasableItem.h"
 
 
-//Default constructor
-PurchasableItem::PurchasableItem(){
-    setItemID("");
-    setPrice(0);
-    setAvailability(false);
-}
-
 //Constructor taking in a QString itemID, float-type for price, and boolean
 //type for availability
-PurchasableItem::PurchasableItem(QString iID, float price, bool available){
-    setItemID(iID);
-    setPrice(price);
-    setAvailability(available);
-}
+PurchasableItem::PurchasableItem(qint32 iID, float p, bool a): itemID(iID), price(p), availability(a){}
 
 //Destructor
 PurchasableItem::~PurchasableItem(){
 
 }
 
-//Get the itemID of this object returning as a QString type
-QString PurchasableItem::getItemID(){
+//Get the itemID of this object returning as a qint32 type
+qint32 PurchasableItem::getItemID(){
     return itemID;
 }
 
@@ -50,7 +39,7 @@ bool PurchasableItem::isAvailable(){
 }
 
 //Input a QString argument, and set this object's itemID to the argument
-void PurchasableItem::setItemID(QString i){
+void PurchasableItem::setItemID(qint32 i){
     itemID = i;
 }
 

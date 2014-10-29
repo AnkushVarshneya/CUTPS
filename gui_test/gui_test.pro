@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     Course.cpp \
     Textbook.cpp \
     Chapter.cpp \
-    Section.cpp
+    Section.cpp \
+    ShoppingCart.cpp \
+    CreditCardInformation.cpp
 
 
 HEADERS  += mainwindow.h \

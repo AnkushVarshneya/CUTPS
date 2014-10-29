@@ -21,8 +21,7 @@ int main(int argc, char *argv[])
     qDebug() << adr->getName();
     qDebug() << adr->getCity();
     conMan->connectToHost(address, port);
-    conMan->checkDataStream(); // 0 = operating normally
-    conMan->insertToStream(adr);
+    conMan->testSend(adr);
     return a.exec();
 }
 

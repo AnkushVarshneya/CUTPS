@@ -6,8 +6,6 @@ ConnectionManager::ConnectionManager(QObject *parent) :
     tcpConnection(new QTcpSocket(this))
 {
     this->dataStream.setDevice(tcpConnection); //sets the i/o device of the data stream
-    //this->textStream.setDevice(tcpConnection);
-    this->textStream.setDevice(tcpConnection);
 }
 
 void ConnectionManager::connectToHost(QHostAddress host, int port) {
@@ -25,6 +23,22 @@ void ConnectionManager::connectToHost(QHostAddress host, int port) {
 
 }
 
+void ConnectionManager::testSend(BillingAddress *testadr) {
+    QJsonObject json;
+    testadr->write(json);
+    QJsonDocument jdoc = QJsonDocument(json);
+
+    qDebug() << "length of json obj: " << json.length() << "\n";
+    qDebug() << "sizeof json obj: " << sizeof(json) << "\n";
+    qDebug() << json << "\n";
+
+    qDebug() << "sizeof jdoc obj: " << sizeof(jdoc) << "\n";
+    qDebug() << jdoc << "\n";
+
+    this->tcpConnection->write(jdoc.toJson());
+}
+
+
 void ConnectionManager::readyRead() {
     qDebug() << "ready to read stuff from server \n";
     qDebug() << "bytes avail: " << this->tcpConnection->bytesAvailable();
@@ -32,22 +46,5 @@ void ConnectionManager::readyRead() {
 
 }
 
-void ConnectionManager::bytesWritten() {
-    qDebug() << "bytes written to textstream";
-}
-
-void ConnectionManager::insertToStream(BillingAddress *address) {
-    address->insertToDataStream(dataStream);
-}
-
-//void ConnectionManager::insertToStream(CUtpsDataObject *object) {
-//    object->insertToDataStream(dataStream);
-//}
-
-
-
-void ConnectionManager::checkDataStream() {
-    qDebug() << this->dataStream.status();
-}
 
 

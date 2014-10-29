@@ -27,10 +27,10 @@ public:
     QString getCity();
     QString getProvince();
     QString getPostalCode();
-
     void setAddress(QString,int,QString,QString,QString,QString);
     void setAddress(const BillingAddress&);
-    void insertToDataStream(QDataStream& dataStream);
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 
 private:
     QString name;
@@ -43,7 +43,6 @@ private:
     static const quint16 classVersion;
 };
 
-QDataStream& operator<<( QDataStream& dataStream, const BillingAddress& billingAddress );
 
 
 #endif // BILLINGADDRESS_H

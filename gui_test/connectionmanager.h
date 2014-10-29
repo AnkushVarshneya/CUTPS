@@ -15,13 +15,11 @@ class ConnectionManager : public QObject
 public:
     explicit ConnectionManager(QObject *parent = 0);
     void connectToHost(QHostAddress hostAddress, int port);
-    void insertToStream(BillingAddress *billingAddress);
-    void insertToStream(CUtpsDataObject *object);
-    void checkDataStream();
+    void testSend(BillingAddress *testadr);
+
 private:
     QTcpSocket *tcpConnection;
     QDataStream dataStream;
-    QTextStream textStream;
     qint64 bytes;
 
 signals:
@@ -30,7 +28,6 @@ public slots:
 
 private slots:
     void readyRead();
-    void bytesWritten();
 
 };
 

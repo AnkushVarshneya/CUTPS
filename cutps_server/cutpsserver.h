@@ -19,7 +19,8 @@ signals:
 
 public slots:
     void incomingConnection();
-    void readyRead();
+    //void readyRead();
+    void readBytes();
     void disconnected(); //recieves signal from tcpConnection
 };
 

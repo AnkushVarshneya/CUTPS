@@ -1,13 +1,9 @@
 
 #include "Term.h"
 
-Term::Term()
-{
+Term::Term(){}
 
-}
-
-Term::Term(QDate a, QDate b)
-{
+Term::Term(QDate a, QDate b){
     startDate = a;
     endDate = b;
 }
@@ -27,3 +23,15 @@ void Term::setEndDate(int year, int month, int day){
     endDate.setDate(year, month, day);
 }
 void Term::setTermID(qint32 a){termID = a;}
+
+std::ostream& operator<<(std::ostream& o,  Term& term){
+    return o << "Term " << term.getTermID() << endl << "from " << term.getStartDate() << " to " << term.getEndDate() << endl;
+}
+
+/*
+                QDate           startDate;term.getStartDate() << " to " << term.getEndDate() <<
+                QDate           endDate;
+                QList<Course*>  courses;
+                qint32          termID;
+
+*/

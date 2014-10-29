@@ -9,7 +9,7 @@
 
 #include <QString>
 
-class User {
+class User{
 
 public:
     User(QString,QString,QString,QString);

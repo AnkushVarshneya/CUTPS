@@ -8,24 +8,32 @@
 
 #include <QString>
 #include "Chapter.h"
+using namespace std;
 
 class Textbook : public PurchasableItem{
 public:
 
-    Textbook();
+    Textbook(QString = "", QString = "", QString = "",
+             QString = "" ,QString = "" ,QString = "",
+             QString = "", float = 0 , bool = false  );
     ~Textbook();
-    QString             getTextbookTitle();
-    QString             getAuthor();
-    QString             getEdition();
-    QString             getPublisher();
-    QString             getISBN();
-    QString             getDesc();
-    QList<Chapter*>&    getChapterList();
-    Chapter*            getChapter(qint32); //use int instead?
-    QString             getItemTitle();
+    QString             getAuthor           ();
+    QString             getEdition          ();
+    QString             getPublisher        ();
+    QString             getISBN             ();
+    QString             getDesc             ();
+    QList<Chapter*>&    getChapterList      ();
+    Chapter*            getChapter          (qint32); //use int instead?
+    QString             getItemTitle        ();
 
-    void                setItemTitle(QString);
-    void                setTextbookTitle(QString);
+
+    void                setItemTitle    (QString);
+    void                setAuthor       (QString);
+    void                setPublisher    (QString);
+    void                setEdition      (QString);
+    void                setISBN         (QString);
+    void                setDescription  (QString);
+
     void                addChapter(Chapter*);
 
 
@@ -40,5 +48,7 @@ private:
     //cover image id?
 
 };
+
+std::ostream& operator<<(std::ostream&,  Textbook&);
 
 #endif // TEXTBOOK_H

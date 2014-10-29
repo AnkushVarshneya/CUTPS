@@ -1,24 +1,24 @@
 
 #include "Section.h"
 
-Section::Section(){}
+Section::Section(QString t,qint32 n,
+                 QString id, float pr, bool avail) :
 
-QString Section::getSectionTitle() {
-    return title;
-}
+                 PurchasableItem(id,pr,avail),
 
-void Section::setTitle(QString a) {
-    title = a;
-}
+                 title(t), sectionNumber(n){}
 
-void Section::setItemTitle(QString a){
-    setSectionTitle(a);
-}
+Section::~Section(){}
 
-void Section::setSectionTitle(QString a){
-    title = a;
-}
+//GETTERS
+QString Section::getItemTitle(){return title;}
+qint32 Section::getSectionNumber(){return sectionNumber;}
 
-QString Section::getItemTitle(){
-    return getSectionTitle();
+//SETTERS
+void Section::setItemTitle(QString a){title = a;}
+void Section::setSectionNumber(qint32 a){sectionNumber = a;}
+
+//PRINT
+std::ostream& operator<<(std::ostream& o,  Section& section){
+    return o << "Section " << section.getSectionNumber() << ": " << section.getItemTitle().toStdString();
 }

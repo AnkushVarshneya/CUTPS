@@ -13,9 +13,13 @@ public:
     ShoppingCart();
     ~ShoppingCart();
     QList<PurchasableItem*>&    getItems();
-
+    qint32                      getShoppingCartID();
+    void                        setShoppingCartID(qint32);
+    void                        addItem(PurchasableItem*);
+    void                        emptyShoppingCart();
 private:
     QList<PurchasableItem*>     items;
+    qint32                      id;
 };
 
 #endif // SHOPPINGCART_H

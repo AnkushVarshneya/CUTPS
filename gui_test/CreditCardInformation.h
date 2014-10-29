@@ -11,22 +11,33 @@
 
 #include <QString>
 #include <QDate>
+#include "Types.h"
+
 class CreditCardInformation{
 
 public:
-    CreditCardInformation();
+    //Constructor
+    CreditCardInformation(QString = "", QString = "", QString = "", QString = "John Doe");
+
+    //Destructor
     ~CreditCardInformation();
+
+    //Getters
     QString         getCreditCardNo();
     QString         getCVV();
     QDate           getExpDate();
     QString         getCardType();
     QString         getNameOnCard();
 
+    //Setters
     void            setCreditCardNo(QString);
     void            setCVV(QString);
     void            setExpDate(int,int,int);
     void            setCardType(QString);
     void            setNameOnCard(QString);
+    void            read(const QJsonObject &json);
+    void            write(QJsonObject &json) const;
+
 
 
 private:
@@ -36,5 +47,8 @@ private:
     QString         cardType;
     QString         nameOnCard;
 };
+
+//ostream method for testing data purposes
+std::ostream& operator<<(std::ostream&, CreditCardInformation&);
 
 #endif // CREDITCARDINFORMATION_H

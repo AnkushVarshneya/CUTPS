@@ -1,8 +1,6 @@
 
 #include "CreditCardInformation.h"
-#include <iostream>
 
-using namespace std;
 
 CreditCardInformation::CreditCardInformation(QString ccNo, QString cvv, QString cType, QString name)
     : creditCardNo(ccNo), CVV(cvv), expDate(QDate()), cardType(cType), nameOnCard(name){}
@@ -37,6 +35,6 @@ void CreditCardInformation::write(QJsonObject &json)const{
 
 //ostream method for testing data purposes
 std::ostream& operator<<(std::ostream& o, CreditCardInformation& ccInfo){
-    o << "Credit Card Number: " + ccInfo.getCreditCardNo.toStdString() << endl
-         <<
+  /*  o << "Credit Card Number: " + ccInfo.getCreditCardNo.toStdString() << endl
+         <<*/
 }

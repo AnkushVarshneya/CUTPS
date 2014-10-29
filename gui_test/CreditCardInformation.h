@@ -11,7 +11,7 @@
 
 #include <QString>
 #include <QDate>
-
+#include "Types.h"
 
 class CreditCardInformation{
 

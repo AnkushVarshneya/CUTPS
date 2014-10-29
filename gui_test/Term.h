@@ -17,14 +17,18 @@ public:
     QDate           getStartDate();
     QDate           getEndDate();
     QList<Course*>& getTermCourses();
+    qint32          getTermID();
+
     void            setStartDate(int,int,int);
     void            setEndDate(int,int,int);
+    void            setTermID(qint32);
 
 
 private:
     QDate           startDate;
     QDate           endDate;
     QList<Course*>  courses;
+    qint32          termID;
 };
 
 #endif // TERM_H

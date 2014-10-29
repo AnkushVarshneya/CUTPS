@@ -10,11 +10,9 @@ using namespace std;
 
 class Section : public PurchasableItem{
 public:
-    //Section();
-    //Section(QString,qint32);
 
     Section(QString = "",qint32 = 0,
-            QString = "", float = 0, bool = false);
+            qint32 = 0, float = 0, bool = false);
 
     ~Section();
 

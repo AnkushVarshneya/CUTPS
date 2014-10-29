@@ -1,7 +1,7 @@
 #ifndef CUTPSDATAOBJECT_H
 #define CUTPSDATAOBJECT_H
 
-#include <QObject>
+
 #include <QDataStream>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -9,12 +9,13 @@
 #include <QJsonParseError>
 #include <QJsonValue>
 
-class CUtpsDataObject : public QObject
+class CUtpsDataObject
 {
-    Q_OBJECT
+
 
 public:
-
+    virtual void read(const QJsonObject &json) = 0;
+    virtual void write(QJsonObject &json) const = 0;
 
 };
 

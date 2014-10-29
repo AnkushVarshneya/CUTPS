@@ -17,10 +17,8 @@
 
 class BillingAddress : public CUtpsDataObject
 {
-    Q_OBJECT
 public:
-    explicit BillingAddress(QObject *parent = 0);
-   // ~BillingAddress();
+    BillingAddress();
     QString getName();
     int getHouseNumber();
     QString getStreetName();

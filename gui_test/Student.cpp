@@ -8,11 +8,11 @@
 
 QString                 Student::getStudentNum(){return studentNum;}
 QString                 Student::getcMail(){return cMail;}
-//PaymentInformation      Student::getpayInfo(){return payInfo;}
+PaymentInformation      Student::getpayInfo(){return payInfo;}
 QList<Course*>&         Student::getRegisteredCourses(){return registeredCourses;}
 
 
 void                    Student::setStudentNum(QString n){studentNum = n;}
 void                    Student::setcMail(QString m){cMail = m;}
-//void                    Student::setPayInfo(const PaymentInformation& p){payInfo = p;}
+void                    Student::setPayInfo(const PaymentInformation& p){payInfo = p;}
 

@@ -2,8 +2,7 @@
 
 
 
-BillingAddress::BillingAddress(QObject *parent) :
-    CUtpsDataObject()
+BillingAddress::BillingAddress()
 {
     name = "test person";
     city = "ottawa";

@@ -20,7 +20,7 @@ SOURCES +=\
     BillingAddress.cpp \
     CUtpsDataObject.cpp \
     main.cpp \
-    origmain2.cpp
+    origmain2.cpp \
     User.cpp \
     PurchasableItem.cpp \
     Course.cpp \

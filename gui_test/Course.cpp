@@ -4,7 +4,7 @@
 //Constructor
 Course::Course(QString c, QString s, QString i) :
 
-    courseCode(c), section(s){}
+    courseCode(c), courseSection(s){}
 
 //Students and Textbooks persist after a Course is deleted
 Course::~Course(){}

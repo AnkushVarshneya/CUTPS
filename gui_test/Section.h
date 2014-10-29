@@ -12,7 +12,7 @@ class Section : public PurchasableItem{
 public:
 
     Section(QString = "",qint32 = 0,
-            QString = "", float = 0, bool = false);
+            qint32 = 0, float = 0, bool = false);
 
     ~Section();
 

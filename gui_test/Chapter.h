@@ -14,7 +14,7 @@ class Chapter : public PurchasableItem{
 public:
 
     Chapter(QString = "",qint32 = 0,
-            QString = "", float = 0, bool = false);
+            qint32 = 0, float = 0, bool = false);
 
     ~Chapter();
 

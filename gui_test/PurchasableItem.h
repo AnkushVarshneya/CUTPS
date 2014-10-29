@@ -11,8 +11,9 @@
 #include <QList>
 #include <QObject>
 #include <QString>
+#include "CUtpsDataObject.h"
 
-class PurchasableItem{
+class PurchasableItem : public CUtpsDataObject{
 
 public:
     PurchasableItem(qint32 = 0, float = 0, bool = false);

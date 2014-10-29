@@ -6,22 +6,29 @@
 
 #include <QString>
 #include "PurchasableItem.h"
+using namespace std;
 
 class Section : public PurchasableItem{
 public:
-    Section();
+    //Section();
+    //Section(QString,qint32);
+
+    Section(QString = "",qint32 = 0,
+            QString = "", float = 0, bool = false);
+
     ~Section();
 
-    QString     getSectionTitle();
     QString     getItemTitle();
+    qint32      getSectionNumber();
 
     void        setItemTitle(QString);
-    void        setSectionTitle(QString);
-    void        setTitle(QString);
+    void        setSectionNumber(qint32);
 
 private:
     QString     title;
     qint32      sectionNumber;
 };
+
+std::ostream& operator<<(std::ostream&,  Section&);
 
 #endif // SECTION_H

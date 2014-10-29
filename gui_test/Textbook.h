@@ -1,19 +1,42 @@
+/*Textbook header file
+ *Date last modified: 10/24/2014
+ *
+ *
+ */
 #ifndef TEXTBOOK_H
 #define TEXTBOOK_H
 
-#include <string>
+#include <QString>
+#include "Chapter.h"
 
 class Textbook : public PurchasableItem{
 public:
+
     Textbook();
+    ~Textbook();
+    QString             getTextbookTitle();
+    QString             getAuthor();
+    QString             getEdition();
+    QString             getPublisher();
+    QString             getISBN();
+    QString             getDesc();
+    QList<Chapter*>&    getChapterList();
+    Chapter*            getChapter(qint32); //use int instead?
+    QString             getItemTitle();
+
+    void                setItemTitle(QString);
+    void                setTextbookTitle(QString);
+    void                addChapter(Chapter*);
+
+
 private:
-    string title;
-    string author;
-    string edition;
-    string publisher;
-    string isbn;
-    string description;
-    QList<Chapter> chapters;
+    QString             title;
+    QString             author;
+    QString             edition;
+    QString             publisher;
+    QString             isbn;
+    QString             description;
+    QList<Chapter*>     chapters;
     //cover image id?
 
 };

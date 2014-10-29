@@ -10,6 +10,7 @@ class CutpsServer : public QTcpServer
 public:
     explicit CutpsServer(QObject *parent = 0);
     void startServer();
+
 private:
     QTcpSocket *tcpConnection;
 

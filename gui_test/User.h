@@ -1,5 +1,5 @@
 /*User class header file
- *Date last modified 10/23/2014
+ *Date last modified 10/24/2014
  *Inherited by Student and ContentManager classes
  *Author Rob
  */
@@ -7,25 +7,27 @@
 #ifndef USER_H
 #define USER_H
 
-#include <string>
+#include <QString>
 
 class User {
 
 public:
-    User();
-    string getUserID();
-    string getFirstName();
-    string getLastName();
-    virtual void setUserID(string) = 0;
-    void setFirstName(string);
-    void setLastName(string);
+    User(QString,QString,QString,QString);
+    ~User();
+    QString         getUserID();
+    QString         getFirstName();
+    QString         getLastName();
+    void            setUserID(QString);
+    void            setPass(QString);
+    void            setFirstName(QString);
+    void            setLastName(QString);
 
 
 protected:
-    string userID;
-    string password;
-    string firstName;
-    string lastName;
+    QString         userID;
+    QString         password;
+    QString         firstName;
+    QString         lastName;
 
 };
 

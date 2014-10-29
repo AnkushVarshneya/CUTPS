@@ -4,6 +4,10 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <QHostAddress>
+#include <QDataStream>
+#include <QTextStream>
+#include "BillingAddress.h"
+#include "CUtpsDataObject.h"
 
 class ConnectionManager : public QObject
 {
@@ -11,9 +15,12 @@ class ConnectionManager : public QObject
 public:
     explicit ConnectionManager(QObject *parent = 0);
     void connectToHost(QHostAddress hostAddress, int port);
+    void testSend(BillingAddress *testadr);
 
 private:
     QTcpSocket *tcpConnection;
+    QDataStream dataStream;
+    qint64 bytes;
 
 signals:
 

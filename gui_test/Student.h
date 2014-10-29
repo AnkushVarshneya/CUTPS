@@ -24,10 +24,12 @@ public:
     QString                 getcMail();
     PaymentInformation      getpayInfo();
     QList<Course*>&         getRegisteredCourses();
+
     void                    setStudentNum(QString);
     void                    setcMail(QString);
     void                    setPayInfo(const PaymentInformation&);
 
+    //void                    addItemToShoppingCart(PurchasableItem*);
 
 private:
     QString                 studentNum;

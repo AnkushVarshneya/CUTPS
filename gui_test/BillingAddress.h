@@ -10,24 +10,27 @@
 #define BILLINGADDRESS_H
 
 #include <string>
-#include <QObject>
+#include "CUtpsDataObject.h"
 #include <QString>
+#include <QDataStream>
 
-class BillingAddress : public QObject
+
+class BillingAddress : public CUtpsDataObject
 {
     Q_OBJECT
 public:
-    BillingAddress();
-    ~BillingAddress();
+    explicit BillingAddress(QObject *parent = 0);
+   // ~BillingAddress();
     QString getName();
     int getHouseNumber();
     QString getStreetName();
     QString getCity();
     QString getProvince();
     QString getPostalCode();
-
     void setAddress(QString,int,QString,QString,QString,QString);
     void setAddress(const BillingAddress&);
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 
 private:
     QString name;
@@ -36,6 +39,10 @@ private:
     QString city;
     QString province;
     QString postalCode;
+    static const quint32 streamHeader;
+    static const quint16 classVersion;
 };
+
+
 
 #endif // BILLINGADDRESS_H

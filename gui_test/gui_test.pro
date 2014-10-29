@@ -12,12 +12,15 @@ TARGET = gui_test
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
+SOURCES +=\
         mainwindow.cpp \
     test.cpp \
     Term.cpp \
     connectionmanager.cpp \
     BillingAddress.cpp \
+    CUtpsDataObject.cpp \
+    main.cpp \
+    origmain2.cpp \
     User.cpp \
     PurchasableItem.cpp \
     Course.cpp \
@@ -44,7 +47,9 @@ HEADERS  += mainwindow.h \
     ShoppingCart.h \
     connectionmanager.h \
     Term.h \
+    CUtpsDataObject.h
     Types.h
+
 
 
 FORMS    += mainwindow.ui

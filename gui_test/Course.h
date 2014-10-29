@@ -1,19 +1,49 @@
+/*Course header file
+ *date last modified: 10/24/2014
+ *
+ */
 #ifndef COURSE_H
 #define COURSE_H
 
-#include <string>
+#include <QString>
 #include <QList>
+#include "Student.h"
+#include "Textbook.h"
+#include "Term.h"
+
+class Term;
 
 class Course{
 public:
 
+    Course(QString = "", QString = "", QString = "");
+
+    ~Course();
+
+
+    //Getters
+    QString             getCourseCode();
+    QString             getCourseSection();
+    Term*               getTerm();
+    QString             getInstructor();
+    QList<Student*>&    getRegisteredStudents();
+    QList<Textbook*>&   getRequiredTextbooks();
+
+    //Setters
+    void                setCourseCode(QString);
+    void                setCourseSection(QString);
+    void                setTerm(Term*);
+    void                setInstructor(QString);
+    void                addStudent(Student*);
+    void                addTextbook(Textbook*);
+
 private:
-    string courseCode;
-    string section;
-    QList<Term> terms;
-    string instructor;
-    QList<Student*> students;
-    QList<Textbook*> requiredTextbooks;
+    QString             courseCode;
+    QString             courseSection;
+    Term*               term;
+    QString             instructor;
+    QList<Student*>     students;
+    QList<Textbook*>    requiredTextbooks;
 
 };
 

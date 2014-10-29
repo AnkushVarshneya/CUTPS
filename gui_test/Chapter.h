@@ -6,23 +6,35 @@
 #ifndef CHAPTER_H
 #define CHAPTER_H
 
-#include <string>
+#include <QString>
+#include "Section.h"
+using namespace std;
 
 class Chapter : public PurchasableItem{
 public:
-    Chapter();
+
+    Chapter(QString = "",qint32 = 0,
+            qint32 = 0, float = 0, bool = false);
+
     ~Chapter();
 
-    string getChapterTitle();
-    QList<Section*>& getChapterSections();
+    QList<Section*>&    getChapterSections();
+    qint32              getChapterNumber();
+    Section*            getSection(qint32);
+    QString             getItemTitle();
 
-    void setChapterTitle(string);
+    void                setItemTitle(QString);
+    void                setChapterNumber(qint32);
+    void                addSection(Section*);
 
 private:
-    string title;
-    QList<Section*> sections;
+    QString             title;
+    QList<Section*>     sections;
+    qint32              chapterNumber;
 
 
 };
+
+std::ostream& operator<<(std::ostream&,  Chapter&);
 
 #endif // CHAPTER_H

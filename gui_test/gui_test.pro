@@ -14,11 +14,22 @@ TEMPLATE = app
 
 SOURCES +=\
         mainwindow.cpp \
+    test.cpp \
+    Term.cpp \
     connectionmanager.cpp \
     BillingAddress.cpp \
     CUtpsDataObject.cpp \
     main.cpp \
     origmain2.cpp
+    User.cpp \
+    PurchasableItem.cpp \
+    Course.cpp \
+    Textbook.cpp \
+    Chapter.cpp \
+    Section.cpp \
+    ShoppingCart.cpp \
+    CreditCardInformation.cpp
+
 
 HEADERS  += mainwindow.h \
     User.h \
@@ -36,6 +47,8 @@ HEADERS  += mainwindow.h \
     connectionmanager.h \
     Term.h \
     CUtpsDataObject.h
+    Types.h
+
 
 
 FORMS    += mainwindow.ui

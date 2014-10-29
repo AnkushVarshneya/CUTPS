@@ -5,7 +5,6 @@
 #ifndef SHOPPINGCART_H
 #define SHOPPINGCART_H
 
-#include <string>
 #include "PurchasableItem.h"
 
 class ShoppingCart{
@@ -13,10 +12,14 @@ class ShoppingCart{
 public:
     ShoppingCart();
     ~ShoppingCart();
-    QList<PurchasableItem*>& getItems();
-
+    QList<PurchasableItem*>&    getItems();
+    qint32                      getShoppingCartID();
+    void                        setShoppingCartID(qint32);
+    void                        addItem(PurchasableItem*);
+    void                        emptyShoppingCart();
 private:
-    QList<PurchasableItem*> items;
+    QList<PurchasableItem*>     items;
+    qint32                      id;
 };
 
 #endif // SHOPPINGCART_H

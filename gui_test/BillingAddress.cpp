@@ -1,6 +1,7 @@
 #include "BillingAddress.h"
 
 
+
 BillingAddress::BillingAddress(QObject *parent) :
     CUtpsDataObject()
 {
@@ -46,3 +47,5 @@ void BillingAddress::write(QJsonObject &json) const
     json["province"] = province;
     json["postal code"] = postalCode;
 }
+
+

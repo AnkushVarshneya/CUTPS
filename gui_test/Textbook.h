@@ -1,6 +1,6 @@
 /*Textbook header file
- *Date last modified: 10/24/2014
- *
+ *Date last modified: 10/29/2014
+ * TODO: Add getters and setters for coverImageLoc
  *
  */
 #ifndef TEXTBOOK_H
@@ -23,7 +23,7 @@ public:
     QString             getISBN             ();
     QString             getDesc             ();
     QList<Chapter*>&    getChapterList      ();
-    Chapter*            getChapter          (qint32); //use int instead?
+    Chapter*            getChapter          (qint32);
     QString             getItemTitle        ();
 
 
@@ -45,7 +45,7 @@ private:
     QString             isbn;
     QString             description;
     QList<Chapter*>     chapters;
-    //cover image id?
+    QString             coverImageLoc;
 
 };
 

@@ -15,21 +15,20 @@
 class PurchasableItem{
 
 public:
-    PurchasableItem();
-    PurchasableItem(QString, float, bool);
+    PurchasableItem(qint32 = 0, float = 0, bool = false);
     ~PurchasableItem();
 
-    QString             getItemID();
+    qint32              getItemID();
     float               getPrice();
     bool                isAvailable();
-    void                setItemID(QString);
+    void                setItemID(qint32);
     void                setPrice(float);
     void                setAvailability(bool);
     virtual QString     getItemTitle() = 0;
     virtual void        setItemTitle(QString) = 0;
 
 private:
-    QString  itemID;
+    qint32   itemID;
     float    price;
     bool     availability;
 };

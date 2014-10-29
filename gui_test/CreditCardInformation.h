@@ -17,7 +17,7 @@ class CreditCardInformation{
 
 public:
     //Constructor
-    CreditCardInformation(QString = "", QString = "", QString = "", QString = "John Doe");
+    CreditCardInformation(QString = "", QString = "", QDate = *(new QDate()), QString = "", QString = "John Doe");
 
     //Destructor
     ~CreditCardInformation();

@@ -2,8 +2,8 @@
 #include "CreditCardInformation.h"
 
 
-CreditCardInformation::CreditCardInformation(QString ccNo, QString cvv, QString cType, QString name)
-    : creditCardNo(ccNo), CVV(cvv), expDate(QDate()), cardType(cType), nameOnCard(name){}
+CreditCardInformation::CreditCardInformation(QString ccNo, QString cvv, QDate date, QString cType, QString name)
+    : creditCardNo(ccNo), CVV(cvv), expDate(date), cardType(cType), nameOnCard(name){}
 
 CreditCardInformation::~CreditCardInformation(){ cout<< "In CreditCardInformation destructor"<<endl;}
 
@@ -35,6 +35,9 @@ void CreditCardInformation::write(QJsonObject &json)const{
 
 //ostream method for testing data purposes
 std::ostream& operator<<(std::ostream& o, CreditCardInformation& ccInfo){
-  /*  o << "Credit Card Number: " + ccInfo.getCreditCardNo.toStdString() << endl
-         <<*/
+    o << "Credit Card Number: " + ccInfo.getCreditCardNo().toStdString() << endl
+      << "CVV: " + ccInfo.getCVV().toStdString() << endl
+      << "ExpDate: " + ccInfo.getExpDate().toString().toStdString() << endl
+      << "Card Type: " + ccInfo.getCardType().toStdString() << endl
+      << "Name On Card: " + ccInfo.getNameOnCard().toStdString() << endl;
 }

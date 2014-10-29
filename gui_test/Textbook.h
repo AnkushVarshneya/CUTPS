@@ -25,7 +25,7 @@ public:
     QList<Chapter*>&    getChapterList      ();
     Chapter*            getChapter          (qint32);
     QString             getItemTitle        ();
-
+    QString             getCoverImageLoc    ();
 
     void                setItemTitle    (QString);
     void                setAuthor       (QString);
@@ -33,8 +33,12 @@ public:
     void                setEdition      (QString);
     void                setISBN         (QString);
     void                setDescription  (QString);
-
+    void                setCoverImageLoc(QString);
     void                addChapter(Chapter*);
+
+    void                read(const QJsonObject &json);
+    void                write(QJsonObject &json) const;
+
 
 
 private:

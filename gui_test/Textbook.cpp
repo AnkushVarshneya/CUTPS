@@ -3,7 +3,7 @@
 
 Textbook::Textbook(QString t, QString a, QString e,
                    QString p, QString i, QString d,
-                   QString id, float pr, bool avail) :
+                   qint32 id, float pr, bool avail) :
 
                    PurchasableItem(id,pr,avail),
 

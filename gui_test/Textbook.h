@@ -15,7 +15,7 @@ public:
 
     Textbook(QString = "", QString = "", QString = "",
              QString = "" ,QString = "" ,QString = "",
-             QString = "", float = 0 , bool = false  );
+             qint32 = 0, float = 0 , bool = false  );
     ~Textbook();
     QString             getAuthor           ();
     QString             getEdition          ();

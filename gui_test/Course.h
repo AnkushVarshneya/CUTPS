@@ -20,27 +20,30 @@ public:
 
     ~Course();
 
-    QString              getCourseCode();
-    QString              getCourseSection();
-    Term*                getTerm();
-    QString              getInstructor();
-    QList<Student*>&     getRegisteredStudents();
-    QList<Textbook*>&    getRequiredTextbooks();
 
-    void setCourseCode(QString);
-    void setCourseSection(QString);
-    void setTerm(Term*);
-    void setInstructor(QString);
-    void addStudent(Student*);
-    void addTextbook(Textbook*);
+    //Getters
+    QString             getCourseCode();
+    QString             getCourseSection();
+    Term*               getTerm();
+    QString             getInstructor();
+    QList<Student*>&    getRegisteredStudents();
+    QList<Textbook*>&   getRequiredTextbooks();
+
+    //Setters
+    void                setCourseCode(QString);
+    void                setCourseSection(QString);
+    void                setTerm(Term*);
+    void                setInstructor(QString);
+    void                addStudent(Student*);
+    void                addTextbook(Textbook*);
 
 private:
-    QString              courseCode;
-    QString              courseSection;
-    Term*                term;
-    QString              instructor;
-    QList<Student*>      students;
-    QList<Textbook*>     requiredTextbooks;
+    QString             courseCode;
+    QString             courseSection;
+    Term*               term;
+    QString             instructor;
+    QList<Student*>     students;
+    QList<Textbook*>    requiredTextbooks;
 
 };
 

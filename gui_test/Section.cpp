@@ -2,7 +2,7 @@
 #include "Section.h"
 
 Section::Section(QString t,qint32 n,
-                 QString id, float pr, bool avail) :
+                 qint32 id, float pr, bool avail) :
 
                  PurchasableItem(id,pr,avail),
 

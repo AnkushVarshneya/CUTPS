@@ -27,8 +27,10 @@ QString          Textbook::getPublisher()        {return publisher;}
 QString          Textbook::getISBN()             {return isbn;}
 QString          Textbook::getDesc()             {return description;}
 QList<Chapter*>& Textbook::getChapterList()      {return chapters;}
+QString          Textbook::getItemTitle()        {return title;}
+QString          Textbook::getCoverImageLoc()    {return coverImageLoc;}
 
-Chapter*         Textbook::getChapter(qint32 num){
+Chapter* Textbook::getChapter(qint32 num){
     QList<Chapter*>::iterator i;
     for (i = chapters.begin(); i != chapters.end(); i++) {
         if ((*i)->getChapterNumber() == num)
@@ -37,10 +39,8 @@ Chapter*         Textbook::getChapter(qint32 num){
     return NULL;
 }
 
-QString          Textbook::getItemTitle()        {return title;}
 
-std::ostream& operator<< (std::ostream& o, Textbook & textbook)
-{
+std::ostream& operator<< (std::ostream& o, Textbook & textbook){
     o << "Title: " + textbook.getItemTitle().toStdString() << endl
              << "Author: " + textbook.getAuthor().toStdString() << endl
              << "Edition: " + textbook.getEdition().toStdString() << endl
@@ -66,6 +66,7 @@ void Textbook::setPublisher(QString a){publisher = a;}
 void Textbook::setEdition(QString a){edition = a;}
 void Textbook::setISBN(QString a){isbn = a;}
 void Textbook::setDescription(QString a){description = a;}
+
 
 void Textbook::addChapter(Chapter* chapter){
     //chapters.insert(chapter->getChapterNumber() - 1, chapter);

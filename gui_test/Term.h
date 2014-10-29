@@ -9,6 +9,10 @@
 #include <QDate>
 #include "Course.h"
 
+
+class Course;
+class Student;
+
 class Term{
 public:
     Term();

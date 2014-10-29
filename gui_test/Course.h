@@ -12,6 +12,7 @@
 #include "Term.h"
 
 class Term;
+class Course;
 
 class Course{
 public:

@@ -41,6 +41,9 @@ void Chapter::addSection(Section* section){
 void Chapter::read(const QJsonObject &json){
     //TODO: Add read from a QJsonObject for Chapter here
     sections.clear();
+    title = json["title"].toString();
+    chapterNumber = json["chapterNumber"].toDouble();
+
     QJsonArray sectionArray = json["sections"].toArray();
     for (int sectionIndex = 0; sectionIndex < sectionArray.size(); ++sectionIndex) {
            QJsonObject sectionObject = sectionArray[sectionIndex].toObject();
@@ -54,6 +57,8 @@ void Chapter::read(const QJsonObject &json){
 void Chapter::write(QJsonObject &json) const{
     //TODO: Add write to a QJson object for a chapter here
     QJsonArray sectionArray;
+    json["title"] = title;
+    json["chapterNumber"] = chapterNumber;
     foreach (const Section* section, sections) {
            QJsonObject sectionObject;
            section->write(sectionObject);

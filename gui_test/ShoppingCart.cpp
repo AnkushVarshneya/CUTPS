@@ -3,7 +3,7 @@
 using namespace std;
 
 //Constructor
-ShoppingCart::ShoppingCart(){cout<< "In Shopping cart constructor" <<endl;}
+ShoppingCart::ShoppingCart(qint32 i): id(i){cout<< "In Shopping cart constructor" <<endl;}
 
 //Destructor
 ShoppingCart::~ShoppingCart(){
@@ -13,19 +13,19 @@ ShoppingCart::~ShoppingCart(){
 
 //Getters
 QList<PurchasableItem*>& ShoppingCart::getItems(){return items;}
-qint32 ShoppingCart::getShoppingCartID(){return id;}
+qint32 ShoppingCart::getShoppingCartID()const{return id;}
 
 //Setters
 void ShoppingCart::setShoppingCartID(qint32 i){id = i;}
 
 //Append a PurchasableItem to the end of the items list
+//TODO: Need to implement this properly
 void ShoppingCart::addItem(PurchasableItem* item){
-    items.push_back(item);
+
 }
 
+
 //Empty shopping cart's contents
-void ShoppingCart::emptyShoppingCart(){
-    while(!items.isEmpty()){
-        delete items.takeFirst();
-    }
+void ShoppingCart::emptyShoppingCart(){  
+     items.clear();
 }

@@ -48,5 +48,6 @@ private:
 
 };
 
+std::ostream& operator<<(std::ostream&,  Course&);
 
 #endif // COURSE_H

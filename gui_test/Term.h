@@ -8,6 +8,7 @@
 #include <QString>
 #include <QDate>
 #include "Course.h"
+using namespace std;
 
 
 class Course;
@@ -34,5 +35,7 @@ private:
     QList<Course*>  courses;
     qint32          termID;
 };
+
+std::ostream& operator<<(std::ostream&,  Term&);
 
 #endif // TERM_H

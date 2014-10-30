@@ -40,4 +40,5 @@ std::ostream& operator<<(std::ostream& o, CreditCardInformation& ccInfo){
       << "ExpDate: " + ccInfo.getExpDate().toString().toStdString() << endl
       << "Card Type: " + ccInfo.getCardType().toStdString() << endl
       << "Name On Card: " + ccInfo.getNameOnCard().toStdString() << endl;
+    return o;
 }

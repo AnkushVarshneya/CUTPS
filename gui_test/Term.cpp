@@ -25,7 +25,17 @@ void Term::setEndDate(int year, int month, int day){
 void Term::setTermID(qint32 a){termID = a;}
 
 std::ostream& operator<<(std::ostream& o,  Term& term){
-    return o << "Term " << term.getTermID() << endl << "from " << term.getStartDate() << " to " << term.getEndDate() << endl;
+    int* syear;
+    int* smonth;
+    int* sday;
+
+    int* eyear;
+    int* emonth;
+    int* eday;
+
+    term.getStartDate().getDate(syear,smonth,sday);
+    term.getEndDate().getDate(eyear,emonth,eday);
+    return o << "Term " << term.getTermID() << endl << "from " << *syear << " " << *smonth << " " << *sday << " to " << *eyear << " " << *emonth << " " << *eday << endl;
 }
 
 /*

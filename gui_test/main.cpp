@@ -1,4 +1,5 @@
 
+
 #include "mainwindow.h"
 #include "connectionmanager.h"
 #include "CUtpsDataObject.h"
@@ -27,7 +28,6 @@ int main(int argc, char *argv[])
     conMan->testSend(adr);
     return a.exec();
 }
-
 
 
 

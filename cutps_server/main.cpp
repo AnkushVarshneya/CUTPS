@@ -1,5 +1,5 @@
 #include <QCoreApplication>
-#include "cutpsserver.h"
+#include "CUtpsServer.h"
 
 int main(int argc, char *argv[])
 {

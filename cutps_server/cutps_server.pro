@@ -16,7 +16,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    cutpsserver.cpp
+    BillingAddress.cpp \
+    CUtpsDataObject.cpp \
+    CUtpsServer.cpp
 
 HEADERS += \
-    cutpsserver.h
+    BillingAddress.h \
+    CUtpsDataObject.h \
+    CUtpsServer.h

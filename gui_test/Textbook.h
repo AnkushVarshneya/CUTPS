@@ -36,8 +36,8 @@ public:
     void                setCoverImageLoc(QString);
     void                addChapter(Chapter*);
 
-    void                read(const QJsonObject &json);
-    void                write(QJsonObject &json) const;
+    //void                read(const QJsonObject &json);
+    //void                write(QJsonObject &json) const;
 
 
 

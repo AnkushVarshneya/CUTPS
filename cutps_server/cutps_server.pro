@@ -18,9 +18,13 @@ TEMPLATE = app
 SOURCES += main.cpp \
     BillingAddress.cpp \
     CUtpsDataObject.cpp \
-    CUtpsServer.cpp
+    CUtpsServer.cpp \
+    chapter.cpp \
+    section.cpp
 
 HEADERS += \
     BillingAddress.h \
     CUtpsDataObject.h \
-    CUtpsServer.h
+    CUtpsServer.h \
+    chapter.h \
+    section.h

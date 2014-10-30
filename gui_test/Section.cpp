@@ -18,6 +18,21 @@ qint32 Section::getSectionNumber(){return sectionNumber;}
 void Section::setItemTitle(QString a){title = a;}
 void Section::setSectionNumber(qint32 a){sectionNumber = a;}
 
+//Takes input argument QJsonObject and extracts information
+//About it to set this object's components
+void Section::read(const QJsonObject &json){
+    //TODO: Add read from a QJsonObject for a section here
+    title = json["title"].toString();
+    sectionNumber = json["sectionNumber"].toDouble();
+}
+
+//Writes this section object's components to a QJsonObject
+void Section::write(QJsonObject &json) const{
+    //TODO: Add write to a QJsonObject for a section object here
+    json["title"] = title;
+    json["sectionNumber"] = sectionNumber;
+}
+
 //PRINT
 std::ostream& operator<<(std::ostream& o,  Section& section){
     return o << "Section " << section.getSectionNumber() << ": " << section.getItemTitle().toStdString();

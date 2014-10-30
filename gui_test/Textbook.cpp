@@ -73,3 +73,44 @@ void Textbook::addChapter(Chapter* chapter){
     chapters.push_back(chapter);
     //check this
 }
+
+//Takes a QJsonobject, extracts information about it
+//And set this textbook's attributes to it
+void Textbook::read(const QJsonObject &json){
+    title = json["title"].toString();
+    author = json["author"].toString();
+    edition = json["edition"].toString();
+    publisher = json["publisher"].toString();
+    isbn = json["isbn"].toString();
+    description = json["description"].toString();
+
+    //TODO: Potential memory leak here:
+    chapters.clear();
+    QJsonArray chapterArray = json["chapters"].toArray();
+    for(int chapterIndex = 0; chapterIndex < chapterArray.size(); ++chapterIndex){
+        QJsonObject chapterObject = chapterArray[chapterIndex].toObject();
+        Chapter* newChapter = new Chapter();
+        newChapter->read(chapterObject);
+        chapters.append(newChapter);
+    }
+    coverImageLoc = json["coverImageLoc"].toString();
+}
+
+//Writes to a QJsonobject this object's components
+void Textbook::write(QJsonObject &json) const{
+    json["title"] = title.toStdString();
+    json["author"] = author.toStdString();
+    json["edition"] = edition.toStdString();
+    json["publisher"] = publisher.toStdString();
+    json["isbn"] = isbn.toStdString();
+    json["description"] = description.toStdString();
+
+    QJsonArray chapterArray;
+    foreach (const Chapter* chapter, chapters){
+        QJsonObject chapterObject;
+        chapter->write(chapterObject);
+        chapterArray.append(chapterObject);
+    }
+    json["chapters"] = chapterArray;
+
+}

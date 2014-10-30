@@ -1,4 +1,10 @@
-#include "cutpsserver.h"
+#include "CUtpsServer.h"
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
+#include <QJsonValue>
+#include "BillingAddress.h"
 
 CutpsServer::CutpsServer(QObject *parent) :
     QTcpServer(parent)
@@ -30,7 +36,6 @@ void CutpsServer::incomingConnection() {
     qDebug() << "a new connection is available";
     tcpConnection = CutpsServer::nextPendingConnection();
     connect(tcpConnection, SIGNAL(readyRead()), this, SLOT(readBytes()));
-    //connect(tcpConnection, SIGNAL(readyRead()), this, SLOT(readyRead()));
     connect(tcpConnection, SIGNAL(disconnected()), this, SLOT(disconnected()));
 
     //    qDebug() << tcpConnection->peerName() << "\n";
@@ -40,12 +45,34 @@ void CutpsServer::incomingConnection() {
 }
 
 void CutpsServer::readBytes() {
-    qDebug() << "in server readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
+
+    this->bytes = 0;
     this->bytes = this->tcpConnection->bytesAvailable();
+    qDebug() << "in server readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
+
     char *data = new char[this->bytes];
     this->tcpConnection->read(data, bytes);
-    this->bytes = 0;
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+
     qDebug() << "\n" << data;
+    qDebug() << jsonDoc;
+    qDebug() << jsonDoc.toJson();
+
+    //test parsing json into a billing address object
+    BillingAddress *testAdr = new BillingAddress();
+    testAdr->read( jsonDoc.object() );
+
+    qDebug() << testAdr << "\n";
+    qDebug() << testAdr->getName() << "\n";
+    qDebug() << testAdr->getStreetName() << "\n";
+    qDebug() << testAdr->getHouseNumber() << "\n";
+    qDebug() << testAdr->getCity() << "\n";
+    qDebug() << testAdr->getProvince() << "\n";
+    qDebug() << testAdr->getPostalCode() << "\n";
+
+
+
 }
 
 //void CutpsServer::readyRead() {

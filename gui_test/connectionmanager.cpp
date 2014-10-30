@@ -28,6 +28,8 @@ void ConnectionManager::testSend(BillingAddress *testadr) {
     testadr->write(json);
     QJsonDocument jdoc = QJsonDocument(json);
 
+    QByteArray ary;
+
     qDebug() << "length of json obj: " << json.length() << "\n";
     qDebug() << "sizeof json obj: " << sizeof(json) << "\n";
     qDebug() << json << "\n";

@@ -19,9 +19,8 @@ qint32 ShoppingCart::getShoppingCartID()const{return id;}
 void ShoppingCart::setShoppingCartID(qint32 i){id = i;}
 
 //Append a PurchasableItem to the end of the items list
-//TODO: Need to implement this properly
 void ShoppingCart::addItem(PurchasableItem* item){
-
+    items.push_back(item);
 }
 
 

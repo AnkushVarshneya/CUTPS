@@ -73,3 +73,14 @@ void Textbook::addChapter(Chapter* chapter){
     chapters.push_back(chapter);
     //check this
 }
+
+//Takes a QJsonobject, extracts information about it
+//And set this textbook's attributes to it
+void Textbook::read(const QJsonObject &json){
+   //TODO: add read from json object here for textbook
+}
+
+//Writes to a QJsonobject this object's components
+void Textbook::write(QJsonObject &json) const{
+    //TODO: add write from json object here for textbook
+}

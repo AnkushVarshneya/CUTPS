@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
    // conMan->testSend(adr);
 
     //test send and parse of chapter w/ nested sections
-        Textbook*   textbook    = new Textbook();
+    Textbook*   textbook    = new Textbook("what goes here?", "two", "three", "four", "five", "six");
         Chapter*    chapter1    = new Chapter("Ryan Lays down the Law", 1);
         Chapter*    chapter2    = new Chapter("Robert Nguyen's Greatest Hits", 2);
         Chapter*    chapter3    = new Chapter("Ankush's Drug Dealing Ways", 3);

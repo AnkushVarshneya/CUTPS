@@ -5,7 +5,8 @@
 #include <QJsonParseError>
 #include <QJsonValue>
 #include "BillingAddress.h"
-
+#include "Textbook.h"
+#include <iostream>
 CutpsServer::CutpsServer(QObject *parent) :
     QTcpServer(parent)
 {
@@ -59,6 +60,23 @@ void CutpsServer::readBytes() {
     //qDebug() << jsonDoc;
     qDebug() << jsonDoc.toJson();
 
+    //test parsing textbook
+    Textbook *text = new Textbook();
+    text->read(jsonDoc.object());
+    qDebug() << text->getItemTitle();
+    qDebug() << text->getAuthor();
+    QList<Chapter> chapList;
+    QList<Chapter*>::Iterator i;
+    for (i = text->getChapterList().begin(); i < text->getChapterList().end(); ++i) {
+        chapList.append(**i);
+    }
+    QList<Chapter>::Iterator z;
+    for (z = chapList.begin(); z < chapList.end(); ++z){
+        cout << *z;
+    }
+
+
+
     //test parsing json into a billing address object
 //    BillingAddress *testAdr = new BillingAddress();
 //    testAdr->read( jsonDoc.object() );
@@ -70,7 +88,6 @@ void CutpsServer::readBytes() {
 //    qDebug() << testAdr->getCity() << "\n";
 //    qDebug() << testAdr->getProvince() << "\n";
 //    qDebug() << testAdr->getPostalCode() << "\n";
-
 
 }
 

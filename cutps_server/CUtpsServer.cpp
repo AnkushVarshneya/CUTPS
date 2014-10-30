@@ -1,9 +1,10 @@
-#include "cutpsserver.h"
+#include "CUtpsServer.h"
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QJsonValue>
+#include "BillingAddress.h"
 
 CutpsServer::CutpsServer(QObject *parent) :
     QTcpServer(parent)
@@ -53,9 +54,25 @@ void CutpsServer::readBytes() {
     this->tcpConnection->read(data, bytes);
 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+
     qDebug() << "\n" << data;
     qDebug() << jsonDoc;
     qDebug() << jsonDoc.toJson();
+
+    //test parsing json into a billing address object
+    BillingAddress *testAdr = new BillingAddress();
+    testAdr->read( jsonDoc.object() );
+
+    qDebug() << testAdr << "\n";
+    qDebug() << testAdr->getName() << "\n";
+    qDebug() << testAdr->getStreetName() << "\n";
+    qDebug() << testAdr->getHouseNumber() << "\n";
+    qDebug() << testAdr->getCity() << "\n";
+    qDebug() << testAdr->getProvince() << "\n";
+    qDebug() << testAdr->getPostalCode() << "\n";
+
+
+
 }
 
 //void CutpsServer::readyRead() {

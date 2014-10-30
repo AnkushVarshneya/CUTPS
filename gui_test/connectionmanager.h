@@ -8,6 +8,7 @@
 #include <QTextStream>
 #include "BillingAddress.h"
 #include "CUtpsDataObject.h"
+#include "Chapter.h"
 
 class ConnectionManager : public QObject
 {
@@ -16,6 +17,7 @@ public:
     explicit ConnectionManager(QObject *parent = 0);
     void connectToHost(QHostAddress hostAddress, int port);
     void testSend(BillingAddress *testadr);
+    void testSend(Chapter *chap);
 
 private:
     QTcpSocket *tcpConnection;

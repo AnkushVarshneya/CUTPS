@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
+    <width>351</width>
     <height>300</height>
    </rect>
   </property>
@@ -18,10 +18,38 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>30</y>
+      <y>70</y>
       <width>256</width>
-      <height>192</height>
+      <height>111</height>
      </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>add textook</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>delete textbook</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>get textooks</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="runTestCaseOption">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>88</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;RunTestCase</string>
     </property>
    </widget>
   </widget>
@@ -30,10 +58,16 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>300</width>
+     <width>351</width>
      <height>24</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuCuTPS_test_driver">
+    <property name="title">
+     <string>cuTPS test driver</string>
+    </property>
+   </widget>
+   <addaction name="menuCuTPS_test_driver"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

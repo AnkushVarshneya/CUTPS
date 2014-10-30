@@ -55,22 +55,21 @@ void CutpsServer::readBytes() {
 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
 
-    qDebug() << "\n" << data;
-    qDebug() << jsonDoc;
+    //qDebug() << "\n" << data;
+    //qDebug() << jsonDoc;
     qDebug() << jsonDoc.toJson();
 
     //test parsing json into a billing address object
-    BillingAddress *testAdr = new BillingAddress();
-    testAdr->read( jsonDoc.object() );
+//    BillingAddress *testAdr = new BillingAddress();
+//    testAdr->read( jsonDoc.object() );
 
-    qDebug() << testAdr << "\n";
-    qDebug() << testAdr->getName() << "\n";
-    qDebug() << testAdr->getStreetName() << "\n";
-    qDebug() << testAdr->getHouseNumber() << "\n";
-    qDebug() << testAdr->getCity() << "\n";
-    qDebug() << testAdr->getProvince() << "\n";
-    qDebug() << testAdr->getPostalCode() << "\n";
-
+//    qDebug() << testAdr << "\n";
+//    qDebug() << testAdr->getName() << "\n";
+//    qDebug() << testAdr->getStreetName() << "\n";
+//    qDebug() << testAdr->getHouseNumber() << "\n";
+//    qDebug() << testAdr->getCity() << "\n";
+//    qDebug() << testAdr->getProvince() << "\n";
+//    qDebug() << testAdr->getPostalCode() << "\n";
 
 
 }

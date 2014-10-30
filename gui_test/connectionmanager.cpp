@@ -38,6 +38,14 @@ void ConnectionManager::testSend(BillingAddress *testadr) {
     qDebug() << jdoc << "\n";
 
     this->tcpConnection->write(jdoc.toJson());
+
+}
+
+void ConnectionManager::testSend(Chapter *chap) {
+    QJsonObject json;
+    chap->write(json);
+    QJsonDocument jdoc = QJsonDocument(json);
+    this->tcpConnection->write(jdoc.toJson());
 }
 
 

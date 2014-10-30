@@ -19,7 +19,7 @@ public:
     PurchasableItem(qint32 = 0, float = 0, bool = false);
     ~PurchasableItem();
 
-    qint32              getItemID();
+    qint32              getItemID() const;
     float               getPrice();
     bool                isAvailable();
     void                setItemID(qint32);
@@ -27,6 +27,7 @@ public:
     void                setAvailability(bool);
     virtual QString     getItemTitle() = 0;
     virtual void        setItemTitle(QString) = 0;
+    bool                operator==(const PurchasableItem&) const;
 
 private:
     qint32   itemID;

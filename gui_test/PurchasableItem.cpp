@@ -24,7 +24,7 @@ PurchasableItem::~PurchasableItem(){
 }
 
 //Get the itemID of this object returning as a qint32 type
-qint32 PurchasableItem::getItemID(){
+qint32 PurchasableItem::getItemID() const{
     return itemID;
 }
 
@@ -51,4 +51,9 @@ void PurchasableItem::setPrice(float p){
 //Input a bool argument, and set this object's availability to this argument
 void PurchasableItem::setAvailability(bool a){
     availability = a;
+}
+
+//Checks to see if two purchasable items are equal by itemID
+bool PurchasableItem::operator==(const PurchasableItem& item) const{
+    return this->getItemID() == item.getItemID();
 }

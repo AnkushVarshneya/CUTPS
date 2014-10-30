@@ -32,3 +32,18 @@ void Course::addStudent(Student* student){
 void Course::addTextbook(Textbook* textbook){
     requiredTextbooks.push_back(textbook);
 }
+
+std::ostream& operator<<(std::ostream& o,  Course& course){
+    return o << course.getCourseCode().toStdString() << "-" << course.getCourseSection().toStdString() << endl
+      << "course.getTerm()"
+      << "Instructor: ";
+}
+
+/*
+         QString             courseCode;
+         QString             courseSection;
+         Term*               term;
+         QString             instructor;
+         QList<Student*>     students;
+         QList<Textbook*>    requiredTextbooks;
+*/

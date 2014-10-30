@@ -9,6 +9,7 @@
 #include "BillingAddress.h"
 #include "CUtpsDataObject.h"
 #include "Chapter.h"
+#include "Textbook.h"
 
 class ConnectionManager : public QObject
 {
@@ -18,6 +19,7 @@ public:
     void connectToHost(QHostAddress hostAddress, int port);
     void testSend(BillingAddress *testadr);
     void testSend(Chapter *chap);
+    void testSend(Textbook *text);
 
 private:
     QTcpSocket *tcpConnection;

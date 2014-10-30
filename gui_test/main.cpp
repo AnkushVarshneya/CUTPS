@@ -45,13 +45,10 @@ int main(int argc, char *argv[])
         Section*    c2sect1    = new Section("Chair Wars Episode XVI", 1);
         chapter1->addSection(c1sect1);
         chapter1->addSection(c1sect2);
-
         chapter3->addSection(c2sect1);
-        //cout << *textbook->getChapter(3);
-        //cout << *chapter3;
 
-        //cout << *textbook;
-    conMan->testSend(chapter1);
+    //conMan->testSend(chapter1);
+    conMan->testSend(textbook);
 
     return a.exec();
 }

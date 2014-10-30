@@ -48,6 +48,14 @@ void ConnectionManager::testSend(Chapter *chap) {
     this->tcpConnection->write(jdoc.toJson());
 }
 
+void ConnectionManager::testSend(Textbook *text) {
+    QJsonObject json;
+    text->write(json);
+    QJsonDocument jdoc = QJsonDocument(json);
+    this->tcpConnection->write(jdoc.toJson());
+
+}
+
 
 void ConnectionManager::readyRead() {
     qDebug() << "ready to read stuff from server \n";

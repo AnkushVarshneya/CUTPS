@@ -17,16 +17,19 @@
 
 class BillingAddress : public CUtpsDataObject
 {
-    Q_OBJECT
 public:
-    explicit BillingAddress(QObject *parent = 0);
-   // ~BillingAddress();
-    QString getName();
-    int getHouseNumber();
-    QString getStreetName();
-    QString getCity();
-    QString getProvince();
-    QString getPostalCode();
+    BillingAddress(QString = "test person",
+                   int = 1125,
+                   QString = "colonel by dr.",
+                   QString = "ottawa",
+                   QString = "ontario",
+                   QString = "K1S 5B6");
+    QString getName() const;
+    int getHouseNumber() const;
+    QString getStreetName() const;
+    QString getCity() const;
+    QString getProvince() const;
+    QString getPostalCode() const;
     void setAddress(QString,int,QString,QString,QString,QString);
     void setAddress(const BillingAddress&);
     void read(const QJsonObject &json);

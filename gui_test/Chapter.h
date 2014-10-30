@@ -26,6 +26,9 @@ public:
     void                setItemTitle(QString);
     void                setChapterNumber(qint32);
     void                addSection(Section*);
+    void                read(const QJsonObject &json);
+    void                write(QJsonObject &json) const;
+
 
 private:
     QString             title;

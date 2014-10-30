@@ -1,4 +1,4 @@
-/*
+
 
 #include "Term.h"
 #include "Chapter.h"
@@ -37,4 +37,4 @@ int main(int argc, char *argv[]){
     cout << *textbook;
     return 0;
 }
-*/
+

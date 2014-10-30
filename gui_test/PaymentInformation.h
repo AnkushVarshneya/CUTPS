@@ -8,7 +8,9 @@
 
 #include "BillingAddress.h"
 #include "CreditCardInformation.h"
+
 class PaymentInformation{
+
 
 public:
     PaymentInformation();

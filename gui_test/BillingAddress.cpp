@@ -2,29 +2,34 @@
 
 
 
-BillingAddress::BillingAddress(QObject *parent) :
-    CUtpsDataObject()
+BillingAddress::BillingAddress(QString n,int hnum,QString sn,QString c,QString prov,QString pos)
 {
-    name = "test person";
-    city = "ottawa";
-    streetName = "colonel by dr.";
-    houseNumber = 1125;
-    province = "ontario";
-    postalCode = "K1S 5B6";
+    setAddress(n, hnum, sn, c, prov, pos);
 }
 
-QString BillingAddress::getName() { return this->name ; }
-int BillingAddress::getHouseNumber() { return this->houseNumber ; }
-QString BillingAddress::getStreetName() { return this->streetName ; }
-QString BillingAddress::getCity() { return this->city ; }
-QString BillingAddress::getProvince() { return this->province ; }
-QString BillingAddress::getPostalCode() { return this->postalCode ; }
+QString BillingAddress::getName() const { return name ; }
+int BillingAddress::getHouseNumber() const { return houseNumber ; }
+QString BillingAddress::getStreetName() const { return streetName ; }
+QString BillingAddress::getCity() const { return city ; }
+QString BillingAddress::getProvince() const { return province ; }
+QString BillingAddress::getPostalCode() const { return postalCode ; }
 
-void BillingAddress::setAddress(QString,int,QString,QString,QString,QString) {
-
+void BillingAddress::setAddress(QString n,int hnum,QString sn,QString c,QString prov,QString pos) {
+    name = n;
+    houseNumber = hnum;
+    streetName = sn;
+    city = c;
+    province = prov;
+    postalCode = pos;
 }
 
-void BillingAddress::setAddress(const BillingAddress&) {
+void BillingAddress::setAddress(const BillingAddress& b) {
+    name = b.getName();
+    houseNumber = b.getHouseNumber();
+    streetName = b.getStreetName();
+    city = b.getCity();
+    province = b.getProvince();
+    postalCode = b.getPostalCode();
 
 }
 

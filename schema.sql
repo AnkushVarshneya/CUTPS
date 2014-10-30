@@ -136,6 +136,7 @@ create table ShoppingCart(
 create table ShoppinCart_Contains_PurchasableItem(
 	cartID integer NOT NULL references ShoppingCart(cartID),
 	itemID integer NOT NULL references PurchasableItem(itemID),
+	quantity integer default 0 NOT NULL,
 	primary key(cartID, itemID)
 );
 

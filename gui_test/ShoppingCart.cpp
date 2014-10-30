@@ -12,7 +12,7 @@ ShoppingCart::~ShoppingCart(){
 }
 
 //Getters
-QMap<PurchasableItem*,qint32>& ShoppingCart::getItems(){return items;}
+QList<PurchasableItem*>& ShoppingCart::getItems(){return items;}
 qint32 ShoppingCart::getShoppingCartID()const{return id;}
 
 //Setters
@@ -24,10 +24,6 @@ void ShoppingCart::addItem(PurchasableItem* item){
 
 }
 
-//TODO need to implement this properly
-void ShoppingCart::addItemQuantity(PurchasableItem*,int){
-
-}
 
 //Empty shopping cart's contents
 void ShoppingCart::emptyShoppingCart(){  

@@ -98,12 +98,12 @@ void Textbook::read(const QJsonObject &json){
 
 //Writes to a QJsonobject this object's components
 void Textbook::write(QJsonObject &json) const{
-    json["title"] = title.toStdString();
-    json["author"] = author.toStdString();
-    json["edition"] = edition.toStdString();
-    json["publisher"] = publisher.toStdString();
-    json["isbn"] = isbn.toStdString();
-    json["description"] = description.toStdString();
+    json["title"] = title;
+    json["author"] = author;
+    json["edition"] = edition;
+    json["publisher"] = publisher;
+    json["isbn"] = isbn;
+    json["description"] = description;
 
     QJsonArray chapterArray;
     foreach (const Chapter* chapter, chapters){

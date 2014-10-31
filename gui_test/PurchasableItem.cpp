@@ -53,7 +53,24 @@ void PurchasableItem::setAvailability(bool a){
     availability = a;
 }
 
+
 //Checks to see if two purchasable items are equal by itemID
 bool PurchasableItem::operator==(const PurchasableItem& item) const{
     return this->getItemID() == item.getItemID();
+}
+
+//Read from JSON object for abstract class purchasable item
+//Will be used by derived classes to get their itemID, price and, availability
+void PurchasableItem::read(const QJsonObject &json){
+    itemID = json["itemID"].toDouble();
+    price = json["price"].toDouble();
+    availability = json["availability"].isBool();
+}
+
+//Write to JSON object which will be used by derived classes to write
+//Their itemID, price, and availability
+void PurchasableItem::write(QJsonObject &json) const{
+    json["itemID"] = itemID;
+    json["price"] = price;
+    json["availability"] = availability;
 }

@@ -13,15 +13,15 @@ using namespace std;
 class Chapter : public PurchasableItem{
 public:
 
-    Chapter(QString = "",qint32 = 0,
-            qint32 = 0, float = 0, bool = false);
+    Chapter(QString = "A chapter title",qint32 = 1,
+            qint32 = 42, float = 15.0, bool = false);
 
     ~Chapter();
 
     QList<Section*>&    getChapterSections();
-    qint32              getChapterNumber();
+    qint32              getChapterNumber() const;
     Section*            getSection(qint32);
-    QString             getItemTitle();
+    QString             getItemTitle() const;
 
     void                setItemTitle(QString);
     void                setChapterNumber(qint32);

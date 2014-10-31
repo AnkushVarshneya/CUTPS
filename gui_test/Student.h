@@ -1,7 +1,12 @@
 /*Student class header file
  *Inherited from User class
- *Date Last modified: 24/10/2014
  *
+ *Description: A Student user will be a customer in CUTPS
+ *A student potentially has saved payment info
+ *A student has a list of courses he/she is registered in
+ *A student has a shopping cart which is an inventory of added items by the student
+ *
+ *Traceability : EO-02
  */
 
 #ifndef STUDENT_H
@@ -18,16 +23,21 @@ class Course;
 class Student : public User {
 
 public:
-    Student();
+    Student(QString = "100848921", QString = "johndoe@cmail.carleton.ca", QString = "generic"
+            , QString = "password", QString = "john", QString = "doe");
     ~Student();
-    QString                 getStudentNum();
-    QString                 getcMail();
+    QString                 getStudentNum() const;
+    QString                 getcMail() const;
     PaymentInformation      getpayInfo();
     QList<Course*>&         getRegisteredCourses();
-
+    ShoppingCart            getShoppingCart();
+    void                    setUsername(QString);
     void                    setStudentNum(QString);
     void                    setcMail(QString);
     void                    setPayInfo(const PaymentInformation&);
+
+    void                    read(const QJsonObject &json);
+    void                    write(QJsonObject &json) const;
 
     //void                    addItemToShoppingCart(PurchasableItem*);
 

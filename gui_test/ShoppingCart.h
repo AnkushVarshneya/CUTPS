@@ -6,9 +6,10 @@
 #define SHOPPINGCART_H
 
 #include "PurchasableItem.h"
-#include <QMap>
+#include <QList>
+#include "CUtpsDataObject.h"
 
-class ShoppingCart{
+class ShoppingCart : public CUtpsDataObject{
 
 public:
     ShoppingCart(qint32 = 0);
@@ -18,6 +19,8 @@ public:
     void                                      setShoppingCartID(qint32);
     void                                      addItem(PurchasableItem*);
     void                                      emptyShoppingCart();
+    void                                      read(const QJsonObject &json);
+    void                                      write(QJsonObject &json) const;
 
 private:
     QList<PurchasableItem*>                   items;

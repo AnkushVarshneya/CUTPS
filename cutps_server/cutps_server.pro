@@ -22,7 +22,14 @@ SOURCES += main.cpp \
     Chapter.cpp \
     Section.cpp \
     PurchasableItem.cpp \
-    Textbook.cpp
+    Textbook.cpp \
+    PaymentInformation.cpp \
+    CreditCardInformation.cpp \
+    Student.cpp \
+    ShoppingCart.cpp \
+    User.cpp \
+    Course.cpp \
+    Term.cpp
 
 HEADERS += \
     BillingAddress.h \
@@ -31,4 +38,11 @@ HEADERS += \
     Section.h \
     Chapter.h \
     PurchasableItem.h \
-    Textbook.h
+    Textbook.h \
+    PaymentInformation.h \
+    CreditCardInformation.h \
+    Student.h \
+    ShoppingCart.h \
+    User.h \
+    Course.h \
+    Term.h

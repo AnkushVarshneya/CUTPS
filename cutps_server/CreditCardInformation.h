@@ -11,7 +11,7 @@
 
 #include <QString>
 #include <QDate>
-#include "Types.h"
+//#include "Types.h"
 #include "CUtpsDataObject.h"
 
 class CreditCardInformation : public CUtpsDataObject {
@@ -50,6 +50,6 @@ private:
 };
 
 //ostream method for testing data purposes
-std::ostream& operator<<(std::ostream&, CreditCardInformation&);
+//std::ostream& operator<<(std::ostream&, CreditCardInformation&);
 
 #endif // CREDITCARDINFORMATION_H

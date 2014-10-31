@@ -29,7 +29,8 @@ SOURCES +=\
     Section.cpp \
     ShoppingCart.cpp \
     CreditCardInformation.cpp \
-    Student.cpp
+    Student.cpp \
+    PaymentInformation.cpp
 
 
 HEADERS  += mainwindow.h \

@@ -49,7 +49,22 @@ int main(int argc, char *argv[])
         chapter3->addSection(c2sect1);
 
     //conMan->testSend(chapter1);
-    conMan->testSend ((CUtpsDataObject*)textbook);
+    //conMan->testSend ((CUtpsDataObject*)textbook);
+
+   //test student
+    Student *student = new Student();
+//    Course *crs = new Course();
+//    student->addCourse(crs);
+//    qDebug() << student->getRegisteredCourses().length();
+//    qDebug() << student->getRegisteredCourses().at(0)->getInstructor();
+
+    QJsonObject stu;
+    student->write(stu);
+    QJsonDocument jdoc = QJsonDocument(stu);
+    qDebug() << jdoc.toJson();
+    conMan->testSend( (CUtpsDataObject*)student );
+
+
 
     return a.exec();
 }

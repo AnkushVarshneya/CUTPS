@@ -63,8 +63,16 @@ void CutpsServer::readBytes() {
     //qDebug() << "\n";
 
     //test parsing textbook
-    Textbook *text = new Textbook();
-    text->read(jsonDoc.object());
+//    Textbook *text = new Textbook();
+//    text->read(jsonDoc.object());
+
+    //test parsing student
+   Student *student = new Student();
+   student->read(jsonDoc.object());
+   qDebug() << student->getFirstName() << "\n";
+   qDebug() << student->getpayInfo().getBillInfo().getStreetName() << "\n";
+   qDebug() << student->getShoppingCart().getShoppingCartID() << "\n";
+
 
 //    qDebug() << text->getItemTitle();
 //    qDebug() << text->getAuthor();

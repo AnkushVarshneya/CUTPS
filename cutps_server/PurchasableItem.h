@@ -16,7 +16,7 @@
 class PurchasableItem : public CUtpsDataObject{
 
 public:
-    PurchasableItem(qint32 = 0, float = 0, bool = false);
+    PurchasableItem(qint32 = 1337, float = 13.37, bool = false);
     ~PurchasableItem();
 
     qint32              getItemID() const;
@@ -25,9 +25,12 @@ public:
     void                setItemID(qint32);
     void                setPrice(float);
     void                setAvailability(bool);
-    virtual QString     getItemTitle() = 0;
+    virtual QString     getItemTitle() const = 0;
     virtual void        setItemTitle(QString) = 0;
     bool                operator==(const PurchasableItem&) const;
+    void                read(const QJsonObject &json);
+    void                write(QJsonObject &json) const;
+
 
 private:
     qint32   itemID;

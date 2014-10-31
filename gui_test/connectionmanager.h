@@ -17,9 +17,10 @@ class ConnectionManager : public QObject
 public:
     explicit ConnectionManager(QObject *parent = 0);
     void connectToHost(QHostAddress hostAddress, int port);
-    void testSend(BillingAddress *testadr);
-    void testSend(Chapter *chap);
-    void testSend(Textbook *text);
+//    void testSend(BillingAddress *testadr);
+//    void testSend(Chapter *chap);
+//    void testSend(Textbook *text);
+    void testSend(CUtpsDataObject *data);
 
 private:
     QTcpSocket *tcpConnection;

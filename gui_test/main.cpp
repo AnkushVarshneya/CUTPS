@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
         chapter3->addSection(c2sect1);
 
     //conMan->testSend(chapter1);
-    conMan->testSend(textbook);
+    conMan->testSend ((CUtpsDataObject*)textbook);
 
     return a.exec();
 }

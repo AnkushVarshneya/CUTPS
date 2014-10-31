@@ -6,17 +6,17 @@
 
 #include <QString>
 #include "PurchasableItem.h"
-using namespace std;
+
 
 class Section : public PurchasableItem{
 public:
 
-    Section(QString = "",qint32 = 0,
-            qint32 = 0, float = 0, bool = false);
+    Section(QString = "a section title",qint32 = 13,
+            qint32 = 9, float = 5.0, bool = false);
 
     ~Section();
 
-    QString     getItemTitle();
+    QString     getItemTitle() const;
     qint32      getSectionNumber();
 
     void        setItemTitle(QString);

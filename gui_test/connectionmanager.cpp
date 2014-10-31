@@ -23,38 +23,45 @@ void ConnectionManager::connectToHost(QHostAddress host, int port) {
 
 }
 
-void ConnectionManager::testSend(BillingAddress *testadr) {
-    QJsonObject json;
-    testadr->write(json);
-    QJsonDocument jdoc = QJsonDocument(json);
+//void ConnectionManager::testSend(BillingAddress *testadr) {
+//    QJsonObject json;
+//    testadr->write(json);
+//    QJsonDocument jdoc = QJsonDocument(json);
 
-    QByteArray ary;
+//    QByteArray ary;
 
-    qDebug() << "length of json obj: " << json.length() << "\n";
-    qDebug() << "sizeof json obj: " << sizeof(json) << "\n";
-    qDebug() << json << "\n";
+//    qDebug() << "length of json obj: " << json.length() << "\n";
+//    qDebug() << "sizeof json obj: " << sizeof(json) << "\n";
+//    qDebug() << json << "\n";
 
-    qDebug() << "sizeof jdoc obj: " << sizeof(jdoc) << "\n";
-    qDebug() << jdoc << "\n";
+//    qDebug() << "sizeof jdoc obj: " << sizeof(jdoc) << "\n";
+//    qDebug() << jdoc << "\n";
 
-    this->tcpConnection->write(jdoc.toJson());
+//    this->tcpConnection->write(jdoc.toJson());
 
+//}
+
+void ConnectionManager::testSend(CUtpsDataObject *data) {
+      QJsonObject json;
+      data->write(json);
+      QJsonDocument jdoc = QJsonDocument(json);
+      this->tcpConnection->write(jdoc.toJson());
 }
 
-void ConnectionManager::testSend(Chapter *chap) {
-    QJsonObject json;
-    chap->write(json);
-    QJsonDocument jdoc = QJsonDocument(json);
-    this->tcpConnection->write(jdoc.toJson());
-}
+//void ConnectionManager::testSend(Chapter *chap) {
+//    QJsonObject json;
+//    chap->write(json);
+//    QJsonDocument jdoc = QJsonDocument(json);
+//    this->tcpConnection->write(jdoc.toJson());
+//}
 
-void ConnectionManager::testSend(Textbook *text) {
-    QJsonObject json;
-    text->write(json);
-    QJsonDocument jdoc = QJsonDocument(json);
-    this->tcpConnection->write(jdoc.toJson());
+//void ConnectionManager::testSend(Textbook *text) {
+//    QJsonObject json;
+//    text->write(json);
+//    QJsonDocument jdoc = QJsonDocument(json);
+//    this->tcpConnection->write(jdoc.toJson());
 
-}
+//}
 
 
 void ConnectionManager::readyRead() {

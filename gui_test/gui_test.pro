@@ -29,7 +29,9 @@ SOURCES +=\
     Section.cpp \
     ShoppingCart.cpp \
     CreditCardInformation.cpp \
-    Student.cpp
+    Student.cpp \
+    studentform.cpp \
+    contentmanagerform.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -47,9 +49,13 @@ HEADERS  += mainwindow.h \
     ShoppingCart.h \
     connectionmanager.h \
     Term.h \
-    CUtpsDataObject.h
+    CUtpsDataObject.h \
+    studentform.h \
+    contentmanagerform.h
     Types.h
 
 
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    studentform.ui \
+    contentmanagerform.ui

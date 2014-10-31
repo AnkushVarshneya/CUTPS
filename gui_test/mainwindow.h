@@ -6,6 +6,11 @@
 #include <QNetworkSession>
 #include <QWidget>
 
+#include "studentform.h"
+#include "contentmanagerform.h"
+
+class StudentForm;
+class ContentManagerForm;
 
 namespace Ui {
 class MainWindow;
@@ -28,10 +33,16 @@ private:
     QNetworkSession *networkSession;
     void connectTcp();
 
+    StudentForm *studentForm;
+    ContentManagerForm *contentManagerForm;
+
+
 private slots:
     //void displayError(QAbstractSocket::SocketError socketError);
     void readyRead();
 
+    void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
 };
 
 #endif // MAINWINDOW_H

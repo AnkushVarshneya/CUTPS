@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
+    studentForm = new StudentForm();
+    contentManagerForm = new ContentManagerForm();
    // this->connectTcp();
 }
 
@@ -31,6 +33,21 @@ void MainWindow::readyRead() {
 
 MainWindow::~MainWindow()
 {
+    delete studentForm;
     delete ui;
 }
 
+
+void MainWindow::on_pushButton_clicked()
+{
+    studentForm->parentForm = this;
+    studentForm->show();
+    this->hide();
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    contentManagerForm->parentForm = this;
+    contentManagerForm->show();
+    this->hide();
+}

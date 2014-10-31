@@ -8,25 +8,30 @@
 #include <QString>
 #include <QDate>
 #include "Course.h"
+#include "CUtpsDataObject.h"
 using namespace std;
 
 
 class Course;
-class Student;
 
-class Term{
+
+class Term : CUtpsDataObject{
 public:
     Term();
-    Term(QDate,QDate);
+    Term(QDate,QDate, qint32);
     ~Term();
-    QDate           getStartDate();
-    QDate           getEndDate();
+    QDate           getStartDate() const;
+    QDate           getEndDate() const;
     QList<Course*>& getTermCourses();
-    qint32          getTermID();
+    qint32          getTermID() const;
 
     void            setStartDate(int,int,int);
     void            setEndDate(int,int,int);
     void            setTermID(qint32);
+
+    void            read(const QJsonObject &json);
+    void            write(QJsonObject &json) const;
+
 
 
 private:

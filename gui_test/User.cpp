@@ -48,6 +48,5 @@ void User::write(QJsonObject &json) const{
     json["password"] = password;
     json["firstName"] = firstName;
     json["lastName"] = lastName;
-
 }
 

@@ -3,18 +3,18 @@
 
 Term::Term(){}
 
-Term::Term(QDate a, QDate b){
+Term::Term(QDate a, QDate b, qint32 id){
     startDate = a;
     endDate = b;
+    termID = id;
 }
 
-QDate Term::getStartDate(){return startDate;}
-QDate Term::getEndDate(){return endDate;}
+QDate Term::getStartDate() const{return startDate;}
+QDate Term::getEndDate() const{return endDate;}
 QList<Course*>& Term::getTermCourses(){
     return courses;
-    //return &courses?
 }
-qint32 Term::getTermID(){return termID;}
+qint32 Term::getTermID() const{return termID;}
 
 void Term::setStartDate(int year, int month, int day){
     startDate.setDate(year, month, day);
@@ -23,6 +23,34 @@ void Term::setEndDate(int year, int month, int day){
     endDate.setDate(year, month, day);
 }
 void Term::setTermID(qint32 a){termID = a;}
+
+//JSON read and write functions
+
+void Term::read(const QJsonObject &json){
+    startDate = QDate::fromString(json["startDate"].toString(), "yyyyMMdd");
+    endDate = QDate::fromString(json["endDate"].toString(), "yyyyMMdd");
+    termID = json["termID"].toDouble();
+    QJsonArray courseArray = json["courses"].toArray();
+    for(int i = 0; i < courseArray.size(); ++i){
+        QJsonObject courseObject = courseArray[i].toObject();
+        Course* newCourse = new Course();
+        newCourse->read(courseObject);
+        courses.append(newCourse);
+    }
+}
+
+void Term::write(QJsonObject &json) const{
+    json["startDate"] = startDate.toString("yyyyMMdd");
+    json["endDate"] = endDate.toString("yyyyMMdd");
+    json["termID"] = termID;
+
+    QJsonArray courseArray;
+    foreach(Course* course, courses){
+        QJsonObject courseObject;
+        course->write(courseObject);
+        courseArray.append(courseObject);
+    }
+}
 
 std::ostream& operator<<(std::ostream& o,  Term& term){
     int* syear;

@@ -89,7 +89,7 @@
      <property name="title">
       <string>View Textbooks</string>
      </property>
-     <addaction name="actionStudent_unenrolled"/>
+     <addaction name="actionStudent_ViewTextbooks_unenrolled"/>
      <addaction name="actionStudent_ViewTextbooks_notextbooks"/>
      <addaction name="actionStudent_ViewTextbooks_hastextbooks"/>
     </widget>
@@ -104,8 +104,8 @@
      <property name="title">
       <string>Empty Shopping Cart</string>
      </property>
-     <addaction name="actionEmptyShoppingCart_hasitems"/>
-     <addaction name="actionEmptyShoppingCart_noitems"/>
+     <addaction name="actionStudent_EmptyShoppingCart_hasitems"/>
+     <addaction name="actionStudent_EmptyShoppingCart_noitems"/>
     </widget>
     <widget class="QMenu" name="menuAdd_Content">
      <property name="title">
@@ -162,7 +162,7 @@
     <string>Shopping Cart is empty</string>
    </property>
   </action>
-  <action name="actionStudent_unenrolled">
+  <action name="actionStudent_ViewTextbooks_unenrolled">
    <property name="text">
     <string>Student is not enrolled in any courses</string>
    </property>
@@ -177,12 +177,12 @@
     <string>Student has textbooks</string>
    </property>
   </action>
-  <action name="actionEmptyShoppingCart_hasitems">
+  <action name="actionStudent_EmptyShoppingCart_hasitems">
    <property name="text">
     <string>Shopping cart contains items</string>
    </property>
   </action>
-  <action name="actionEmptyShoppingCart_noitems">
+  <action name="actionStudent_EmptyShoppingCart_noitems">
    <property name="text">
     <string>Shopping cart is already empty</string>
    </property>

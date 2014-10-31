@@ -13,19 +13,19 @@ using namespace std;
 class Textbook : public PurchasableItem{
 public:
 
-    Textbook(QString = "", QString = "", QString = "",
-             QString = "" ,QString = "" ,QString = "",
-             qint32 = 0, float = 0 , bool = false  );
+    Textbook(QString = "Generic Title", QString = "Generic Author", QString = "1st ed",
+             QString = "A Publisher" ,QString = "978-3-16-148410-0" ,QString = "A generic description",
+             qint32 = 555, float = 80.50 , bool = false  );
     ~Textbook();
-    QString             getAuthor           ();
-    QString             getEdition          ();
-    QString             getPublisher        ();
-    QString             getISBN             ();
-    QString             getDesc             ();
+    QString             getAuthor           () const;
+    QString             getEdition          () const;
+    QString             getPublisher        () const;
+    QString             getISBN             () const;
+    QString             getDesc             () const;
     QList<Chapter*>&    getChapterList      ();
     Chapter*            getChapter          (qint32);
-    QString             getItemTitle        ();
-    QString             getCoverImageLoc    ();
+    QString             getItemTitle        () const;
+    QString             getCoverImageLoc    () const;
 
     void                setItemTitle    (QString);
     void                setAuthor       (QString);

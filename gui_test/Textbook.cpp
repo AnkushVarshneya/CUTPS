@@ -1,14 +1,12 @@
 #include "Textbook.h"
 
 
-Textbook::Textbook(QString t, QString a, QString e,
-                   QString p, QString i, QString d,
-                   qint32 id, float pr, bool avail) :
-
-                   PurchasableItem(id,pr,avail),
-
-                   title(t), author(a), edition(e),
-                   publisher(p), isbn(i), description(d){}
+Textbook::Textbook(QString textTitle, QString auth, QString ed,
+                   QString pub, QString ISBN, QString desc,
+                   qint32 id, float price, bool avail) :
+                   PurchasableItem(id,price,avail),
+                   title(textTitle), author(auth), edition(ed),
+                   publisher(pub), isbn(ISBN), description(desc){}
 
 //Textbook::Textbook(QString a, float b, bool c){}
 Textbook::~Textbook(){
@@ -21,14 +19,14 @@ Textbook::~Textbook(){
 }
 
 
-QString          Textbook::getAuthor()           {return author;}
-QString          Textbook::getEdition()          {return edition;}
-QString          Textbook::getPublisher()        {return publisher;}
-QString          Textbook::getISBN()             {return isbn;}
-QString          Textbook::getDesc()             {return description;}
-QList<Chapter*>& Textbook::getChapterList()      {return chapters;}
-QString          Textbook::getItemTitle()        {return title;}
-QString          Textbook::getCoverImageLoc()    {return coverImageLoc;}
+QString          Textbook::getAuthor()          const        {return author;}
+QString          Textbook::getEdition()         const        {return edition;}
+QString          Textbook::getPublisher()       const        {return publisher;}
+QString          Textbook::getISBN()            const        {return isbn;}
+QString          Textbook::getDesc()            const        {return description;}
+QList<Chapter*>& Textbook::getChapterList()                  {return chapters;}
+QString          Textbook::getItemTitle()       const        {return title;}
+QString          Textbook::getCoverImageLoc()   const        {return coverImageLoc;}
 
 Chapter* Textbook::getChapter(qint32 num){
     QList<Chapter*>::iterator i;
@@ -77,6 +75,7 @@ void Textbook::addChapter(Chapter* chapter){
 //Takes a QJsonobject, extracts information about it
 //And set this textbook's attributes to it
 void Textbook::read(const QJsonObject &json){
+    PurchasableItem::read(json);
     title = json["title"].toString();
     author = json["author"].toString();
     edition = json["edition"].toString();
@@ -98,6 +97,7 @@ void Textbook::read(const QJsonObject &json){
 
 //Writes to a QJsonobject this object's components
 void Textbook::write(QJsonObject &json) const{
+    PurchasableItem::write(json);
     json["title"] = title;
     json["author"] = author;
     json["edition"] = edition;

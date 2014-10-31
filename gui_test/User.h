@@ -1,30 +1,39 @@
 /*User class header file
- *Date last modified 10/24/2014
+ *
+ *Inherits from CUtpsDataObject
  *Inherited by Student and ContentManager classes
- *Author Rob
+ *
+ *Description: basic User with a username, password, first and last name
+ *Is an Abstract class
+ *
+ *Traceability: EO-01 in Deliverable 1
  */
 
 #ifndef USER_H
 #define USER_H
 
 #include <QString>
+#include "CUtpsDataObject.h"
 
-class User{
+class User : CUtpsDataObject{
 
 public:
-    User(QString,QString,QString,QString);
+    User(QString = "generic" ,QString = "password",QString = "John",QString = "Doe");
     ~User();
-    QString         getUserID();
-    QString         getFirstName();
-    QString         getLastName();
-    void            setUserID(QString);
+    QString         getUsername() const;
+    QString         getFirstName() const;
+    QString         getLastName() const;
+    virtual void    setUsername(QString) = 0;
     void            setPass(QString);
     void            setFirstName(QString);
     void            setLastName(QString);
+    bool            validatePass(QString) const;
+    void            read(const QJsonObject &json);
+    void            write(QJsonObject &json) const;
 
 
 protected:
-    QString         userID;
+    QString         username;
     QString         password;
     QString         firstName;
     QString         lastName;

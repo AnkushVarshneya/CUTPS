@@ -6,6 +6,7 @@
 
 begin transaction;
 
+drop table if exists Role;
 drop table if exists User;
 drop table if exists Student;
 drop table if exists PaymentInformation;
@@ -20,13 +21,25 @@ drop table if exists ShoppingCart;
 drop table if exists ShoppinCart_Contains_PurchasableItem;
 drop table if exists PurchasableItem;
 
+--creating the Table called Role
+create table Role(
+	roleID integer NOT NULL primary key,
+	roleType varchar(20)
+	);
+	
+--insert default roles
+insert into Role (roleID, roleType) values (1, "Student");
+insert into Role (roleID, roleType) values (2, "Content Manager");
+insert into Role (roleID, roleType) values (3, "Administrator");
+
 --creating the Table called User
 create table User(
 	userName varchar(50) NOT NULL primary key,
 	firstName varchar(20),
 	lastName varchar(20),
 	password varchar(20),
-	role varchar(20)
+	roleID integer NOT NULL,
+	foreign key (roleID) references Role(roleID) on delete cascade
 	);
 	
 --creating the Table called Student
@@ -81,7 +94,7 @@ create table Term(
 
 --creating the Table called Course_Assigned_Textbook 
 create table Course_Assigned_Textbook(
-	ISBN varchar(13) NOT NULL references Textbook(ISBN),
+	ISBN varchar(20) NOT NULL references Textbook(ISBN),
 	courseCode varchar(8) NOT NULL references Course(courseCode),
 	section varchar(1) NOT NULL references Course(section),
 	termID integer NOT NULL references Course(termID),
@@ -90,7 +103,7 @@ create table Course_Assigned_Textbook(
 
 --creating the Table called Textbook
 create table Textbook(
-	ISBN varchar(13) NOT NULL primary key,
+	ISBN varchar(20) NOT NULL primary key,
 	coverImageLocation varchar(100),
 	Desc varchar(200),
 	Author varchar(50),
@@ -103,7 +116,7 @@ create table Textbook(
 
 --creating the Table called Chapter
 create table Chapter(
-	ISBN varchar(13) NOT NULL,
+	ISBN varchar(20) NOT NULL,
 	chapterNumber integer NOT NULL,
 	chapterTitle varchar(50),
 	itemID integer NOT NULL,
@@ -114,7 +127,7 @@ create table Chapter(
 
 --creating the Table called Section
 create table Section(
-	ISBN varchar(13) NOT NULL,
+	ISBN varchar(20) NOT NULL,
 	chapterNumber integer NOT NULL,
 	sectionNumber integer NOT NULL,
 	sectionTitle varchar(50),
@@ -125,25 +138,11 @@ create table Section(
 	primary key(ISBN, chapterNumber, sectionNumber)
 );
 
---creating the Table called ShoppingCart
-create table ShoppingCart(
-	cartID integer NOT NULL primary key,
-	studentNumber varchar(10) NOT NULL references Student(studentNumber),	
-	foreign key (studentNumber) references Student(studentNumber) on delete cascade
-);
-
---creating the Table called ShoppinCart_Contains_PurchasableItem
-create table ShoppinCart_Contains_PurchasableItem(
-	cartID integer NOT NULL references ShoppingCart(cartID),
-	itemID integer NOT NULL references PurchasableItem(itemID),
-	primary key(cartID, itemID)
-);
-
 --creating the Table called PurchasableItem
 create table PurchasableItem(
 	itemID integer NOT NULL primary key,
 	price decimal(18,2),
-	avalibility boolean
+	availability boolean
 );
 
 commit;

@@ -45,7 +45,10 @@ void ConnectionManager::testSend(CUtpsDataObject *data) {
       QJsonObject json;
       data->write(json);
       QJsonDocument jdoc = QJsonDocument(json);
-      this->tcpConnection->write(jdoc.toJson());
+      bytes = this->tcpConnection->write(jdoc.toJson()); //write function returns number of bytes written or -1 if an error occurred.
+      if (bytes = -1 ){       qDebug() << this->tcpConnection->errorString() ;      }
+      qDebug() << "bytes written: " << bytes << "\n";
+
 }
 
 //void ConnectionManager::testSend(Chapter *chap) {

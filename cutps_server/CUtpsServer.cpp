@@ -53,28 +53,30 @@ void CutpsServer::readBytes() {
     qDebug() << "in server readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
 
     char *data = new char[this->bytes];
-    this->tcpConnection->read(data, bytes);
-
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+   bytes = this->tcpConnection->read(data, bytes);
+   qDebug() << "bytes read: " << bytes << "\n";
+   QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
 
     //qDebug() << "\n" << data;
     //qDebug() << jsonDoc;
-    qDebug() << jsonDoc.toJson();
+   qDebug() << jsonDoc.toJson();
+    //qDebug() << "\n";
 
     //test parsing textbook
     Textbook *text = new Textbook();
     text->read(jsonDoc.object());
-    qDebug() << text->getItemTitle();
-    qDebug() << text->getAuthor();
-    QList<Chapter> chapList;
-    QList<Chapter*>::Iterator i;
-    for (i = text->getChapterList().begin(); i < text->getChapterList().end(); ++i) {
-        chapList.append(**i);
-    }
-    QList<Chapter>::Iterator z;
-    for (z = chapList.begin(); z < chapList.end(); ++z){
-        cout << *z;
-    }
+
+//    qDebug() << text->getItemTitle();
+//    qDebug() << text->getAuthor();
+//    QList<Chapter> chapList;
+//    QList<Chapter*>::Iterator i;
+//    for (i = text->getChapterList().begin(); i < text->getChapterList().end(); ++i) {
+//        chapList.append(**i);
+//    }
+//    QList<Chapter>::Iterator z;
+//    for (z = chapList.begin(); z < chapList.end(); ++z){
+//        cout << *z;
+//    }
 
 
 
@@ -90,7 +92,7 @@ void CutpsServer::readBytes() {
 //    qDebug() << testAdr->getProvince() << "\n";
 //    qDebug() << testAdr->getPostalCode() << "\n";
 
-}
+} //readbytes
 
 //void CutpsServer::readyRead() {
 //    qDebug() << "initial bytes available: " << this->tcpConnection->bytesAvailable() << "\n";  //to read

@@ -10,6 +10,7 @@
 #include "CUtpsDataObject.h"
 #include "Chapter.h"
 #include "Textbook.h"
+#include "Student.h"
 
 class ConnectionManager : public QObject
 {
@@ -33,7 +34,9 @@ public slots:
 
 private slots:
     void readyRead();
-
+//    void createTextbook(Textbook *text);
+//    void studentViewTextbooks(Student *student);
+//    void viewShoppingCart(Student *student);
 };
 
 #endif // CONNECTIONMANAGER_H

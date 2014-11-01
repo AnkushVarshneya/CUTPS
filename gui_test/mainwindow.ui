@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>300</height>
+    <width>590</width>
+    <height>390</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>cuTPS Client Test Cases</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QListWidget" name="listWidget">
@@ -19,8 +19,8 @@
      <rect>
       <x>30</x>
       <y>30</y>
-      <width>256</width>
-      <height>192</height>
+      <width>531</width>
+      <height>271</height>
      </rect>
     </property>
    </widget>
@@ -30,10 +30,118 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>300</width>
+     <width>590</width>
      <height>24</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuContent_Manager">
+    <property name="title">
+     <string>Content Manager</string>
+    </property>
+    <widget class="QMenu" name="menuCreate_Course">
+     <property name="title">
+      <string>Create Course</string>
+     </property>
+     <addaction name="actionContentManager_CreateCourse_nullcourse"/>
+     <addaction name="actionContentManager_CreateCourse_validcourse"/>
+    </widget>
+    <widget class="QMenu" name="menuCreate_Textbook">
+     <property name="title">
+      <string>Create Textbook</string>
+     </property>
+     <addaction name="actionContentManager_CreateTextbook_nulltextbook"/>
+     <addaction name="actionContentManager_CreateTextbook_withchaptersandsections"/>
+    </widget>
+    <widget class="QMenu" name="menuLink_Textbook">
+     <property name="title">
+      <string>Link Textbook</string>
+     </property>
+     <addaction name="actionContentManager_LinkTextbook_alreadylinked"/>
+     <addaction name="actionContentManager_LinkTextbook_nulltextbook"/>
+     <addaction name="actionContentManager_LinkTextbook_nullcourse"/>
+     <addaction name="actionContentManager_LinkTextbook_validlink"/>
+    </widget>
+    <widget class="QMenu" name="menuView_Textbooks_by_Term">
+     <property name="title">
+      <string>View Textbooks by Term</string>
+     </property>
+     <addaction name="actionContentManager_ViewTextbooksByTerm_notextbooks"/>
+     <addaction name="actionContentManager_ViewTextbooksByTerm_hastextbooks"/>
+    </widget>
+    <widget class="QMenu" name="menuView_Courses">
+     <property name="title">
+      <string>View Courses</string>
+     </property>
+     <addaction name="actionContentManager_ViewCourses_nocourses"/>
+     <addaction name="actionContentManager_ViewCourses_hascourses"/>
+    </widget>
+    <addaction name="menuCreate_Course"/>
+    <addaction name="menuCreate_Textbook"/>
+    <addaction name="menuLink_Textbook"/>
+    <addaction name="menuView_Textbooks_by_Term"/>
+    <addaction name="menuView_Courses"/>
+   </widget>
+   <widget class="QMenu" name="menuStudent">
+    <property name="title">
+     <string>Student</string>
+    </property>
+    <widget class="QMenu" name="menuStudentViewTextbooks_unenrolled">
+     <property name="title">
+      <string>View Textbooks</string>
+     </property>
+     <addaction name="actionStudent_ViewTextbooks_unenrolled"/>
+     <addaction name="actionStudent_ViewTextbooks_notextbooks"/>
+     <addaction name="actionStudent_ViewTextbooks_hastextbooks"/>
+    </widget>
+    <widget class="QMenu" name="menuView_Shopping_Cart">
+     <property name="title">
+      <string>View Shopping Cart</string>
+     </property>
+     <addaction name="actionViewShoppingCart_hasitems"/>
+     <addaction name="actionViewShoppingCart_noitems"/>
+    </widget>
+    <widget class="QMenu" name="menuEmpty_Shopping_Cart">
+     <property name="title">
+      <string>Empty Shopping Cart</string>
+     </property>
+     <addaction name="actionStudent_EmptyShoppingCart_hasitems"/>
+     <addaction name="actionStudent_EmptyShoppingCart_noitems"/>
+    </widget>
+    <widget class="QMenu" name="menuAdd_Content">
+     <property name="title">
+      <string>Add Content</string>
+     </property>
+     <addaction name="actionStudent_AddContent_nullitem"/>
+     <addaction name="actionStudent_AddContent_Textbook"/>
+     <addaction name="actionStudent_AddContent_Chapter"/>
+     <addaction name="actionStudent_AddContent_Section"/>
+     <addaction name="actionStudent_AddContent_multipleitems"/>
+     <addaction name="actionStudent_AddContent_invalidnumofitems"/>
+    </widget>
+    <widget class="QMenu" name="menuGet_Existing_Billing_Information">
+     <property name="title">
+      <string>Get Existing Billing Information</string>
+     </property>
+     <addaction name="actionStudent_GetExistingBillingInformation_hasinfo"/>
+     <addaction name="actionStudent_GetExistingBillingInformation_noinfo"/>
+    </widget>
+    <widget class="QMenu" name="menuSave_Billing_Information">
+     <property name="title">
+      <string>Save Billing Information</string>
+     </property>
+     <addaction name="actionStudent_SaveBillingInformation_invalidformat"/>
+     <addaction name="actionStudent_SaveBillingInformation_validformat"/>
+     <addaction name="actionStudent_SaveBillingInformation_hasinfo"/>
+    </widget>
+    <addaction name="menuStudentViewTextbooks_unenrolled"/>
+    <addaction name="menuView_Shopping_Cart"/>
+    <addaction name="menuEmpty_Shopping_Cart"/>
+    <addaction name="menuAdd_Content"/>
+    <addaction name="menuGet_Existing_Billing_Information"/>
+    <addaction name="menuSave_Billing_Information"/>
+   </widget>
+   <addaction name="menuContent_Manager"/>
+   <addaction name="menuStudent"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -44,6 +152,156 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionViewShoppingCart_hasitems">
+   <property name="text">
+    <string>Shopping Cart has items</string>
+   </property>
+  </action>
+  <action name="actionViewShoppingCart_noitems">
+   <property name="text">
+    <string>Shopping Cart is empty</string>
+   </property>
+  </action>
+  <action name="actionStudent_ViewTextbooks_unenrolled">
+   <property name="text">
+    <string>Student is not enrolled in any courses</string>
+   </property>
+  </action>
+  <action name="actionStudent_ViewTextbooks_notextbooks">
+   <property name="text">
+    <string>Student is enrolled but has no textbooks</string>
+   </property>
+  </action>
+  <action name="actionStudent_ViewTextbooks_hastextbooks">
+   <property name="text">
+    <string>Student has textbooks</string>
+   </property>
+  </action>
+  <action name="actionStudent_EmptyShoppingCart_hasitems">
+   <property name="text">
+    <string>Shopping cart contains items</string>
+   </property>
+  </action>
+  <action name="actionStudent_EmptyShoppingCart_noitems">
+   <property name="text">
+    <string>Shopping cart is already empty</string>
+   </property>
+  </action>
+  <action name="actionStudent_AddContent_nullitem">
+   <property name="text">
+    <string>Adding a NULL item</string>
+   </property>
+  </action>
+  <action name="actionStudent_AddContent_Textbook">
+   <property name="text">
+    <string>Adding a Textbook</string>
+   </property>
+  </action>
+  <action name="actionStudent_AddContent_Chapter">
+   <property name="text">
+    <string>Adding a Chapter</string>
+   </property>
+  </action>
+  <action name="actionStudent_AddContent_Section">
+   <property name="text">
+    <string>Adding a Section</string>
+   </property>
+  </action>
+  <action name="actionStudent_AddContent_multipleitems">
+   <property name="text">
+    <string>Adding multiple items</string>
+   </property>
+  </action>
+  <action name="actionStudent_AddContent_invalidnumofitems">
+   <property name="text">
+    <string>Adding invalid number of items</string>
+   </property>
+  </action>
+  <action name="actionStudent_GetExistingBillingInformation_hasinfo">
+   <property name="text">
+    <string>Student has existing billing information</string>
+   </property>
+  </action>
+  <action name="actionStudent_GetExistingBillingInformation_noinfo">
+   <property name="text">
+    <string>Student has no existing billing information</string>
+   </property>
+  </action>
+  <action name="actionStudent_SaveBillingInformation_invalidformat">
+   <property name="text">
+    <string>Billing information has invalid format</string>
+   </property>
+  </action>
+  <action name="actionStudent_SaveBillingInformation_validformat">
+   <property name="text">
+    <string>Billing information has valid format</string>
+   </property>
+  </action>
+  <action name="actionStudent_SaveBillingInformation_hasinfo">
+   <property name="text">
+    <string>Student has existing billing information</string>
+   </property>
+  </action>
+  <action name="actionContentManager_CreateCourse_nullcourse">
+   <property name="text">
+    <string>Creating a NULL course</string>
+   </property>
+  </action>
+  <action name="actionContentManager_CreateCourse_validcourse">
+   <property name="text">
+    <string>Creating a course</string>
+   </property>
+  </action>
+  <action name="actionContentManager_CreateTextbook_nulltextbook">
+   <property name="text">
+    <string>Creating a NULL textbook</string>
+   </property>
+  </action>
+  <action name="actionContentManager_CreateTextbook_withchaptersandsections">
+   <property name="text">
+    <string>Creating a textbook with chapters and sections</string>
+   </property>
+  </action>
+  <action name="actionContentManager_LinkTextbook_alreadylinked">
+   <property name="text">
+    <string>Textbook is already linked to the course</string>
+   </property>
+  </action>
+  <action name="actionContentManager_LinkTextbook_nulltextbook">
+   <property name="text">
+    <string>Textbook is NULL</string>
+   </property>
+  </action>
+  <action name="actionContentManager_LinkTextbook_nullcourse">
+   <property name="text">
+    <string>Course is NULL</string>
+   </property>
+  </action>
+  <action name="actionContentManager_LinkTextbook_validlink">
+   <property name="text">
+    <string>Textbook is not linked</string>
+   </property>
+  </action>
+  <action name="actionContentManager_ViewTextbooksByTerm_notextbooks">
+   <property name="text">
+    <string>No textbooks in database</string>
+   </property>
+  </action>
+  <action name="actionContentManager_ViewTextbooksByTerm_hastextbooks">
+   <property name="text">
+    <string>Textbooks in database</string>
+   </property>
+  </action>
+  <action name="actionContentManager_ViewCourses_nocourses">
+   <property name="text">
+    <string>No courses in database</string>
+   </property>
+  </action>
+  <action name="actionContentManager_ViewCourses_hascourses">
+   <property name="text">
+    <string>Courses in database</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

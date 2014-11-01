@@ -34,3 +34,50 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//Student View Shopping Cart
+
+//ShoppingCart contains items
+void MainWindow::on_actionViewShoppingCart_hasitems_triggered()
+{
+
+}
+//ShoppingCart is empty
+void MainWindow::on_actionViewShoppingCart_noitems_triggered()
+{
+
+}
+
+
+//Student View Textbooks
+
+//Student has no textbooks
+void MainWindow::on_actionStudent_ViewTextbooks_notextbooks_triggered()
+{
+
+}
+//Student is not enrolled in any Courses
+void MainWindow::on_actionStudent_ViewTextbooks_unenrolled_triggered()
+{
+
+}
+//Student has textbooks
+void MainWindow::on_actionStudent_ViewTextbooks_hastextbooks_triggered()
+{
+
+}
+
+//Student Empty Shopping Cart
+
+//Shopping cart is already empty
+void MainWindow::on_actionStudent_EmptyShoppingCart_noitems_triggered()
+{
+
+}
+
+//Shopping cart contains items
+void MainWindow::on_actionStudent_EmptyShoppingCart_hasitems_triggered()
+{
+
+}
+
+

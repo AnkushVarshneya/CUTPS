@@ -19,12 +19,30 @@ SOURCES += main.cpp \
     BillingAddress.cpp \
     CUtpsDataObject.cpp \
     CUtpsServer.cpp \
-    chapter.cpp \
-    section.cpp
+    Chapter.cpp \
+    Section.cpp \
+    PurchasableItem.cpp \
+    Textbook.cpp \
+    PaymentInformation.cpp \
+    CreditCardInformation.cpp \
+    Student.cpp \
+    ShoppingCart.cpp \
+    User.cpp \
+    Course.cpp \
+    Term.cpp
 
 HEADERS += \
     BillingAddress.h \
     CUtpsDataObject.h \
     CUtpsServer.h \
-    chapter.h \
-    section.h
+    Section.h \
+    Chapter.h \
+    PurchasableItem.h \
+    Textbook.h \
+    PaymentInformation.h \
+    CreditCardInformation.h \
+    Student.h \
+    ShoppingCart.h \
+    User.h \
+    Course.h \
+    Term.h

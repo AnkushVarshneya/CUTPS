@@ -5,7 +5,9 @@
 #include <QJsonParseError>
 #include <QJsonValue>
 #include "BillingAddress.h"
+#include "Textbook.h"
 
+#include <iostream>
 CutpsServer::CutpsServer(QObject *parent) :
     QTcpServer(parent)
 {
@@ -51,29 +53,54 @@ void CutpsServer::readBytes() {
     qDebug() << "in server readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
 
     char *data = new char[this->bytes];
-    this->tcpConnection->read(data, bytes);
+   bytes = this->tcpConnection->read(data, bytes);
+   qDebug() << "bytes read: " << bytes << "\n";
+   QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
 
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+    //qDebug() << "\n" << data;
+    //qDebug() << jsonDoc;
+   qDebug() << jsonDoc.toJson();
+    //qDebug() << "\n";
 
-    qDebug() << "\n" << data;
-    qDebug() << jsonDoc;
-    qDebug() << jsonDoc.toJson();
+    //test parsing textbook
+//    Textbook *text = new Textbook();
+//    text->read(jsonDoc.object());
+
+    //test parsing student
+   Student *student = new Student();
+   student->read(jsonDoc.object());
+   qDebug() << student->getFirstName() << "\n";
+   qDebug() << student->getpayInfo().getBillInfo().getStreetName() << "\n";
+   qDebug() << student->getShoppingCart().getShoppingCartID() << "\n";
+
+
+//    qDebug() << text->getItemTitle();
+//    qDebug() << text->getAuthor();
+//    QList<Chapter> chapList;
+//    QList<Chapter*>::Iterator i;
+//    for (i = text->getChapterList().begin(); i < text->getChapterList().end(); ++i) {
+//        chapList.append(**i);
+//    }
+//    QList<Chapter>::Iterator z;
+//    for (z = chapList.begin(); z < chapList.end(); ++z){
+//        cout << *z;
+//    }
+
+
 
     //test parsing json into a billing address object
-    BillingAddress *testAdr = new BillingAddress();
-    testAdr->read( jsonDoc.object() );
+//    BillingAddress *testAdr = new BillingAddress();
+//    testAdr->read( jsonDoc.object() );
 
-    qDebug() << testAdr << "\n";
-    qDebug() << testAdr->getName() << "\n";
-    qDebug() << testAdr->getStreetName() << "\n";
-    qDebug() << testAdr->getHouseNumber() << "\n";
-    qDebug() << testAdr->getCity() << "\n";
-    qDebug() << testAdr->getProvince() << "\n";
-    qDebug() << testAdr->getPostalCode() << "\n";
+//    qDebug() << testAdr << "\n";
+//    qDebug() << testAdr->getName() << "\n";
+//    qDebug() << testAdr->getStreetName() << "\n";
+//    qDebug() << testAdr->getHouseNumber() << "\n";
+//    qDebug() << testAdr->getCity() << "\n";
+//    qDebug() << testAdr->getProvince() << "\n";
+//    qDebug() << testAdr->getPostalCode() << "\n";
 
-
-
-}
+} //readbytes
 
 //void CutpsServer::readyRead() {
 //    qDebug() << "initial bytes available: " << this->tcpConnection->bytesAvailable() << "\n";  //to read

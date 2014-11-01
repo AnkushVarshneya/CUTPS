@@ -23,6 +23,34 @@
       <height>271</height>
      </rect>
     </property>
+    <item>
+     <property name="text">
+      <string>add textook</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>delete textbook</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>get textooks</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="runTestCaseOption">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>88</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&amp;RunTestCase</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

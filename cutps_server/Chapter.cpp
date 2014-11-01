@@ -1,10 +1,10 @@
 #include "Chapter.h"
 
 //Constructor
-Chapter::Chapter(QString t,qint32 n,
-                 qint32 id, float pr, bool avail) :
-                 PurchasableItem(id,pr,avail),
-                 title(t), chapterNumber(n){}
+Chapter::Chapter(QString chapTitle,qint32 chapNo,
+                 qint32 id, float price, bool avail) :
+                 PurchasableItem(id,price,avail),
+                 title(chapTitle), chapterNumber(chapNo){}
 
 
 //Destructor
@@ -21,9 +21,9 @@ Chapter::~Chapter(){
 
 
 //GETTERS
-QList<Section*>& Chapter::getChapterSections(){return sections;}
-qint32 Chapter::getChapterNumber(){return chapterNumber;}
-QString Chapter::getItemTitle(){return title;}
+QList<Section*>& Chapter::getChapterSections()        {return sections;}
+qint32 Chapter::getChapterNumber()              const {return chapterNumber;}
+QString Chapter::getItemTitle()                 const {return title;}
 
 
 //SETTERS
@@ -39,8 +39,11 @@ void Chapter::addSection(Section* section){
 //Takes a QJson object, this object extracts info about it
 //And sets its attributes to this extracted info
 void Chapter::read(const QJsonObject &json){
-    //TODO: Add read from a QJsonObject for Chapter here
+    PurchasableItem::read(json);
     sections.clear();
+    title = json["title"].toString();
+    chapterNumber = json["chapterNumber"].toDouble();
+
     QJsonArray sectionArray = json["sections"].toArray();
     for (int sectionIndex = 0; sectionIndex < sectionArray.size(); ++sectionIndex) {
            QJsonObject sectionObject = sectionArray[sectionIndex].toObject();
@@ -53,7 +56,10 @@ void Chapter::read(const QJsonObject &json){
 //Writes to a QJsonobject this object's components
 void Chapter::write(QJsonObject &json) const{
     //TODO: Add write to a QJson object for a chapter here
+    PurchasableItem::write(json);
     QJsonArray sectionArray;
+    json["title"] = title;
+    json["chapterNumber"] = chapterNumber;
     foreach (const Section* section, sections) {
            QJsonObject sectionObject;
            section->write(sectionObject);

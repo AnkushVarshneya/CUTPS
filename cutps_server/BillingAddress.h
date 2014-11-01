@@ -45,6 +45,4 @@ private:
     static const quint16 classVersion;
 };
 
-
-
 #endif // BILLINGADDRESS_H

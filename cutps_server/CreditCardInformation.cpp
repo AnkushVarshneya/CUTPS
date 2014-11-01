@@ -1,6 +1,7 @@
 
 #include "CreditCardInformation.h"
-
+#include <iostream>
+using namespace std;
 
 CreditCardInformation::CreditCardInformation(QString ccNo, QString cvv, QDate date, QString cType, QString name)
     : creditCardNo(ccNo), CVV(cvv), expDate(date), cardType(cType), nameOnCard(name){}
@@ -26,7 +27,7 @@ void CreditCardInformation::setNameOnCard(QString name){nameOnCard = name;}
 void CreditCardInformation::read(const QJsonObject &json){
     creditCardNo = json["creditCardNo"].toString();
     CVV = json["CVV"].toString();
-    //TODO expDate = json["expDate"].toString();
+    expDate = QDate::fromString(json["expDate"].toString(), "yyyyMMdd");
     cardType = json["cardType"].toString();
     nameOnCard = json["nameOnCard"].toString();
 
@@ -36,7 +37,7 @@ void CreditCardInformation::read(const QJsonObject &json){
 void CreditCardInformation::write(QJsonObject &json)const{
     json["creditCardNo"] = creditCardNo;
     json["CVV"] = CVV;
-    json["expDate"] = expDate.toString();
+    json["expDate"] = expDate.toString("yyyyMMdd");
     json["cardType"] = cardType;
     json["nameOnCard"] = nameOnCard;
 

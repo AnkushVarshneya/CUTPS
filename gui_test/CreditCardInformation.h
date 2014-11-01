@@ -11,14 +11,13 @@
 
 #include <QString>
 #include <QDate>
-#include "Types.h"
 #include "CUtpsDataObject.h"
 
 class CreditCardInformation : public CUtpsDataObject {
 
 public:
     //Constructor
-    CreditCardInformation(QString = "", QString = "", QDate = *(new QDate()), QString = "", QString = "John Doe");
+    CreditCardInformation(QString = "1234098712321234", QString = "908", QDate = QDate::fromString("20190120", "yyyyMMdd"), QString = "MasterCard", QString = "John Doe");
 
     //Destructor
     //~CreditCardInformation();

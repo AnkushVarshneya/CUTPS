@@ -45,11 +45,11 @@ void CreditCardInformation::write(QJsonObject &json)const{
 
 
 //ostream method for testing data purposes
-std::ostream& operator<<(std::ostream& o, CreditCardInformation& ccInfo){
-    o << "Credit Card Number: " + ccInfo.getCreditCardNo().toStdString() << endl
-      << "CVV: " + ccInfo.getCVV().toStdString() << endl
-      << "ExpDate: " + ccInfo.getExpDate().toString().toStdString() << endl
-      << "Card Type: " + ccInfo.getCardType().toStdString() << endl
-      << "Name On Card: " + ccInfo.getNameOnCard().toStdString() << endl;
-    return o;
-}
+//std::ostream& operator<<(std::ostream& o, CreditCardInformation& ccInfo){
+//    o << "Credit Card Number: " + ccInfo.getCreditCardNo().toStdString() << endl
+//      << "CVV: " + ccInfo.getCVV().toStdString() << endl
+//      << "ExpDate: " + ccInfo.getExpDate().toString().toStdString() << endl
+//      << "Card Type: " + ccInfo.getCardType().toStdString() << endl
+//      << "Name On Card: " + ccInfo.getNameOnCard().toStdString() << endl;
+//    return o;
+//}

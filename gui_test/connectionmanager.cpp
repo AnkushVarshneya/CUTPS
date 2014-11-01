@@ -23,22 +23,48 @@ void ConnectionManager::connectToHost(QHostAddress host, int port) {
 
 }
 
-void ConnectionManager::testSend(BillingAddress *testadr) {
-    QJsonObject json;
-    testadr->write(json);
-    QJsonDocument jdoc = QJsonDocument(json);
+//void ConnectionManager::testSend(BillingAddress *testadr) {
+//    QJsonObject json;
+//    testadr->write(json);
+//    QJsonDocument jdoc = QJsonDocument(json);
 
-    QByteArray ary;
+//    QByteArray ary;
 
-    qDebug() << "length of json obj: " << json.length() << "\n";
-    qDebug() << "sizeof json obj: " << sizeof(json) << "\n";
-    qDebug() << json << "\n";
+//    qDebug() << "length of json obj: " << json.length() << "\n";
+//    qDebug() << "sizeof json obj: " << sizeof(json) << "\n";
+//    qDebug() << json << "\n";
 
-    qDebug() << "sizeof jdoc obj: " << sizeof(jdoc) << "\n";
-    qDebug() << jdoc << "\n";
+//    qDebug() << "sizeof jdoc obj: " << sizeof(jdoc) << "\n";
+//    qDebug() << jdoc << "\n";
 
-    this->tcpConnection->write(jdoc.toJson());
+//    this->tcpConnection->write(jdoc.toJson());
+
+//}
+
+void ConnectionManager::testSend(CUtpsDataObject *data) {
+      QJsonObject json;
+      data->write(json);
+      QJsonDocument jdoc = QJsonDocument(json);
+      bytes = this->tcpConnection->write(jdoc.toJson()); //write function returns number of bytes written or -1 if an error occurred.
+      if (bytes = -1 ){       qDebug() << this->tcpConnection->errorString() ;      }
+      qDebug() << "bytes written: " << bytes << "\n";
+
 }
+
+//void ConnectionManager::testSend(Chapter *chap) {
+//    QJsonObject json;
+//    chap->write(json);
+//    QJsonDocument jdoc = QJsonDocument(json);
+//    this->tcpConnection->write(jdoc.toJson());
+//}
+
+//void ConnectionManager::testSend(Textbook *text) {
+//    QJsonObject json;
+//    text->write(json);
+//    QJsonDocument jdoc = QJsonDocument(json);
+//    this->tcpConnection->write(jdoc.toJson());
+
+//}
 
 
 void ConnectionManager::readyRead() {

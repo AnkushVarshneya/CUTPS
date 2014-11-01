@@ -3,6 +3,10 @@
 
 #include <QTcpServer>
 #include <QTcpSocket>
+#include "Student.h"
+#include "ShoppingCart.h"
+#include "CreditCardInformation.h"
+#include "BillingAddress.h"
 
 class CutpsServer : public QTcpServer
 {

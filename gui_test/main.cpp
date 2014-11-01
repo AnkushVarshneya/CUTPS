@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
 
    //test student
     Student *student = new Student();
-//    Course *crs = new Course();
-//    student->addCourse(crs);
+   // Course *crs = new Course();
+   // student->addCourse(crs);
 //    qDebug() << student->getRegisteredCourses().length();
 //    qDebug() << student->getRegisteredCourses().at(0)->getInstructor();
 

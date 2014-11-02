@@ -19,7 +19,9 @@
 
 //Constructor
 Course::Course(QString cCode, QString section, QString instruct) :
-    courseCode(cCode), courseSection(section), instructor(instruct){}
+    courseCode(cCode), courseSection(section), instructor(instruct){
+    term = new Term();
+}
 
 //Students and Textbooks persist after a Course is deleted
 Course::~Course(){}

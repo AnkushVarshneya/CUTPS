@@ -1,4 +1,7 @@
-
+/*CreditCardInformation class source
+ *
+ *Traceability: EO-07
+ */
 #include "CreditCardInformation.h"
 #include <iostream>
 using namespace std;
@@ -6,7 +9,7 @@ using namespace std;
 CreditCardInformation::CreditCardInformation(QString ccNo, QString cvv, QDate date, QString cType, QString name)
     : creditCardNo(ccNo), CVV(cvv), expDate(date), cardType(cType), nameOnCard(name){}
 
-//CreditCardInformation::~CreditCardInformation(){ cout<< "In CreditCardInformation destructor"<<endl;}
+CreditCardInformation::~CreditCardInformation(){ cout<< "In CreditCardInformation destructor"<<endl;}
 
 
 //Getters

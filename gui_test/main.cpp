@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
     BillingAddress *adr = new BillingAddress("new student",251,"test street","toronto","ontario", "k3g6d3");
 
 
-    qDebug() << adr->getName();
-    qDebug() << adr->getCity();
+  //  qDebug() << adr->getName();
+  //  qDebug() << adr->getCity();
     conMan->connectToHost(address, port);
    // conMan->testSend(adr);
 

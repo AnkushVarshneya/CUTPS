@@ -1,6 +1,10 @@
 /*Term header class
- *Date last modified: 24/10/2014
  *
+ *Purpose of this class: An academic term, usually 4 months in length (Summer terms can be considered
+ *to have 2 month sub-terms). A term will have a start and end date and a list of courses offered.
+ *Will be used by Students to easily search for Textbooks for the registered courses they are in for a given term
+ *
+ *Traceability: EO-09
  */
 #ifndef TERM_H
 #define TERM_H

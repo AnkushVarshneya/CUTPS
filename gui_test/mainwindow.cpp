@@ -37,16 +37,28 @@ MainWindow::~MainWindow()
 //Student View Shopping Cart
 
 //ShoppingCart contains items
-void MainWindow::on_actionViewShoppingCart_hasitems_triggered()
+void MainWindow::on_actionShopping_Cart_has_Items_triggered()
 {
 
 }
+
+void MainWindow::on_actionShopping_Cart_is_Empty_triggered(){
+
+}
+
+void MainWindow::on_actionViewShoppingCart_hasitems_triggered(){
+
+}
+
 //ShoppingCart is empty
 void MainWindow::on_actionViewShoppingCart_noitems_triggered()
 {
 
 }
 
+void MainWindow::on_actionStudent_unenrolled_triggered(){
+
+}
 
 //Student View Textbooks
 
@@ -63,6 +75,14 @@ void MainWindow::on_actionStudent_ViewTextbooks_unenrolled_triggered()
 //Student has textbooks
 void MainWindow::on_actionStudent_ViewTextbooks_hastextbooks_triggered()
 {
+
+}
+
+void MainWindow::on_actionEmptyShoppingCart_hasitems_triggered(){
+
+}
+
+void MainWindow::on_actionEmptyShoppingCart_noitems_triggered(){
 
 }
 

@@ -15,6 +15,9 @@
 User::User(QString user, QString pass, QString fName, QString lName)
     : username(user), password(pass), firstName(fName), lastName(lName){}
 
+//Destructor
+User::~User() { } ;
+
 
 //Getters
 QString User::getUsername() const {return username;}
@@ -50,6 +53,4 @@ void User::write(QJsonObject &json) const{
     json["lastName"] = lastName;
 }
 
-//TODO
-User::~User() { } ;
 

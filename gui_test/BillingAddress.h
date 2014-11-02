@@ -1,9 +1,13 @@
-/*Billing Address header class
- *By: Rob
+/*Billing Address class header
+ *
  *
  *Billing address is for use as part of the PaymentInformation class
  *that has this component
+ *A Billing address in this system will contain the following attributes:
+ *- Name (to match correctly with the credit card info)
+ *- House Number, Street name, city, province, and postal code
  *
+ *Traceability: EO-06
  */
 #ifndef BILLINGADDRESS_H
 #define BILLINGADDRESS_H

@@ -2,9 +2,9 @@ Starting point of API Calls we need in D2 (Based on occurrences of accessing the
 
 ### *Student API Calls:* ###
 
-input: Student, Term    output: a list of textbooks 
+input: QString for student number, Term object    output: a list of textbooks 
 
-**studentViewTextbooks (student, term)**
+**studentViewTextbooks (QString StudentNumber, term)**
 
 input: Student output:1 ShoppingCart
 

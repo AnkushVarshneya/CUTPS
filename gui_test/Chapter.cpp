@@ -19,7 +19,7 @@ Chapter::Chapter(QString chapTitle,qint32 chapNo,
 Chapter::~Chapter(){
     QList<Section*>::iterator i;
     for (i = sections.begin(); i != sections.end(); i++) {
-        free(*i);
+        delete *i;
     }
 }
 

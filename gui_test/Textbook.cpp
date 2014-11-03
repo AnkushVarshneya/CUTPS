@@ -11,12 +11,10 @@ Textbook::Textbook(QString textTitle, QString auth, QString ed,
 
 //Destructor that also destroys the chapters it has
 Textbook::~Textbook(){
-
     QList<Chapter*>::iterator i;
     for (i = chapters.begin(); i != chapters.end(); i++) {
-        free(*i);
+        delete *i;
     }
-
 }
 
 
@@ -48,7 +46,6 @@ std::ostream& operator<< (std::ostream& o, Textbook & textbook){
              << "Description: " + textbook.getDesc().toStdString() << endl
              << "Chapter List: " << endl;
     //chapters
-
     QList<Chapter*>::iterator i;
     for (i = textbook.getChapterList().begin(); i != textbook.getChapterList().end(); i++) {
         //if (**i != NULL)

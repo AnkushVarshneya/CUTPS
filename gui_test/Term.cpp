@@ -4,7 +4,12 @@
 
 Term::Term(QDate a, QDate b, qint32 id): startDate(a), endDate(b), termID(id){}
 
-Term::~Term(){}
+Term::~Term(){
+    QList<Course*>::iterator i;
+    for (i = courses.begin(); i != courses.end(); i++) {
+        delete *i;
+    }
+}
 
 QDate Term::getStartDate() const{return startDate;}
 QDate Term::getEndDate() const{return endDate;}
@@ -20,6 +25,11 @@ void Term::setEndDate(int year, int month, int day){
     endDate.setDate(year, month, day);
 }
 void Term::setTermID(qint32 a){termID = a;}
+
+
+void Term::addCourse(Course* c){
+    courses.push_back(c);
+}
 
 //JSON read and write functions
 

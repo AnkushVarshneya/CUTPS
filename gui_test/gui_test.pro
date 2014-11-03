@@ -30,7 +30,8 @@ SOURCES +=\
     ShoppingCart.cpp \
     CreditCardInformation.cpp \
     Student.cpp \
-    PaymentInformation.cpp
+    PaymentInformation.cpp \
+    cuTPSTestAPIControl.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -48,7 +49,8 @@ HEADERS  += mainwindow.h \
     ShoppingCart.h \
     connectionmanager.h \
     Term.h \
-    CUtpsDataObject.h
+    CUtpsDataObject.h \
+    cuTPSTestAPIControl.h
     Types.h
 
 

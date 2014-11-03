@@ -6,32 +6,32 @@ input: QString for student number, Term object    output: a list of textbooks
 
 **studentViewTextbooks (QString StudentNumber, term)**
 
-input: Student output:1 ShoppingCart
+input: QString for student number output:1 A list of purchasable items
 
-**viewShoppingCart (student)**
+**viewShoppingCart (QString studentNumber)**
 
 input: student, PurchasableItem, quantity of item   output: void
 
-**addContent(student,purchasableItem,quantity)** 
+**addContent(student number,purchasableItemID,quantity)** 
 
 input: Student     output: void
 
-**emptyShoppingCart(Student)**
+**emptyShoppingCart(Student number)**
 
 input: Student    output: modified student with BillingInformation
 
-**getExistingBillingInfo (Student)**
+**getExistingBillingInfo (Student number)**
 
 input: Student, BillingInfo   output: void
 
-**saveBillingInformation(Student, BillingInformation)**
+**saveBillingInformation(Student number, BillingInformation)**
 
 
 ### ContentManager API Calls ###
 
-createTextbook()
+createTextbook(Textbook)
 
-createCourse()
+createCourse(Course)
 
 linkTextbook(Textbook,Course)
 

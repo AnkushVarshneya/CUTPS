@@ -23,6 +23,7 @@ class Term : CUtpsDataObject{
 public:
     Term(QDate = QDate::fromString("20140905","yyyyMMdd"),QDate = QDate::fromString("20141209","yyyyMMdd"), qint32 = 0);
     ~Term();
+
     QDate           getStartDate() const;
     QDate           getEndDate() const;
     QList<Course*>& getTermCourses();

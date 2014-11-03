@@ -6,9 +6,24 @@
 #include <QNetworkSession>
 #include <QWidget>
 
+#include <QString>
+
+#include "cuTPSTestAPIControl.h"
+
 namespace Ui {
 class MainWindow;
+
 }
+
+enum Selected {
+    CreateCourse_NullCourse,
+    CreateCourse_ValidCourse,
+    CreateCourse_AlreadyExists,
+    CreateCourse_ExistsDiffTerm,
+    CreateCourse_ExistsDiffSect
+
+};
+
 
 class MainWindow : public QMainWindow
 {
@@ -27,22 +42,34 @@ private:
     QNetworkSession *networkSession;
     void connectTcp();
 
+    Selected behaviour;
+    cuTPSTestAPIControl* control;
+
+    void update_pass(QString);
+    void update_fail(QString);
+
 
 private slots:
     //void displayError(QAbstractSocket::SocketError socketError);
-    void readyRead();
-    void on_actionShopping_Cart_has_Items_triggered();
-    void on_actionShopping_Cart_is_Empty_triggered();
-    void on_actionViewShoppingCart_hasitems_triggered();
-    void on_actionViewShoppingCart_noitems_triggered();
-    void on_actionStudent_unenrolled_triggered();
-    void on_actionStudent_ViewTextbooks_notextbooks_triggered();
+
+
+    void on_actionStudent_ViewShoppingCart_hasitems_triggered();
+    void on_actionStudent_ViewShoppingCart_noitems_triggered();
     void on_actionStudent_ViewTextbooks_unenrolled_triggered();
+    void on_actionStudent_ViewTextbooks_notextbooks_triggered();
     void on_actionStudent_ViewTextbooks_hastextbooks_triggered();
-    void on_actionEmptyShoppingCart_hasitems_triggered();
-    void on_actionEmptyShoppingCart_noitems_triggered();
-    void on_actionStudent_EmptyShoppingCart_hasitems_triggered();
-    void on_actionStudent_EmptyShoppingCart_noitems_triggered();
+    void on_actionStudent_ViewTextbooks_studentnotfound_triggered();
+    void on_actionStudent_ViewTextbooks_termnotfound_triggered();
+    void on_actionContentManager_CreateCourse_nullcourse_triggered();
+    void on_actionContentManager_CreateCourse_validcourse_triggered();
+    void on_actionContentManager_CreateCourse_coursealreadyexists_triggered();
+    void on_actionContentManager_CreateCourse_existsdiffterm_triggered();
+    void on_actionContentManager_CreateCourse_existsdiffsection_triggered();
+    void on_actionContentManager_CreateTextbook_textbookexists_triggered();
+    void on_actionContentManager_CreateTextbook_nulltextbook_triggered();
+
+
+    void on_pushButton_clicked();
 };
 
 #endif // MAINWINDOW_H

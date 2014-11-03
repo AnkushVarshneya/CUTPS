@@ -2,36 +2,44 @@ Starting point of API Calls we need in D2 (Based on occurrences of accessing the
 
 ### *Student API Calls:* ###
 
-input: Student, Term    output: a list of textbooks 
+input: QString for student number, Term object    output: a list of textbooks 
 
-**studentViewTextbooks (student, term)**
+**studentViewTextbooks (QString StudentNumber, term){
+    
+    SUCCESSFUL CASE:
+    - You pass in student number and a term Object
+    - Send it over to the server
+    - The server queries the database with the student number and term 
+    - The server gets a list of courses that match the student number's courses with the given term
+    - The server sends back to the client a list of courses with required textbooks
+}**
 
-input: Student output:1 ShoppingCart
+input: QString for student number output:1 A list of purchasable items
 
-**viewShoppingCart (student)**
+**viewShoppingCart (QString studentNumber)**
 
 input: student, PurchasableItem, quantity of item   output: void
 
-**addContent(student,purchasableItem,quantity)** 
+**addContent(student number,purchasableItemID,quantity)** 
 
 input: Student     output: void
 
-**emptyShoppingCart(Student)**
+**emptyShoppingCart(Student number)**
 
 input: Student    output: modified student with BillingInformation
 
-**getExistingBillingInfo (Student)**
+**getExistingBillingInfo (Student number)**
 
 input: Student, BillingInfo   output: void
 
-**saveBillingInformation(Student, BillingInformation)**
+**saveBillingInformation(Student number, BillingInformation)**
 
 
 ### ContentManager API Calls ###
 
-createTextbook()
+createTextbook(Textbook)
 
-createCourse()
+createCourse(Course)
 
 linkTextbook(Textbook,Course)
 

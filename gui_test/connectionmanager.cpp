@@ -51,6 +51,15 @@ void ConnectionManager::testSend(CUtpsDataObject *data) {
 
 }
 
+//Send function to put the passed in argument into a JSON document to be sent over
+//On the server. API calls by the client to the server will be sent over to the server this way
+void ConnectionManager::send(QJsonObject &json){
+    QJsonDocument jdoc = QJsonDocument(json);
+    bytes = this->tcpConnection->write(jdoc.toJson()); //write function returns number of bytes written or -1 if an error occurred.
+    if (bytes = -1 ){       qDebug() << this->tcpConnection->errorString() ;      }
+    qDebug() << "bytes written: " << bytes << "\n";
+}
+
 //void ConnectionManager::testSend(Chapter *chap) {
 //    QJsonObject json;
 //    chap->write(json);

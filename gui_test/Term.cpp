@@ -1,13 +1,10 @@
 
 #include "Term.h"
 
-Term::Term(){}
 
-Term::Term(QDate a, QDate b, qint32 id){
-    startDate = a;
-    endDate = b;
-    termID = id;
-}
+Term::Term(QDate a, QDate b, qint32 id): startDate(a), endDate(b), termID(id){}
+
+Term::~Term(){}
 
 QDate Term::getStartDate() const{return startDate;}
 QDate Term::getEndDate() const{return endDate;}

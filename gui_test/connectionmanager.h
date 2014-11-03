@@ -22,6 +22,7 @@ public:
 //    void testSend(Chapter *chap);
 //    void testSend(Textbook *text);
     void testSend(CUtpsDataObject *data);
+    void send(QJsonObject &json);
 
 private:
     QTcpSocket *tcpConnection;

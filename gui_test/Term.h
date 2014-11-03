@@ -32,6 +32,8 @@ public:
     void            setEndDate(int,int,int);
     void            setTermID(qint32);
 
+    void            addCourse(Course*);
+
     void            read(const QJsonObject &json);
     void            write(QJsonObject &json) const;
 

@@ -10,7 +10,8 @@ input: QString for student number, Term object    output: a list of textbooks
     - You pass in student number and a term Object
     - Send it over to the server
     - The server queries the database with the student number and term 
-    - 
+    - The server gets a list of courses that match the student number's courses with the given term
+    - The server sends back to the client a list of courses with required textbooks
 }**
 
 input: QString for student number output:1 A list of purchasable items

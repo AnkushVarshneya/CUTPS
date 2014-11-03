@@ -14,42 +14,27 @@
    <string>cuTPS Client Test Cases</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QTextBrowser" name="textBrowser">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>30</y>
-      <width>531</width>
-      <height>271</height>
+      <x>40</x>
+      <y>20</y>
+      <width>501</width>
+      <height>231</height>
      </rect>
     </property>
-    <item>
-     <property name="text">
-      <string>add textook</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>delete textbook</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>get textooks</string>
-     </property>
-    </item>
    </widget>
-   <widget class="QPushButton" name="runTestCaseOption">
+   <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>30</y>
-      <width>88</width>
-      <height>27</height>
+      <x>170</x>
+      <y>270</y>
+      <width>211</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>&amp;RunTestCase</string>
+     <string>Execute</string>
     </property>
    </widget>
   </widget>
@@ -72,6 +57,9 @@
      </property>
      <addaction name="actionContentManager_CreateCourse_nullcourse"/>
      <addaction name="actionContentManager_CreateCourse_validcourse"/>
+     <addaction name="actionContentManager_CreateCourse_coursealreadyexists"/>
+     <addaction name="actionContentManager_CreateCourse_existsdiffterm"/>
+     <addaction name="actionContentManager_CreateCourse_existsdiffsection"/>
     </widget>
     <widget class="QMenu" name="menuCreate_Textbook">
      <property name="title">
@@ -79,6 +67,7 @@
      </property>
      <addaction name="actionContentManager_CreateTextbook_nulltextbook"/>
      <addaction name="actionContentManager_CreateTextbook_withchaptersandsections"/>
+     <addaction name="actionContentManager_CreateTextbook_textbookexists"/>
     </widget>
     <widget class="QMenu" name="menuLink_Textbook">
      <property name="title">
@@ -120,13 +109,16 @@
      <addaction name="actionStudent_ViewTextbooks_unenrolled"/>
      <addaction name="actionStudent_ViewTextbooks_notextbooks"/>
      <addaction name="actionStudent_ViewTextbooks_hastextbooks"/>
+     <addaction name="actionStudent_ViewTextbooks_studentnotfound"/>
+     <addaction name="actionStudent_ViewTextbooks_termnotfound"/>
     </widget>
     <widget class="QMenu" name="menuView_Shopping_Cart">
      <property name="title">
       <string>View Shopping Cart</string>
      </property>
-     <addaction name="actionViewShoppingCart_hasitems"/>
-     <addaction name="actionViewShoppingCart_noitems"/>
+     <addaction name="actionStudent_ViewShoppingCart_hasitems"/>
+     <addaction name="actionStudent_ViewShoppingCart_noitems"/>
+     <addaction name="actionStudent_ViewShoppingCart_studentnotfound"/>
     </widget>
     <widget class="QMenu" name="menuEmpty_Shopping_Cart">
      <property name="title">
@@ -134,6 +126,7 @@
      </property>
      <addaction name="actionStudent_EmptyShoppingCart_hasitems"/>
      <addaction name="actionStudent_EmptyShoppingCart_noitems"/>
+     <addaction name="actionStudent_EmptyShoppingCart_studentnotfound"/>
     </widget>
     <widget class="QMenu" name="menuAdd_Content">
      <property name="title">
@@ -145,6 +138,8 @@
      <addaction name="actionStudent_AddContent_Section"/>
      <addaction name="actionStudent_AddContent_multipleitems"/>
      <addaction name="actionStudent_AddContent_invalidnumofitems"/>
+     <addaction name="actionStudent_AddContent_studentnotfound"/>
+     <addaction name="actionStudent_AddContent_itemnotfound"/>
     </widget>
     <widget class="QMenu" name="menuGet_Existing_Billing_Information">
      <property name="title">
@@ -152,6 +147,7 @@
      </property>
      <addaction name="actionStudent_GetExistingBillingInformation_hasinfo"/>
      <addaction name="actionStudent_GetExistingBillingInformation_noinfo"/>
+     <addaction name="actionStudent_GetExistingBillingInformation_studentnotfound"/>
     </widget>
     <widget class="QMenu" name="menuSave_Billing_Information">
      <property name="title">
@@ -160,6 +156,7 @@
      <addaction name="actionStudent_SaveBillingInformation_invalidformat"/>
      <addaction name="actionStudent_SaveBillingInformation_validformat"/>
      <addaction name="actionStudent_SaveBillingInformation_hasinfo"/>
+     <addaction name="actionStudent_SaveBillingInformation_studentnotfound"/>
     </widget>
     <addaction name="menuStudentViewTextbooks_unenrolled"/>
     <addaction name="menuView_Shopping_Cart"/>
@@ -180,12 +177,12 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionViewShoppingCart_hasitems">
+  <action name="actionStudent_ViewShoppingCart_hasitems">
    <property name="text">
     <string>Shopping Cart has items</string>
    </property>
   </action>
-  <action name="actionViewShoppingCart_noitems">
+  <action name="actionStudent_ViewShoppingCart_noitems">
    <property name="text">
     <string>Shopping Cart is empty</string>
    </property>
@@ -328,6 +325,66 @@
   <action name="actionContentManager_ViewCourses_hascourses">
    <property name="text">
     <string>Courses in database</string>
+   </property>
+  </action>
+  <action name="actionStudent_ViewTextbooks_studentnotfound">
+   <property name="text">
+    <string>Student is not found in the database</string>
+   </property>
+  </action>
+  <action name="actionStudent_ViewTextbooks_termnotfound">
+   <property name="text">
+    <string>Term is not found in the database</string>
+   </property>
+  </action>
+  <action name="actionStudent_ViewShoppingCart_studentnotfound">
+   <property name="text">
+    <string>Student is not found in the database</string>
+   </property>
+  </action>
+  <action name="actionStudent_EmptyShoppingCart_studentnotfound">
+   <property name="text">
+    <string>Student is not found in the database</string>
+   </property>
+  </action>
+  <action name="actionStudent_AddContent_studentnotfound">
+   <property name="text">
+    <string>Student is not found in the database</string>
+   </property>
+  </action>
+  <action name="actionStudent_AddContent_itemnotfound">
+   <property name="text">
+    <string>Purchasable item is not found in the database</string>
+   </property>
+  </action>
+  <action name="actionStudent_GetExistingBillingInformation_studentnotfound">
+   <property name="text">
+    <string>Student is not found in the database</string>
+   </property>
+  </action>
+  <action name="actionStudent_SaveBillingInformation_studentnotfound">
+   <property name="text">
+    <string>Student is not found in the database</string>
+   </property>
+  </action>
+  <action name="actionContentManager_CreateCourse_coursealreadyexists">
+   <property name="text">
+    <string>Course already exists in the database</string>
+   </property>
+  </action>
+  <action name="actionContentManager_CreateTextbook_textbookexists">
+   <property name="text">
+    <string>Textbook already exists in the database</string>
+   </property>
+  </action>
+  <action name="actionContentManager_CreateCourse_existsdiffterm">
+   <property name="text">
+    <string>Course exists with different term</string>
+   </property>
+  </action>
+  <action name="actionContentManager_CreateCourse_existsdiffsection">
+   <property name="text">
+    <string>Course exists with different section</string>
    </property>
   </action>
  </widget>

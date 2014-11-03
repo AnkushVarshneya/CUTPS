@@ -23,6 +23,7 @@ class Term : CUtpsDataObject{
 public:
     Term(QDate = QDate::fromString("20140905","yyyyMMdd"),QDate = QDate::fromString("20141209","yyyyMMdd"), qint32 = 0);
     ~Term();
+
     QDate           getStartDate() const;
     QDate           getEndDate() const;
     QList<Course*>& getTermCourses();
@@ -31,6 +32,8 @@ public:
     void            setStartDate(int,int,int);
     void            setEndDate(int,int,int);
     void            setTermID(qint32);
+
+    void            addCourse(Course*);
 
     void            read(const QJsonObject &json);
     void            write(QJsonObject &json) const;

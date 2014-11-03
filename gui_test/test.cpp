@@ -1,10 +1,15 @@
-
-
+///*Test file with unit testing for each class
+// *
+// *
+// */
+//#include "BillingAddress.h"
 //#include "Term.h"
 //#include "Chapter.h"
 //#include "PurchasableItem.h"
 //#include "Textbook.h"
+
 //#include <iostream>
+//#include <QtTest/QtTest>
 
 //using namespace std;
 
@@ -31,10 +36,15 @@
 //    chapter1->addSection(c1sect2);
 
 //    chapter3->addSection(c2sect1);
-//    //cout << *textbook->getChapter(3);
-//    //cout << *chapter3;
+//    cout << *textbook->getChapter(3);
+//    cout << *chapter3;
 
-//    //cout << *textbook;
+//    cout << *textbook;
+
+//    delete textbook;
+
 //    return 0;
+
 //}
+
 

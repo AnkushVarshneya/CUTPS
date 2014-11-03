@@ -1,15 +1,5 @@
 /*Course class source file
  *
- *Inherited from CUtps data object
- *
- *Functions include:
- *GETTERS: getCourseCode(), getCourseSection(), getTerm(), getInstructor()
- *getRegisteredStudents(), getRequiredTextbooks()
- *SETTERS: setCourseCode, setCourseSection(), setTerm(), setInstructor()
- *
- *addStudent(Student*) <- Adds a student to the students list
- *
- *addTextbook(Textbook*) <- Adds a textbook to the textbook list
  *Traceability: EO-08
  *
  *
@@ -124,11 +114,3 @@ std::ostream& operator<<(std::ostream& o,  Course& course){
       << "Instructor: ";
 }
 
-/*
-         QString             courseCode;
-         QString             courseSection;
-         Term*               term;
-         QString             instructor;
-         QList<Student*>     students;
-         QList<Textbook*>    requiredTextbooks;
-*/

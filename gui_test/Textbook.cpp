@@ -1,6 +1,7 @@
 #include "Textbook.h"
 
 
+//Constructor
 Textbook::Textbook(QString textTitle, QString auth, QString ed,
                    QString pub, QString ISBN, QString desc,
                    qint32 id, float price, bool avail) :
@@ -8,14 +9,12 @@ Textbook::Textbook(QString textTitle, QString auth, QString ed,
                    title(textTitle), author(auth), edition(ed),
                    publisher(pub), isbn(ISBN), description(desc){}
 
-//Textbook::Textbook(QString a, float b, bool c){}
+//Destructor that also destroys the chapters it has
 Textbook::~Textbook(){
-
     QList<Chapter*>::iterator i;
     for (i = chapters.begin(); i != chapters.end(); i++) {
-        free(*i);
+        delete *i;
     }
-
 }
 
 
@@ -47,7 +46,6 @@ std::ostream& operator<< (std::ostream& o, Textbook & textbook){
              << "Description: " + textbook.getDesc().toStdString() << endl
              << "Chapter List: " << endl;
     //chapters
-
     QList<Chapter*>::iterator i;
     for (i = textbook.getChapterList().begin(); i != textbook.getChapterList().end(); i++) {
         //if (**i != NULL)

@@ -27,6 +27,9 @@ void                    Student::setStudentNum(QString n){studentNum = n;}
 void                    Student::setcMail(QString m){cMail = m;}
 void                    Student::setPayInfo(const PaymentInformation& p){payInfo = p;}
 
+
+Student::~Student(){}
+
 void Student::addCourse(Course* course) {
     registeredCourses.append(course);
 }

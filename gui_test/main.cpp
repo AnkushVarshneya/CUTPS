@@ -13,6 +13,7 @@
 #include <iostream>
 
 using namespace std;
+QList<Textbook*>& studentViewTextbooks(Student *stu, Term *term, ConnectionManager *conMan);
 
 int main(int argc, char *argv[])
 {
@@ -23,14 +24,11 @@ int main(int argc, char *argv[])
     QHostAddress address = QHostAddress(testaddress);
     w.show();
     ConnectionManager *conMan = new ConnectionManager(&w);
-    BillingAddress *adr = new BillingAddress("new student",251,"test street","toronto","ontario", "k3g6d3");
 
 
-    qDebug() << adr->getName();
-    qDebug() << adr->getCity();
     conMan->connectToHost(address, port);
    // conMan->testSend(adr);
-
+/*
     //test send and parse of chapter w/ nested sections
     Textbook*   textbook    = new Textbook("what goes here?", "two", "three", "four", "five", "six");
         Chapter*    chapter1    = new Chapter("Ryan Lays down the Law", 1);
@@ -63,11 +61,57 @@ int main(int argc, char *argv[])
     QJsonDocument jdoc = QJsonDocument(stu);
     qDebug() << jdoc.toJson();
     conMan->testSend( (CUtpsDataObject*)student );
+*/
 
+    Student aStu;
+    Term fall2014;
+    Course *c1 = new Course("COMP3004","A","Christine Laurendeau");
+    Course *c2 = new Course("COMP3804", "A", "Amin Gheibi");
+    Course *c3 = new Course("COMP3005", "A", "Louis Nel");
+    Course *c4 = new Course("BIOC3101", "A", "William Willmore");
+    Course *c5 = new Course("COMP3803", "A", "John Oommen");
+    c1->setTerm(fall2014);
+    c2->setTerm(fall2014);
+    c3->setTerm(fall2014);
+    c4->setTerm(fall2014);
 
-
+    //Adding courses
+    aStu.addCourse(c1);
+    aStu.addCourse(c2);
+    aStu.addCourse(c3);
+    aStu.addCourse(c4);
+    aStu.addCourse(c5);
+    studentViewTextbooks(&aStu, &fall2014, conMan);
     return a.exec();
 }
 
+//API call studentViewTextbooks where a student and a term are arguments
+//To send over to the server in which the server will query the database
+//For the necessary textbooks
+//Traceability: SD-01 (sequence diagram 1)
+QList<Textbook*>& studentViewTextbooks(Student *stu, Term *term, ConnectionManager *conMan){
+
+    QJsonObject api_server_call;
+    //Set API call to initiate on serverside
+    QString functionCall = "studentViewTextbooks()";
+    api_server_call["Function:"] = functionCall;
+
+    //Write the student argument into the api_server_call object
+    QJsonObject stuObject;
+    stu->write(stuObject);
+    api_server_call["Student"] = stuObject;
+
+    //Write the term argument into the api_server_call object
+    QJsonObject termObject;
+    term->write(termObject);
+    api_server_call["Term"] = termObject;
+
+    conMan->send(api_server_call);
+
+    //Placeholder to when we read back from the server to get the list of textbooks
+    QList<Textbook*> temp;
+    return temp;
+
+}
 
 

@@ -1,3 +1,11 @@
+/*Chapter class source
+ *
+ *
+ *
+ *Traceability: EO-12
+ *
+ */
+
 #include "Chapter.h"
 
 //Constructor
@@ -11,13 +19,10 @@ Chapter::Chapter(QString chapTitle,qint32 chapNo,
 Chapter::~Chapter(){
     QList<Section*>::iterator i;
     for (i = sections.begin(); i != sections.end(); i++) {
-        free(*i);
+        delete *i;
     }
-
 }
 
-
-/**************/
 
 
 //GETTERS
@@ -30,10 +35,9 @@ QString Chapter::getItemTitle()                 const {return title;}
 void Chapter::setItemTitle(QString a){title = a;}
 void Chapter::setChapterNumber(qint32 a){chapterNumber = a;}
 
+//Adds the argument Section* to the sections list
 void Chapter::addSection(Section* section){
-    //sections.insert(section->getSectionNumber() - 1, section);
-    sections.push_back(section);
-    //check this
+    sections.push_back(section);  
 }
 
 //Takes a QJson object, this object extracts info about it
@@ -55,7 +59,6 @@ void Chapter::read(const QJsonObject &json){
 
 //Writes to a QJsonobject this object's components
 void Chapter::write(QJsonObject &json) const{
-    //TODO: Add write to a QJson object for a chapter here
     PurchasableItem::write(json);
     QJsonArray sectionArray;
     json["title"] = title;

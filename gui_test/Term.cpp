@@ -57,6 +57,7 @@ void Term::write(QJsonObject &json) const{
         course->write(courseObject);
         courseArray.append(courseObject);
     }
+    json["courses"] = courseArrray;
 }
 
 std::ostream& operator<<(std::ostream& o,  Term& term){

@@ -62,7 +62,7 @@ void Textbook::setPublisher(QString a){publisher = a;}
 void Textbook::setEdition(QString a){edition = a;}
 void Textbook::setISBN(QString a){isbn = a;}
 void Textbook::setDescription(QString a){description = a;}
-
+void Textbook::setCoverImageLoc(QString a){coverImageLoc = a;}
 
 void Textbook::addChapter(Chapter* chapter){
     //chapters.insert(chapter->getChapterNumber() - 1, chapter);

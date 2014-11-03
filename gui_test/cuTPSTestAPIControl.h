@@ -18,21 +18,23 @@ public:
     cuTPSTestAPIControl();
 
 
-    QList<Textbook*> studentViewTextbooks(QString,Term*);
-    QList<PurchasableItem*> viewShoppingCart(QString);
-    void addContent(QString,qint32,qint32);
-    void emptyShoppingCart(QString);
-    PaymentInformation* getExistingBillingInfo(QString);
-    void savePaymentInformation(QString,PaymentInformation*);
+    QList<Course*>& studentViewTextbooks(QString,Term*);
+    QList<PurchasableItem*>& viewShoppingCart(QString);
+    bool addContent(QString,qint32,qint32);
+    bool emptyShoppingCart(QString);
+    PaymentInformation* getExistingPaymentInfo(QString);
+    bool savePaymentInfo(QString,PaymentInformation*);
 
-    void createTextbook(Textbook*);
+    bool createTextbook(Textbook*);
     bool createCourse(Course*);
-    void linkTextbook(Textbook*,Course*);
-    QList<Textbook*> cManagerViewTextbooks(Term*);
-    QList<Course*> viewCourses(Term*);
+    bool linkTextbook(Textbook*,Course*);
+    QList<Textbook*>& cManagerViewTextbooks(Term*);
+    QList<Course*>& cManagerViewCourses(Term*);
+
+    void setConnectionManager(ConnectionManager*);
 
 private:
-    ConnectionManager* connectionManager;
+    ConnectionManager* conMan;
 
 };
 

@@ -8,6 +8,7 @@
 
 #include <QString>
 
+#include "connectionmanager.h"
 #include "cuTPSTestAPIControl.h"
 
 namespace Ui {
@@ -33,6 +34,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
 
     ~MainWindow();
+
+    cuTPSTestAPIControl* getControl();
 
 private:
 

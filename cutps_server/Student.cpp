@@ -28,6 +28,14 @@ void                    Student::setcMail(QString m){cMail = m;}
 void                    Student::setPayInfo(const PaymentInformation& p){payInfo = p;}
 
 
+Student::~Student(){}
+
+void Student::addCourse(Course* course) {
+    registeredCourses.append(course);
+}
+
+
+
 //JSON read and write concrete functions
 
 //Reads a QJsonObject and sets the Student's components

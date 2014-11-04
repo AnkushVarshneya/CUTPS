@@ -1,5 +1,9 @@
 /*Section header class
- *Date last modified: 24/10/2014
+ *
+ *Purpose of this class: This is a chapter section, part of a textbook.
+ *In CUTPS, the chapter section can be purchased so long as it is available
+ *
+ *Traceability: EO-13
  */
 #ifndef SECTION_H
 #define SECTION_H

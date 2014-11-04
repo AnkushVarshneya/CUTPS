@@ -1,8 +1,9 @@
-/*CreditCardInformation header class
- *Date last modified 10/24/2014
- *Note: Expiry date might need a separate class for date,
- *but maybe not because of prototype purposes
+/*CreditCardInformation class header
  *
+ *Purpose of class: This class is to contain the attributes for
+ *a typical credit card, part of a Student's PaymentInformation
+ *
+ *Traceability: EO-07
  */
 
 
@@ -20,7 +21,7 @@ public:
     CreditCardInformation(QString = "1234098712321234", QString = "908", QDate = QDate::fromString("20190120", "yyyyMMdd"), QString = "MasterCard", QString = "John Doe");
 
     //Destructor
-    //~CreditCardInformation();
+    ~CreditCardInformation();
 
     //Getters
     QString         getCreditCardNo();

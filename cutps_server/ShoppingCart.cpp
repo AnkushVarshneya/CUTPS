@@ -30,7 +30,7 @@ void ShoppingCart::addItem(PurchasableItem* item){
 
 
 //Empty shopping cart's contents
-void ShoppingCart::emptyShoppingCart(){
+void ShoppingCart::emptyShoppingCart(){  
      items.clear();
 }
 

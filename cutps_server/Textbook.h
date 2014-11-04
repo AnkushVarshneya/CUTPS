@@ -1,6 +1,11 @@
 /*Textbook header file
- *Date last modified: 10/29/2014
- * TODO: Add getters and setters for coverImageLoc
+ *
+ *Purpose: A textbook is the academic text that is used in courses. In CUTPS,
+ *it will be a purchasable item as a whole if it is linked to any course in CUTPS
+ *Textbooks can be subdivided into chapters which will also be purchasasble in CUTPS given
+ *That it is made available by the Content Manager
+ *
+ *Traceability: EO-11
  *
  */
 #ifndef TEXTBOOK_H

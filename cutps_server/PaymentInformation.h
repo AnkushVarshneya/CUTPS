@@ -1,6 +1,10 @@
 /*PaymentInformation Class Header
- *Date Last modified: 10/24/2014
- *By:Rob
+ *
+ *Purpose: The Payment information for a given student if the student so chooses
+ *to save their information through CUTPS for a later shopping session
+ *Has a billing address and credit card info
+ *
+ *Traceability: EO-05
  *
  */
 #ifndef PAYMENTINFORMATION_H
@@ -18,8 +22,8 @@ public:
 
     BillingAddress                 getBillInfo();
     CreditCardInformation          getCreditCardInfo();
-//    void                           setBillInfo(const BillingAddress&);
-//    void                           setCreditCardInfo(const CreditCardInformation&);
+    void                           setBillInfo(const BillingAddress&);
+    void                           setCreditCardInfo(const CreditCardInformation&);
     void                           read(const QJsonObject &json);
     void                           write(QJsonObject &json) const;
 

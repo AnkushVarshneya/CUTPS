@@ -1,6 +1,9 @@
 #include "connectionmanager.h"
 #include "BillingAddress.h"
 
+#include <iostream>
+using namespace std;
+
 ConnectionManager::ConnectionManager(QObject *parent) :
     QObject(parent),
     tcpConnection(new QTcpSocket(this))
@@ -80,6 +83,22 @@ void ConnectionManager::readyRead() {
     qDebug() << "ready to read stuff from server \n";
     qDebug() << "bytes avail: " << this->tcpConnection->bytesAvailable();
     qDebug() << "peer info: " << this->tcpConnection->peerName() << this->tcpConnection->peerAddress() << this->tcpConnection->peerPort() << "\n";
+
+
+//     char *data = new char[50];
+//     bytes = this->tcpConnection->read(data, bytes);
+//     cout << "does this even work";
+//     cout << data;
+//     cout << "really";
+
+//     this->bytes = 0;
+//     this->bytes = this->tcpConnection->bytesAvailable();
+//     qDebug() << "in server readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
+
+//     char *data = new char[this->bytes];
+//     bytes = this->tcpConnection->read(data, bytes);
+//     qDebug() << "bytes read: " << bytes << "\n";
+//     qDebug() << data;
 
 }
 

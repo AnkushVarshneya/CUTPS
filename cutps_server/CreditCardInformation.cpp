@@ -1,4 +1,7 @@
-
+/*CreditCardInformation class source
+ *
+ *Traceability: EO-07
+ */
 #include "CreditCardInformation.h"
 #include <iostream>
 using namespace std;
@@ -6,7 +9,7 @@ using namespace std;
 CreditCardInformation::CreditCardInformation(QString ccNo, QString cvv, QDate date, QString cType, QString name)
     : creditCardNo(ccNo), CVV(cvv), expDate(date), cardType(cType), nameOnCard(name){}
 
-//CreditCardInformation::~CreditCardInformation(){ cout<< "In CreditCardInformation destructor"<<endl;}
+CreditCardInformation::~CreditCardInformation(){ cout<< "In CreditCardInformation destructor"<<endl;}
 
 
 //Getters
@@ -45,11 +48,11 @@ void CreditCardInformation::write(QJsonObject &json)const{
 
 
 //ostream method for testing data purposes
-//std::ostream& operator<<(std::ostream& o, CreditCardInformation& ccInfo){
-//    o << "Credit Card Number: " + ccInfo.getCreditCardNo().toStdString() << endl
-//      << "CVV: " + ccInfo.getCVV().toStdString() << endl
-//      << "ExpDate: " + ccInfo.getExpDate().toString().toStdString() << endl
-//      << "Card Type: " + ccInfo.getCardType().toStdString() << endl
-//      << "Name On Card: " + ccInfo.getNameOnCard().toStdString() << endl;
-//    return o;
-//}
+std::ostream& operator<<(std::ostream& o, CreditCardInformation& ccInfo){
+    o << "Credit Card Number: " + ccInfo.getCreditCardNo().toStdString() << endl
+      << "CVV: " + ccInfo.getCVV().toStdString() << endl
+      << "ExpDate: " + ccInfo.getExpDate().toString().toStdString() << endl
+      << "Card Type: " + ccInfo.getCardType().toStdString() << endl
+      << "Name On Card: " + ccInfo.getNameOnCard().toStdString() << endl;
+    return o;
+}

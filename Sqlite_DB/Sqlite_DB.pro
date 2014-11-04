@@ -12,9 +12,36 @@ TARGET = Sqlite_DB
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        login.cpp
+SOURCES += main.cpp \
+        login.cpp \
+        CUtpsDataObject.cpp \
+        User.cpp \
+        Student.cpp \
+        Term.cpp \
+        Course.cpp \
+        PurchasableItem.cpp \
+        Textbook.cpp \
+        Chapter.cpp \
+        Section.cpp \
+        paymentInformation.cpp \
+        BillingAddress.cpp \
+        CreditCardInformation.cpp \
+        ShoppingCart.cpp
 
-HEADERS  += login.h
+
+HEADERS  += login.h \
+        CUtpsDataObject.h \
+        User.h \
+        Student.h \
+        Term.h \
+        Course.h \
+        PurchasableItem.h \
+        Textbook.h \
+        Chapter.h \
+        Section.h \
+        paymentInformation.h \
+        BillingAddress.h \
+        CreditCardInformation.h \
+        ShoppingCart.h
 
 FORMS    += login.ui

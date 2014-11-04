@@ -88,8 +88,8 @@ create table Course(
 --creating the Table called Term
 create table Term(
 	termID integer NOT NULL primary key,
-	startDate date,
-	endDate date
+	startDate varchar(10),
+	endDate varchar(10)
 );
 
 --creating the Table called Course_Assigned_Textbook 
@@ -105,11 +105,11 @@ create table Course_Assigned_Textbook(
 create table Textbook(
 	ISBN varchar(20) NOT NULL primary key,
 	coverImageLocation varchar(100),
-	Desc varchar(200),
-	Author varchar(50),
-	TextBookTitle varchar(50),
-	Publisher varchar(50),
-	Edition varchar(50),
+	desc varchar(200),
+	author varchar(50),
+	textBookTitle varchar(50),
+	publisher varchar(50),
+	edition varchar(50),
 	itemID integer NOT NULL,
 	foreign key (itemID) references PurchasableItem(itemID) on delete cascade
 );

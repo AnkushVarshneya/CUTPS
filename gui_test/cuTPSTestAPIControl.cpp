@@ -6,7 +6,21 @@ cuTPSTestAPIControl::cuTPSTestAPIControl()
 
 void cuTPSTestAPIControl::setConnectionManager(ConnectionManager* c){
     conMan = c;
+//    connect(this->conMan->getTcp(), SIGNAL(readyRead()), this, SLOT(readBytes()));
 }
+
+//void cuTPSTestAPIControl::readBytes() {
+//    //conMan->setBytes(0);
+//    this->conMan->setBytes(this->conMan->getTcp()->bytesAvailable());
+//    qDebug() << "in client readbytes slot, bytes avail: " << this->conMan->getBytes() << "\n";  //to read
+
+//    char *data = new char[this->conMan->getBytes()];
+//   this->conMan->setBytes(this->conMan->getTcp()->read(data, this->conMan->getBytes()));
+//   qDebug() << "bytes read: " << this->conMan->getBytes() << "\n";
+//   QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+//   qDebug() << jsonDoc.toJson();
+
+//}
 
 //API call studentViewTextbooks where a student number and a term are arguments
 //To send over to the server in which the server will query the database
@@ -28,10 +42,21 @@ QList<Course*>& cuTPSTestAPIControl::studentViewTextbooks(QString stuNum, Term *
     api_server_call["Term"] = termObject;
 
     conMan->send(api_server_call);
+    conMan->getTcp()->waitForReadyRead();
+    QJsonDocument res = conMan->getResult();
+    qDebug() << res.toJson();
 
     //Placeholder to when we read back from the server to get the list of textbooks
-    QList<Course*> temp;
-    return temp;
+    QList<Course*> result;
+    QJsonArray courseArray = res.object()["courses:"].toArray();
+    for (int courseIndex = 0; courseIndex<courseArray.size();++courseIndex){
+        QJsonObject courseObject = courseArray[courseIndex].toObject();
+        Course* newCourse = new Course();
+        newCourse->read(courseObject);
+        result.append(newCourse);
+    }
+    qDebug() << result.front()->getRequiredTextbooks().front()->getItemTitle();
+    return result;
 
 }
 

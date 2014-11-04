@@ -23,11 +23,16 @@ public:
 //    void testSend(Textbook *text);
     void testSend(CUtpsDataObject *data);
     void send(QJsonObject &json);
+    QJsonDocument getResult();
+    QTcpSocket* getTcp();
+    qint64 getBytes();
+    void setBytes(qint64 bytes);
 
 private:
     QTcpSocket *tcpConnection;
     QDataStream dataStream;
     qint64 bytes;
+    QJsonDocument result;
 
 signals:
 

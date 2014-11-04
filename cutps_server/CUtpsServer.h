@@ -7,6 +7,7 @@
 #include "ShoppingCart.h"
 #include "CreditCardInformation.h"
 #include "BillingAddress.h"
+#include "APIControl.h"
 
 class CutpsServer : public QTcpServer
 {
@@ -14,6 +15,7 @@ class CutpsServer : public QTcpServer
 public:
     explicit CutpsServer(QObject *parent = 0);
     void startServer();
+    void sendJson(QJsonObject &json);
 
 private:
     QTcpSocket *tcpConnection;

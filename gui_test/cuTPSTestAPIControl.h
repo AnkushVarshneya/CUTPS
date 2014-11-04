@@ -11,7 +11,7 @@
 #include <QString>
 #include <QList>
 
-class cuTPSTestAPIControl
+class cuTPSTestAPIControl : public QObject
 {
 public:
 
@@ -35,6 +35,9 @@ public:
 
 private:
     ConnectionManager* conMan;
+
+private slots:
+    void readBytes();
 
 };
 

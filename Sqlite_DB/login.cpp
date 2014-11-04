@@ -9,29 +9,29 @@ Login::Login(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Login)
 {
-    //ui->setupUi(this);
+    ui->setupUi(this);
 
+    // setup db connection
     QSqlDatabase db=QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("../cuTPS.db");
-
-    qDebug() << "started";
 
     if(!db.open())
         qDebug() << "FAILED TO CONNECT TO DATA BASE";
     else {
-         qDebug() << "connected....";
-         qint32 tid = 1;
-         QString sNum = "100853074";
+        qDebug() << "connected....";
+        qint32 tid = 1;
+        QString sNum = "100853074";
 
         // get term
         QSqlQuery termQuery;
-        termQuery.prepare(" SELECT * FROM term WHERE termID=:termID;");
+        termQuery.prepare("SELECT term.startDate, "
+                                "term.endDate, "
+                                "term.termID "
+                            "FROM Term WHERE termID=:termID;");
         termQuery.bindValue(":termID", tid);
         termQuery.exec();
 
         while (termQuery.next()) {
-            qDebug() << "term...";
-
             Term *term = new Term(QDate::fromString(
                                       termQuery.value(termQuery.record().indexOf("startDate")).toString(),
                                       "yyyyMMdd"),
@@ -42,30 +42,41 @@ Login::Login(QWidget *parent) :
 
             // get all courses in the term for a perticular student
             QSqlQuery courseQuery;
-            courseQuery.prepare("SELECT * FROM Student "
+            courseQuery.prepare("SELECT Course.courseCode, "
+                                        "Course.section, "
+                                        "Course.instructor "
+                                    "FROM Course "
                                     "JOIN Student_RegisteredIn_Course ON "
-                                        "student.studentNumber = Student_RegisteredIn_Course.studentNumber "
-                                    "JOIN Course ON "
-                                        "Student_RegisteredIn_Course.courseCode = Course.courseCode AND "
-                                        "Student_RegisteredIn_Course.section = Course.section AND "
-                                        "Student_RegisteredIn_Course.termID = Course.termID "
+                                        "Course.courseCode = Student_RegisteredIn_Course.courseCode AND "
+                                        "Course.section = Student_RegisteredIn_Course.section AND "
+                                        "Course.termID = Student_RegisteredIn_Course.termID "
+                                    "JOIN Student ON "
+                                        "student_RegisteredIn_Course.studentNumber = Student.studentNumber "
                                     "WHERE Course.termID=:termID AND student.studentNumber=:studentNumber "
-                                        "ORDER BY Course.courseCode ASC, Course.section ASC; ");
+                                        "ORDER BY Course.courseCode ASC, Course.section ASC;");
             courseQuery.bindValue(":termID", term->getTermID());
             courseQuery.bindValue(":studentNumber", sNum);
             courseQuery.exec();
 
             while (courseQuery.next()){
-                qDebug() << "course...";
-
                 Course *course = new Course(courseQuery.value(courseQuery.record().indexOf("courseCode")).toString(),
                                            courseQuery.value(courseQuery.record().indexOf("section")).toString(),
                                            courseQuery.value(courseQuery.record().indexOf("instructor")).toString());
-                course->setTerm(*term);
+                course->setTerm(*(new Term(QDate::fromString("11111111", "yyyyMMdd"),QDate::fromString("11111111", "yyyyMMdd"), 1)));//*term);
 
                 // get all textbooks for this course
                 QSqlQuery textBookQuery;
-                textBookQuery.prepare("SELECT * FROM Textbook "
+                textBookQuery.prepare("SELECT Textbook.textBookTitle, "
+                                            "Textbook.author, "
+                                            "Textbook.edition, "
+                                            "Textbook.publisher, "
+                                            "Textbook.ISBN, "
+                                            "Textbook.desc, "
+                                            "Textbook.itemID, "
+                                            "PurchasableItem.price, "
+                                            "PurchasableItem.availability, "
+                                            "Textbook.coverImageLocation "
+                                        "FROM Textbook "
                                         "JOIN Course_Assigned_Textbook ON "
                                             "Textbook.ISBN = Course_Assigned_Textbook.ISBN "
                                         "JOIN Course ON "
@@ -75,15 +86,13 @@ Login::Login(QWidget *parent) :
                                         "JOIN PurchasableItem ON "
                                             "Textbook.itemID = PurchasableItem.ItemID "
                                         "WHERE Course.courseCode=:courseCode AND Course.section=:section AND Course.termID=:termID "
-                                            "ORDER BY Textbook.textBookTitle ASC, Textbook.ISBN ASC; ");
+                                            "ORDER BY Textbook.textBookTitle ASC, Textbook.ISBN ASC;");
                 textBookQuery.bindValue(":courseCode", course->getCourseCode());
                 textBookQuery.bindValue(":section", course->getCourseSection());
                 textBookQuery.bindValue(":termID", course->getTerm()->getTermID());
                 textBookQuery.exec();
 
                  while (textBookQuery.next()){
-                     qDebug() << "textbook...";
-
                      Textbook *textbook = new Textbook(textBookQuery.value(textBookQuery.record().indexOf("textBookTitle")).toString(),
                                                        textBookQuery.value(textBookQuery.record().indexOf("author")).toString(),
                                                        textBookQuery.value(textBookQuery.record().indexOf("edition")).toString(),
@@ -97,9 +106,14 @@ Login::Login(QWidget *parent) :
 
                      // get all chapters for this textbook
                      QSqlQuery chapterQuery;
-                     chapterQuery.prepare("SELECT * from Textbook "
-                                            "JOIN Chapter ON "
-                                                "Textbook.ISBN = Chapter.ISBN "
+                     chapterQuery.prepare("SELECT Chapter.chapterTitle, "
+                                                "Chapter.chapterNumber, "
+                                                "Chapter.itemID, "
+                                                "PurchasableItem.price, "
+                                                "PurchasableItem.availability "
+                                            "FROM Chapter "
+                                            "JOIN Textbook ON "
+                                                "Chapter.ISBN = Textbook.ISBN "
                                             "JOIN PurchasableItem ON "
                                                 "Chapter.itemID = PurchasableItem.ItemID "
                                             "WHERE Textbook.ISBN=:ISBN "
@@ -108,8 +122,6 @@ Login::Login(QWidget *parent) :
                      chapterQuery.exec();
 
                      while (chapterQuery.next()){
-                        qDebug() << "chapter...";
-
                         Chapter *chapter = new Chapter(chapterQuery.value(chapterQuery.record().indexOf("chapterTitle")).toString(),
                                                        chapterQuery.value(chapterQuery.record().indexOf("chapterNumber")).toInt(),
                                                        chapterQuery.value(chapterQuery.record().indexOf("itemID")).toInt(),
@@ -118,21 +130,24 @@ Login::Login(QWidget *parent) :
 
                             // get all section for this chapter
                             QSqlQuery sectionQuery;
-                            sectionQuery.prepare("SELECT * FROM Chapter "
-                                                   "JOIN Section ON "
-                                                       "Chapter.ISBN = section.ISBN AND "
-                                                       "Chapter.chapterNumber = section.chapterNumber "
-                                                   "JOIN PurchasableItem ON "
-                                                       "section.itemID = PurchasableItem.ItemID "
-                                                   "WHERE Chapter.ISBN=:ISBN AND Chapter.chapterNumber=:chapterNumber "
-                                                       "ORDER BY Section.sectionNumber ASC;");
+                            sectionQuery.prepare("SELECT section.sectionTitle, "
+                                                        "section.sectionNumber, "
+                                                        "section.itemID, "
+                                                        "PurchasableItem.price, "
+                                                        "PurchasableItem.availability "
+                                                    "FROM Section "
+                                                    "JOIN Chapter ON "
+                                                        "section.ISBN = Chapter.ISBN AND "
+                                                        "section.chapterNumber = Chapter.chapterNumber "
+                                                    "JOIN PurchasableItem ON "
+                                                        "section.itemID = PurchasableItem.ItemID "
+                                                    "WHERE Chapter.ISBN=:ISBN AND Chapter.chapterNumber=:chapterNumber "
+                                                        "ORDER BY Section.sectionNumber ASC;");
                             sectionQuery.bindValue(":ISBN", textbook->getISBN());
                             sectionQuery.bindValue(":chapterNumber", chapter->getChapterNumber());
                             sectionQuery.exec();
 
                             while (sectionQuery.next()){
-                               qDebug() << "section...";
-
                                Section *section = new Section(sectionQuery.value(sectionQuery.record().indexOf("sectionTitle")).toString(),
                                                               sectionQuery.value(sectionQuery.record().indexOf("sectionNumber")).toInt(),
                                                               sectionQuery.value(sectionQuery.record().indexOf("itemID")).toInt(),

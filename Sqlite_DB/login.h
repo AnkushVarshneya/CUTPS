@@ -5,6 +5,7 @@
 #include <QtSql>
 #include<QDebug>
 #include<QFileInfo>
+#include "Course.h"
 
 namespace Ui {
 class Login;
@@ -20,6 +21,8 @@ public:
 
 private:
     Ui::Login *ui;
+    QList<Course*>& studentViewTextbooks(QString, qint32) const;
+
 };
 
 #endif // LOGIN_H

@@ -15,6 +15,7 @@ class CutpsServer : public QTcpServer
 public:
     explicit CutpsServer(QObject *parent = 0);
     void startServer();
+    void sendJson(QJsonObject &json);
 
 private:
     QTcpSocket *tcpConnection;

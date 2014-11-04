@@ -22,7 +22,7 @@ class APIControl
 {
 public:
     APIControl();
-    QJsonObject& studentViewTextbooks(QJsonObject json);
+    QJsonObject studentViewTextbooks(QJsonObject json);
 };
 
 #endif // APICONTROL_H

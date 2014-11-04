@@ -11,9 +11,11 @@ QueryControl::QueryControl(){
 }
 
 QueryControl::~QueryControl(){
+    qDebug()<< "IN QUERY CONTROL DESTRUCTOR";
     db.commit();
-    db.close();
     db.removeDatabase("QSQLITE");
+    db.close();
+    qDebug() << db.databaseName();
 }
 
 //Query for studentViewTextbooks use case where argument passed in is a student number

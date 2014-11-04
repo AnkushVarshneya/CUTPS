@@ -73,6 +73,8 @@ void CutpsServer::readBytes() {
    qDebug() << student->getpayInfo().getBillInfo().getStreetName() << "\n";
    qDebug() << student->getShoppingCart().getShoppingCartID() << "\n";
 
+//   this->tcpConnection->write("testcity \n");
+
 
 //    qDebug() << text->getItemTitle();
 //    qDebug() << text->getAuthor();
@@ -116,7 +118,7 @@ void CutpsServer::readBytes() {
 //    qDebug() << data.data();
 //    //test writing to client process
 //    this->tcpConnection->write("asdgadfh \n");
-//    this->tcpConnection->write("testcity \n");
+
 //}
 
 void CutpsServer::disconnected(){

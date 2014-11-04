@@ -12,6 +12,10 @@ MainWindow::MainWindow(QWidget *parent) :
    // this->connectTcp();
 }
 
+cuTPSTestAPIControl* MainWindow::getControl(){
+    return control;
+}
+
 //void MainWindow::connectTcp() {
 //   // this->tcpConnection = new QTcpSocket(this);
 //    const QString & testaddress = "0.0.0.0";

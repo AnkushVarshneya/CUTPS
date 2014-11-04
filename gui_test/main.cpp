@@ -14,17 +14,6 @@
 
 using namespace std;
 
-//Function prototypes TODO get rid of these once we move these function calls to the APIControl;
-QList<Course*>& studentViewTextbooks(QString stuNum, Term *term, ConnectionManager *conMan);
-QList<PurchasableItem*>& viewShoppingCart(QString stuNum, ConnectionManager *conMan);
-bool addContent(QString stuNum, qint32 itemID, qint32 quantity, ConnectionManager *conMan);
-bool emptyShoppingCart(QString stuNum, ConnectionManager *conMan);
-bool getExistingPaymentInfo(QString stuNum, ConnectionManager *conMan);
-bool savePaymentInfo(QString stuNum, PaymentInformation payInfo, ConnectionManager *conMan);
-bool createTextbook(Textbook *aTextbook, ConnectionManager *conMan);
-bool createCourse(Course *aCourse, ConnectionManager *conMan);
-bool cManagerViewTextbooks(Term *aTerm, ConnectionManager *conMan);
-bool cManagerViewCourses(Term *aTerm, ConnectionManager *conMan);
 
 int main(int argc, char *argv[])
 {
@@ -35,6 +24,8 @@ int main(int argc, char *argv[])
     QHostAddress address = QHostAddress(testaddress);
     w.show();
     ConnectionManager *conMan = new ConnectionManager(&w);
+
+    w.getControl()->setConnectionManager(conMan);
 
 
     conMan->connectToHost(address, port);
@@ -73,7 +64,7 @@ int main(int argc, char *argv[])
     qDebug() << jdoc.toJson();
     conMan->testSend( (CUtpsDataObject*)student );
 */
-
+    /*
     Student aStu;
     Term fall2014;
     Course *c1 = new Course("COMP3004","A","Christine Laurendeau");
@@ -105,144 +96,8 @@ int main(int argc, char *argv[])
     createCourse(newCourse, conMan);
     cManagerViewTextbooks(&fall2014, conMan);
     cManagerViewCourses(&fall2014, conMan);
+    */
     return a.exec();
 }
 
-//API call studentViewTextbooks where a student number and a term are arguments
-//To send over to the server in which the server will query the database
-//For the necessary textbooks required for the registered courses
-//Traceability: SD-01 (sequence diagram 1)
-QList<Course*>& studentViewTextbooks(QString stuNum, Term *term, ConnectionManager *conMan){
 
-    QJsonObject api_server_call;
-    //Set API call to initiate on serverside
-    QString functionCall = "studentViewTextbooks()";
-    api_server_call["Function:"] = functionCall;
-
-    //Write the student number argument into the api_server_call object
-    api_server_call["Student Number"] = stuNum;
-
-    //Write the term argument into the api_server_call object
-    QJsonObject termObject;
-    term->write(termObject);
-    api_server_call["Term"] = termObject;
-
-    conMan->send(api_server_call);
-
-    //Placeholder to when we read back from the server to get the list of textbooks
-    QList<Course*> temp;
-    return temp;
-
-}
-
-//API call to view a student's shopping cart
-//This function makes a QJsonObject to send over to the server
-//Which includes the API function call to execute server-side
-//And what student is relevant (given student number)
-//Returns a list of purchasable items
-QList<PurchasableItem*>& viewShoppingCart(QString stuNum, ConnectionManager *conMan){
-    QJsonObject api_server_call;
-    QString functionCall = "viewShoppingCart()";
-    api_server_call["Function:"] = functionCall;
-    api_server_call["Student Number"] = stuNum;
-    conMan->send(api_server_call);
-    QList<PurchasableItem*> temp;
-    return temp;
-}
-
-//API call to add some content to the student's shopping cart
-//This function makes a QJsonObject to send over to the server
-//Which includes the function name and the arguments to be passed
-bool addContent(QString stuNum, qint32 itemID, qint32 quantity, ConnectionManager *conMan){
-    QJsonObject api_server_call;
-    QString functionCall = "addContent()";
-    api_server_call["Function:"] = functionCall;
-    api_server_call["Student Number"] = stuNum;
-    api_server_call["Item ID"] = itemID;
-    api_server_call["Quantity"] = quantity;
-    conMan->send(api_server_call);
-    return true;
-}
-
-//Empty the student's shopping cart, given the student's student number
-bool emptyShoppingCart(QString stuNum, ConnectionManager *conMan){
-    QJsonObject api_server_call;
-    QString functionCall = "emptyShoppingCart()";
-    api_server_call["Function:"] = functionCall;
-    api_server_call["Student Number"] = stuNum;
-    conMan->send(api_server_call);
-    return true;
-}
-
-//Get the existing payment info for a given student
-bool getExistingPaymentInfo(QString stuNum, ConnectionManager *conMan){
-    QJsonObject api_server_call;
-    QString functionCall = "getExistingBillingInfo()";
-    api_server_call["Function:"] = functionCall;
-    api_server_call["Student Number"] = stuNum;
-    conMan->send(api_server_call);
-    return true;
-}
-
-//Save the payment info for a student
-bool savePaymentInfo(QString stuNum, PaymentInformation payInfo, ConnectionManager *conMan){
-    QJsonObject api_server_call;
-    QString functionCall = "saveExistingPaymentInfo()";
-    api_server_call["Function:"] = functionCall;
-    api_server_call["Student Number"] = stuNum;
-    QJsonObject payInfoObject;
-    payInfo.write(payInfoObject);
-    api_server_call["Payment Info"] = payInfoObject;
-    conMan->send(api_server_call);
-    return true;
-
-}
-
-//Create a textbook
-bool createTextbook(Textbook *aTextbook, ConnectionManager *conMan){
-    QJsonObject api_server_call;
-    QString functionCall = "createTextbook()";
-    api_server_call["Function:"] = functionCall;
-    QJsonObject textbookObject;
-    aTextbook->write(textbookObject);
-    api_server_call["Textbook"] = textbookObject;
-    conMan->send(api_server_call);
-
-    return true;
-}
-
-//Create a course
-bool createCourse(Course *aCourse, ConnectionManager *conMan){
-    QJsonObject api_server_call;
-    QString functionCall = "createCourse()";
-    api_server_call["Function:"] = functionCall;
-    QJsonObject courseObject;
-    aCourse->write(courseObject);
-    api_server_call["Course"] = courseObject;
-    conMan->send(api_server_call);
-    return true;
-}
-
-//Content Manager View textbooks
-bool cManagerViewTextbooks(Term *aTerm, ConnectionManager *conMan){
-    QJsonObject api_server_call;
-    QString functionCall = "cManagerViewTextbooks()";
-    api_server_call["Function:"] = functionCall;
-    QJsonObject termObject;
-    aTerm->write(termObject);
-    api_server_call["Term"] = termObject;
-    conMan->send(api_server_call);
-    return true;
-}
-
-//Content Manager View Courses
-bool cManagerViewCourses(Term *aTerm, ConnectionManager *conMan){
-    QJsonObject api_server_call;
-    QString functionCall = "cManagerViewCourses()";
-    api_server_call["Function:"] = functionCall;
-    QJsonObject termObject;
-    aTerm->write(termObject);
-    api_server_call["Term"] = termObject;
-    conMan->send(api_server_call);
-    return true;
-}

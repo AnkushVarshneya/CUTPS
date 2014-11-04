@@ -36,6 +36,8 @@ public:
     void                    setcMail(QString);
     void                    setPayInfo(const PaymentInformation&);
 
+    void                    addCourse(Course *course);
+
     void                    read(const QJsonObject &json);
     void                    write(QJsonObject &json) const;
 

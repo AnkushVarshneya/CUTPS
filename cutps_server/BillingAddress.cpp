@@ -67,3 +67,4 @@ void BillingAddress::write(QJsonObject &json) const
     json["postal code"] = postalCode;
 }
 
+

@@ -1,8 +1,10 @@
 /*PurchasableItem class header
- *Date last modified: 28/10/2014
+ *
+ *Purpose: An abstract class in which the item is "purchasable" within CUtps
+ *The purchasable content includes the textbooks, their chapters, and chapter sections
+ *Has an itemID, a price, and an availability assigned to it
  *
  *Traceability: EO-10 of Entity Class DataDictionary in Deliverable 1
- *TODO: Must inherit QObject? Or create super super class CUTPSDataObject for serializing
  */
 
 #ifndef PURCHASABLEITEM_H

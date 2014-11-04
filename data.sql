@@ -10,8 +10,8 @@ VALUES ("Kushlord", "Ankush", "Varshneya", "hunter1", 1);
 INSERT INTO Student (studentNumber,cmail,userName)
 VALUES ("100853074","ankushlord@cmail.carleton.ca","Kushlord");
 
-INSERT INTO PaymentInformation (creditCardNumber, cvv, expirationDate, nameOnCard,postalCode,province,city,streetName,houseNumber,studentNumber)
-Values (2345-5675-1234,756,1976-04-20,"Ankush Dabess Varshneya","H8R8H8","Ontario","Ottawa","Swag St.",420,"100853074");
+INSERT INTO PaymentInformation (creditCardNumber, cardType, cvv, expirationDate, nameOnCard,postalCode,province,city,streetName,houseNumber,studentNumber)
+Values ("2345-5675-1234", "Master Card", "756","19760420","Ankush Dabess Varshneya","H8R8H8","Ontario","Ottawa","Swag St.",420,"100853074");
 
 INSERT INTO Term (termID,startDate,endDate)
 VALUES (1,"20140905","20141209");

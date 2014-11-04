@@ -21,10 +21,15 @@ Login::Login(QWidget *parent) :
 
         // test for view studentView
         foreach(Course *crs, studentViewTextbooks("100853074", 1)){
-            QJsonObject *json = new QJsonObject();
-            crs->write(*json);
-            qDebug() << *json;
+            QJsonObject json = QJsonObject();
+            crs->write(json);
+            //qDebug() <<json;
         }
+
+        // test for getExistingBillingInfo
+        QJsonObject json = QJsonObject();
+        getExistingBillingInfo("100853074").write(json);
+        qDebug() <<json;
 
         //if there was a connection end it
         QSqlDatabase::database().commit();
@@ -34,6 +39,56 @@ Login::Login(QWidget *parent) :
 Login::~Login()
 {
     delete ui;
+}
+
+PaymentInformation& Login::getExistingBillingInfo(QString studentNumber) const{
+    PaymentInformation *info;
+
+    // get the student payment information
+    QSqlQuery PaymentInformationQuery;
+
+    PaymentInformationQuery.prepare("SELECT paymentInformation.creditCardNumber, "
+                                            "paymentInformation.cardType, "
+                                            "paymentInformation.cvv, "
+                                            "paymentInformation.expirationDate, "
+                                            "paymentInformation.nameOnCard, "
+                                            "paymentInformation.postalCode, "
+                                            "paymentInformation.province, "
+                                            "paymentInformation.city, "
+                                            "paymentInformation.streetName, "
+                                            "paymentInformation.houseNumber, "
+                                            "User.firstname||' '||User.lastname AS fullname "
+                                        "FROM PaymentInformation "
+                                        "JOIN  Student ON "
+                                            "paymentInformation.studentNumber = Student.StudentNumber "
+                                        "JOIN User ON "
+                                            "Student.username = User.username AND "
+                                            "User.roleID = (Select roleID from Role where roleType = 'Student') "
+                                        "WHERE Student.studentNumber=:studentNumber;");
+    PaymentInformationQuery.bindValue(":studentNumber", studentNumber);
+    PaymentInformationQuery.exec();
+
+    //if student has payment info set it else its NULL
+    if(PaymentInformationQuery.first()){
+        info = new PaymentInformation();
+        info->setBillInfo(*(new BillingAddress(PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("fullname")).toString(),
+                                        PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("houseNumber")).toInt(),
+                                        PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("streetName")).toString(),
+                                        PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("city")).toString(),
+                                        PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("province")).toString(),
+                                        PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("postalCode")).toString())));
+
+        info->setCreditCardInfo(*(new CreditCardInformation(PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("creditCardNumber")).toString(),
+                                                     PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("cvv")).toString(),
+                                                     QDate::fromString(PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("expirationDate")).toString(), "yyyyMMdd"),
+                                                     PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("cardType")).toString(),
+                                                     PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("nameOnCard")).toString())));
+    }
+    else{
+        info=NULL;
+    }
+
+    return *info;
 }
 
 QList<Course*>& Login::studentViewTextbooks(QString studentNumber, qint32 termID) const{

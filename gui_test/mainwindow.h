@@ -17,11 +17,30 @@ class MainWindow;
 }
 
 enum Selected {
-    CreateCourse_NullCourse,
-    CreateCourse_ValidCourse,
-    CreateCourse_AlreadyExists,
-    CreateCourse_ExistsDiffTerm,
-    CreateCourse_ExistsDiffSect
+
+    StudentViewShoppingCart_hasitems,
+    StudentViewShoppingCart_noitems,
+
+    ContentManagerCreateCourse_NullCourse,
+    ContentManagerCreateCourse_ValidCourse,
+    ContentManagerCreateCourse_AlreadyExists,
+    ContentManagerCreateCourse_ExistsDiffTerm,
+    ContentManagerCreateCourse_ExistsDiffSect,
+
+    StudentViewTextbooks_unenrolled,
+    StudentViewTextbooks_notextbooks,
+    StudentViewTextbooks_hastextbooks,
+    StudentViewTextbooks_studentnotfound,
+    StudentViewTextbooks_termnotfound,
+
+    ContentManagerCreateTextbook_textbookexists,
+    ContentManagerCreateTextbook_nulltextbook,
+    ContentManagerCreateTextbook_withchaptersandsections,
+
+    ContentManagerLinkTextbook_alreadylinked,
+    ContentManagerLinkTextbook_nulltextbook,
+    ContentManagerLinkTextbook_nullcourse,
+    ContentManagerLinkTextbook_validlink
 
 };
 
@@ -73,6 +92,11 @@ private slots:
 
 
     void on_pushButton_clicked();
+    void on_actionContentManager_CreateTextbook_withchaptersandsections_triggered();
+    void on_actionContentManager_LinkTextbook_alreadylinked_triggered();
+    void on_actionContentManager_LinkTextbook_nulltextbook_triggered();
+    void on_actionContentManager_LinkTextbook_nullcourse_triggered();
+    void on_actionContentManager_LinkTextbook_validlink_triggered();
 };
 
 #endif // MAINWINDOW_H

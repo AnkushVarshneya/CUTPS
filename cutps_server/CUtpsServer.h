@@ -7,6 +7,7 @@
 #include "ShoppingCart.h"
 #include "CreditCardInformation.h"
 #include "BillingAddress.h"
+#include "APIControl.h"
 
 class CutpsServer : public QTcpServer
 {

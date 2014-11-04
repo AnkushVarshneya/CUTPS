@@ -54,8 +54,50 @@ void CutpsServer::readBytes() {
 
     char *data = new char[this->bytes];
    bytes = this->tcpConnection->read(data, bytes);
+   QString cmd;
    qDebug() << "bytes read: " << bytes << "\n";
    QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+   cmd = jsonDoc.object()["Function:"].toString();
+   qDebug() << cmd;
+   if(cmd == "studentViewTextbooks()"){
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->studentViewTextbooks(jsonDoc.object());
+       delete apic;
+       //TODO: write back to client the list of courses in QJSON object
+   }
+   /*switch(cmd) {
+   case "studentViewTextbooks()":
+       APIControl *apic = new APIControl();
+       apic->studentViewTextbooks(jsonDoc.object());
+       break;
+   case "viewShoppingCart()":
+       //
+       break;
+   case "addContent()":
+       //
+       break;
+   case "emptyShoppingCart()":
+       //
+       break;
+   case "getExistingPaymentInfo()":
+       //
+       break;
+   case "savePaymentInfo()":
+       //
+       break;
+   case "createTextbook()":
+       //
+       break;
+   case "createCourse()":
+       //
+       break;
+   case "cManagerViewManager()":
+        //
+        break;
+   case "cManagerViewCourses()":
+       //
+       break;
+   }*/
 
     //qDebug() << "\n" << data;
     //qDebug() << jsonDoc;
@@ -67,11 +109,11 @@ void CutpsServer::readBytes() {
 //    text->read(jsonDoc.object());
 
     //test parsing student
-   Student *student = new Student();
-   student->read(jsonDoc.object());
-   qDebug() << student->getFirstName() << "\n";
-   qDebug() << student->getpayInfo().getBillInfo().getStreetName() << "\n";
-   qDebug() << student->getShoppingCart().getShoppingCartID() << "\n";
+//   Student *student = new Student();
+//   student->read(jsonDoc.object());
+//   qDebug() << student->getFirstName() << "\n";
+//   qDebug() << student->getpayInfo().getBillInfo().getStreetName() << "\n";
+//   qDebug() << student->getShoppingCart().getShoppingCartID() << "\n";
 
 
 //    qDebug() << text->getItemTitle();

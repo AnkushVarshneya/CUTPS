@@ -6,6 +6,7 @@
 
 QT       += core
 QT       += network
+QT       += sql
 QT       -= gui
 
 TARGET = cutps_server
@@ -29,7 +30,9 @@ SOURCES += main.cpp \
     ShoppingCart.cpp \
     User.cpp \
     Course.cpp \
-    Term.cpp
+    Term.cpp \
+    APIControl.cpp \
+    QueryControl.cpp
 
 HEADERS += \
     BillingAddress.h \
@@ -45,4 +48,6 @@ HEADERS += \
     ShoppingCart.h \
     User.h \
     Course.h \
-    Term.h
+    Term.h \
+    APIControl.h \
+    QueryControl.h

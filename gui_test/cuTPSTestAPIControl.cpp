@@ -143,7 +143,7 @@ bool cuTPSTestAPIControl::createTextbook(Textbook *aTextbook){
 }
 
 //Create a course
-bool cuTPSTestAPIControl::createCourse(Course *aCourse){
+bool cuTPSTestAPIControl::createCourse(Course *aCourse, qint32 termID){
     QJsonObject api_server_call;
     QString functionCall = "createCourse()";
     api_server_call["Function:"] = functionCall;

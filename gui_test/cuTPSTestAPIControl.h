@@ -26,7 +26,7 @@ public:
     bool savePaymentInfo(QString,PaymentInformation*);
 
     bool createTextbook(Textbook*);
-    bool createCourse(Course*);
+    bool createCourse(Course*,qint32);
     bool linkTextbook(Textbook*,Course*);
     QList<Textbook*>& cManagerViewTextbooks(Term*);
     QList<Course*>& cManagerViewCourses(Term*);

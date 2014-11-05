@@ -114,12 +114,35 @@ void CutpsServer::readBytes() {
 
        this->sendJson(result);
    }
-//   else if (cmd == "createCourse()") {
-//       qDebug() << "processing command to create course..." << "\n";
-//       APIControl *apic = new APIControl();
-//       apic->createCourse(jsonDoc.object());
-//   }
+   else if (cmd == "createCourse()") {
+       qDebug() << "processing command to create course..." << "\n";
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->createCourse(jsonDoc.object());
+       delete apic;
+       this->sendJson(result);
+   }
+   else if (cmd == "createTextbook()") {
+       qDebug() << "processing command to create textbook..." << "\n";
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->createTextbook(jsonDoc.object());
+       delete apic;
+       this->sendJson(result);
+   }
+   else if (cmd == "cManagerViewCourses()") {
+       qDebug() << "processing command to create textbook..." << "\n";
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->cManagerViewCourses(jsonDoc.object());
+       delete apic;
+       this->sendJson(result);
 
+   }
+   else if (cmd == "cManagerViewTextbooks()") {
+       qDebug() << "processing command to create textbook..." << "\n";
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->cManagerViewTextbooks(jsonDoc.object());
+       delete apic;
+       this->sendJson(result);
+   }
 } //readbytes
 
 void CutpsServer::sendJson(QJsonObject &json) {

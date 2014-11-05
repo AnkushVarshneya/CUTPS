@@ -55,7 +55,6 @@ std::ostream& operator<< (std::ostream& o, Textbook & textbook){
 }
 
 //SETTERS
-
 void Textbook::setItemTitle(QString a){title = a;}
 void Textbook::setAuthor(QString a){author = a;}
 void Textbook::setPublisher(QString a){publisher = a;}
@@ -64,6 +63,7 @@ void Textbook::setISBN(QString a){isbn = a;}
 void Textbook::setDescription(QString a){description = a;}
 void Textbook::setCoverImageLoc(QString a){coverImageLoc = a;}
 
+//add a chapter to a textbook
 void Textbook::addChapter(Chapter* chapter){
     //chapters.insert(chapter->getChapterNumber() - 1, chapter);
     chapters.push_back(chapter);

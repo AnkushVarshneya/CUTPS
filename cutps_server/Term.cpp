@@ -10,7 +10,7 @@ Term::~Term(){
         delete *i;
     }
 }
-
+//GETTERS
 QDate Term::getStartDate() const{return startDate;}
 QDate Term::getEndDate() const{return endDate;}
 QList<Course*>& Term::getTermCourses(){
@@ -18,6 +18,7 @@ QList<Course*>& Term::getTermCourses(){
 }
 qint32 Term::getTermID() const{return termID;}
 
+//SETTERS
 void Term::setStartDate(int year, int month, int day){
     startDate.setDate(year, month, day);
 }
@@ -26,7 +27,7 @@ void Term::setEndDate(int year, int month, int day){
 }
 void Term::setTermID(qint32 a){termID = a;}
 
-
+//add a course to a term
 void Term::addCourse(Course* c){
     courses.push_back(c);
 }
@@ -74,10 +75,3 @@ std::ostream& operator<<(std::ostream& o,  Term& term){
     return o << "Term " << term.getTermID() << endl << "from " << *syear << " " << *smonth << " " << *sday << " to " << *eyear << " " << *emonth << " " << *eday << endl;
 }
 
-/*
-                QDate           startDate;term.getStartDate() << " to " << term.getEndDate() <<
-                QDate           endDate;
-                QList<Course*>  courses;
-                qint32          termID;
-
-*/

@@ -14,7 +14,7 @@ CutpsServer::CutpsServer(QObject *parent) :
     connect(this, SIGNAL(newConnection()), SLOT(incomingConnection()));
 
 }
-
+//Starts a tcp listen server on a configurable ip and port.
 void CutpsServer::startServer()
 {
     int port = 1234;
@@ -34,6 +34,7 @@ void CutpsServer::startServer()
     qDebug() << "Listening on port: " << port << "...";
     }
 
+   //Data for testing purposes
    ShoppingCart emptyShoppingCart;
    ShoppingCart cartWithItems;
    Textbook* textbooktest1 = new Textbook("C++ Software Engineering", "Ted","1st ed",
@@ -57,18 +58,17 @@ void CutpsServer::startServer()
 
 }
 
+//Slot function that is invoked when the newConnection() signal is recieved. Gets the next pending connection
+//and prepares to read bytes from the socket.
 void CutpsServer::incomingConnection() {
     qDebug() << "a new connection is available";
     tcpConnection = CutpsServer::nextPendingConnection();
     connect(tcpConnection, SIGNAL(readyRead()), this, SLOT(readBytes()));
     connect(tcpConnection, SIGNAL(disconnected()), this, SLOT(disconnected()));
-
-    //    qDebug() << tcpConnection->peerName() << "\n";
-    //    qDebug() << tcpConnection->peerAddress() << "\n";
-    //    qDebug() << tcpConnection->peerPort() << "\n";
-
 }
 
+//invoked automatically when bytes are available to be read from the socket. Determines the type
+//of command to be processed and acts accordingly.
 void CutpsServer::readBytes() {
 
     this->bytes = 0;
@@ -129,26 +129,33 @@ void CutpsServer::readBytes() {
        delete apic;
        this->sendJson(result);
    }
+   else if (cmd == "linkTextbook()") {
+       qDebug() << "processing command to link textbook..." << "\n";
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->linkTextbook(jsonDoc.object());
+       delete apic;
+       this->sendJson(result);
+   }
 
    else if (cmd == "cManagerViewCourses()") {
-       qDebug() << "processing command to create textbook..." << "\n";
+       qDebug() << "processing command to retrieve content manager list of courses..." << "\n";
        APIControl *apic = new APIControl();
        QJsonObject result = apic->cManagerViewCourses(jsonDoc.object());
        delete apic;
        this->sendJson(result);
 
    }
-   /*
    else if (cmd == "cManagerViewTextbooks()") {
-       qDebug() << "processing command to create textbook..." << "\n";
+       qDebug() << "processing command to retries content manager list of textbook..." << "\n";
        APIControl *apic = new APIControl();
        QJsonObject result = apic->cManagerViewTextbooks(jsonDoc.object());
        delete apic;
        this->sendJson(result);
    }
-   */
+
 } //readbytes
 
+//writes a json object to the tcp socket
 void CutpsServer::sendJson(QJsonObject &json) {
         QJsonDocument jdoc = QJsonDocument(json);
         bytes = this->tcpConnection->write(jdoc.toJson());

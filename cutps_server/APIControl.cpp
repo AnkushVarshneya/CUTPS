@@ -104,23 +104,60 @@ QJsonObject APIControl::createCourse(QJsonObject json){
     return r;
 }
 
-//QJsonObject APIControl::cManagerViewTextbooks(QJsonObject json) {
+QJsonObject APIControl::cManagerViewTextbooks(QJsonObject json) {
 
-//    Term term;
-//    term.read(json["Term"].toObject());
-//    QueryControl *query = new QueryControl();
-//    //
-//    delete query;
-//    QJsonArray resultArray;
-//    foreach(Course *crs, result){
-//        QJsonObject json;
-//        crs->write(json);
-//        resultArray.append(json);
-//    }
+    Term* term = new Term();
+    term->read(json["Term"].toObject());
 
-//    QJsonObject r;
-//    r["courses:"] = resultArray;
-//    qDebug() << r;
-//    return r;
+    QueryControl *query = new QueryControl();
+    QList<Textbook*> result  = query->viewAllTextbooks(term->getTermID());
+    delete term;
+    delete query;
+    QJsonArray resultArray;
+    foreach(Textbook *txt, result){
+        QJsonObject json;
+        txt->write(json);
+        resultArray.append(json);
+    }
 
-//}
+    QJsonObject r;
+    r["textbooks:"] = resultArray;
+    qDebug() << r;
+    return r;
+
+}
+
+QJsonObject APIControl::cManagerViewCourses(QJsonObject json){
+    Term* term = new Term();
+    term->read(json["Term"].toObject());
+
+    QueryControl *query = new QueryControl();
+    QList<Course*> result  = query->viewCourses(term->getTermID());
+    delete term;
+    delete query;
+    QJsonArray resultArray;
+    foreach(Course *crs, result){
+        QJsonObject json;
+        crs->write(json);
+        resultArray.append(json);
+    }
+
+    QJsonObject r;
+    r["courses:"] = resultArray;
+    qDebug() << r;
+    return r;
+}
+
+QJsonObject APIControl::linkTextbook(QJsonObject json){
+    Textbook* linkText = new Textbook();
+    Course* linkCourse = new Course();
+    qint32 termID = json["termID"].toDouble();
+    linkText->read(json["Textbook"].toObject());
+    linkCourse->read(json["Course"].toObject());
+    QueryControl *query = new QueryControl();
+    bool result = query->linkTextbook(linkText,linkCourse,termID);
+    delete query, linkText, linkCourse;
+    QJsonObject r;
+    r["Boolean:"] = result;
+    return r;
+}

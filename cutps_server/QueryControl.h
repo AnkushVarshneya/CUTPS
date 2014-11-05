@@ -15,6 +15,9 @@ public:
     bool saveBillingInformation(const QString, PaymentInformation*);
     bool createCourse(Course*, qint32);
     bool createTextbook(Textbook*);
+    QList<Textbook*>& viewAllTextbooks(qint32);
+    QList<Course*>& viewCourses(qint32);
+    bool linkTextbook(Textbook*, Course*, qint32);
 private:
     QSqlDatabase db;
 };

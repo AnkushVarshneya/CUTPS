@@ -33,8 +33,8 @@ public:
     QJsonObject studentViewTextbooks(QJsonObject json);
 
     QJsonObject viewShoppingCart(QJsonObject json, QMap<QString, ShoppingCart> testStudentShoppingCart);
-//    QJsonObject addContent(QJsonObject json);
-//    QJsonObject emptyShoppingCart(QJsonObject json);
+    QJsonObject addContent(QJsonObject json, QMap<QString,ShoppingCart> testStudentShoppingCart);
+    QJsonObject emptyShoppingCart(QJsonObject json, QMap<QString,ShoppingCart> testStudentShoppingCart);
     QJsonObject getExistingPaymentInfo(QJsonObject json);
     QJsonObject savePaymentInfo(QJsonObject json);
 

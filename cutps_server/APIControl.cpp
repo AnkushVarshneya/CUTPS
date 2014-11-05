@@ -80,6 +80,33 @@ QJsonObject APIControl::viewShoppingCart(QJsonObject json, QMap<QString, Shoppin
     return result;
 }
 
+/*
+QJsonObject APIControl::addContent(QJsonObject json, QMap<QString, ShoppingCart> testStudentShoppingCart){
+    QJsonObject result;
+    QString stuNum = json["Student Number"].toString();
+    qint32 itemID = json["Item ID"].toDouble();
+    qint32 quantity = json["Quantity"].toDouble();
+    QueryControl query = new QueryControl();
+    QList<
+}
+*/
+
+QJsonObject APIControl::emptyShoppingCart(QJsonObject json, QMap<QString,ShoppingCart> testStudentShoppingCart ){
+    QJsonObject result;
+    QString stuNum = json["Student Number"].toString();
+    ShoppingCart cart;
+    if(testStudentShoppingCart.contains(stuNum)) {
+        testStudentShoppingCart.insert(stuNum, cart);
+        result["Boolean:"] = true;
+    }
+    else{
+        result["Boolean:"] = false;
+    }
+    return result;
+}
+
+
+
 QJsonObject APIControl::savePaymentInfo(QJsonObject json){
 
     QString stuNum = json["Student Number"].toString();

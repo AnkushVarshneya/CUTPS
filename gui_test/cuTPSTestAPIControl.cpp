@@ -52,16 +52,17 @@ QList<Course*>& cuTPSTestAPIControl::studentViewTextbooks(QString stuNum, Term *
     qDebug() << res.toJson();
 
     //Placeholder to when we read back from the server to get the list of textbooks
-    QList<Course*> result;
+    QList<Course*>* result = new QList<Course*>();
     QJsonArray courseArray = res.object()["courses:"].toArray();
-    for (int courseIndex = 0; courseIndex<courseArray.size();++courseIndex){
-        QJsonObject courseObject = courseArray[courseIndex].toObject();
-        Course* newCourse = new Course();
-        newCourse->read(courseObject);
-        result.append(newCourse);
+    if(!courseArray.isEmpty()){
+        for (int courseIndex = 0; courseIndex<courseArray.size();++courseIndex){
+            QJsonObject courseObject = courseArray[courseIndex].toObject();
+            Course* newCourse = new Course();
+            newCourse->read(courseObject);
+            result->append(newCourse);
+        }
     }
-    qDebug() << result.front()->getRequiredTextbooks().front()->getItemTitle();
-    return result;
+    return *result;
 
 }
 
@@ -184,12 +185,22 @@ QList<Textbook*>& cuTPSTestAPIControl::cManagerViewTextbooks(Term *aTerm){
     api_server_call["Term"] = termObject;
     conMan->send(api_server_call);
     conMan->getTcp()->waitForReadyRead();
+    QJsonDocument res = conMan->getResult();
+    QJsonArray textArray = res.object()["textbooks:"].toArray();
+    if(!textArray.isEmpty()){
+        for (int textIndex = 0; textIndex<textArray.size();++textIndex){
+            QJsonObject textObject = textArray[textIndex].toObject();
+            Textbook* newText = new Textbook();
+            newText->read(textObject);
+            textbooks.append(newText);
+        }
+    }
     return textbooks;
 }
 
 //Content Manager View Courses
 QList<Course*>& cuTPSTestAPIControl::cManagerViewCourses(Term *aTerm){
-    QList<Course*> courses;
+
     QJsonObject api_server_call;
     QString functionCall = "cManagerViewCourses()";
     api_server_call["Function:"] = functionCall;
@@ -199,5 +210,18 @@ QList<Course*>& cuTPSTestAPIControl::cManagerViewCourses(Term *aTerm){
     conMan->send(api_server_call);
     conMan->getTcp()->waitForReadyRead();
 
-    return courses;
+    QJsonDocument res = conMan->getResult();
+
+    //Placeholder to when we read back from the server to get the list of textbooks
+    QList<Course*>* result = new QList<Course*>();
+    QJsonArray courseArray = res.object()["courses:"].toArray();
+    if(!courseArray.isEmpty()){
+        for (int courseIndex = 0; courseIndex<courseArray.size();++courseIndex){
+            QJsonObject courseObject = courseArray[courseIndex].toObject();
+            Course* newCourse = new Course();
+            newCourse->read(courseObject);
+            result->append(newCourse);
+        }
+    }
+    return *result;
 }

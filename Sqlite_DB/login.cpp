@@ -15,7 +15,7 @@ Login::Login(QWidget *parent) :
         qDebug() << "FAILED TO CONNECT TO DATA BASE";
     else {
         qDebug() << "CONNECT TO DATA BASE";
-
+/*
         // test for view studentView
         foreach(Course *crs, studentViewTextbooks("100853074", 1)){
             QJsonObject json = QJsonObject();
@@ -40,7 +40,7 @@ Login::Login(QWidget *parent) :
             info2.write(json);
             qDebug() <<json;
         }
-/*
+
         //test for creating a textbook
         Textbook *textbook = new Textbook();
         Chapter *chapter = new Chapter();
@@ -67,6 +67,14 @@ Login::Login(QWidget *parent) :
             qDebug() <<json<< endl;
         }
 */
+
+        // test for viewAllTerm
+        foreach(Term *tr, viewAllTerm()){
+            QJsonObject json = QJsonObject();
+            tr->write(json);
+            qDebug() <<json<< endl;
+        }
+
         qDebug() << resetDatabase();
         //if there was a connection end it
         QSqlDatabase::database().commit();
@@ -76,6 +84,27 @@ Login::Login(QWidget *parent) :
 Login::~Login()
 {
     delete ui;
+}
+
+QList<Term*>& Login::viewAllTerm() {
+    QList<Term*> *terms = new QList<Term*>();
+    // get all terms
+    QSqlQuery termQuery;
+    termQuery.prepare("SELECT * FROM Term ");
+    termQuery.exec();
+    qDebug() << termQuery.lastError();
+    while (termQuery.next()){
+        Term *term = new Term(QDate::fromString(termQuery.value(termQuery.record().indexOf("startDate")).toString(), "yyyyMMdd"),
+                              QDate::fromString(termQuery.value(termQuery.record().indexOf("endDate")).toString(), "yyyyMMdd"),
+                              termQuery.value(termQuery.record().indexOf("termID")).toInt());
+        //get all course for term
+        foreach(Course *crs, viewCourses(term->getTermID())){
+            term->addCourse(crs);
+        }
+        //add to terms
+        terms->push_back(term);
+    }
+    return *terms;
 }
 
 bool Login::resetDatabase(){
@@ -450,7 +479,7 @@ QList<Course*>& Login::viewCourses(qint32 termID) {
                                 "ORDER BY Course.courseCode ASC, Course.section ASC;");
     courseQuery.bindValue(":termID", termID);
     courseQuery.exec();
-    qDebug() << courseQuery.lastError();
+
     while (courseQuery.next()){
         Course *course = new Course(courseQuery.value(courseQuery.record().indexOf("courseCode")).toString(),
                                    courseQuery.value(courseQuery.record().indexOf("section")).toString(),

@@ -106,7 +106,17 @@ void CutpsServer::readBytes() {
        this->sendJson(result);
       // delete doc;
    }
-
+   else if (cmd == "saveExistingPaymentInfo()") {
+       qDebug() << "processing command to save billing info..." << "\n";
+       APIControl *apic = new APIControl();
+       apic->savePaymentInfo(jsonDoc.object());
+       delete apic;
+   }
+//   else if (cmd == "createCourse()") {
+//       qDebug() << "processing command to create course..." << "\n";
+//       APIControl *apic = new APIControl();
+//       apic->createCourse(jsonDoc.object());
+//   }
 
 } //readbytes
 

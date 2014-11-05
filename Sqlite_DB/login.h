@@ -35,6 +35,8 @@ private:
     QList<Textbook*>& viewAllTextbooks(qint32);
     QList<Course*>& viewCourses(qint32);
 
+    bool resetDatabase();
+
 };
 
 #endif // LOGIN_H

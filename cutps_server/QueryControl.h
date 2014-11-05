@@ -18,6 +18,7 @@ public:
     QList<Textbook*>& viewAllTextbooks(qint32);
     QList<Course*>& viewCourses(qint32);
     bool linkTextbook(Textbook*, Course*, qint32);
+    bool resetDatabase();
 private:
     QSqlDatabase db;
 };

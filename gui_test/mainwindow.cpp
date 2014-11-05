@@ -258,6 +258,9 @@ void MainWindow::on_pushButton_clicked()
                 ui->textBrowser->setText("Pass: Expected no textbooks, got textbooks.");
             break;
 
+
+
+
         case ContentManagerViewCourses_nocourses:
             if(control->cManagerViewCourses(testTermEmpty).isEmpty())
                 ui->textBrowser->setText("Pass: Expected no Courses, got no Courses.");
@@ -273,6 +276,21 @@ void MainWindow::on_pushButton_clicked()
             break;
 
 
+
+
+        case StudentGetExistingPaymentInformation_hasinfo:
+            if(control->getExistingPaymentInfo("100859320"))
+                ui->textBrowser->setText("Pass: Expected Payment Information, got Payment Information.");
+            else
+                ui->textBrowser->setText("Failure: Expected Payment Information, got no Payment Information.");
+            break;
+
+        case StudentGetExistingPaymentInformation_noinfo:
+            if(control->getExistingPaymentInfo("123456789"))
+                ui->textBrowser->setText("Failure: Expected no Payment Information, got Payment Information.");
+            else
+                ui->textBrowser->setText("Pass: Expected no Payment Information, got no Payment Information.");
+                break;
 
 
 
@@ -604,12 +622,52 @@ void MainWindow::on_actionStudent_AddContent_itemnotfound_triggered()
     behaviour = StudentAddContent_itemnotfound;
 }
 
-void MainWindow::on_actionStudent_GetExistingBillingInformation_hasinfo_triggered()
+
+
+
+
+/****************************************
+Student Get Existing Billing Information
+****************************************/
+
+//There is existing Billing Information
+void MainWindow::on_actionStudent_GetExistingPaymentInformation_hasinfo_triggered()
+{
+    ui->textBrowser->setText("Get existing Billing Information when there is existing information.");
+    behaviour = StudentGetExistingPaymentInformation_hasinfo;
+}
+//No existing Billing Information
+void MainWindow::on_actionStudent_GetExistingPaymentInformation_noinfo_triggered()
+{
+    ui->textBrowser->setText("Get existing Billing Information when there isn't any existing information.");
+    behaviour = StudentGetExistingPaymentInformation_noinfo;
+}
+
+
+
+
+
+/*******************************
+Student Save Billing Information
+*******************************/
+
+//Invalid format
+void MainWindow::on_actionStudent_SavePaymentInformation_invalidformat_triggered()
 {
 
 }
+//Valid format, no existing information
+void MainWindow::on_actionStudent_SavePaymentInformation_validformat_triggered()
+{
 
-void MainWindow::on_actionStudent_GetExistingBillingInformation_noinfo_triggered()
+}
+//Valid format, existing information
+void MainWindow::on_actionStudent_SavePaymentInformation_hasinfo_triggered()
+{
+
+}
+//Student not found
+void MainWindow::on_actionStudent_SavePaymentInformation_studentnotfound_triggered()
 {
 
 }

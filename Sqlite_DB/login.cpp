@@ -23,7 +23,7 @@ Login::Login(QWidget *parent) :
         foreach(Course *crs, studentViewTextbooks("100853074", 1)){
             QJsonObject json = QJsonObject();
             crs->write(json);
-            //qDebug() <<json;
+            qDebug() <<json;
         }
 
         // test for getExistingBillingInfo
@@ -59,8 +59,7 @@ bool Login::saveBillingInformation(const QString studentNumber, PaymentInformati
     // edit payment information
     QSqlQuery PaymentInformationQuery;
 
-    PaymentInformationQuery.prepare("BEGIN TRANSACTION; "
-                                    "UPDATE PaymentInformation SET "
+    PaymentInformationQuery.prepare("UPDATE PaymentInformation SET "
                                         "creditCardNumber=:creditCardNumber, "
                                         "cardType=:cardType, "
                                         "cvv=:cvv, "
@@ -71,15 +70,7 @@ bool Login::saveBillingInformation(const QString studentNumber, PaymentInformati
                                         "city=:city, "
                                         "streetName=:streetName, "
                                         "houseNumber=:houseNumber "
-                                    "WHERE studentNumber=:studentNumber; "
-                                    "UPDATE User SET "
-                                        "fullName=:fullName "
-                                    "WHERE userName= "
-                                        "( "
-                                            "SELECT userName FROM Student "
-                                            "WHERE Student.studentNumber=:studentNumber "
-                                        "); "
-                                    "COMMIT;");
+                                    "WHERE studentNumber=:studentNumber; ");
 
     PaymentInformationQuery.bindValue(":creditCardNumber", info->getCreditCardInfo().getCreditCardNo());
     PaymentInformationQuery.bindValue(":cardType", info->getCreditCardInfo().getCardType());
@@ -91,8 +82,23 @@ bool Login::saveBillingInformation(const QString studentNumber, PaymentInformati
     PaymentInformationQuery.bindValue(":city", info->getBillInfo().getCity());
     PaymentInformationQuery.bindValue(":streetName", info->getBillInfo().getStreetName());
     PaymentInformationQuery.bindValue(":houseNumber", info->getBillInfo().getHouseNumber());
-    PaymentInformationQuery.bindValue(":fullName", info->getBillInfo().getName());
-    return PaymentInformationQuery.exec();
+    PaymentInformationQuery.bindValue(":studentNumber", studentNumber);
+
+    // edit name
+    QSqlQuery nameQuery;
+
+    nameQuery.prepare(  "UPDATE User SET "
+                            "fullName=:fullName "
+                        "WHERE userName= "
+                            "( "
+                                "SELECT userName FROM Student "
+                                "WHERE Student.studentNumber=:studentNumber "
+                            "); ");
+
+    nameQuery.bindValue(":fullName", info->getBillInfo().getName());
+    nameQuery.bindValue(":studentNumber", studentNumber);
+
+    return PaymentInformationQuery.exec() && nameQuery.exec();
 }
 
 

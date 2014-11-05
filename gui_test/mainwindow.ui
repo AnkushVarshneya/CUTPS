@@ -335,11 +335,6 @@
     <string>Term is not found in the database</string>
    </property>
   </action>
-  <action name="actionStudent_ViewShoppingCart_studentnotfound">
-   <property name="text">
-    <string>Student is not found in the database</string>
-   </property>
-  </action>
   <action name="actionStudent_EmptyShoppingCart_studentnotfound">
    <property name="text">
     <string>Student is not found in the database</string>

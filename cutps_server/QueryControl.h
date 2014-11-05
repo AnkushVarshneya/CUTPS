@@ -12,7 +12,7 @@ public:
     ~QueryControl();
     QList<Course*>& studentViewTextbooks(QString studentNumber, qint32 termID) const;
     PaymentInformation* getExistingBillingInfo(QString studentNumber) const;
-
+    bool saveBillingInformation(const QString, PaymentInformation*);
 private:
     QSqlDatabase db;
 };

@@ -101,7 +101,8 @@ bool cuTPSTestAPIControl::emptyShoppingCart(QString stuNum){
     api_server_call["Function:"] = functionCall;
     api_server_call["Student Number"] = stuNum;
     conMan->send(api_server_call);
-    return true;
+    conMan->getTcp()->waitForReadyRead();
+    return conMan->getResult().object()["Boolean:"].toBool();
 }
 
 //Get the existing payment info for a given student

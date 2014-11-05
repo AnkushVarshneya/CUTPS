@@ -295,14 +295,14 @@ void MainWindow::on_pushButton_clicked()
 
 
         case StudentEmptyShoppingCart_hasitems:
-            if(control->emptyShoppingCart("100853074"))
+            if(control->emptyShoppingCart("100859320"))
                 ui->textBrowser->setText("Pass: Emptied Shopping Cart.");
             else
                 ui->textBrowser->setText("Failure: Could not empty Shopping Cart.");
             break;
 
         case StudentEmptyShoppingCart_noitems:
-            if(control->emptyShoppingCart("195372839"))
+            if(control->emptyShoppingCart("100848920"))
                 ui->textBrowser->setText("Pass: Shopping Cart is already empty.");
             else
                 ui->textBrowser->setText("Failure: Could not empty Shopping Cart.");

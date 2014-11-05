@@ -96,6 +96,20 @@ void CutpsServer::readBytes() {
        delete apic;
        this->sendJson(result);
    }
+   /*
+   else if(cmd == "addContent()"){
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->addContent(jsonDoc.object(), testStudentShoppingCart);
+       delete apic;
+       this->sendJson(result);
+
+   }*/
+   else if(cmd == "emptyShoppingCart()"){
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->emptyShoppingCart(jsonDoc.object(), testStudentShoppingCart);
+       delete apic;
+       this->sendJson(result);
+   }
    else if (cmd == "getExistingBillingInfo()") {
        qDebug() << "processing command to get billing info..." << "\n";
        APIControl *apic = new APIControl();

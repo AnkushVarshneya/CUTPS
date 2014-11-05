@@ -39,7 +39,7 @@ public:
     void                setISBN         (QString);
     void                setDescription  (QString);
     void                setCoverImageLoc(QString);
-    void                addChapter(Chapter*);
+    void                addChapter      (Chapter*);
     bool                equals          (Textbook*);
 
     void                read(const QJsonObject &json);

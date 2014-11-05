@@ -118,7 +118,6 @@
      </property>
      <addaction name="actionStudent_ViewShoppingCart_hasitems"/>
      <addaction name="actionStudent_ViewShoppingCart_noitems"/>
-     <addaction name="actionStudent_ViewShoppingCart_studentnotfound"/>
     </widget>
     <widget class="QMenu" name="menuEmpty_Shopping_Cart">
      <property name="title">
@@ -126,7 +125,6 @@
      </property>
      <addaction name="actionStudent_EmptyShoppingCart_hasitems"/>
      <addaction name="actionStudent_EmptyShoppingCart_noitems"/>
-     <addaction name="actionStudent_EmptyShoppingCart_studentnotfound"/>
     </widget>
     <widget class="QMenu" name="menuAdd_Content">
      <property name="title">

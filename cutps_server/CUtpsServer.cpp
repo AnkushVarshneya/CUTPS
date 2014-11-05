@@ -22,6 +22,7 @@ void CutpsServer::startServer()
     //const QString & testaddress = "1.2.3.4";
    QHostAddress address = QHostAddress(testaddress);
 
+
    if (!this->listen(address, port))
     {
         qDebug() << "Could not start server.";
@@ -52,22 +53,26 @@ void CutpsServer::readBytes() {
     this->bytes = this->tcpConnection->bytesAvailable();
     qDebug() << "in server readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
 
-    char *data = new char[this->bytes];
+   char *data = new char[this->bytes];
    bytes = this->tcpConnection->read(data, bytes);
    QString cmd;
    qDebug() << "bytes read: " << bytes << "\n";
    QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
    cmd = jsonDoc.object()["Function:"].toString();
    qDebug() << cmd;
-       if(cmd == "studentViewTextbooks()"){
-           APIControl *apic = new APIControl();
-           QJsonObject result = apic->studentViewTextbooks(jsonDoc.object());
-           delete apic;
-           QJsonDocument *doc = new QJsonDocument(result);
-           qDebug() << doc->toJson();
-           this->sendJson(result);
-           //TODO: write back to client the list of courses in QJSON object
-       }
+   if(cmd == "studentViewTextbooks()"){
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->studentViewTextbooks(jsonDoc.object());
+       delete apic;
+       QJsonDocument *doc = new QJsonDocument(result);
+       qDebug() << doc->toJson();
+       this->sendJson(result);
+       //TODO: write back to client the list of courses in QJSON object
+   }
+   else if(cmd == "viewShoppingCart()"){
+
+   }
+
    qDebug() << jsonDoc.toJson();
 } //readbytes
 

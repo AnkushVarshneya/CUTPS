@@ -53,8 +53,9 @@ create table Student(
 --creating the Table called PaymentInformation
 create table PaymentInformation(
 	creditCardNumber varchar(50) NOT NULL,
+	cardType varchar(50),
 	cvv varchar(50),
-	expirationDate date,
+	expirationDate varchar(10),
 	nameOnCard varchar(50),
 	postalCode varchar(7),
 	province varchar(50),

@@ -12,37 +12,19 @@ ConnectionManager::ConnectionManager(QObject *parent) :
 }
 
 void ConnectionManager::connectToHost(QHostAddress host, int port) {
-//    this->tcpConnection->connectToHost(host, port);
-//    qDebug() << this->tcpConnection->state();
-//    qDebug() << this->tcpConnection->errorString();
 
     const QString & testaddress = "0.0.0.0";
     QHostAddress address = QHostAddress(testaddress);
     this->tcpConnection->connectToHost(address, 1234);
-//    this->tcpConnection->write(" testing data write to server. \n");
-//    this->tcpConnection->write(" testing further data write to server. \n");
-
     connect(this->tcpConnection, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
 }
 
-//void ConnectionManager::testSend(BillingAddress *testadr) {
-//    QJsonObject json;
-//    testadr->write(json);
-//    QJsonDocument jdoc = QJsonDocument(json);
+QJsonDocument ConnectionManager::getResult() { return result ; }
+QTcpSocket* ConnectionManager::getTcp() { return this->tcpConnection ; }
+qint64 ConnectionManager::getBytes() { return this->bytes ; }
 
-//    QByteArray ary;
-
-//    qDebug() << "length of json obj: " << json.length() << "\n";
-//    qDebug() << "sizeof json obj: " << sizeof(json) << "\n";
-//    qDebug() << json << "\n";
-
-//    qDebug() << "sizeof jdoc obj: " << sizeof(jdoc) << "\n";
-//    qDebug() << jdoc << "\n";
-
-//    this->tcpConnection->write(jdoc.toJson());
-
-//}
+void ConnectionManager::setBytes(qint64 bytes) {this->bytes = bytes ; }
 
 void ConnectionManager::testSend(CUtpsDataObject *data) {
       QJsonObject json;
@@ -63,42 +45,21 @@ void ConnectionManager::send(QJsonObject &json){
     qDebug() << "bytes written: " << bytes << "\n";
 }
 
-//void ConnectionManager::testSend(Chapter *chap) {
-//    QJsonObject json;
-//    chap->write(json);
-//    QJsonDocument jdoc = QJsonDocument(json);
-//    this->tcpConnection->write(jdoc.toJson());
-//}
-
-//void ConnectionManager::testSend(Textbook *text) {
-//    QJsonObject json;
-//    text->write(json);
-//    QJsonDocument jdoc = QJsonDocument(json);
-//    this->tcpConnection->write(jdoc.toJson());
-
-//}
-
 
 void ConnectionManager::readyRead() {
     qDebug() << "ready to read stuff from server \n";
     qDebug() << "bytes avail: " << this->tcpConnection->bytesAvailable();
     qDebug() << "peer info: " << this->tcpConnection->peerName() << this->tcpConnection->peerAddress() << this->tcpConnection->peerPort() << "\n";
 
+    this->bytes = 0;
+    this->bytes = this->tcpConnection->bytesAvailable();
+    qDebug() << "in client readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
 
-//     char *data = new char[50];
-//     bytes = this->tcpConnection->read(data, bytes);
-//     cout << "does this even work";
-//     cout << data;
-//     cout << "really";
-
-//     this->bytes = 0;
-//     this->bytes = this->tcpConnection->bytesAvailable();
-//     qDebug() << "in server readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
-
-//     char *data = new char[this->bytes];
-//     bytes = this->tcpConnection->read(data, bytes);
-//     qDebug() << "bytes read: " << bytes << "\n";
-//     qDebug() << data;
+    char *data = new char[this->bytes];
+   bytes = this->tcpConnection->read(data, bytes);
+   qDebug() << "bytes read: " << bytes << "\n";
+   result = QJsonDocument::fromJson(data);
+//   qDebug() << result.toJson();
 
 }
 

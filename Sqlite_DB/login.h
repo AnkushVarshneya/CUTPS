@@ -3,10 +3,10 @@
 
 #include <QMainWindow>
 #include <QtSql>
-#include<QDebug>
-#include<QFileInfo>
+#include <QDebug>
+#include <QFileInfo>
 #include "Course.h"
-
+#include "PaymentInformation.h"
 namespace Ui {
 class Login;
 }
@@ -22,7 +22,7 @@ public:
 private:
     Ui::Login *ui;
     QList<Course*>& studentViewTextbooks(QString, qint32) const;
-
+    PaymentInformation& getExistingBillingInfo(QString) const;
 };
 
 #endif // LOGIN_H

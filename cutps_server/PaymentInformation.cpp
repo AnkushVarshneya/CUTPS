@@ -2,8 +2,8 @@
 
 //Constructor
 PaymentInformation::PaymentInformation() {
-   BillingAddress *billAddress = new BillingAddress();
-   CreditCardInformation *creditCardInfo = new CreditCardInformation();
+   billAddress = BillingAddress();
+   creditCardInfo = CreditCardInformation();
 }
 
 //Destructor

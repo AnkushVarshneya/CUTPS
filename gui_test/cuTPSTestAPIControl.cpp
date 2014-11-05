@@ -6,7 +6,9 @@ cuTPSTestAPIControl::cuTPSTestAPIControl()
 
 void cuTPSTestAPIControl::setConnectionManager(ConnectionManager* c){
     conMan = c;
+//    connect(this->conMan->getTcp(), SIGNAL(readyRead()), this, SLOT(readBytes()));
 }
+
 
 bool cuTPSTestAPIControl::linkTextbook(Textbook* textbook, Course* course){
     return true;
@@ -32,10 +34,21 @@ QList<Course*>& cuTPSTestAPIControl::studentViewTextbooks(QString stuNum, Term *
     api_server_call["Term"] = termObject;
 
     conMan->send(api_server_call);
+    conMan->getTcp()->waitForReadyRead();
+    QJsonDocument res = conMan->getResult();
+    qDebug() << res.toJson();
 
     //Placeholder to when we read back from the server to get the list of textbooks
-    QList<Course*> temp;
-    return temp;
+    QList<Course*> result;
+    QJsonArray courseArray = res.object()["courses:"].toArray();
+    for (int courseIndex = 0; courseIndex<courseArray.size();++courseIndex){
+        QJsonObject courseObject = courseArray[courseIndex].toObject();
+        Course* newCourse = new Course();
+        newCourse->read(courseObject);
+        result.append(newCourse);
+    }
+    qDebug() << result.front()->getRequiredTextbooks().front()->getItemTitle();
+    return result;
 
 }
 

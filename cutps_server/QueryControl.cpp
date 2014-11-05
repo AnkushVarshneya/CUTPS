@@ -278,6 +278,8 @@ bool QueryControl::resetDatabase(){
 
 }
 
+//Query the database to get the existing billing info for a student
+//Returns a payment information (or NULL if there was no billing info)
 PaymentInformation* QueryControl::getExistingBillingInfo(QString studentNumber) const{
     PaymentInformation *info;
 
@@ -465,6 +467,8 @@ QList<Course*>& QueryControl::studentViewTextbooks(QString studentNumber, qint32
     return *courses;
 }
 
+//Overwrites the Billing information for a student given his student number key
+//Returns bool whether or not it is successful
 bool QueryControl::saveBillingInformation(const QString studentNumber, PaymentInformation *info){
 
     //check if there is a student with that id
@@ -523,6 +527,8 @@ bool QueryControl::saveBillingInformation(const QString studentNumber, PaymentIn
     return false;
 }
 
+//Queries the database to insert a new course into the database
+//Returns a bool as to whether or not the course was successfully inserted
 bool QueryControl::createCourse(Course *course, qint32 termID){
     // create a course
     QSqlQuery courseQuery;
@@ -537,6 +543,9 @@ bool QueryControl::createCourse(Course *course, qint32 termID){
     return courseQuery.exec();
 }
 
+//Queries the database to insert the textbook into the textbook table
+//Sets the next item ID in PurchasableItem table as the maxID + 1
+//Returns boolean as to whether or not it was successfully added
 bool QueryControl::createTextbook(Textbook *textbook){
     bool noError = true;
 
@@ -648,6 +657,8 @@ bool QueryControl::createTextbook(Textbook *textbook){
     return noError;
 }
 
+//Queries the database to view all textbooks for a given term
+//Returns a list of textbooks
 QList<Textbook*>& QueryControl::viewAllTextbooks(qint32 termID){
     QList<Textbook*> *textbooks = new QList<Textbook*>();
 
@@ -747,6 +758,8 @@ QList<Textbook*>& QueryControl::viewAllTextbooks(qint32 termID){
     return *textbooks;
 }
 
+//Queries the database to view all the courses
+//Returns a list of courses
 QList<Course*>& QueryControl::viewCourses(qint32 termID) {
     QList<Course*> *courses = new QList<Course*>();
 
@@ -874,6 +887,8 @@ QList<Course*>& QueryControl::viewCourses(qint32 termID) {
     return *courses;
 }
 
+//Assign a course with a textbook,
+//Returns a boolean as to whether or not it was sucessfully linked
 bool QueryControl::linkTextbook(Textbook *textbook, Course *course, qint32 termID){
     // link a text book to a course
     QSqlQuery linkQuery;

@@ -14,7 +14,7 @@ public:
     PaymentInformation* getExistingBillingInfo(QString studentNumber) const;
     bool saveBillingInformation(const QString, PaymentInformation*);
     bool createCourse(Course*, qint32);
-
+    bool createTextbook(Textbook*);
 private:
     QSqlDatabase db;
 };

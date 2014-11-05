@@ -38,11 +38,11 @@ public:
     QJsonObject getExistingPaymentInfo(QJsonObject json);
     QJsonObject savePaymentInfo(QJsonObject json);
 
-//    QJsonObject createTextbook(QJsonObject json);
+    QJsonObject createTextbook(QJsonObject json);
     QJsonObject createCourse(QJsonObject json);
 //    QJsonObject linkTextbook(QJsonObject json);
 //    QJsonObject cManagerViewTextbooks(QJsonObject json);
-//    QJsonObject cManagerViewCourses(QJsonObject json);
+    QJsonObject cManagerViewCourses(QJsonObject json);
 
 
 };

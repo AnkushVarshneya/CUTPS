@@ -125,7 +125,9 @@ bool cuTPSTestAPIControl::savePaymentInfo(QString stuNum, PaymentInformation* pa
     payInfo->write(payInfoObject);
     api_server_call["Payment Info"] = payInfoObject;
     conMan->send(api_server_call);
-    return true;
+    conMan->getTcp()->waitForReadyRead();
+
+    return conMan->getResult().object()["Boolean:"].toBool();
 
 }
 
@@ -138,8 +140,8 @@ bool cuTPSTestAPIControl::createTextbook(Textbook *aTextbook){
     aTextbook->write(textbookObject);
     api_server_call["Textbook"] = textbookObject;
     conMan->send(api_server_call);
-
-    return true;
+    conMan->getTcp()->waitForReadyRead();
+    return conMan->getResult().object()["Boolean:"].toBool();
 }
 
 //Create a course
@@ -150,8 +152,11 @@ bool cuTPSTestAPIControl::createCourse(Course *aCourse, qint32 termID){
     QJsonObject courseObject;
     aCourse->write(courseObject);
     api_server_call["Course"] = courseObject;
+    api_server_call["TermID"] = termID;
     conMan->send(api_server_call);
-    return true;
+    conMan->getTcp()->waitForReadyRead();
+
+    return conMan->getResult().object()["Boolean:"].toBool();
 }
 
 //Content Manager View textbooks

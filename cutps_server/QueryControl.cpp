@@ -204,3 +204,175 @@ QList<Course*>& QueryControl::studentViewTextbooks(QString studentNumber, qint32
     }
     return *courses;
 }
+
+bool QueryControl::saveBillingInformation(const QString studentNumber, PaymentInformation *info){
+
+    // edit payment information
+    QSqlQuery PaymentInformationQuery;
+
+    PaymentInformationQuery.prepare("UPDATE PaymentInformation SET "
+                                        "creditCardNumber=:creditCardNumber, "
+                                        "cardType=:cardType, "
+                                        "cvv=:cvv, "
+                                        "expirationDate=:expirationDate, "
+                                        "nameOnCard=:nameOnCard, "
+                                        "postalCode=:postalCode, "
+                                        "province=:province, "
+                                        "city=:city, "
+                                        "streetName=:streetName, "
+                                        "houseNumber=:houseNumber "
+                                    "WHERE studentNumber=:studentNumber; ");
+
+    PaymentInformationQuery.bindValue(":creditCardNumber", info->getCreditCardInfo().getCreditCardNo());
+    PaymentInformationQuery.bindValue(":cardType", info->getCreditCardInfo().getCardType());
+    PaymentInformationQuery.bindValue(":cvv", info->getCreditCardInfo().getCVV());
+    PaymentInformationQuery.bindValue(":expirationDate", info->getCreditCardInfo().getExpDate());
+    PaymentInformationQuery.bindValue(":nameOnCard", info->getCreditCardInfo().getNameOnCard());
+    PaymentInformationQuery.bindValue(":postalCode", info->getBillInfo().getPostalCode());
+    PaymentInformationQuery.bindValue(":province", info->getBillInfo().getProvince());
+    PaymentInformationQuery.bindValue(":city", info->getBillInfo().getCity());
+    PaymentInformationQuery.bindValue(":streetName", info->getBillInfo().getStreetName());
+    PaymentInformationQuery.bindValue(":houseNumber", info->getBillInfo().getHouseNumber());
+    PaymentInformationQuery.bindValue(":studentNumber", studentNumber);
+
+    // edit name
+    QSqlQuery nameQuery;
+
+    nameQuery.prepare(  "UPDATE User SET "
+                            "fullName=:fullName "
+                        "WHERE userName= "
+                            "( "
+                                "SELECT userName FROM Student "
+                                "WHERE Student.studentNumber=:studentNumber "
+                            "); ");
+
+    nameQuery.bindValue(":fullName", info->getBillInfo().getName());
+    nameQuery.bindValue(":studentNumber", studentNumber);
+
+    return PaymentInformationQuery.exec() && nameQuery.exec();
+}
+
+bool QueryControl::createCourse(Course *course, qint32 termID){
+    // create a course
+    QSqlQuery courseQuery;
+
+    courseQuery.prepare("INSERT INTO Course (courseCode,section,instructor,termID) "
+                            "VALUES (:courseCode,:section,:instructor,:termID);");
+    courseQuery.bindValue(":courseCode", course->getCourseCode());
+    courseQuery.bindValue(":section", course->getCourseSection());
+    courseQuery.bindValue(":instructor", course->getInstructor());
+    courseQuery.bindValue(":termID", termID);
+
+    return courseQuery.exec();
+}
+
+bool QueryControl::createTextbook(Textbook *textbook){
+    bool noError = true;
+
+    //get the current max item id
+    int nextItemID = -1;
+    QSqlQuery maxItemID("SELECT MAX(itemID)+1 AS nextItemID FROM PurchasableItem;");
+    noError = noError && maxItemID.exec();
+    if(maxItemID.first()){
+        nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
+    }
+    else{
+        nextItemID++;
+    }
+    textbook->setItemID(nextItemID);
+
+    // create a textbook
+    QSqlQuery textBookQuery;
+
+    textBookQuery.prepare("INSERT INTO Textbook (ISBN,coverImageLocation,Desc,Author,TextbookTitle,Publisher,Edition,itemID) "
+                            "VALUES (:ISBN,:coverImageLocation,:Desc,:Author,:TextbookTitle,:Publisher,:Edition,:itemID);");
+    textBookQuery.bindValue(":ISBN", textbook->getISBN());
+    textBookQuery.bindValue(":coverImageLocation", textbook->getCoverImageLoc());
+    textBookQuery.bindValue(":Desc", textbook->getDesc());
+    textBookQuery.bindValue(":Author", textbook->getAuthor());
+    textBookQuery.bindValue(":TextbookTitle", textbook->getItemTitle());
+    textBookQuery.bindValue(":Publisher", textbook->getPublisher());
+    textBookQuery.bindValue(":Edition", textbook->getEdition());
+    textBookQuery.bindValue(":itemID", textbook->getItemID());
+
+    //create its PurchasableItem
+    QSqlQuery textBookItemQuery;
+
+    textBookItemQuery.prepare("INSERT INTO PurchasableItem (itemID,price,availability) "
+                      "VALUES (:itemID,:price,:availability);");
+    textBookItemQuery.bindValue(":itemID", textbook->getItemID());
+    textBookItemQuery.bindValue(":price", textbook->getPrice());
+    textBookItemQuery.bindValue(":availability", textbook->isAvailable());
+
+    noError = noError && textBookQuery.exec();
+    noError = noError && textBookItemQuery.exec();
+
+    foreach(Chapter *chapter, textbook->getChapterList()){
+        noError = noError && maxItemID.exec();
+        if(maxItemID.first()){
+            nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
+        }
+        else{
+            nextItemID++;
+        }
+        chapter->setItemID(nextItemID);
+
+        //create a chapter
+        QSqlQuery chapterQuery;
+
+        chapterQuery.prepare("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
+                                "VALUES (:ISBN,:chapterNumber,:chapterTitle,:itemID);");
+        chapterQuery.bindValue(":ISBN", textbook->getISBN());
+        chapterQuery.bindValue(":chapterNumber", chapter->getChapterNumber());
+        chapterQuery.bindValue(":chapterTitle", chapter->getItemTitle());
+        chapterQuery.bindValue(":itemID", chapter->getItemID());
+
+        //create its PurchasableItem
+        QSqlQuery chapterItemQuery;
+
+        chapterItemQuery.prepare("INSERT INTO PurchasableItem (itemID,price,availability) "
+                          "VALUES (:itemID,:price,:availability);");
+        chapterItemQuery.bindValue(":itemID", chapter->getItemID());
+        chapterItemQuery.bindValue(":price", chapter->getPrice());
+        chapterItemQuery.bindValue(":availability", chapter->isAvailable());
+
+        noError = noError && chapterQuery.exec();
+        noError = noError && chapterItemQuery.exec();
+
+        foreach(Section *section, chapter->getChapterSections()){
+            noError = noError && maxItemID.exec();
+            if(maxItemID.first()){
+                nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
+            }
+            else{
+                nextItemID++;
+            }
+            section->setItemID(nextItemID);
+
+            //create a section
+            QSqlQuery sectionQuery;
+
+            sectionQuery.prepare("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                    "VALUES (:ISBN,:chapterNumber,:sectionNumber,:sectionTitle,:itemID);");
+            sectionQuery.bindValue(":ISBN", textbook->getISBN());
+            sectionQuery.bindValue(":chapterNumber", chapter->getChapterNumber());
+            sectionQuery.bindValue(":sectionNumber", section->getSectionNumber());
+            sectionQuery.bindValue(":sectionTitle", section->getItemTitle());
+            sectionQuery.bindValue(":itemID", section->getItemID());
+
+            //create its PurchasableItem
+            QSqlQuery sectionItemQuery;
+
+            sectionItemQuery.prepare("INSERT INTO PurchasableItem (itemID,price,availability) "
+                              "VALUES (:itemID,:price,:availability);");
+            sectionItemQuery.bindValue(":itemID", section->getItemID());
+            sectionItemQuery.bindValue(":price", section->getPrice());
+            sectionItemQuery.bindValue(":availability", section->isAvailable());
+
+            noError = noError && sectionQuery.exec();
+            noError = noError && sectionItemQuery.exec();
+        }
+    }
+
+    return noError;
+}

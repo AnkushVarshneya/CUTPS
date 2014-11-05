@@ -88,8 +88,8 @@ void MainWindow::on_pushButton_clicked()
 
         case ContentManagerCreateCourse_ValidCourse:
             //creating valid course
-            t = Term(QDate(2015,01,05),QDate(2015,05,01),2);
-            c.setTerm(t);
+
+            c = Course("COMP3005","B","Louis Nel");
             if(control->createCourse(&c, 1))
                 ui->textBrowser->setText("Pass: Course successfully added.");
             else
@@ -361,18 +361,6 @@ void MainWindow::on_pushButton_clicked()
                 ui->textBrowser->setText("Failure: Added an item not found in the database.");
             else
                 ui->textBrowser->setText("Pass: Could not add an item not found in the database.");
-            break;
-
-
-
-
-
-        case StudentSavePaymentInformation_invalidformat:
-            payInfo->setBillInfo(0);
-            if(control->savePaymentInfo("100853074",payInfo))
-                ui->textBrowser->setText("Failure: Saved Payment Information with an invalid format");
-            else
-                ui->textBrowser->setText("Pass: Could not save Payment Information with an invalid format.");
             break;
 
         case StudentSavePaymentInformation_validformat:

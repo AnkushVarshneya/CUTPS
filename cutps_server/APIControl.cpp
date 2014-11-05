@@ -28,6 +28,10 @@ QJsonObject APIControl::studentViewTextbooks(QJsonObject json) {
     qDebug() << r;
     return r;
 }
+
+//API getExistingPaymentInfo() that takes in the json object,
+//reads it, creates a query control to get existing payment information
+//from the database, then returns a payment information object.
 QJsonObject APIControl::getExistingPaymentInfo(QJsonObject json) {
     QString stuNum = json["Student Number"].toString();
     qDebug() << "testing billing info on student num: " << stuNum << "\n";
@@ -51,11 +55,20 @@ QJsonObject APIControl::getExistingPaymentInfo(QJsonObject json) {
 
 }
 
-//QJsonObject APIControl::createTextbook(QJsonObject json) {
-//    QueryControl *query = new QueryControl(this);
-//    query->createTextbook();
-//}
 
+QJsonObject APIControl::createTextbook(QJsonObject json) {
+    Textbook* argText = new Textbook();
+    argText->read(json["Textbook"].toObject());
+    QueryControl *query = new QueryControl();
+    bool result  = query->createTextbook(argText);
+    delete argText;
+    QJsonObject r;
+    r["Boolean:"] = result;
+    return r;
+}
+
+
+//API viewShoppingCart()
 QJsonObject APIControl::viewShoppingCart(QJsonObject json, QMap<QString, ShoppingCart> testStudentShoppingCart) {
     QJsonObject result;
     QString stuNum = json["Student Number"].toString();
@@ -65,6 +78,30 @@ QJsonObject APIControl::viewShoppingCart(QJsonObject json, QMap<QString, Shoppin
        }
     cart.write(result);
     return result;
+}
+
+QJsonObject APIControl::savePaymentInfo(QJsonObject json){
+
+    QString stuNum = json["Student Number"].toString();
+    PaymentInformation *paymentInfo = new PaymentInformation;
+    paymentInfo->read(json["Payment Info"].toObject());
+    QueryControl *query = new QueryControl();
+    bool result  = query->saveBillingInformation(stuNum,paymentInfo);
+    QJsonObject r;
+    r["Boolean:"] = result;
+    return r;
+}
+
+QJsonObject APIControl::createCourse(QJsonObject json){
+    Course* argCourse = new Course();
+    argCourse->read(json["Course"].toObject());
+    qint32 termID = json["TermID"].toDouble();
+    QueryControl *query = new QueryControl();
+    bool result  = query->createCourse(argCourse,termID);
+    delete argCourse;
+    QJsonObject r;
+    r["Boolean:"] = result;
+    return r;
 }
 
 //QJsonObject APIControl::cManagerViewTextbooks(QJsonObject json) {

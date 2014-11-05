@@ -1,3 +1,11 @@
+/*APIControl class header
+ *
+ *
+ *APIControl is used to manage access to server application programming interface functionality.
+ *An APIControl object facilitates communication between the client and the database.
+ *
+ *Traceability: NR-22
+ */
 #ifndef APICONTROL_H
 #define APICONTROL_H
 #include <QJsonDocument>
@@ -28,13 +36,13 @@ public:
 //    QJsonObject addContent(QJsonObject json);
 //    QJsonObject emptyShoppingCart(QJsonObject json);
     QJsonObject getExistingPaymentInfo(QJsonObject json);
-//    QJsonObject savePaymentInfo(QJsonObject json);
+    QJsonObject savePaymentInfo(QJsonObject json);
 
     QJsonObject createTextbook(QJsonObject json);
-//    QJsonObject createCourse(QJsonObject json);
+    QJsonObject createCourse(QJsonObject json);
 //    QJsonObject linkTextbook(QJsonObject json);
 //    QJsonObject cManagerViewTextbooks(QJsonObject json);
-//    QJsonObject cManagerViewCourses(QJsonObject json);
+    QJsonObject cManagerViewCourses(QJsonObject json);
 
 
 };

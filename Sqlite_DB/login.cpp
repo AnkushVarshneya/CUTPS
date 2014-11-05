@@ -67,6 +67,7 @@ Login::Login(QWidget *parent) :
             qDebug() <<json<< endl;
         }
 */
+        qDebug() << resetDatabase();
         //if there was a connection end it
         QSqlDatabase::database().commit();
     }
@@ -89,20 +90,20 @@ bool Login::resetDatabase(){
     noError = noError && query.exec("drop table if exists Student_RegisteredIn_Course;");
     noError = noError && query.exec("drop table if exists Course;");
     noError = noError && query.exec("drop table if exists Term;");
-    noError = noError && query.exec("drop table if exists Course_Assigned_Textbook;");
     noError = noError && query.exec("drop table if exists Textbook;");
     noError = noError && query.exec("drop table if exists Chapter;");
     noError = noError && query.exec("drop table if exists Section;");
     noError = noError && query.exec("drop table if exists ShoppingCart;");
     noError = noError && query.exec("drop table if exists ShoppinCart_Contains_PurchasableItem;");
     noError = noError && query.exec("drop table if exists PurchasableItem;");
+    noError = noError && query.exec("drop table if exists Course_Assigned_Textbook;");
 
-    //creating the Table called Role
+    // creating the Table called Role
     noError = noError && query.exec("create table Role( "
                                         "roleID integer NOT NULL primary key, "
                                         "roleType varchar(20) "
                                     ");");
-    //insert default Role(s)
+    // insert default Role(s)
     noError = noError && query.exec("insert into Role (roleID, roleType) values (1, 'Student');");
     noError = noError && query.exec("insert into Role (roleID, roleType) values (2, 'Content Manager');");
     noError = noError && query.exec("insert into Role (roleID, roleType) values (3, 'Administrator');");
@@ -127,14 +128,209 @@ bool Login::resetDatabase(){
     noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
                                         "VALUES ('LorettaBetta','Loretta Lee','hunter3',1);");
 
+    // creating the Table called Student
+    noError = noError && query.exec("create table Student( "
+                                        "studentNumber varchar(10) NOT NULL primary key, "
+                                        "cmail varchar(100) NOT NULL UNIQUE, "
+                                        "userName varchar(50) NOT NULL, "
+                                        "foreign key (userName) references User(userName) on delete cascade "
+                                    ");");
 
+    // insert default Students(s)
+    noError = noError && query.exec("INSERT INTO Student (studentNumber,cmail,userName) "
+                                        "VALUES ('100853074','ankushlord@cmail.carleton.ca','Kushlord');");
+    noError = noError && query.exec("INSERT INTO Student (studentNumber,cmail,userName) "
+                                        "VALUES ('195372839','ryanmoore@cmail.carleton.ca','Mooreloaded');");
+    noError = noError && query.exec("INSERT INTO Student (studentNumber,cmail,userName) "
+                                        "VALUES ('123456789','somestudent@cmail.carleton.ca','LorettaBetta');");
 
+    // creating the Table called PaymentInformation
+    noError = noError && query.exec("create table PaymentInformation( "
+                                        "creditCardNumber varchar(50) NOT NULL, "
+                                        "cardType varchar(50), "
+                                        "cvv varchar(50), "
+                                        "expirationDate varchar(10), "
+                                        "nameOnCard varchar(50), "
+                                        "postalCode varchar(7), "
+                                        "province varchar(50), "
+                                        "city varchar(50), "
+                                        "streetName varchar(50), "
+                                        "houseNumber integer, "
+                                        "studentNumber varchar(10) NOT NULL, "
+                                        "foreign key (studentNumber) references Student(studentNumber) on delete cascade, "
+                                        "primary key(studentNumber, creditCardNumber) "
+                                    ");");
 
+    // insert default PaymentInformation(s)
+    noError = noError && query.exec("INSERT INTO PaymentInformation (creditCardNumber, cardType, cvv, expirationDate, nameOnCard,postalCode,province,city,streetName,houseNumber,studentNumber) "
+                                        "Values ('2345-5675-1234', 'Master Card', '756','19760420','Ankush Dabess Varshneya','H8R8H8','Ontario','Ottawa','Swag St.',420,'100853074');");
+
+    //creating the Table called Student_RegisteredIn_Course
+    noError = noError && query.exec("create table Student_RegisteredIn_Course( "
+                                        "studentNumber varchar(10) NOT NULL references Student(studentNumber), "
+                                        "courseCode varchar(8) NOT NULL references Course(courseCode), "
+                                        "section varchar(1) NOT NULL references Course(section), "
+                                        "termID integer NOT NULL references Course(termID), "
+                                        "primary key(studentNumber, courseCode, section, termID) "
+                                    ");");
+
+    // insert default Student_RegisteredIn_Course(s)
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('100853074','COMP3004', 'A', 1);");
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('100853074','COMP3804', 'A', 1);");
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('195372839','PHIL1002','C',1);");
+
+    //creating the Table called Course
+    noError = noError && query.exec("create table Course( "
+                                        "courseCode varchar(8) NOT NULL, "
+                                        "section varchar(1) NOT NULL, "
+                                        "instructor varchar(20), "
+                                        "termID integer NOT NULL, "
+                                        "foreign key (termID) references Term(termID) on delete cascade, "
+                                        "primary key(courseCode, section, termID) "
+                                    ");");
+
+    // insert default Course(s)
+    noError = noError && query.exec("INSERT INTO Course (courseCode,section,instructor,termID) "
+                                        "VALUES ('COMP3004','A', 'Christine Laurendeau',1);");
+    noError = noError && query.exec("INSERT INTO Course (courseCode,section,instructor,termID) "
+                                        "VALUES('COMP3804', 'A', 'Amin Gheibi',1);");
+    noError = noError && query.exec("INSERT INTO Course (courseCode,section,instructor,termID) "
+                                        "VALUES ('PHIL1002','C','Peter Dinklage',1);");
+
+    // creating the Table called Term
+    noError = noError && query.exec("create table Term( "
+                                        "termID integer NOT NULL primary key, "
+                                        "startDate varchar(10), "
+                                        "endDate varchar(10) "
+                                    ");");
+    // insert default Terms(s)
+    noError = noError && query.exec("INSERT INTO Term (termID,startDate,endDate) "
+                                        "VALUES (1,'20140905','20141209');");
+    noError = noError && query.exec("INSERT INTO Term (termID,startDate,endDate) "
+                                        "VALUES (2,'20150105','20151209');");
+
+    //creating the Table called Textbook
+    noError = noError && query.exec("create table Textbook( "
+                                        "ISBN varchar(20) NOT NULL primary key, "
+                                        "coverImageLocation varchar(100), "
+                                        "desc varchar(200), "
+                                        "author varchar(50), "
+                                        "textBookTitle varchar(50), "
+                                        "publisher varchar(50), "
+                                        "edition varchar(50), "
+                                        "itemID integer NOT NULL, "
+                                        "foreign key (itemID) references PurchasableItem(itemID) on delete cascade "
+                                    ");");
+
+    // insert default Textbook(s)
+    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
+                                        "VALUES ('111-1-11-111111-0','./COMP3004.png','COMP3004 course pack is required!','Author of COMP3004','COMP3004 A Course Pack','Carleton Course Pack Inc.','1st',1);");
+    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
+                                        "VALUES ('222-2-22-222222-0','./COMP3804.png','COMP3804 course pack is required!','Author of COMP3804','COMP3804 A Course Pack','Carleton Course Pack Inc.','1st',7);");
+
+   // creating the Table called Chapter
+    noError = noError && query.exec("create table Chapter( "
+                                        "ISBN varchar(20) NOT NULL, "
+                                        "chapterNumber integer NOT NULL, "
+                                        "chapterTitle varchar(50), "
+                                        "itemID integer NOT NULL, "
+                                        "foreign key (ISBN) references Textbook(ISBN) on delete cascade, "
+                                        "foreign key (itemID) references PurchasableItem(itemID) on delete cascade, "
+                                        "primary key(ISBN, chapterNumber) "
+                                    ");");
+
+    // insert default Chapter(s)
+    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
+                                        "VALUES ('111-1-11-111111-0',1,'Intro To COMP3004',2);");
+    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
+                                        "VALUES ('111-1-11-111111-0',2,'COMP3004 Midterm',5);");
+    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
+                                        "VALUES ('222-2-22-222222-0',1,'Intro To COMP3804',8);");
+    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
+                                        "VALUES ('222-2-22-222222-0',2,'COMP3804 Midterm',11);");
+
+    // creating the Table called Section
+    noError = noError && query.exec("create table Section( "
+                                        "ISBN varchar(20) NOT NULL, "
+                                        "chapterNumber integer NOT NULL, "
+                                        "sectionNumber integer NOT NULL, "
+                                        "sectionTitle varchar(50), "
+                                        "itemID integer NOT NULL, "
+                                        "foreign key (ISBN) references Chapter(ISBN) on delete cascade, "
+                                        "foreign key (chapterNumber) references Chapter(chapterNumber) on delete cascade, "
+                                        "foreign key (itemID) references PurchasableItem(itemID) on delete cascade, "
+                                        "primary key(ISBN, chapterNumber, sectionNumber) "
+                                    ");");
+
+    // insert default Section(s)
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('111-1-11-111111-0',1,1,'Pre-reqs for COMP3004',3);");
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('111-1-11-111111-0',1,2,'Review needed information for COMP3004',4);");
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('111-1-11-111111-0',2,1,'COMP3004 Midterm mark break-up',6);");
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('222-2-22-222222-0',1,1,'Pre-reqs for COMP3804',9);");
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('222-2-22-222222-0',1,2,'Review needed information for COMP3804',10);");
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('222-2-22-222222-0',2,1,'COMP3804 Midterm mark break-up',12);");
+
+    // creating the Table called PurchasableItem
+    noError = noError && query.exec("create table PurchasableItem( "
+                                        "itemID integer NOT NULL primary key, "
+                                        "price decimal(18,2), "
+                                        "availability boolean "
+                                    ");");
+
+    // insert default PurchasableItem(s)
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (1,1.99,0);");
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (2,2.99,0);");
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (3,3.99,0);");
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (4,4.99,0);");
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (5,5.99,0);");
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (6,6.99,0);");
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (7,7.99,0);");
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (8,8.99,0);");
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (9,9.99,0);");
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (10,10.99,0);");
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (11,11.99,0);");
+    noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
+                                        "VALUES (12,12.99,0);");
+
+    // creating the Table called Course_Assigned_Textbook
+    noError = noError && query.exec("create table Course_Assigned_Textbook( "
+                                        "ISBN varchar(20) NOT NULL references Textbook(ISBN), "
+                                        "courseCode varchar(8) NOT NULL references Course(courseCode), "
+                                        "section varchar(1) NOT NULL references Course(section), "
+                                        "termID integer NOT NULL references Course(termID), "
+                                        "primary key(ISBN, courseCode, section, termID) "
+                                    ");");
+
+    // insert default Course_Assigned_Textbook(s)
+    noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
+                                        "VALUES ('111-1-11-111111-0','COMP3004','A',1);");
+    noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
+                                        "VALUES ('222-2-22-222222-0','COMP3804','A',1);");
+
+    //commit transaction
     noError = noError && query.exec("commit;");
 
-
     return noError;
-
 }
 
 QList<Textbook*>& Login::viewAllTextbooks(qint32 termID){

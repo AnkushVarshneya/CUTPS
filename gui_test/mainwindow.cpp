@@ -212,28 +212,28 @@ void MainWindow::on_pushButton_clicked()
 
 
         case ContentManagerLinkTextbook_alreadylinked:
-            control->linkTextbook(&textbook,&c);
-            if(control->linkTextbook(&textbook,&c))
+            control->linkTextbook(&textbook,&c,1 );
+            if(control->linkTextbook(&textbook,&c, 1))
                 ui->textBrowser->setText("Failure: Expected link failure, got link success.");
             else
                 ui->textBrowser->setText("Pass: Expected link failure, got link failure,");
             break;
 
         case ContentManagerLinkTextbook_nulltextbook:
-            if(control->linkTextbook(NULL,&c))
+            if(control->linkTextbook(NULL,&c, 1))
                 ui->textBrowser->setText("Failure: Expected link failure, got link success.");
             else
                 ui->textBrowser->setText("Pass: Expected link failure, got link failure.");
             break;
 
         case ContentManagerLinkTextbook_nullcourse:
-            if(control->linkTextbook(&textbook,NULL))
+            if(control->linkTextbook(&textbook,NULL, 1))
                 ui->textBrowser->setText("Failure: Expected link failure, got link success.");
             else
                 ui->textBrowser->setText("Pass: Expected link failure, got link failure.");
             break;
         case ContentManagerLinkTextbook_validlink:
-            if(control->linkTextbook(&textbook,&c))
+            if(control->linkTextbook(&textbook,&c, 1))
                 ui->textBrowser->setText("Pass: Expected link success, got link success.");
             else
                 ui->textBrowser->setText("Failure: Expected link success, got link failure.");

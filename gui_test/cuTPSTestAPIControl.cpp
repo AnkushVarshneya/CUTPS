@@ -99,6 +99,8 @@ PaymentInformation* cuTPSTestAPIControl::getExistingPaymentInfo(QString stuNum){
     api_server_call["Function:"] = functionCall;
     api_server_call["Student Number"] = stuNum;
     conMan->send(api_server_call);
+
+
     return paymentInfo;
 }
 

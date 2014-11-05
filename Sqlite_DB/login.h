@@ -34,8 +34,11 @@ private:
     bool linkTextbook(Textbook*, Course*, qint32);
     QList<Textbook*>& viewAllTextbooks(qint32);
     QList<Course*>& viewCourses(qint32);
+    QList<Term*>& viewAllTerm();
 
     bool resetDatabase();
+
+
 
 };
 

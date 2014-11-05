@@ -1,3 +1,17 @@
+/*Query Control class header
+ *
+ *Purpose: This class is used to query the database relevant to the
+ *functionality and features involved in Student features and Content Features
+ *No server-API functions relevant to AddContent, ViewShoppingCart, and EmptyShoppingCart
+ *are to be queried as the ShoppingCart is not stored between sessions
+ *
+ *Each time the Query is finished, the database resets to keep the test cases
+ *expected outcomes
+ *
+ *NR-22
+ *
+ */
+
 #ifndef QUERYCONTROL_H
 #define QUERYCONTROL_H
 
@@ -18,6 +32,7 @@ public:
     QList<Textbook*>& viewAllTextbooks(qint32);
     QList<Course*>& viewCourses(qint32);
     bool linkTextbook(Textbook*, Course*, qint32);
+    bool resetDatabase();
 private:
     QSqlDatabase db;
 };

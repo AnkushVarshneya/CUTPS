@@ -82,6 +82,9 @@ void CutpsServer::readBytes() {
    QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
    cmd = jsonDoc.object()["Function:"].toString();
    qDebug() << cmd;
+
+   //Determines from the passed in json object, in the "Function:" field,
+   //The API to call through control
    if(cmd == "studentViewTextbooks()"){
        APIControl *apic = new APIControl();
        QJsonObject result = apic->studentViewTextbooks(jsonDoc.object());
@@ -93,6 +96,20 @@ void CutpsServer::readBytes() {
    else if(cmd == "viewShoppingCart()"){
        APIControl *apic = new APIControl();
        QJsonObject result = apic->viewShoppingCart(jsonDoc.object(), testStudentShoppingCart);
+       delete apic;
+       this->sendJson(result);
+   }
+   /*
+   else if(cmd == "addContent()"){
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->addContent(jsonDoc.object(), testStudentShoppingCart);
+       delete apic;
+       this->sendJson(result);
+
+   }*/
+   else if(cmd == "emptyShoppingCart()"){
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->emptyShoppingCart(jsonDoc.object(), testStudentShoppingCart);
        delete apic;
        this->sendJson(result);
    }

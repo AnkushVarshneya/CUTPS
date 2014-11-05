@@ -278,7 +278,7 @@ void MainWindow::on_pushButton_clicked()
 
 
         case StudentGetExistingPaymentInformation_hasinfo:
-            if(control->getExistingPaymentInfo("100859320"))
+            if(control->getExistingPaymentInfo("100853074"))
                 ui->textBrowser->setText("Pass: Expected Payment Information, got Payment Information.");
             else
                 ui->textBrowser->setText("Failure: Expected Payment Information, got no Payment Information.");

@@ -59,7 +59,7 @@ void ConnectionManager::readyRead() {
    bytes = this->tcpConnection->read(data, bytes);
    qDebug() << "bytes read: " << bytes << "\n";
    result = QJsonDocument::fromJson(data);
-//   qDebug() << result.toJson();
+   qDebug() << result.toJson();
 
 }
 

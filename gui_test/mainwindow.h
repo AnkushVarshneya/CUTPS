@@ -20,7 +20,6 @@ enum Selected {
 
     StudentViewShoppingCart_hasitems,
     StudentViewShoppingCart_noitems,
-    StudentViewShoppingCart_studentnotfound,
 
     ContentManagerCreateCourse_NullCourse,
     ContentManagerCreateCourse_ValidCourse,
@@ -41,8 +40,34 @@ enum Selected {
     ContentManagerLinkTextbook_alreadylinked,
     ContentManagerLinkTextbook_nulltextbook,
     ContentManagerLinkTextbook_nullcourse,
-    ContentManagerLinkTextbook_validlink
+    ContentManagerLinkTextbook_validlink,
 
+    ContentManagerViewTextbooks_notextbooks,
+    ContentManagerViewTextbooks_hastextbooks,
+
+    ContentManagerViewCourses_nocourses,
+    ContentManagerViewCourses_hascourses,
+
+    StudentEmptyShoppingCart_hasitems,
+    StudentEmptyShoppingCart_noitems,
+    StudentEmptyShoppingCart_studentnotfound,
+
+    StudentAddContent_nullitem,
+    StudentAddContent_textbook,
+    StudentAddContent_chapter,
+    StudentAddContent_section,
+    StudentAddContent_multipleitems,
+    StudentAddContent_invalidnumofitems,
+    StudentAddContent_studentnotfound,
+    StudentAddContent_itemnotfound,
+
+    StudentGetExistingPaymentInformation_hasinfo,
+    StudentGetExistingPaymentInformation_noinfo,
+
+    StudentSavePaymentInformation_invalidformat,
+    StudentSavePaymentInformation_validformat,
+    StudentSavePaymentInformation_hasinfo,
+    StudentSavePaymentInformation_studentnotfound
 };
 
 
@@ -103,6 +128,23 @@ private slots:
     void on_actionContentManager_ViewCourses_nocourses_triggered();
     void on_actionContentManager_ViewCourses_hascourses_triggered();
     void on_actionStudent_ViewShoppingCart_studentnotfound_triggered();
+    void on_actionStudent_EmptyShoppingCart_hasitems_triggered();
+    void on_actionStudent_EmptyShoppingCart_noitems_triggered();
+    void on_actionStudent_EmptyShoppingCart_studentnotfound_triggered();
+    void on_actionStudent_AddContent_nullitem_triggered();
+    void on_actionStudent_AddContent_Textbook_triggered();
+    void on_actionStudent_AddContent_Chapter_triggered();
+    void on_actionStudent_AddContent_Section_triggered();
+    void on_actionStudent_AddContent_multipleitems_triggered();
+    void on_actionStudent_AddContent_invalidnumofitems_triggered();
+    void on_actionStudent_AddContent_studentnotfound_triggered();
+    void on_actionStudent_AddContent_itemnotfound_triggered();
+    void on_actionStudent_GetExistingPaymentInformation_hasinfo_triggered();
+    void on_actionStudent_GetExistingPaymentInformation_noinfo_triggered();
+    void on_actionStudent_SavePaymentInformation_invalidformat_triggered();
+    void on_actionStudent_SavePaymentInformation_validformat_triggered();
+    void on_actionStudent_SavePaymentInformation_hasinfo_triggered();
+    void on_actionStudent_SavePaymentInformation_studentnotfound_triggered();
 };
 
 #endif // MAINWINDOW_H

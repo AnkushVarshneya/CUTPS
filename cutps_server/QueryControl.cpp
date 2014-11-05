@@ -18,6 +18,57 @@ QueryControl::~QueryControl(){
     qDebug() << db.databaseName();
 }
 
+PaymentInformation* QueryControl::getExistingBillingInfo(QString studentNumber) const{
+    PaymentInformation *info;
+
+    // get the student payment information
+    QSqlQuery PaymentInformationQuery;
+
+    PaymentInformationQuery.prepare("SELECT paymentInformation.creditCardNumber, "
+                                            "paymentInformation.cardType, "
+                                            "paymentInformation.cvv, "
+                                            "paymentInformation.expirationDate, "
+                                            "paymentInformation.nameOnCard, "
+                                            "paymentInformation.postalCode, "
+                                            "paymentInformation.province, "
+                                            "paymentInformation.city, "
+                                            "paymentInformation.streetName, "
+                                            "paymentInformation.houseNumber, "
+                                            "User.fullName "
+                                        "FROM PaymentInformation "
+                                        "JOIN Student ON "
+                                            "paymentInformation.studentNumber = Student.StudentNumber "
+                                        "JOIN User ON "
+                                            "Student.username = User.username AND "
+                                            "User.roleID = (Select roleID from Role where roleType = 'Student') "
+                                        "WHERE Student.studentNumber=:studentNumber;");
+    PaymentInformationQuery.bindValue(":studentNumber", studentNumber);
+    PaymentInformationQuery.exec();
+
+    //if student has payment info set it else its NULL
+    if(PaymentInformationQuery.first()){
+        info = new PaymentInformation();
+        info->setBillInfo(*(new BillingAddress(PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("fullName")).toString(),
+                                        PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("houseNumber")).toInt(),
+                                        PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("streetName")).toString(),
+                                        PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("city")).toString(),
+                                        PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("province")).toString(),
+                                        PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("postalCode")).toString())));
+
+        info->setCreditCardInfo(*(new CreditCardInformation(PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("creditCardNumber")).toString(),
+                                                     PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("cvv")).toString(),
+                                                     QDate::fromString(PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("expirationDate")).toString(), "yyyyMMdd"),
+                                                     PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("cardType")).toString(),
+                                                     PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("nameOnCard")).toString())));
+    }
+    else{
+        return NULL;
+    }
+
+    return info;
+}
+
+
 //Query for studentViewTextbooks use case where argument passed in is a student number
 //and a termID. Returns a list of courses that the student is registered in
 QList<Course*>& QueryControl::studentViewTextbooks(QString studentNumber, qint32 termID) const{

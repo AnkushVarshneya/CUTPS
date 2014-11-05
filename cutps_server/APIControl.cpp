@@ -28,6 +28,10 @@ QJsonObject APIControl::studentViewTextbooks(QJsonObject json) {
     qDebug() << r;
     return r;
 }
+
+//API getExistingPaymentInfo() that takes in the json object,
+//reads it, creates a query control to get existing payment information
+//from the database, then returns a payment information object.
 QJsonObject APIControl::getExistingPaymentInfo(QJsonObject json) {
     QString stuNum = json["Student Number"].toString();
     qDebug() << "testing billing info on student num: " << stuNum << "\n";
@@ -56,6 +60,8 @@ QJsonObject APIControl::getExistingPaymentInfo(QJsonObject json) {
 //    query->createTextbook();
 //}
 
+
+//API viewShoppingCart()
 QJsonObject APIControl::viewShoppingCart(QJsonObject json, QMap<QString, ShoppingCart> testStudentShoppingCart) {
     QJsonObject result;
     QString stuNum = json["Student Number"].toString();

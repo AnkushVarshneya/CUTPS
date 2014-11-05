@@ -1,3 +1,11 @@
+/*APIControl class header
+ *
+ *
+ *APIControl is used to manage access to server application programming interface functionality.
+ *An APIControl object facilitates communication between the client and the database.
+ *
+ *Traceability: NR-22
+ */
 #ifndef APICONTROL_H
 #define APICONTROL_H
 #include <QJsonDocument>

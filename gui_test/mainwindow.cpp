@@ -363,18 +363,6 @@ void MainWindow::on_pushButton_clicked()
                 ui->textBrowser->setText("Pass: Could not add an item not found in the database.");
             break;
 
-
-
-
-
-        case StudentSavePaymentInformation_invalidformat:
-            payInfo->setBillInfo(0);
-            if(control->savePaymentInfo("100853074",payInfo))
-                ui->textBrowser->setText("Failure: Saved Payment Information with an invalid format");
-            else
-                ui->textBrowser->setText("Pass: Could not save Payment Information with an invalid format.");
-            break;
-
         case StudentSavePaymentInformation_validformat:
             if(control->savePaymentInfo("123456789",payInfo))
                 ui->textBrowser->setText("Pass: Saved valid Payment Information");

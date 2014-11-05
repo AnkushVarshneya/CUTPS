@@ -109,8 +109,10 @@ void CutpsServer::readBytes() {
    else if (cmd == "saveExistingPaymentInfo()") {
        qDebug() << "processing command to save billing info..." << "\n";
        APIControl *apic = new APIControl();
-       apic->savePaymentInfo(jsonDoc.object());
+       QJsonObject result = apic->savePaymentInfo(jsonDoc.object());
        delete apic;
+
+       this->sendJson(result);
    }
 //   else if (cmd == "createCourse()") {
 //       qDebug() << "processing command to create course..." << "\n";

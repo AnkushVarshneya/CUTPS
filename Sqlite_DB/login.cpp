@@ -214,7 +214,7 @@ QList<Course*>& Login::studentViewTextbooks(QString studentNumber, qint32 termID
         textBookQuery.bindValue(":termID", course->getTerm()->getTermID());
         textBookQuery.exec();
 
-         while (textBookQuery.next()){
+        while (textBookQuery.next()){
              Textbook *textbook = new Textbook(textBookQuery.value(textBookQuery.record().indexOf("textBookTitle")).toString(),
                                                textBookQuery.value(textBookQuery.record().indexOf("author")).toString(),
                                                textBookQuery.value(textBookQuery.record().indexOf("edition")).toString(),

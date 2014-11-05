@@ -125,7 +125,9 @@ bool cuTPSTestAPIControl::savePaymentInfo(QString stuNum, PaymentInformation* pa
     payInfo->write(payInfoObject);
     api_server_call["Payment Info"] = payInfoObject;
     conMan->send(api_server_call);
-    return true;
+    conMan->getTcp()->waitForReadyRead();
+
+    return conMan->getResult().object()["Boolean:"].toBool();
 
 }
 

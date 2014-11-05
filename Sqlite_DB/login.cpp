@@ -15,14 +15,14 @@ Login::Login(QWidget *parent) :
         qDebug() << "FAILED TO CONNECT TO DATA BASE";
     else {
         qDebug() << "CONNECT TO DATA BASE";
-/*
+
         // test for view studentView
         foreach(Course *crs, studentViewTextbooks("100853074", 1)){
             QJsonObject json = QJsonObject();
             crs->write(json);
-            //qDebug() <<json;
+            qDebug() <<json;
         }
-
+/*
         // test for getExistingBillingInfo
         QJsonObject json = QJsonObject();
         PaymentInformation info = getExistingBillingInfo("100853074");
@@ -66,7 +66,7 @@ Login::Login(QWidget *parent) :
             tb->write(json);
             qDebug() <<json<< endl;
         }
-*/
+
 
         // test for viewAllTerm
         foreach(Term *tr, viewAllTerm()){
@@ -74,6 +74,7 @@ Login::Login(QWidget *parent) :
             tr->write(json);
             qDebug() <<json<< endl;
         }
+        */
 
         qDebug() << resetDatabase();
         //if there was a connection end it

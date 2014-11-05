@@ -55,7 +55,6 @@
      <property name="title">
       <string>Create Course</string>
      </property>
-     <addaction name="actionContentManager_CreateCourse_nullcourse"/>
      <addaction name="actionContentManager_CreateCourse_validcourse"/>
      <addaction name="actionContentManager_CreateCourse_coursealreadyexists"/>
      <addaction name="actionContentManager_CreateCourse_existsdiffterm"/>
@@ -65,7 +64,6 @@
      <property name="title">
       <string>Create Textbook</string>
      </property>
-     <addaction name="actionContentManager_CreateTextbook_nulltextbook"/>
      <addaction name="actionContentManager_CreateTextbook_withchaptersandsections"/>
      <addaction name="actionContentManager_CreateTextbook_textbookexists"/>
     </widget>
@@ -74,8 +72,6 @@
       <string>Link Textbook</string>
      </property>
      <addaction name="actionContentManager_LinkTextbook_alreadylinked"/>
-     <addaction name="actionContentManager_LinkTextbook_nulltextbook"/>
-     <addaction name="actionContentManager_LinkTextbook_nullcourse"/>
      <addaction name="actionContentManager_LinkTextbook_validlink"/>
     </widget>
     <widget class="QMenu" name="menuView_Textbooks_by_Term">
@@ -130,7 +126,6 @@
      <property name="title">
       <string>Add Content</string>
      </property>
-     <addaction name="actionStudent_AddContent_nullitem"/>
      <addaction name="actionStudent_AddContent_Textbook"/>
      <addaction name="actionStudent_AddContent_Chapter"/>
      <addaction name="actionStudent_AddContent_Section"/>
@@ -210,11 +205,6 @@
     <string>Shopping cart is already empty</string>
    </property>
   </action>
-  <action name="actionStudent_AddContent_nullitem">
-   <property name="text">
-    <string>Adding a NULL item</string>
-   </property>
-  </action>
   <action name="actionStudent_AddContent_Textbook">
    <property name="text">
     <string>Adding a Textbook</string>
@@ -265,19 +255,9 @@
     <string>Student has existing payment information</string>
    </property>
   </action>
-  <action name="actionContentManager_CreateCourse_nullcourse">
-   <property name="text">
-    <string>Creating a NULL course</string>
-   </property>
-  </action>
   <action name="actionContentManager_CreateCourse_validcourse">
    <property name="text">
     <string>Creating a course</string>
-   </property>
-  </action>
-  <action name="actionContentManager_CreateTextbook_nulltextbook">
-   <property name="text">
-    <string>Creating a NULL textbook</string>
    </property>
   </action>
   <action name="actionContentManager_CreateTextbook_withchaptersandsections">
@@ -288,16 +268,6 @@
   <action name="actionContentManager_LinkTextbook_alreadylinked">
    <property name="text">
     <string>Textbook is already linked to the course</string>
-   </property>
-  </action>
-  <action name="actionContentManager_LinkTextbook_nulltextbook">
-   <property name="text">
-    <string>Textbook is NULL</string>
-   </property>
-  </action>
-  <action name="actionContentManager_LinkTextbook_nullcourse">
-   <property name="text">
-    <string>Course is NULL</string>
    </property>
   </action>
   <action name="actionContentManager_LinkTextbook_validlink">

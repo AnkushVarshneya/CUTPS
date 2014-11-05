@@ -21,7 +21,6 @@ enum Selected {
     StudentViewShoppingCart_hasitems,
     StudentViewShoppingCart_noitems,
 
-    ContentManagerCreateCourse_NullCourse,
     ContentManagerCreateCourse_ValidCourse,
     ContentManagerCreateCourse_AlreadyExists,
     ContentManagerCreateCourse_ExistsDiffTerm,
@@ -34,12 +33,9 @@ enum Selected {
     StudentViewTextbooks_termnotfound,
 
     ContentManagerCreateTextbook_textbookexists,
-    ContentManagerCreateTextbook_nulltextbook,
     ContentManagerCreateTextbook_withchaptersandsections,
 
     ContentManagerLinkTextbook_alreadylinked,
-    ContentManagerLinkTextbook_nulltextbook,
-    ContentManagerLinkTextbook_nullcourse,
     ContentManagerLinkTextbook_validlink,
 
     ContentManagerViewTextbooks_notextbooks,
@@ -52,7 +48,6 @@ enum Selected {
     StudentEmptyShoppingCart_noitems,
     StudentEmptyShoppingCart_studentnotfound,
 
-    StudentAddContent_nullitem,
     StudentAddContent_textbook,
     StudentAddContent_chapter,
     StudentAddContent_section,
@@ -108,7 +103,7 @@ private slots:
     void on_actionStudent_ViewTextbooks_hastextbooks_triggered();
     void on_actionStudent_ViewTextbooks_studentnotfound_triggered();
     void on_actionStudent_ViewTextbooks_termnotfound_triggered();
-    void on_actionContentManager_CreateCourse_nullcourse_triggered();
+
     void on_actionContentManager_CreateCourse_validcourse_triggered();
     void on_actionContentManager_CreateCourse_coursealreadyexists_triggered();
     void on_actionContentManager_CreateCourse_existsdiffterm_triggered();
@@ -127,7 +122,6 @@ private slots:
     void on_actionContentManager_ViewTextbooksByTerm_hastextbooks_triggered();
     void on_actionContentManager_ViewCourses_nocourses_triggered();
     void on_actionContentManager_ViewCourses_hascourses_triggered();
-    void on_actionStudent_ViewShoppingCart_studentnotfound_triggered();
     void on_actionStudent_EmptyShoppingCart_hasitems_triggered();
     void on_actionStudent_EmptyShoppingCart_noitems_triggered();
     void on_actionStudent_EmptyShoppingCart_studentnotfound_triggered();

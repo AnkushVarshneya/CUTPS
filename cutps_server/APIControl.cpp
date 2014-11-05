@@ -14,7 +14,7 @@ QJsonObject APIControl::studentViewTextbooks(QJsonObject json) {
     Term term;
     term.read(json["Term"].toObject());
     QueryControl *query = new QueryControl();
-    QList<Course*>& result = query->studentViewTextbooks("100853074", 1);
+    QList<Course*>& result = query->studentViewTextbooks(studentNumber, term.getTermID());
     delete query;
     QJsonArray resultArray;
     foreach(Course *crs, result){

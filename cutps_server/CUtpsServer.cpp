@@ -82,6 +82,9 @@ void CutpsServer::readBytes() {
    QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
    cmd = jsonDoc.object()["Function:"].toString();
    qDebug() << cmd;
+
+   //Determines from the passed in json object, in the "Function:" field,
+   //The API to call through control
    if(cmd == "studentViewTextbooks()"){
        APIControl *apic = new APIControl();
        QJsonObject result = apic->studentViewTextbooks(jsonDoc.object());

@@ -56,6 +56,10 @@ QJsonObject APIControl::getExistingPaymentInfo(QJsonObject json) {
 }
 
 
+//Takes in the passed in Json argument and parses it
+//Queries the database to insert into the table of textbooks
+//Returns a JSON object containing a boolean dependent on
+//Whether or not the insert was successful
 QJsonObject APIControl::createTextbook(QJsonObject json) {
     Textbook* argText = new Textbook();
     argText->read(json["Textbook"].toObject());
@@ -68,7 +72,8 @@ QJsonObject APIControl::createTextbook(QJsonObject json) {
 }
 
 
-//API viewShoppingCart()
+//Gets the passed in client's argument for student number
+//And returns the cart contents as a JSON object
 QJsonObject APIControl::viewShoppingCart(QJsonObject json, QMap<QString, ShoppingCart> testStudentShoppingCart) {
     QJsonObject result;
     QString stuNum = json["Student Number"].toString();
@@ -80,7 +85,7 @@ QJsonObject APIControl::viewShoppingCart(QJsonObject json, QMap<QString, Shoppin
     return result;
 }
 
-/*
+/*Nonfunctional
 QJsonObject APIControl::addContent(QJsonObject json, QMap<QString, ShoppingCart> testStudentShoppingCart){
     QJsonObject result;
     QString stuNum = json["Student Number"].toString();
@@ -91,6 +96,8 @@ QJsonObject APIControl::addContent(QJsonObject json, QMap<QString, ShoppingCart>
 }
 */
 
+//Gets the JSON object argument's student number field value
+//And empties the shopping cart based on the key of the shopping cart map
 QJsonObject APIControl::emptyShoppingCart(QJsonObject json, QMap<QString,ShoppingCart> testStudentShoppingCart ){
     QJsonObject result;
     QString stuNum = json["Student Number"].toString();
@@ -106,7 +113,8 @@ QJsonObject APIControl::emptyShoppingCart(QJsonObject json, QMap<QString,Shoppin
 }
 
 
-
+//Takes the Student Number and Payment Info fields and turns them into
+//arguments to pass as a query to the database.
 QJsonObject APIControl::savePaymentInfo(QJsonObject json){
 
     QString stuNum = json["Student Number"].toString();
@@ -119,6 +127,8 @@ QJsonObject APIControl::savePaymentInfo(QJsonObject json){
     return r;
 }
 
+//Takes the Course and TermID arguments and passes them into
+//Querying the database
 QJsonObject APIControl::createCourse(QJsonObject json){
     Course* argCourse = new Course();
     argCourse->read(json["Course"].toObject());
@@ -131,6 +141,8 @@ QJsonObject APIControl::createCourse(QJsonObject json){
     return r;
 }
 
+//Gets the Term argument by the passed in json object and
+//Queries the database gettinga  list of all textbooks in that term
 QJsonObject APIControl::cManagerViewTextbooks(QJsonObject json) {
 
     Term* term = new Term();
@@ -154,6 +166,8 @@ QJsonObject APIControl::cManagerViewTextbooks(QJsonObject json) {
 
 }
 
+//Gets the Term argument by the passed in json object and
+//Queries the database gettinga  list of all courses in that term
 QJsonObject APIControl::cManagerViewCourses(QJsonObject json){
     Term* term = new Term();
     term->read(json["Term"].toObject());
@@ -175,6 +189,8 @@ QJsonObject APIControl::cManagerViewCourses(QJsonObject json){
     return r;
 }
 
+//Takes the textbook and course arguments and queries the database to
+//Assign a textbook to a course
 QJsonObject APIControl::linkTextbook(QJsonObject json){
     Textbook* linkText = new Textbook();
     Course* linkCourse = new Course();

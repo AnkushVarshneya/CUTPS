@@ -20,7 +20,6 @@ enum Selected {
 
     StudentViewShoppingCart_hasitems,
     StudentViewShoppingCart_noitems,
-    StudentViewShoppingCart_studentnotfound,
 
     ContentManagerCreateCourse_NullCourse,
     ContentManagerCreateCourse_ValidCourse,
@@ -63,10 +62,12 @@ enum Selected {
     StudentAddContent_itemnotfound,
 
     StudentGetExistingPaymentInformation_hasinfo,
-    StudentGetExistingPaymentInformation_noinfo
+    StudentGetExistingPaymentInformation_noinfo,
 
-
-
+    StudentSavePaymentInformation_invalidformat,
+    StudentSavePaymentInformation_validformat,
+    StudentSavePaymentInformation_hasinfo,
+    StudentSavePaymentInformation_studentnotfound
 };
 
 

@@ -56,6 +56,8 @@ void MainWindow::on_pushButton_clicked()
 
     Term* testTermEmpty;
 
+    PaymentInformation* payInfo = new PaymentInformation();
+
     switch (behaviour){
         case StudentViewShoppingCart_hasitems:
             //view a shopping cart with items
@@ -79,7 +81,7 @@ void MainWindow::on_pushButton_clicked()
 
         case ContentManagerCreateCourse_NullCourse:
             //call control object with test for create course-null course
-            if(control->createCourse(NULL))
+            if(control->createCourse(NULL, 1))
                 ui->textBrowser->setText("Failure: Added a NULL Course.");
             else
                 ui->textBrowser->setText("Success: could not create a NULL Course."); break;
@@ -88,37 +90,34 @@ void MainWindow::on_pushButton_clicked()
             //creating valid course
             t = Term(QDate(2015,01,05),QDate(2015,05,01),2);
             c.setTerm(t);
-            if(control->createCourse(&c))
+            if(control->createCourse(&c, 1))
                 ui->textBrowser->setText("Pass: Course successfully added.");
             else
                 ui->textBrowser->setText("Failure: Valid Course could not be added."); break;
 
         case ContentManagerCreateCourse_AlreadyExists:
             //creating duplicate courses
-            control->createCourse(&c);
+            control->createCourse(&c, 1);
 
-            if(control->createCourse(&c))
+            if(control->createCourse(&c, 1))
                 ui->textBrowser->setText("Failure: Created a duplicate course.");
             else
                 ui->textBrowser->setText("Pass: Could not add a duplicate Course"); break;
 
         case ContentManagerCreateCourse_ExistsDiffTerm:
             //creating a Course with same course code and different Term
-            control->createCourse(&c);
-            t = Term(QDate(2015,01,05),QDate(2015,05,01),2);
-            c.setTerm(t);
-
-            if(control->createCourse(&c))
+            control->createCourse(&c, 1);
+            if(control->createCourse(&c, 2))
                 ui->textBrowser->setText("Pass: Added Course with identical course code and section with different Term.");
             else
                 ui->textBrowser->setText("Failure: Could not add Course with identical course code and section with different Term."); break;
 
         case ContentManagerCreateCourse_ExistsDiffSect:
             //creating a Course with same course code and different Term
-            control->createCourse(&c);
+            control->createCourse(&c, 1);
             c.setCourseSection("B");
 
-            if(control->createCourse(&c))
+            if(control->createCourse(&c, 1))
                 ui->textBrowser->setText("Pass: Added Course with identical course code and Term with different section.");
             else
                 ui->textBrowser->setText("Failure: Could not add Course with identical course code and Term with different section."); break;
@@ -310,33 +309,91 @@ void MainWindow::on_pushButton_clicked()
             break;
 
         case StudentEmptyShoppingCart_studentnotfound:
-
+            if(control->emptyShoppingCart("dneStu"))
+                ui->textBrowser->setText("Failure: Emptied Shopping Cart of a Student not found in the database.");
+            else
+                ui->textBrowser->setText("Pass: Could not empty the Shopping Cart of a Student not found in the database.");
             break;
 
 
-        case StudentAddContent_nullitem:
 
-            break;
+
+
         case StudentAddContent_textbook:
-
+            if(control->addContent("100853074",1,1))
+                ui->textBrowser->setText("Pass: Added a Textbook to the Shopping Cart.");
+            else
+                ui->textBrowser->setText("Failure: Could not add a Textbook to the Shopping Cart.");
             break;
-        case StudentAddContent_chapter:
 
+        case StudentAddContent_chapter:
+            if(control->addContent("100853074",2,1))
+                ui->textBrowser->setText("Pass: Added a Chapter to the Shopping Cart.");
+            else
+                ui->textBrowser->setText("Failure: Could not add a Chapter to the Shopping Cart.");
             break;
         case StudentAddContent_section:
-
+            if(control->addContent("100853074",3,1))
+                ui->textBrowser->setText("Pass: Added a Section to the Shopping Cart.");
+            else
+                ui->textBrowser->setText("Failure: Could not add a Section to the Shopping Cart.");
             break;
         case StudentAddContent_multipleitems:
-
+            if(control->addContent("100853074",1,4))
+                ui->textBrowser->setText("Pass: Added multiple items to the Shopping Cart.");
+            else
+                ui->textBrowser->setText("Failure: Could not add multiple items to the Shopping Cart.");
             break;
         case StudentAddContent_invalidnumofitems:
-
+            if(control->addContent("100853074",1,-2))
+                ui->textBrowser->setText("Failure: Added invalid number of items to the Shopping Cart.");
+            else
+                ui->textBrowser->setText("Pass: Could not add invalid number of items to the Shopping Cart.");
             break;
         case StudentAddContent_studentnotfound:
-
+            if(control->addContent("dneStu",1,1))
+                ui->textBrowser->setText("Failure: Added content to the Shopping Cart of a Student that is not found in the database.");
+            else
+                ui->textBrowser->setText("Pass: Could not add content to the Shopping Cart of a Student that is not found in the database.");
             break;
         case StudentAddContent_itemnotfound:
+            if(control->addContent("100853074",50,1))
+                ui->textBrowser->setText("Failure: Added an item not found in the database.");
+            else
+                ui->textBrowser->setText("Pass: Could not add an item not found in the database.");
+            break;
 
+
+
+
+
+        case StudentSavePaymentInformation_invalidformat:
+            payInfo->setBillInfo(0);
+            if(control->savePaymentInfo("100853074",payInfo))
+                ui->textBrowser->setText("Failure: Saved Payment Information with an invalid format");
+            else
+                ui->textBrowser->setText("Pass: Could not save Payment Information with an invalid format.");
+            break;
+
+        case StudentSavePaymentInformation_validformat:
+            if(control->savePaymentInfo("123456789",payInfo))
+                ui->textBrowser->setText("Pass: Saved valid Payment Information");
+            else
+                ui->textBrowser->setText("Failure: Could not save valid Payment Information.");
+            break;
+
+        case StudentSavePaymentInformation_hasinfo:
+            if(control->savePaymentInfo("100853074",payInfo))
+                ui->textBrowser->setText("Pass: Saved valid Payment Information");
+            else
+                ui->textBrowser->setText("Failure: Could not save valid Payment Information.");
+            break;
+
+        case StudentSavePaymentInformation_studentnotfound:
+            if(control->savePaymentInfo("dneStu",payInfo))
+                ui->textBrowser->setText("Failure: Saved Payment Information for a Student not found in the database.");
+            else
+                ui->textBrowser->setText("Pass: Could not save Payment Information for a Student not found in the database.");
             break;
 
     }
@@ -359,12 +416,6 @@ void MainWindow::on_actionStudent_ViewShoppingCart_noitems_triggered()
 {
     ui->textBrowser->setText("View an empty Shopping Cart.");
     behaviour = StudentViewShoppingCart_noitems;
-}
-//Student is not found in the database
-void MainWindow::on_actionStudent_ViewShoppingCart_studentnotfound_triggered()
-{
-    ui->textBrowser->setText("View the Shopping Cart of a Student who is not found in the database.");
-    behaviour = StudentViewShoppingCart_studentnotfound;
 }
 
 
@@ -627,19 +678,19 @@ void MainWindow::on_actionStudent_AddContent_itemnotfound_triggered()
 
 
 /****************************************
-Student Get Existing Billing Information
+Student Get Existing Payment Information
 ****************************************/
 
-//There is existing Billing Information
+//There is existing Payment Information
 void MainWindow::on_actionStudent_GetExistingPaymentInformation_hasinfo_triggered()
 {
-    ui->textBrowser->setText("Get existing Billing Information when there is existing information.");
+    ui->textBrowser->setText("Get existing Payment Information when there is existing information.");
     behaviour = StudentGetExistingPaymentInformation_hasinfo;
 }
-//No existing Billing Information
+//No existing Payment Information
 void MainWindow::on_actionStudent_GetExistingPaymentInformation_noinfo_triggered()
 {
-    ui->textBrowser->setText("Get existing Billing Information when there isn't any existing information.");
+    ui->textBrowser->setText("Get existing Payment Information when there isn't any existing information.");
     behaviour = StudentGetExistingPaymentInformation_noinfo;
 }
 
@@ -654,20 +705,24 @@ Student Save Billing Information
 //Invalid format
 void MainWindow::on_actionStudent_SavePaymentInformation_invalidformat_triggered()
 {
-
+    ui->textBrowser->setText("Save Payment Information with an invalid format.");
+    behaviour = StudentSavePaymentInformation_invalidformat;
 }
 //Valid format, no existing information
 void MainWindow::on_actionStudent_SavePaymentInformation_validformat_triggered()
 {
-
+    ui->textBrowser->setText("Save Payment Information with a valid format and no existing Payment Information.");
+    behaviour = StudentSavePaymentInformation_validformat;
 }
 //Valid format, existing information
 void MainWindow::on_actionStudent_SavePaymentInformation_hasinfo_triggered()
 {
-
+    ui->textBrowser->setText("Save Payment Information with a valid format and existing Payment Information.");
+        behaviour = StudentSavePaymentInformation_hasinfo;
 }
 //Student not found
 void MainWindow::on_actionStudent_SavePaymentInformation_studentnotfound_triggered()
 {
-
+    ui->textBrowser->setText("Save Payment Information of a Student not found in the database.");
+        behaviour = StudentSavePaymentInformation_studentnotfound;
 }

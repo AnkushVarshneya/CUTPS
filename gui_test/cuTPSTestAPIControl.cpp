@@ -152,8 +152,11 @@ bool cuTPSTestAPIControl::createCourse(Course *aCourse, qint32 termID){
     QJsonObject courseObject;
     aCourse->write(courseObject);
     api_server_call["Course"] = courseObject;
+    api_server_call["TermID"] = termID;
     conMan->send(api_server_call);
-    return true;
+    conMan->getTcp()->waitForReadyRead();
+
+    return conMan->getResult().object()["Boolean:"].toBool();
 }
 
 //Content Manager View textbooks

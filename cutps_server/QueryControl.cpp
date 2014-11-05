@@ -251,3 +251,17 @@ bool QueryControl::saveBillingInformation(const QString studentNumber, PaymentIn
 
     return PaymentInformationQuery.exec() && nameQuery.exec();
 }
+
+bool QueryControl::createCourse(Course *course, qint32 termID){
+    // create a course
+    QSqlQuery courseQuery;
+
+    courseQuery.prepare("INSERT INTO Course (courseCode,section,instructor,termID) "
+                            "VALUES (:courseCode,:section,:instructor,:termID);");
+    courseQuery.bindValue(":courseCode", course->getCourseCode());
+    courseQuery.bindValue(":section", course->getCourseSection());
+    courseQuery.bindValue(":instructor", course->getInstructor());
+    courseQuery.bindValue(":termID", termID);
+
+    return courseQuery.exec();
+}

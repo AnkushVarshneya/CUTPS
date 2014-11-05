@@ -13,6 +13,8 @@ public:
     QList<Course*>& studentViewTextbooks(QString studentNumber, qint32 termID) const;
     PaymentInformation* getExistingBillingInfo(QString studentNumber) const;
     bool saveBillingInformation(const QString, PaymentInformation*);
+    bool createCourse(Course*, qint32);
+
 private:
     QSqlDatabase db;
 };

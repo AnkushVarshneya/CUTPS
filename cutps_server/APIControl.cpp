@@ -85,6 +85,18 @@ QJsonObject APIControl::savePaymentInfo(QJsonObject json){
     return r;
 }
 
+QJsonObject APIControl::createCourse(QJsonObject json){
+    Course* argCourse = new Course();
+    argCourse->read(json["Course"].toObject());
+    qint32 termID = json["TermID"].toDouble();
+    QueryControl *query = new QueryControl();
+    bool result  = query->createCourse(argCourse,termID);
+    delete argCourse;
+    QJsonObject r;
+    r["Boolean:"] = result;
+    return r;
+}
+
 //QJsonObject APIControl::cManagerViewTextbooks(QJsonObject json) {
 
 //    Term term;

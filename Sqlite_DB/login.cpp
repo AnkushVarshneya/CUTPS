@@ -28,8 +28,21 @@ Login::Login(QWidget *parent) :
 
         // test for getExistingBillingInfo
         QJsonObject json = QJsonObject();
-        getExistingBillingInfo("100853074").write(json);
+        PaymentInformation info = getExistingBillingInfo("100853074");
+        info.write(json);
         qDebug() <<json;
+
+        // test for saveBillingInformation use default values by calling default const.
+        info.setBillInfo(*(new BillingAddress()));
+        info.setCreditCardInfo(*(new CreditCardInformation()));
+
+        if(saveBillingInformation("100853074", &info)) {
+            qDebug()<<"changed it!";
+            json = QJsonObject();
+            PaymentInformation info2  = getExistingBillingInfo("100853074");
+            info2.write(json);
+            qDebug() <<json;
+        }
 
         //if there was a connection end it
         QSqlDatabase::database().commit();
@@ -40,6 +53,48 @@ Login::~Login()
 {
     delete ui;
 }
+
+bool Login::saveBillingInformation(const QString studentNumber, PaymentInformation *info){
+
+    // edit payment information
+    QSqlQuery PaymentInformationQuery;
+
+    PaymentInformationQuery.prepare("BEGIN TRANSACTION; "
+                                    "UPDATE PaymentInformation SET "
+                                        "creditCardNumber=:creditCardNumber, "
+                                        "cardType=:cardType, "
+                                        "cvv=:cvv, "
+                                        "expirationDate=:expirationDate, "
+                                        "nameOnCard=:nameOnCard, "
+                                        "postalCode=:postalCode, "
+                                        "province=:province, "
+                                        "city=:city, "
+                                        "streetName=:streetName, "
+                                        "houseNumber=:houseNumber "
+                                    "WHERE studentNumber=:studentNumber; "
+                                    "UPDATE User SET "
+                                        "fullName=:fullName "
+                                    "WHERE userName= "
+                                        "( "
+                                            "SELECT userName FROM Student "
+                                            "WHERE Student.studentNumber=:studentNumber "
+                                        "); "
+                                    "COMMIT;");
+
+    PaymentInformationQuery.bindValue(":creditCardNumber", info->getCreditCardInfo().getCreditCardNo());
+    PaymentInformationQuery.bindValue(":cardType", info->getCreditCardInfo().getCardType());
+    PaymentInformationQuery.bindValue(":cvv", info->getCreditCardInfo().getCVV());
+    PaymentInformationQuery.bindValue(":expirationDate", info->getCreditCardInfo().getExpDate());
+    PaymentInformationQuery.bindValue(":nameOnCard", info->getCreditCardInfo().getNameOnCard());
+    PaymentInformationQuery.bindValue(":postalCode", info->getBillInfo().getPostalCode());
+    PaymentInformationQuery.bindValue(":province", info->getBillInfo().getProvince());
+    PaymentInformationQuery.bindValue(":city", info->getBillInfo().getCity());
+    PaymentInformationQuery.bindValue(":streetName", info->getBillInfo().getStreetName());
+    PaymentInformationQuery.bindValue(":houseNumber", info->getBillInfo().getHouseNumber());
+    PaymentInformationQuery.bindValue(":fullName", info->getBillInfo().getName());
+    return PaymentInformationQuery.exec();
+}
+
 
 PaymentInformation& Login::getExistingBillingInfo(QString studentNumber) const{
     PaymentInformation *info;
@@ -57,9 +112,9 @@ PaymentInformation& Login::getExistingBillingInfo(QString studentNumber) const{
                                             "paymentInformation.city, "
                                             "paymentInformation.streetName, "
                                             "paymentInformation.houseNumber, "
-                                            "User.firstname||' '||User.lastname AS fullname "
+                                            "User.fullName "
                                         "FROM PaymentInformation "
-                                        "JOIN  Student ON "
+                                        "JOIN Student ON "
                                             "paymentInformation.studentNumber = Student.StudentNumber "
                                         "JOIN User ON "
                                             "Student.username = User.username AND "
@@ -71,7 +126,7 @@ PaymentInformation& Login::getExistingBillingInfo(QString studentNumber) const{
     //if student has payment info set it else its NULL
     if(PaymentInformationQuery.first()){
         info = new PaymentInformation();
-        info->setBillInfo(*(new BillingAddress(PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("fullname")).toString(),
+        info->setBillInfo(*(new BillingAddress(PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("fullName")).toString(),
                                         PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("houseNumber")).toInt(),
                                         PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("streetName")).toString(),
                                         PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("city")).toString(),

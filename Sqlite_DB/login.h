@@ -23,6 +23,7 @@ private:
     Ui::Login *ui;
     QList<Course*>& studentViewTextbooks(QString, qint32) const;
     PaymentInformation& getExistingBillingInfo(QString) const;
+    bool saveBillingInformation(const QString, PaymentInformation*);
 };
 
 #endif // LOGIN_H

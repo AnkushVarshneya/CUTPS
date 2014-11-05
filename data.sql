@@ -1,11 +1,13 @@
-INSERT INTO User (userName,firstName,lastName,password,roleID)
-VALUES ("Nooyen", "Robert", "Nguyen", "hunter", 3);
+begin transaction;
 
-INSERT INTO User (userName,firstName,lastName,password,roleID)
-VALUES ("BurryInAHurry", "Graham", "Burry", "huntermanager", 2);
+INSERT INTO User (userName,fullName,password,roleID)
+VALUES ("Nooyen", "Robert Nguyen", "hunter", 3);
 
-INSERT INTO User (userName,firstName,lastName,password,roleID)
-VALUES ("Kushlord", "Ankush", "Varshneya", "hunter1", 1);
+INSERT INTO User (userName,fullName,password,roleID)
+VALUES ("BurryInAHurry", "Graham Burry", "huntermanager", 2);
+
+INSERT INTO User (userName,fullName,password,roleID)
+VALUES ("Kushlord", "Ankush Varshneya", "hunter1", 1);
 
 INSERT INTO Student (studentNumber,cmail,userName)
 VALUES ("100853074","ankushlord@cmail.carleton.ca","Kushlord");
@@ -107,3 +109,5 @@ VALUES (11,11.99,0);
 
 INSERT INTO PurchasableItem (itemID,price,availability)
 VALUES (12,12.99,0);
+
+commit;

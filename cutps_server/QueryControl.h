@@ -11,7 +11,7 @@ public:
     QueryControl();
     ~QueryControl();
     QList<Course*>& studentViewTextbooks(QString studentNumber, qint32 termID) const;
-    PaymentInformation& getExistingBillingInfo(QString studentNumber) const;
+    PaymentInformation* getExistingBillingInfo(QString studentNumber) const;
 
 private:
     QSqlDatabase db;

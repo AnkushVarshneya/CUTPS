@@ -94,11 +94,20 @@ void CutpsServer::readBytes() {
        APIControl *apic = new APIControl();
        QJsonObject result = apic->viewShoppingCart(jsonDoc.object(), testStudentShoppingCart);
        delete apic;
-       QJsonDocument *doc = new QJsonDocument(result);
        this->sendJson(result);
    }
+   else if (cmd == "getExistingBillingInfo()") {
+       qDebug() << "processing command to get billing info..." << "\n";
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->getExistingPaymentInfo(jsonDoc.object());
+      // qDebug() << result;
+       delete apic;
 
-   qDebug() << jsonDoc.toJson();
+       this->sendJson(result);
+      // delete doc;
+   }
+
+
 } //readbytes
 
 void CutpsServer::sendJson(QJsonObject &json) {

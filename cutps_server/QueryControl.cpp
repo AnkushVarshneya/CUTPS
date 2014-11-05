@@ -18,7 +18,7 @@ QueryControl::~QueryControl(){
     qDebug() << db.databaseName();
 }
 
-PaymentInformation& QueryControl::getExistingBillingInfo(QString studentNumber) const{
+PaymentInformation* QueryControl::getExistingBillingInfo(QString studentNumber) const{
     PaymentInformation *info;
 
     // get the student payment information
@@ -62,10 +62,10 @@ PaymentInformation& QueryControl::getExistingBillingInfo(QString studentNumber) 
                                                      PaymentInformationQuery.value(PaymentInformationQuery.record().indexOf("nameOnCard")).toString())));
     }
     else{
-        info=NULL;
+        return NULL;
     }
 
-    return *info;
+    return info;
 }
 
 

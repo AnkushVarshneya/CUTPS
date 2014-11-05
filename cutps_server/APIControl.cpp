@@ -30,34 +30,40 @@ QJsonObject APIControl::studentViewTextbooks(QJsonObject json) {
 }
 QJsonObject APIControl::getExistingPaymentInfo(QJsonObject json) {
     QString stuNum = json["Student Number"].toString();
+    qDebug() << "testing billing info on student num: " << stuNum << "\n";
 
-    QString testNum = "100853074";
 
     QueryControl *query = new QueryControl();
-    PaymentInformation p;
-    p = query->getExistingBillingInfo(testNum);  //100853074
+    PaymentInformation *p;
+    qDebug() << "Test break 1";
+    p = query->getExistingBillingInfo(stuNum);
+    qDebug() << "Test break 2";
     delete query;
     QJsonObject payment;
-    QJsonDocument result;
-    p.write(payment);
-    result = QJsonDocument(payment);
-    qDebug() << result.toJson();
+    if(p != NULL){
+        p->write(payment);
+    }
+    else{
+        qDebug() << "No payment info found";
+    }
+    return payment;
+
 
 }
 
-QJsonObject APIControl::createTextbook(QJsonObject json) {
-
-}
-
+//QJsonObject APIControl::createTextbook(QJsonObject json) {
+//    QueryControl *query = new QueryControl(this);
+//    query->createTextbook();
+//}
 
 QJsonObject APIControl::viewShoppingCart(QJsonObject json, QMap<QString, ShoppingCart> testStudentShoppingCart) {
     QJsonObject result;
     QString stuNum = json["Student Number"].toString();
-    ShoppingCart *cart;
+    ShoppingCart cart;
        if(testStudentShoppingCart.contains(stuNum)) {
-       *cart = testStudentShoppingCart.value(stuNum);
+       cart = testStudentShoppingCart.value(stuNum);
        }
-    cart->write(result);
+    cart.write(result);
     return result;
 }
 

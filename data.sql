@@ -30,6 +30,9 @@ Values ("2345-5675-1234", "Master Card", "756","19760420","Ankush Dabess Varshne
 INSERT INTO Term (termID,startDate,endDate)
 VALUES (1,"20140905","20141209");
 
+INSERT INTO Term (termID,startDate,endDate)
+VALUES (2,"20150105","20150509");
+
 INSERT INTO Course (courseCode,section,instructor,termID)
 VALUES ("PHIL1002","C","Peter Dinklage",1);
 

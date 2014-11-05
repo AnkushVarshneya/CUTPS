@@ -204,3 +204,50 @@ QList<Course*>& QueryControl::studentViewTextbooks(QString studentNumber, qint32
     }
     return *courses;
 }
+
+bool QueryControl::saveBillingInformation(const QString studentNumber, PaymentInformation *info){
+
+    // edit payment information
+    QSqlQuery PaymentInformationQuery;
+
+    PaymentInformationQuery.prepare("UPDATE PaymentInformation SET "
+                                        "creditCardNumber=:creditCardNumber, "
+                                        "cardType=:cardType, "
+                                        "cvv=:cvv, "
+                                        "expirationDate=:expirationDate, "
+                                        "nameOnCard=:nameOnCard, "
+                                        "postalCode=:postalCode, "
+                                        "province=:province, "
+                                        "city=:city, "
+                                        "streetName=:streetName, "
+                                        "houseNumber=:houseNumber "
+                                    "WHERE studentNumber=:studentNumber; ");
+
+    PaymentInformationQuery.bindValue(":creditCardNumber", info->getCreditCardInfo().getCreditCardNo());
+    PaymentInformationQuery.bindValue(":cardType", info->getCreditCardInfo().getCardType());
+    PaymentInformationQuery.bindValue(":cvv", info->getCreditCardInfo().getCVV());
+    PaymentInformationQuery.bindValue(":expirationDate", info->getCreditCardInfo().getExpDate());
+    PaymentInformationQuery.bindValue(":nameOnCard", info->getCreditCardInfo().getNameOnCard());
+    PaymentInformationQuery.bindValue(":postalCode", info->getBillInfo().getPostalCode());
+    PaymentInformationQuery.bindValue(":province", info->getBillInfo().getProvince());
+    PaymentInformationQuery.bindValue(":city", info->getBillInfo().getCity());
+    PaymentInformationQuery.bindValue(":streetName", info->getBillInfo().getStreetName());
+    PaymentInformationQuery.bindValue(":houseNumber", info->getBillInfo().getHouseNumber());
+    PaymentInformationQuery.bindValue(":studentNumber", studentNumber);
+
+    // edit name
+    QSqlQuery nameQuery;
+
+    nameQuery.prepare(  "UPDATE User SET "
+                            "fullName=:fullName "
+                        "WHERE userName= "
+                            "( "
+                                "SELECT userName FROM Student "
+                                "WHERE Student.studentNumber=:studentNumber "
+                            "); ");
+
+    nameQuery.bindValue(":fullName", info->getBillInfo().getName());
+    nameQuery.bindValue(":studentNumber", studentNumber);
+
+    return PaymentInformationQuery.exec() && nameQuery.exec();
+}

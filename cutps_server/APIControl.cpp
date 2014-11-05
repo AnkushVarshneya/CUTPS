@@ -73,6 +73,18 @@ QJsonObject APIControl::viewShoppingCart(QJsonObject json, QMap<QString, Shoppin
     return result;
 }
 
+QJsonObject APIControl::savePaymentInfo(QJsonObject json){
+
+    QString stuNum = json["Student Number"].toString();
+    PaymentInformation *paymentInfo = new PaymentInformation;
+    paymentInfo->read(json["Payment Info"].toObject());
+    QueryControl *query = new QueryControl();
+    bool result  = query->saveBillingInformation(stuNum,paymentInfo);
+    QJsonObject r;
+    r["Boolean:"] = result;
+    return r;
+}
+
 //QJsonObject APIControl::cManagerViewTextbooks(QJsonObject json) {
 
 //    Term term;

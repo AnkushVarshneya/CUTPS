@@ -36,7 +36,7 @@ public:
 //    QJsonObject addContent(QJsonObject json);
 //    QJsonObject emptyShoppingCart(QJsonObject json);
     QJsonObject getExistingPaymentInfo(QJsonObject json);
-//    QJsonObject savePaymentInfo(QJsonObject json);
+    QJsonObject savePaymentInfo(QJsonObject json);
 
     QJsonObject createTextbook(QJsonObject json);
 //    QJsonObject createCourse(QJsonObject json);

@@ -129,6 +129,13 @@ void CutpsServer::readBytes() {
        delete apic;
        this->sendJson(result);
    }
+   else if (cmd == "linkTextbook()") {
+       qDebug() << "processing command to link textbook..." << "\n";
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->linkTextbook(jsonDoc.object());
+       delete apic;
+       this->sendJson(result);
+   }
 
    else if (cmd == "cManagerViewCourses()") {
        qDebug() << "processing command to retrieve content manager list of courses..." << "\n";

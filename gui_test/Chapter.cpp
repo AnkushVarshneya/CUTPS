@@ -40,6 +40,20 @@ void Chapter::addSection(Section* section){
     sections.push_back(section);  
 }
 
+bool Chapter::equals(Chapter* chapter){
+    if( !(chapterNumber == chapter->getItemID()
+        && title == chapter->getItemTitle()))
+        return false;
+
+    if(sections.size() != chapter->sections.size())
+        return false;
+    for(int i=0;i<sections.size();i++){
+        if(!sections.at(i)->equals(chapter->getChapterSections().at(i)))
+            return false;
+    }
+    return true;
+}
+
 //Takes a QJson object, this object extracts info about it
 //And sets its attributes to this extracted info
 void Chapter::read(const QJsonObject &json){

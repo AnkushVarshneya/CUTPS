@@ -44,6 +44,7 @@ public:
     qint32              getChapterNumber() const;
     Section*            getSection(qint32);
     QString             getItemTitle() const;
+    bool                equals(Chapter*);
 
     void                setItemTitle(QString);
     void                setChapterNumber(qint32);

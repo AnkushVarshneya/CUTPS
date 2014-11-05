@@ -70,6 +70,28 @@ void Textbook::addChapter(Chapter* chapter){
     //check this
 }
 
+bool Textbook::equals(Textbook* textbook){
+
+    if( !((isbn == textbook->getISBN())
+        && (author == textbook->getAuthor())
+        && (title == textbook->getItemTitle())
+        && (edition == textbook->getEdition())
+        && (publisher == textbook->getPublisher())
+        && (description == textbook->getDesc())
+        && (coverImageLoc == textbook->getCoverImageLoc()))){
+        return false;
+    }
+
+
+    if(chapters.size() != textbook->getChapterList().size())
+        return false;
+    for(int i=0;i<chapters.size();i++){
+        if(!chapters.at(i)->equals(textbook->getChapterList().at(i)))
+            return false;
+    }
+    return true;
+}
+
 //Takes a QJsonobject, extracts information about it
 //And set this textbook's attributes to it
 void Textbook::read(const QJsonObject &json){

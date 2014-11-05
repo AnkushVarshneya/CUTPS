@@ -25,6 +25,7 @@ public:
 
     void        setItemTitle(QString);
     void        setSectionNumber(qint32);
+    bool        equals(Section*);
 
     void        read(const QJsonObject &json);
     void        write(QJsonObject &json) const;

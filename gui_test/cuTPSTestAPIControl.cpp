@@ -9,18 +9,10 @@ void cuTPSTestAPIControl::setConnectionManager(ConnectionManager* c){
 //    connect(this->conMan->getTcp(), SIGNAL(readyRead()), this, SLOT(readBytes()));
 }
 
-//void cuTPSTestAPIControl::readBytes() {
-//    //conMan->setBytes(0);
-//    this->conMan->setBytes(this->conMan->getTcp()->bytesAvailable());
-//    qDebug() << "in client readbytes slot, bytes avail: " << this->conMan->getBytes() << "\n";  //to read
 
-//    char *data = new char[this->conMan->getBytes()];
-//   this->conMan->setBytes(this->conMan->getTcp()->read(data, this->conMan->getBytes()));
-//   qDebug() << "bytes read: " << this->conMan->getBytes() << "\n";
-//   QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
-//   qDebug() << jsonDoc.toJson();
-
-//}
+bool cuTPSTestAPIControl::linkTextbook(Textbook* textbook, Course* course){
+    return true;
+}
 
 //API call studentViewTextbooks where a student number and a term are arguments
 //To send over to the server in which the server will query the database

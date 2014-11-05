@@ -21,6 +21,13 @@ qint32 Section::getSectionNumber()      {return sectionNumber;}
 void Section::setItemTitle(QString a){title = a;}
 void Section::setSectionNumber(qint32 a){sectionNumber = a;}
 
+bool Section::equals(Section* section){
+    if(!(title == section->getItemTitle()
+         && sectionNumber == section->getItemID()))
+        return false;
+    return true;
+}
+
 //Takes input argument QJsonObject and extracts information
 //About it to set this object's components
 void Section::read(const QJsonObject &json){

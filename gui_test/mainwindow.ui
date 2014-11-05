@@ -118,7 +118,6 @@
      </property>
      <addaction name="actionStudent_ViewShoppingCart_hasitems"/>
      <addaction name="actionStudent_ViewShoppingCart_noitems"/>
-     <addaction name="actionStudent_ViewShoppingCart_studentnotfound"/>
     </widget>
     <widget class="QMenu" name="menuEmpty_Shopping_Cart">
      <property name="title">
@@ -126,7 +125,6 @@
      </property>
      <addaction name="actionStudent_EmptyShoppingCart_hasitems"/>
      <addaction name="actionStudent_EmptyShoppingCart_noitems"/>
-     <addaction name="actionStudent_EmptyShoppingCart_studentnotfound"/>
     </widget>
     <widget class="QMenu" name="menuAdd_Content">
      <property name="title">
@@ -143,27 +141,27 @@
     </widget>
     <widget class="QMenu" name="menuGet_Existing_Billing_Information">
      <property name="title">
-      <string>Get Existing Billing Information</string>
+      <string>Get Existing Payment Information</string>
      </property>
-     <addaction name="actionStudent_GetExistingBillingInformation_hasinfo"/>
-     <addaction name="actionStudent_GetExistingBillingInformation_noinfo"/>
-     <addaction name="actionStudent_GetExistingBillingInformation_studentnotfound"/>
+     <addaction name="actionStudent_GetExistingPaymentInformation_hasinfo"/>
+     <addaction name="actionStudent_GetExistingPaymentInformation_noinfo"/>
+     <addaction name="actionStudent_GetExistingPaymentInformation_studentnotfound"/>
     </widget>
-    <widget class="QMenu" name="menuSave_Billing_Information">
+    <widget class="QMenu" name="menuSave_Payment_Information">
      <property name="title">
-      <string>Save Billing Information</string>
+      <string>Save Payment Information</string>
      </property>
-     <addaction name="actionStudent_SaveBillingInformation_invalidformat"/>
-     <addaction name="actionStudent_SaveBillingInformation_validformat"/>
-     <addaction name="actionStudent_SaveBillingInformation_hasinfo"/>
-     <addaction name="actionStudent_SaveBillingInformation_studentnotfound"/>
+     <addaction name="actionStudent_SavePaymentInformation_invalidformat"/>
+     <addaction name="actionStudent_SavePaymentInformation_validformat"/>
+     <addaction name="actionStudent_SavePaymentInformation_hasinfo"/>
+     <addaction name="actionStudent_SavePaymentInformation_studentnotfound"/>
     </widget>
     <addaction name="menuStudentViewTextbooks"/>
     <addaction name="menuView_Shopping_Cart"/>
     <addaction name="menuEmpty_Shopping_Cart"/>
     <addaction name="menuAdd_Content"/>
     <addaction name="menuGet_Existing_Billing_Information"/>
-    <addaction name="menuSave_Billing_Information"/>
+    <addaction name="menuSave_Payment_Information"/>
    </widget>
    <addaction name="menuContent_Manager"/>
    <addaction name="menuStudent"/>
@@ -242,29 +240,29 @@
     <string>Adding invalid number of items</string>
    </property>
   </action>
-  <action name="actionStudent_GetExistingBillingInformation_hasinfo">
+  <action name="actionStudent_GetExistingPaymentInformation_hasinfo">
    <property name="text">
-    <string>Student has existing billing information</string>
+    <string>Student has existing payment information</string>
    </property>
   </action>
-  <action name="actionStudent_GetExistingBillingInformation_noinfo">
+  <action name="actionStudent_GetExistingPaymentInformation_noinfo">
    <property name="text">
-    <string>Student has no existing billing information</string>
+    <string>Student has no existing payment information</string>
    </property>
   </action>
-  <action name="actionStudent_SaveBillingInformation_invalidformat">
+  <action name="actionStudent_SavePaymentInformation_invalidformat">
    <property name="text">
-    <string>Billing information has invalid format</string>
+    <string>Payment information has invalid format</string>
    </property>
   </action>
-  <action name="actionStudent_SaveBillingInformation_validformat">
+  <action name="actionStudent_SavePaymentInformation_validformat">
    <property name="text">
-    <string>Billing information has valid format</string>
+    <string>Payment information has valid format</string>
    </property>
   </action>
-  <action name="actionStudent_SaveBillingInformation_hasinfo">
+  <action name="actionStudent_SavePaymentInformation_hasinfo">
    <property name="text">
-    <string>Student has existing billing information</string>
+    <string>Student has existing payment information</string>
    </property>
   </action>
   <action name="actionContentManager_CreateCourse_nullcourse">
@@ -357,12 +355,12 @@
     <string>Purchasable item is not found in the database</string>
    </property>
   </action>
-  <action name="actionStudent_GetExistingBillingInformation_studentnotfound">
+  <action name="actionStudent_GetExistingPaymentInformation_studentnotfound">
    <property name="text">
     <string>Student is not found in the database</string>
    </property>
   </action>
-  <action name="actionStudent_SaveBillingInformation_studentnotfound">
+  <action name="actionStudent_SavePaymentInformation_studentnotfound">
    <property name="text">
     <string>Student is not found in the database</string>
    </property>

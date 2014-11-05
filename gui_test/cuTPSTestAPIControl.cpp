@@ -93,13 +93,26 @@ bool cuTPSTestAPIControl::emptyShoppingCart(QString stuNum){
 
 //Get the existing payment info for a given student
 PaymentInformation* cuTPSTestAPIControl::getExistingPaymentInfo(QString stuNum){
-    PaymentInformation* paymentInfo;
+    PaymentInformation* paymentInfo = new PaymentInformation();
     QJsonObject api_server_call;
     QString functionCall = "getExistingBillingInfo()";
     api_server_call["Function:"] = functionCall;
     api_server_call["Student Number"] = stuNum;
     conMan->send(api_server_call);
-    return paymentInfo;
+    conMan->getTcp()->waitForReadyRead();
+
+
+    if(conMan->getResult().isEmpty()){
+        return NULL;
+    }
+    else{
+        QJsonObject a = conMan->getResult().object();
+        paymentInfo->read(a);
+        return paymentInfo;
+    }
+
+
+
 }
 
 //Save the payment info for a student
@@ -130,7 +143,7 @@ bool cuTPSTestAPIControl::createTextbook(Textbook *aTextbook){
 }
 
 //Create a course
-bool cuTPSTestAPIControl::createCourse(Course *aCourse){
+bool cuTPSTestAPIControl::createCourse(Course *aCourse, qint32 termID){
     QJsonObject api_server_call;
     QString functionCall = "createCourse()";
     api_server_call["Function:"] = functionCall;

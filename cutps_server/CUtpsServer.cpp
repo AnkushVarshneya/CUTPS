@@ -33,6 +33,28 @@ void CutpsServer::startServer()
     qDebug() << "Server address is: " << address;
     qDebug() << "Listening on port: " << port << "...";
     }
+
+   ShoppingCart emptyShoppingCart;
+   ShoppingCart cartWithItems;
+   Textbook* textbooktest1 = new Textbook("C++ Software Engineering", "Ted","1st ed",
+                                          "APublisher","978-3-16-148410-0", "A description", 456, 100.00, true);
+   Chapter*  chaptertest1 = new Chapter("Polymorphism", 1, 821, 10, true);
+   Section*  sectiontest1 = new Section("How to polymorphic", 1, 822, 2.50, true);
+   chaptertest1->addSection(sectiontest1);
+   textbooktest1->addChapter(chaptertest1);
+   cartWithItems.addItem((PurchasableItem*)textbooktest1);
+   cartWithItems.addItem((PurchasableItem*)chaptertest1);
+   cartWithItems.addItem((PurchasableItem*)sectiontest1);
+   Textbook* textbooktest2 = new Textbook("A++ Software", "Alex Baldwin", "2nd ed", "McGraw", "987-9-92-149210-2", "A++ software programming", 890, 130.00, true);
+   Chapter*  chaptertest2 = new Chapter("Programming in A++", 1, 102, 15.00, true);
+   Section*  sectiontest2 = new Section("Basics of programming", 1, 500, 5.00, false);
+   chaptertest2->addSection(sectiontest2);
+   textbooktest2->addChapter(chaptertest2);
+   cartWithItems.addItem((PurchasableItem*)textbooktest2);
+
+   testStudentShoppingCart.insert("100848920",emptyShoppingCart);
+   testStudentShoppingCart.insert("100859320",cartWithItems);
+
 }
 
 void CutpsServer::incomingConnection() {
@@ -67,13 +89,25 @@ void CutpsServer::readBytes() {
        QJsonDocument *doc = new QJsonDocument(result);
        qDebug() << doc->toJson();
        this->sendJson(result);
-       //TODO: write back to client the list of courses in QJSON object
    }
    else if(cmd == "viewShoppingCart()"){
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->viewShoppingCart(jsonDoc.object(), testStudentShoppingCart);
+       delete apic;
+       this->sendJson(result);
+   }
+   else if (cmd == "getExistingBillingInfo()") {
+       qDebug() << "processing command to get billing info..." << "\n";
+       APIControl *apic = new APIControl();
+       QJsonObject result = apic->getExistingPaymentInfo(jsonDoc.object());
+      // qDebug() << result;
+       delete apic;
 
+       this->sendJson(result);
+      // delete doc;
    }
 
-   qDebug() << jsonDoc.toJson();
+
 } //readbytes
 
 void CutpsServer::sendJson(QJsonObject &json) {

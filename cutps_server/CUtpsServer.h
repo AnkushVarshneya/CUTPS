@@ -16,10 +16,10 @@ public:
     explicit CutpsServer(QObject *parent = 0);
     void startServer();
     void sendJson(QJsonObject &json);
-
 private:
     QTcpSocket *tcpConnection;
     qint64 bytes;
+    QMap<QString,ShoppingCart> testStudentShoppingCart;
 
 signals:
 

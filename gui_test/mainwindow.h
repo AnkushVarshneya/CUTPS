@@ -60,10 +60,10 @@ enum Selected {
     StudentAddContent_multipleitems,
     StudentAddContent_invalidnumofitems,
     StudentAddContent_studentnotfound,
-    StudentAddContent_itemnotfound
+    StudentAddContent_itemnotfound,
 
-
-
+    StudentGetExistingPaymentInformation_hasinfo,
+    StudentGetExistingPaymentInformation_noinfo
 
 
 
@@ -138,8 +138,12 @@ private slots:
     void on_actionStudent_AddContent_invalidnumofitems_triggered();
     void on_actionStudent_AddContent_studentnotfound_triggered();
     void on_actionStudent_AddContent_itemnotfound_triggered();
-    void on_actionStudent_GetExistingBillingInformation_hasinfo_triggered();
-    void on_actionStudent_GetExistingBillingInformation_noinfo_triggered();
+    void on_actionStudent_GetExistingPaymentInformation_hasinfo_triggered();
+    void on_actionStudent_GetExistingPaymentInformation_noinfo_triggered();
+    void on_actionStudent_SavePaymentInformation_invalidformat_triggered();
+    void on_actionStudent_SavePaymentInformation_validformat_triggered();
+    void on_actionStudent_SavePaymentInformation_hasinfo_triggered();
+    void on_actionStudent_SavePaymentInformation_studentnotfound_triggered();
 };
 
 #endif // MAINWINDOW_H

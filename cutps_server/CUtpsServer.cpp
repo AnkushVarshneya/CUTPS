@@ -138,7 +138,6 @@ void CutpsServer::readBytes() {
        this->sendJson(result);
 
    }
-   /*
    else if (cmd == "cManagerViewTextbooks()") {
        qDebug() << "processing command to retries content manager list of textbook..." << "\n";
        APIControl *apic = new APIControl();
@@ -146,7 +145,7 @@ void CutpsServer::readBytes() {
        delete apic;
        this->sendJson(result);
    }
-   */
+
 } //readbytes
 
 //writes a json object to the tcp socket

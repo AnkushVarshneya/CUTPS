@@ -41,7 +41,7 @@ public:
     QJsonObject createTextbook(QJsonObject json);
     QJsonObject createCourse(QJsonObject json);
 //    QJsonObject linkTextbook(QJsonObject json);
-//    QJsonObject cManagerViewTextbooks(QJsonObject json);
+    QJsonObject cManagerViewTextbooks(QJsonObject json);
     QJsonObject cManagerViewCourses(QJsonObject json);
 
 

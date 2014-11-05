@@ -169,6 +169,7 @@ QList<Textbook*>& cuTPSTestAPIControl::cManagerViewTextbooks(Term *aTerm){
     aTerm->write(termObject);
     api_server_call["Term"] = termObject;
     conMan->send(api_server_call);
+    conMan->getTcp()->waitForReadyRead();
     return textbooks;
 }
 
@@ -182,5 +183,7 @@ QList<Course*>& cuTPSTestAPIControl::cManagerViewCourses(Term *aTerm){
     aTerm->write(termObject);
     api_server_call["Term"] = termObject;
     conMan->send(api_server_call);
+    conMan->getTcp()->waitForReadyRead();
+
     return courses;
 }

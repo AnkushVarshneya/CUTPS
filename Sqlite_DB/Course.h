@@ -26,7 +26,7 @@ class Student;
 class Course: CUtpsDataObject {
 public:
 
-    Course(QString = "COMP3004", QString = "A", QString = "Dr. Laurendeau");
+    Course(QString = "COMP3004", QString = "B", QString = "Dr. Laurendeau");
 
     ~Course();
 

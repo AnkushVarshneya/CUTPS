@@ -54,8 +54,8 @@ void MainWindow::on_pushButton_clicked()
     Term* testterm = new Term(QDate(2014,9,5),QDate(2014,12,9),1);
     testterm->getTermCourses().push_back(new Course());
 
-    Term* testTermEmpty;
-
+    Term* testTermEmpty = new Term();
+    testTermEmpty->setTermID(2);
     PaymentInformation* payInfo = new PaymentInformation();
 
     switch (behaviour){
@@ -79,12 +79,6 @@ void MainWindow::on_pushButton_clicked()
 
 
 
-        case ContentManagerCreateCourse_NullCourse:
-            //call control object with test for create course-null course
-            if(control->createCourse(NULL, 1))
-                ui->textBrowser->setText("Failure: Added a NULL Course.");
-            else
-                ui->textBrowser->setText("Success: could not create a NULL Course."); break;
 
         case ContentManagerCreateCourse_ValidCourse:
             //creating valid course
@@ -179,7 +173,7 @@ void MainWindow::on_pushButton_clicked()
             t.setTermID(4000);
             courses = control->studentViewTextbooks("hasTextbooksStu", &t);
             if(courses.empty())
-                ui->textBrowser->setText("Pass: Expected no Textbooks, got Textbooks.");
+                ui->textBrowser->setText("Pass: Expected no Textbooks, got no Textbooks.");
             else
                 ui->textBrowser->setText("Failure: Expected no Textbooks, got Textbooks."); break;
 
@@ -194,12 +188,6 @@ void MainWindow::on_pushButton_clicked()
                 ui->textBrowser->setText("Pass: Expected failure, got failure.");
             break;
 
-        case ContentManagerCreateTextbook_nulltextbook:
-            if(control->createTextbook(NULL))
-                ui->textBrowser->setText("Failure: Expected failure, got success.");
-            else
-                ui->textBrowser->setText("Success: Expected failure, got failure.");
-            break;
 
         case ContentManagerCreateTextbook_withchaptersandsections:
             if(control->createTextbook(&textbook))
@@ -219,19 +207,6 @@ void MainWindow::on_pushButton_clicked()
                 ui->textBrowser->setText("Pass: Expected link failure, got link failure,");
             break;
 
-        case ContentManagerLinkTextbook_nulltextbook:
-            if(control->linkTextbook(NULL,&c, 1))
-                ui->textBrowser->setText("Failure: Expected link failure, got link success.");
-            else
-                ui->textBrowser->setText("Pass: Expected link failure, got link failure.");
-            break;
-
-        case ContentManagerLinkTextbook_nullcourse:
-            if(control->linkTextbook(&textbook,NULL, 1))
-                ui->textBrowser->setText("Failure: Expected link failure, got link success.");
-            else
-                ui->textBrowser->setText("Pass: Expected link failure, got link failure.");
-            break;
         case ContentManagerLinkTextbook_validlink:
             if(control->linkTextbook(&textbook,&c, 1))
                 ui->textBrowser->setText("Pass: Expected link success, got link success.");
@@ -450,12 +425,6 @@ void MainWindow::on_actionStudent_ViewTextbooks_termnotfound_triggered()
 Content Manager Create Course
 ****************************/
 
-//Course is NULL
-void MainWindow::on_actionContentManager_CreateCourse_nullcourse_triggered()
-{
-    ui->textBrowser->setText("Create a NULL Course");
-    behaviour = ContentManagerCreateCourse_NullCourse;
-}
 //Course is valid
 void MainWindow::on_actionContentManager_CreateCourse_validcourse_triggered()
 {
@@ -494,12 +463,6 @@ void MainWindow::on_actionContentManager_CreateTextbook_textbookexists_triggered
     ui->textBrowser->setText("Create a Textbook that already exists in the database.");
     behaviour = ContentManagerCreateTextbook_textbookexists;
 }
-//Create a NULL Textbook
-void MainWindow::on_actionContentManager_CreateTextbook_nulltextbook_triggered()
-{
-    ui->textBrowser->setText("Create a NULL Textbook.");
-    behaviour = ContentManagerCreateTextbook_nulltextbook;
-}
 //Create Textbook with Chapters and Sections
 void MainWindow::on_actionContentManager_CreateTextbook_withchaptersandsections_triggered()
 {
@@ -519,18 +482,6 @@ void MainWindow::on_actionContentManager_LinkTextbook_alreadylinked_triggered()
 {
     ui->textBrowser->setText("Link a Textbook and Course that are already linked together.");
     behaviour = ContentManagerLinkTextbook_alreadylinked;
-}
-//Textbook is NULL
-void MainWindow::on_actionContentManager_LinkTextbook_nulltextbook_triggered()
-{
-    ui->textBrowser->setText("Link a Textbook and Course when the Textbook is NULL.");
-    behaviour = ContentManagerLinkTextbook_nulltextbook;
-}
-//Course is NULL
-void MainWindow::on_actionContentManager_LinkTextbook_nullcourse_triggered()
-{
-    ui->textBrowser->setText("Link a Textbook and Course when the Course is NULL.");
-    behaviour = ContentManagerLinkTextbook_nullcourse;
 }
 //Link is valid
 void MainWindow::on_actionContentManager_LinkTextbook_validlink_triggered()
@@ -612,12 +563,6 @@ void MainWindow::on_actionStudent_EmptyShoppingCart_studentnotfound_triggered()
 Student Add Content (to shopping cart)
 **************************************/
 
-//Add a NULL item to the Student's Shopping Cart
-void MainWindow::on_actionStudent_AddContent_nullitem_triggered()
-{
-    ui->textBrowser->setText("Add a NULL item to a Student's Shopping Cart.");
-    behaviour = StudentAddContent_nullitem;
-}
 //Add a Textbook to the Student's Shopping Cart
 void MainWindow::on_actionStudent_AddContent_Textbook_triggered()
 {
@@ -714,3 +659,10 @@ void MainWindow::on_actionStudent_SavePaymentInformation_studentnotfound_trigger
     ui->textBrowser->setText("Save Payment Information of a Student not found in the database.");
         behaviour = StudentSavePaymentInformation_studentnotfound;
 }
+
+
+//Need to have these or else program does not compile
+void MainWindow::on_actionContentManager_CreateTextbook_nulltextbook_triggered(){}
+void MainWindow::on_actionContentManager_LinkTextbook_nulltextbook_triggered(){}
+void MainWindow::on_actionContentManager_LinkTextbook_nullcourse_triggered(){}
+void MainWindow::on_actionStudent_AddContent_nullitem_triggered(){}

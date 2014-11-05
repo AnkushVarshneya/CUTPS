@@ -613,3 +613,18 @@ QList<Course*>& QueryControl::viewCourses(qint32 termID) {
     }
     return *courses;
 }
+
+bool QueryControl::linkTextbook(Textbook *textbook, Course *course, qint32 termID){
+    // link a text book to a course
+    QSqlQuery linkQuery;
+
+    linkQuery.prepare("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
+                            "VALUES (:ISBN,:courseCode,:section,:termID);");
+    linkQuery.bindValue(":ISBN", textbook->getISBN());
+    linkQuery.bindValue(":courseCode", course->getCourseCode());
+    linkQuery.bindValue(":section", course->getCourseSection());
+    linkQuery.bindValue(":termID", termID);
+
+    return linkQuery.exec();
+}
+

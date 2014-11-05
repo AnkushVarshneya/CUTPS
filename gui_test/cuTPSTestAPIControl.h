@@ -27,7 +27,7 @@ public:
 
     bool createTextbook(Textbook*);
     bool createCourse(Course*,qint32);
-    bool linkTextbook(Textbook*,Course*);
+    bool linkTextbook(Textbook*,Course*, qint32);
     QList<Textbook*>& cManagerViewTextbooks(Term*);
     QList<Course*>& cManagerViewCourses(Term*);
 

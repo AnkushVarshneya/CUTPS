@@ -147,3 +147,17 @@ QJsonObject APIControl::cManagerViewCourses(QJsonObject json){
     qDebug() << r;
     return r;
 }
+
+QJsonObject APIControl::linkTextbook(QJsonObject json){
+    Textbook* linkText = new Textbook();
+    Course* linkCourse = new Course();
+    qint32 termID = json["termID"].toDouble();
+    linkText->read(json["Textbook"].toObject());
+    linkCourse->read(json["Course"].toObject());
+    QueryControl *query = new QueryControl();
+    bool result = query->linkTextbook(linkText,linkCourse,termID);
+    delete query, linkText, linkCourse;
+    QJsonObject r;
+    r["Boolean:"] = result;
+    return r;
+}

@@ -10,8 +10,21 @@ void cuTPSTestAPIControl::setConnectionManager(ConnectionManager* c){
 }
 
 
-bool cuTPSTestAPIControl::linkTextbook(Textbook* textbook, Course* course){
-    return true;
+bool cuTPSTestAPIControl::linkTextbook(Textbook* textbook, Course* course, qint32 termID){
+    QJsonObject api_server_call;
+    QString functionCall = "linkTextbook()";
+    api_server_call["Function:"] = functionCall;
+    QJsonObject textbookObject;
+    textbook->write(textbookObject);
+    QJsonObject courseObject;
+    course->write(courseObject);
+    api_server_call["Textbook"] = textbookObject;
+    api_server_call["Course"] = courseObject;
+    api_server_call["termID"] = termID;
+    conMan->send(api_server_call);
+    conMan->getTcp()->waitForReadyRead();
+
+    return conMan->getResult().object()["Boolean:"].toBool();
 }
 
 //API call studentViewTextbooks where a student number and a term are arguments

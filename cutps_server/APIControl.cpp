@@ -55,10 +55,17 @@ QJsonObject APIControl::getExistingPaymentInfo(QJsonObject json) {
 
 }
 
-//QJsonObject APIControl::createTextbook(QJsonObject json) {
-//    QueryControl *query = new QueryControl(this);
-//    query->createTextbook();
-//}
+
+QJsonObject APIControl::createTextbook(QJsonObject json) {
+    Textbook* argText = new Textbook();
+    argText->read(json["Textbook"].toObject());
+    QueryControl *query = new QueryControl();
+    bool result  = query->createTextbook(argText);
+    delete argText;
+    QJsonObject r;
+    r["Boolean:"] = result;
+    return r;
+}
 
 
 //API viewShoppingCart()

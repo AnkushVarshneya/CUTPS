@@ -140,8 +140,8 @@ bool cuTPSTestAPIControl::createTextbook(Textbook *aTextbook){
     aTextbook->write(textbookObject);
     api_server_call["Textbook"] = textbookObject;
     conMan->send(api_server_call);
-
-    return true;
+    conMan->getTcp()->waitForReadyRead();
+    return conMan->getResult().object()["Boolean:"].toBool();
 }
 
 //Create a course

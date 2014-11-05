@@ -265,3 +265,114 @@ bool QueryControl::createCourse(Course *course, qint32 termID){
 
     return courseQuery.exec();
 }
+
+bool QueryControl::createTextbook(Textbook *textbook){
+    bool noError = true;
+
+    //get the current max item id
+    int nextItemID = -1;
+    QSqlQuery maxItemID("SELECT MAX(itemID)+1 AS nextItemID FROM PurchasableItem;");
+    noError = noError && maxItemID.exec();
+    if(maxItemID.first()){
+        nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
+    }
+    else{
+        nextItemID++;
+    }
+    textbook->setItemID(nextItemID);
+
+    // create a textbook
+    QSqlQuery textBookQuery;
+
+    textBookQuery.prepare("INSERT INTO Textbook (ISBN,coverImageLocation,Desc,Author,TextbookTitle,Publisher,Edition,itemID) "
+                            "VALUES (:ISBN,:coverImageLocation,:Desc,:Author,:TextbookTitle,:Publisher,:Edition,:itemID);");
+    textBookQuery.bindValue(":ISBN", textbook->getISBN());
+    textBookQuery.bindValue(":coverImageLocation", textbook->getCoverImageLoc());
+    textBookQuery.bindValue(":Desc", textbook->getDesc());
+    textBookQuery.bindValue(":Author", textbook->getAuthor());
+    textBookQuery.bindValue(":TextbookTitle", textbook->getItemTitle());
+    textBookQuery.bindValue(":Publisher", textbook->getPublisher());
+    textBookQuery.bindValue(":Edition", textbook->getEdition());
+    textBookQuery.bindValue(":itemID", textbook->getItemID());
+
+    //create its PurchasableItem
+    QSqlQuery textBookItemQuery;
+
+    textBookItemQuery.prepare("INSERT INTO PurchasableItem (itemID,price,availability) "
+                      "VALUES (:itemID,:price,:availability);");
+    textBookItemQuery.bindValue(":itemID", textbook->getItemID());
+    textBookItemQuery.bindValue(":price", textbook->getPrice());
+    textBookItemQuery.bindValue(":availability", textbook->isAvailable());
+
+    noError = noError && textBookQuery.exec();
+    noError = noError && textBookItemQuery.exec();
+
+    foreach(Chapter *chapter, textbook->getChapterList()){
+        noError = noError && maxItemID.exec();
+        if(maxItemID.first()){
+            nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
+        }
+        else{
+            nextItemID++;
+        }
+        chapter->setItemID(nextItemID);
+
+        //create a chapter
+        QSqlQuery chapterQuery;
+
+        chapterQuery.prepare("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
+                                "VALUES (:ISBN,:chapterNumber,:chapterTitle,:itemID);");
+        chapterQuery.bindValue(":ISBN", textbook->getISBN());
+        chapterQuery.bindValue(":chapterNumber", chapter->getChapterNumber());
+        chapterQuery.bindValue(":chapterTitle", chapter->getItemTitle());
+        chapterQuery.bindValue(":itemID", chapter->getItemID());
+
+        //create its PurchasableItem
+        QSqlQuery chapterItemQuery;
+
+        chapterItemQuery.prepare("INSERT INTO PurchasableItem (itemID,price,availability) "
+                          "VALUES (:itemID,:price,:availability);");
+        chapterItemQuery.bindValue(":itemID", chapter->getItemID());
+        chapterItemQuery.bindValue(":price", chapter->getPrice());
+        chapterItemQuery.bindValue(":availability", chapter->isAvailable());
+
+        noError = noError && chapterQuery.exec();
+        noError = noError && chapterItemQuery.exec();
+
+        foreach(Section *section, chapter->getChapterSections()){
+            noError = noError && maxItemID.exec();
+            if(maxItemID.first()){
+                nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
+            }
+            else{
+                nextItemID++;
+            }
+            section->setItemID(nextItemID);
+
+            //create a section
+            QSqlQuery sectionQuery;
+
+            sectionQuery.prepare("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                    "VALUES (:ISBN,:chapterNumber,:sectionNumber,:sectionTitle,:itemID);");
+            sectionQuery.bindValue(":ISBN", textbook->getISBN());
+            sectionQuery.bindValue(":chapterNumber", chapter->getChapterNumber());
+            sectionQuery.bindValue(":sectionNumber", section->getSectionNumber());
+            sectionQuery.bindValue(":sectionTitle", section->getItemTitle());
+            sectionQuery.bindValue(":itemID", section->getItemID());
+
+            //create its PurchasableItem
+            QSqlQuery sectionItemQuery;
+
+            sectionItemQuery.prepare("INSERT INTO PurchasableItem (itemID,price,availability) "
+                              "VALUES (:itemID,:price,:availability);");
+            sectionItemQuery.bindValue(":itemID", section->getItemID());
+            sectionItemQuery.bindValue(":price", section->getPrice());
+            sectionItemQuery.bindValue(":availability", section->isAvailable());
+
+            noError = noError && sectionQuery.exec();
+            noError = noError && sectionItemQuery.exec();
+        }
+    }
+
+    return noError;
+}

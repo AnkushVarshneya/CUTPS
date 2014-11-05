@@ -88,8 +88,8 @@ void MainWindow::on_pushButton_clicked()
 
         case ContentManagerCreateCourse_ValidCourse:
             //creating valid course
-            t = Term(QDate(2015,01,05),QDate(2015,05,01),2);
-            c.setTerm(t);
+
+            c = Course("COMP3005","B","Louis Nel");
             if(control->createCourse(&c, 1))
                 ui->textBrowser->setText("Pass: Course successfully added.");
             else

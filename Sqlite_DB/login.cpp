@@ -15,12 +15,12 @@ Login::Login(QWidget *parent) :
         qDebug() << "FAILED TO CONNECT TO DATA BASE";
     else {
         qDebug() << "CONNECT TO DATA BASE";
-/*
+
         // test for view studentView
         foreach(Course *crs, studentViewTextbooks("100853074", 1)){
             QJsonObject json = QJsonObject();
             crs->write(json);
-            qDebug() <<json;
+            //qDebug() <<json;
         }
 
         // test for getExistingBillingInfo
@@ -40,7 +40,7 @@ Login::Login(QWidget *parent) :
             info2.write(json);
             qDebug() <<json;
         }
-*/
+/*
         //test for creating a textbook
         Textbook *textbook = new Textbook();
         Chapter *chapter = new Chapter();
@@ -66,7 +66,7 @@ Login::Login(QWidget *parent) :
             tb->write(json);
             qDebug() <<json<< endl;
         }
-
+*/
         //if there was a connection end it
         QSqlDatabase::database().commit();
     }
@@ -75,6 +75,66 @@ Login::Login(QWidget *parent) :
 Login::~Login()
 {
     delete ui;
+}
+
+bool Login::resetDatabase(){
+    bool noError = true;
+    QSqlQuery query;
+
+    noError = noError && query.exec("begin transaction;");
+    noError = noError && query.exec("drop table if exists Role;");
+    noError = noError && query.exec("drop table if exists User;");
+    noError = noError && query.exec("drop table if exists Student;");
+    noError = noError && query.exec("drop table if exists PaymentInformation;");
+    noError = noError && query.exec("drop table if exists Student_RegisteredIn_Course;");
+    noError = noError && query.exec("drop table if exists Course;");
+    noError = noError && query.exec("drop table if exists Term;");
+    noError = noError && query.exec("drop table if exists Course_Assigned_Textbook;");
+    noError = noError && query.exec("drop table if exists Textbook;");
+    noError = noError && query.exec("drop table if exists Chapter;");
+    noError = noError && query.exec("drop table if exists Section;");
+    noError = noError && query.exec("drop table if exists ShoppingCart;");
+    noError = noError && query.exec("drop table if exists ShoppinCart_Contains_PurchasableItem;");
+    noError = noError && query.exec("drop table if exists PurchasableItem;");
+
+    //creating the Table called Role
+    noError = noError && query.exec("create table Role( "
+                                        "roleID integer NOT NULL primary key, "
+                                        "roleType varchar(20) "
+                                    ");");
+    //insert default Role(s)
+    noError = noError && query.exec("insert into Role (roleID, roleType) values (1, 'Student');");
+    noError = noError && query.exec("insert into Role (roleID, roleType) values (2, 'Content Manager');");
+    noError = noError && query.exec("insert into Role (roleID, roleType) values (3, 'Administrator');");
+
+    // creating the Table called User
+    noError = noError && query.exec("create table User( "
+                                        "userName varchar(50) NOT NULL primary key, "
+                                        "fullName varchar(50), "
+                                        "password varchar(20), "
+                                        "roleID integer NOT NULL, "
+                                        "foreign key (roleID) references Role(roleID) on delete cascade "
+                                    ");");
+    // insert default User(s)
+    noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
+                                        "VALUES ('Nooyen', 'Robert Nguyen', 'hunter', 3);");
+    noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
+                                        "VALUES ('BurryInAHurry', 'Graham Burry', 'huntermanager', 2);");
+    noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
+                                        "VALUES ('Kushlord', 'Ankush Varshneya', 'hunter1', 1);");
+    noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
+                                        "VALUES ('Mooreloaded', 'Ryan Moore', 'hunter2', 1);");
+    noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
+                                        "VALUES ('LorettaBetta','Loretta Lee','hunter3',1);");
+
+
+
+
+    noError = noError && query.exec("commit;");
+
+
+    return noError;
+
 }
 
 QList<Textbook*>& Login::viewAllTextbooks(qint32 termID){
@@ -317,7 +377,6 @@ bool Login::linkTextbook(Textbook *textbook, Course *course, qint32 termID){
     return linkQuery.exec();
 }
 
-
 bool Login::createCourse(Course *course, qint32 termID){
     // create a course
     QSqlQuery courseQuery;
@@ -445,49 +504,60 @@ bool Login::createTextbook(Textbook *textbook){
 
 bool Login::saveBillingInformation(const QString studentNumber, PaymentInformation *info){
 
-    // edit payment information
-    QSqlQuery PaymentInformationQuery;
+    //check if there is a student with that id
+    QSqlQuery studentQuery;
+    studentQuery.prepare("SELECT COUNT(*) FROM student "
+                            "WHERE studentNumber =:studentNumber;");
+    studentQuery.bindValue(":studentNumber", studentNumber);
+    studentQuery.exec();
 
-    PaymentInformationQuery.prepare("UPDATE PaymentInformation SET "
-                                        "creditCardNumber=:creditCardNumber, "
-                                        "cardType=:cardType, "
-                                        "cvv=:cvv, "
-                                        "expirationDate=:expirationDate, "
-                                        "nameOnCard=:nameOnCard, "
-                                        "postalCode=:postalCode, "
-                                        "province=:province, "
-                                        "city=:city, "
-                                        "streetName=:streetName, "
-                                        "houseNumber=:houseNumber "
-                                    "WHERE studentNumber=:studentNumber; ");
+    if(studentQuery.first() && (studentQuery.value(studentQuery.record().indexOf("COUNT(*)")).toInt()>0)){
+        // edit payment information
+        QSqlQuery PaymentInformationQuery;
 
-    PaymentInformationQuery.bindValue(":creditCardNumber", info->getCreditCardInfo().getCreditCardNo());
-    PaymentInformationQuery.bindValue(":cardType", info->getCreditCardInfo().getCardType());
-    PaymentInformationQuery.bindValue(":cvv", info->getCreditCardInfo().getCVV());
-    PaymentInformationQuery.bindValue(":expirationDate", info->getCreditCardInfo().getExpDate());
-    PaymentInformationQuery.bindValue(":nameOnCard", info->getCreditCardInfo().getNameOnCard());
-    PaymentInformationQuery.bindValue(":postalCode", info->getBillInfo().getPostalCode());
-    PaymentInformationQuery.bindValue(":province", info->getBillInfo().getProvince());
-    PaymentInformationQuery.bindValue(":city", info->getBillInfo().getCity());
-    PaymentInformationQuery.bindValue(":streetName", info->getBillInfo().getStreetName());
-    PaymentInformationQuery.bindValue(":houseNumber", info->getBillInfo().getHouseNumber());
-    PaymentInformationQuery.bindValue(":studentNumber", studentNumber);
+        PaymentInformationQuery.prepare("UPDATE PaymentInformation SET "
+                                            "creditCardNumber=:creditCardNumber, "
+                                            "cardType=:cardType, "
+                                            "cvv=:cvv, "
+                                            "expirationDate=:expirationDate, "
+                                            "nameOnCard=:nameOnCard, "
+                                            "postalCode=:postalCode, "
+                                            "province=:province, "
+                                            "city=:city, "
+                                            "streetName=:streetName, "
+                                            "houseNumber=:houseNumber "
+                                        "WHERE studentNumber=:studentNumber; ");
 
-    // edit name
-    QSqlQuery nameQuery;
+        PaymentInformationQuery.bindValue(":creditCardNumber", info->getCreditCardInfo().getCreditCardNo());
+        PaymentInformationQuery.bindValue(":cardType", info->getCreditCardInfo().getCardType());
+        PaymentInformationQuery.bindValue(":cvv", info->getCreditCardInfo().getCVV());
+        PaymentInformationQuery.bindValue(":expirationDate", info->getCreditCardInfo().getExpDate());
+        PaymentInformationQuery.bindValue(":nameOnCard", info->getCreditCardInfo().getNameOnCard());
+        PaymentInformationQuery.bindValue(":postalCode", info->getBillInfo().getPostalCode());
+        PaymentInformationQuery.bindValue(":province", info->getBillInfo().getProvince());
+        PaymentInformationQuery.bindValue(":city", info->getBillInfo().getCity());
+        PaymentInformationQuery.bindValue(":streetName", info->getBillInfo().getStreetName());
+        PaymentInformationQuery.bindValue(":houseNumber", info->getBillInfo().getHouseNumber());
+        PaymentInformationQuery.bindValue(":studentNumber", studentNumber);
 
-    nameQuery.prepare(  "UPDATE User SET "
-                            "fullName=:fullName "
-                        "WHERE userName= "
-                            "( "
-                                "SELECT userName FROM Student "
-                                "WHERE Student.studentNumber=:studentNumber "
-                            "); ");
+        // edit name
+        QSqlQuery nameQuery;
 
-    nameQuery.bindValue(":fullName", info->getBillInfo().getName());
-    nameQuery.bindValue(":studentNumber", studentNumber);
+        nameQuery.prepare(  "UPDATE User SET "
+                                "fullName=:fullName "
+                            "WHERE userName= "
+                                "( "
+                                    "SELECT userName FROM Student "
+                                    "WHERE Student.studentNumber=:studentNumber "
+                                "); ");
 
-    return PaymentInformationQuery.exec() && nameQuery.exec();
+        nameQuery.bindValue(":fullName", info->getBillInfo().getName());
+        nameQuery.bindValue(":studentNumber", studentNumber);
+
+        return PaymentInformationQuery.exec() && nameQuery.exec();
+    }
+
+    return false;
 }
 
 

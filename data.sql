@@ -10,10 +10,10 @@ INSERT INTO User (userName,fullName,password,roleID)
 VALUES ("Kushlord", "Ankush Varshneya", "hunter1", 1);
 
 INSERT INTO User (userName,fullName,password,roleID)
-VALUES ("Mooreloaded", "Ryan Moore", "hunter2", 1)
+VALUES ("Mooreloaded", "Ryan Moore", "hunter2", 1);
 
 INSERT INTO User (userName,fullName,password,roleID)
-VALUES ("LorettaBetta","Loretta Lee","hunter3",1)
+VALUES ("LorettaBetta","Loretta Lee","hunter3",1);
 
 INSERT INTO Student (studentNumber,cmail,userName)
 VALUES ("100853074","ankushlord@cmail.carleton.ca","Kushlord");
@@ -30,8 +30,11 @@ Values ("2345-5675-1234", "Master Card", "756","19760420","Ankush Dabess Varshne
 INSERT INTO Term (termID,startDate,endDate)
 VALUES (1,"20140905","20141209");
 
+INSERT INTO Term (termID,startDate,endDate)
+VALUES (2,"20150105","20150509");
+
 INSERT INTO Course (courseCode,section,instructor,termID)
-VALUES ("PHIL1002","C","Peter Dinklage");
+VALUES ("PHIL1002","C","Peter Dinklage",1);
 
 INSERT INTO Course (courseCode,section,instructor,termID)
 VALUES ("COMP3004","A", "Christine Laurendeau",1);
@@ -126,6 +129,5 @@ VALUES (11,11.99,0);
 
 INSERT INTO PurchasableItem (itemID,price,availability)
 VALUES (12,12.99,0);
-
 
 commit;

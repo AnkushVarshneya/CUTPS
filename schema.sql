@@ -35,8 +35,7 @@ insert into Role (roleID, roleType) values (3, "Administrator");
 --creating the Table called User
 create table User(
 	userName varchar(50) NOT NULL primary key,
-	firstName varchar(20),
-	lastName varchar(20),
+	fullName varchar(50),
 	password varchar(20),
 	roleID integer NOT NULL,
 	foreign key (roleID) references Role(roleID) on delete cascade

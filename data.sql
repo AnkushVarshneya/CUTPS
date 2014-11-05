@@ -127,4 +127,8 @@ VALUES (11,11.99,0);
 INSERT INTO PurchasableItem (itemID,price,availability)
 VALUES (12,12.99,0);
 
+<<<<<<< HEAD
 commit;
+=======
+commit;
+>>>>>>> 2c61d84b97f775ae1af7d735ee3ff8ce069080e0

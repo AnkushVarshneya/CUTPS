@@ -40,6 +40,7 @@ public:
     void                setDescription  (QString);
     void                setCoverImageLoc(QString);
     void                addChapter(Chapter*);
+    bool                equals          (Textbook*);
 
     void                read(const QJsonObject &json);
     void                write(QJsonObject &json) const;

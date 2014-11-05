@@ -20,6 +20,7 @@ enum Selected {
 
     StudentViewShoppingCart_hasitems,
     StudentViewShoppingCart_noitems,
+    StudentViewShoppingCart_studentnotfound,
 
     ContentManagerCreateCourse_NullCourse,
     ContentManagerCreateCourse_ValidCourse,
@@ -97,6 +98,11 @@ private slots:
     void on_actionContentManager_LinkTextbook_nulltextbook_triggered();
     void on_actionContentManager_LinkTextbook_nullcourse_triggered();
     void on_actionContentManager_LinkTextbook_validlink_triggered();
+    void on_actionContentManager_ViewTextbooksByTerm_notextbooks_triggered();
+    void on_actionContentManager_ViewTextbooksByTerm_hastextbooks_triggered();
+    void on_actionContentManager_ViewCourses_nocourses_triggered();
+    void on_actionContentManager_ViewCourses_hascourses_triggered();
+    void on_actionStudent_ViewShoppingCart_studentnotfound_triggered();
 };
 
 #endif // MAINWINDOW_H

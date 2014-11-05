@@ -1,24 +1,43 @@
-INSERT INTO User (userName,firstName,lastName,password,roleID)
-VALUES ("Nooyen", "Robert", "Nguyen", "hunter", 3);
+begin transaction;
 
-INSERT INTO User (userName,firstName,lastName,password,roleID)
-VALUES ("BurryInAHurry", "Graham", "Burry", "huntermanager", 2);
+INSERT INTO User (userName,fullName,password,roleID)
+VALUES ("Nooyen", "Robert Nguyen", "hunter", 3);
 
-INSERT INTO User (userName,firstName,lastName,password,roleID)
-VALUES ("Kushlord", "Ankush", "Varshneya", "hunter1", 1);
+INSERT INTO User (userName,fullName,password,roleID)
+VALUES ("BurryInAHurry", "Graham Burry", "huntermanager", 2);
+
+INSERT INTO User (userName,fullName,password,roleID)
+VALUES ("Kushlord", "Ankush Varshneya", "hunter1", 1);
+
+INSERT INTO User (userName,fullName,password,roleID)
+VALUES ("Mooreloaded", "Ryan Moore", "hunter2", 1)
+
+INSERT INTO User (userName,fullName,password,roleID)
+VALUES ("LorettaBetta","Loretta Lee","hunter3",1)
 
 INSERT INTO Student (studentNumber,cmail,userName)
 VALUES ("100853074","ankushlord@cmail.carleton.ca","Kushlord");
 
-INSERT INTO PaymentInformation (creditCardNumber, cvv, expirationDate, nameOnCard,postalCode,province,city,streetName,houseNumber,studentNumber)
-Values (2345-5675-1234,756,1976-04-20,"Ankush Dabess Varshneya","H8R8H8","Ontario","Ottawa","Swag St.",420,"100853074");
+INSERT INTO Student (studentNumber,cmail,userName)
+VALUES ("195372839","ryanmoore@cmail.carleton.ca","Mooreloaded");
+
+INSERT INTO Student (studentNumber,cmail,userName)
+VALUES ("123456789","somestudent@cmail.carleton.ca","LorettaBetta");
+
+INSERT INTO PaymentInformation (creditCardNumber, cardType, cvv, expirationDate, nameOnCard,postalCode,province,city,streetName,houseNumber,studentNumber)
+Values ("2345-5675-1234", "Master Card", "756","19760420","Ankush Dabess Varshneya","H8R8H8","Ontario","Ottawa","Swag St.",420,"100853074");
 
 INSERT INTO Term (termID,startDate,endDate)
 VALUES (1,"20140905","20141209");
 
+INSERT INTO Course (courseCode,section,instructor,termID)
+VALUES ("PHIL1002","C","Peter Dinklage");
 
 INSERT INTO Course (courseCode,section,instructor,termID)
 VALUES ("COMP3004","A", "Christine Laurendeau",1);
+
+INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID)
+VALUES ("195372839","PHIL1002","C",1);
 
 INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID)
 VALUES ("100853074","COMP3004", "A", 1);
@@ -107,3 +126,5 @@ VALUES (11,11.99,0);
 
 INSERT INTO PurchasableItem (itemID,price,availability)
 VALUES (12,12.99,0);
+
+commit;

@@ -49,8 +49,40 @@ void MainWindow::on_pushButton_clicked()
     Course c;
     Term t;
     Textbook textbook;
+    QList<Course*> courses;
+
+    Term* testterm = new Term(QDate(2014,9,5),QDate(2014,12,9),1);
+    testterm->getTermCourses().push_back(new Course());
 
     switch (behaviour){
+        case StudentViewShoppingCart_hasitems:
+            //view a shopping cart with items
+            if(!control->viewShoppingCart("100853074").isEmpty())
+                update_pass("Pass: Expected nonempty cart, got nonempty cart.");
+            else
+                update_fail("Fail: Expected nonempty cart, got empty cart.");
+            break;
+
+        case StudentViewShoppingCart_noitems:
+            //view an empty shopping cart
+            if(!control->viewShoppingCart("noitemsStu").isEmpty())
+                update_fail("Failure: Expected empty Shopping Cart, got nonempty Shopping Cart.");
+            else
+                update_pass("Pass: Expected empty Shopping Cart, got empty Shopping Cart.");
+            break;
+
+        case StudentViewShoppingCart_studentnotfound:
+            //view a shopping cart where the Student is not found in the database
+            if(!control->viewShoppingCart("dneStu").isEmpty())
+                update_fail("Failure: Expected empty Shopping Cart, got nonempty Shopping Cart.");
+            else
+                update_pass("Pass: Expected empty Shopping Cart, got empty Shopping Cart.");
+            break;
+
+
+
+
+
         case ContentManagerCreateCourse_NullCourse:
             //call control object with test for create course-null course
             if(control->createCourse(NULL))
@@ -102,28 +134,49 @@ void MainWindow::on_pushButton_clicked()
 
         case StudentViewTextbooks_unenrolled:
             //viewing the Textbooks of a Student who has no Courses but exists in the database
-            if(control->studentViewTextbooks("unenrolledStu", &t).empty())
+            courses = control->studentViewTextbooks("unenrolledStu", &t);
+            if(courses.empty())
                 update_pass("Pass: Could not view Textbooks of an unenrolled Student.");
             else
                 update_fail("Failure: An unenrolled Student should have no Textbooks."); break;
 
         case StudentViewTextbooks_notextbooks:
             //viewing the Textbooks of a Student who is enrolled but has no Textbooks
-            if(control->studentViewTextbooks("noTextbooksStu", &t).empty())
+            courses = control->studentViewTextbooks("noTextbooksStu", &t);
+            if(courses.empty())
                 update_pass("Pass: A Student who is enrolled with no Textbooks should have no Textbooks.");
             else
                 update_fail("Failure: A Student who is enrolled with no Textbooks should have no Textbooks."); break;
 
         case StudentViewTextbooks_hastextbooks:
             //viewing the Textbooks of a Student who has Textbooks
-            if(*control->studentViewTextbooks("hasTextbooksStu", &t).front()->getRequiredTextbooks().front() == textbook)
-                update_pass("Pass: Viewed the Textbooks of a Student who has Textbooks.");
+            courses = control->studentViewTextbooks("100853074", testterm);
+            if(!courses.empty()){
+                if(courses.front() != 0){
+                  if(!courses.front()->getRequiredTextbooks().isEmpty()){
+                      if(courses.front()->getRequiredTextbooks().front() != 0){
+                          if(courses.front()->getRequiredTextbooks().front()){
+                              update_pass("Pass: Viewed the Textbooks of a Student who has Textbooks.");
+                          }
+                          else
+                              update_fail("Failure: 1"); break;
+                      }
+                      else
+                          update_fail("Failure: 2"); break;
+                  }
+                  else
+                      update_fail("Failure: 3"); break;
+                }
+                else
+                    update_fail("Failure: 4"); break;
+            }
             else
                 update_fail("Failure: Could not view the Textbooks of a Student who has Textbooks."); break;
 
         case StudentViewTextbooks_studentnotfound:
             //viewing the Textbooks of a Student who is not found in the database
-            if(control->studentViewTextbooks("nonexistentStu", &t).empty())
+            courses = control->studentViewTextbooks("nonexistentStu", &t);
+            if(courses.empty())
                 update_pass("Pass: Expected no Textbooks, got no Textbooks");
             else
                 update_fail("Failure: Expected no Textbooks, got Textbooks"); break;
@@ -131,14 +184,15 @@ void MainWindow::on_pushButton_clicked()
         case StudentViewTextbooks_termnotfound:
             //viewing the Textbooks of a Student when the Term is not found in the database
             t.setTermID(4000);
-            if(control->studentViewTextbooks("hasTextbooksStu", &t).empty())
+            courses = control->studentViewTextbooks("hasTextbooksStu", &t);
+            if(courses.empty())
                 update_pass("Pass: Expected no Textbooks, got Textbooks.");
             else
                 update_fail("Failure: Expected no Textbooks, got Textbooks."); break;
 
 
 
-/*
+
         case ContentManagerLinkTextbook_alreadylinked:
             control->linkTextbook(&textbook,&c);
             if(control->linkTextbook(&textbook,&c))
@@ -166,7 +220,7 @@ void MainWindow::on_pushButton_clicked()
             else
                 update_fail("Failure: Expected link success, got link failure.");
             break;
-            */
+
     }
 }
 
@@ -188,6 +242,13 @@ void MainWindow::on_actionStudent_ViewShoppingCart_noitems_triggered()
     ui->textBrowser->setText("View an empty Shopping Cart.");
     behaviour = StudentViewShoppingCart_noitems;
 }
+//Student is not found in the database
+void MainWindow::on_actionStudent_ViewShoppingCart_studentnotfound_triggered()
+{
+    ui->textBrowser->setText("View the Shopping Cart of a Student who is not found in the database.");
+    behaviour = StudentViewShoppingCart_studentnotfound;
+}
+
 
 
 
@@ -317,3 +378,24 @@ void MainWindow::on_actionContentManager_LinkTextbook_validlink_triggered()
     ui->textBrowser->setText("Link a Textbook and Course.");
     behaviour = ContentManagerLinkTextbook_validlink;
 }
+
+void MainWindow::on_actionContentManager_ViewTextbooksByTerm_notextbooks_triggered()
+{
+
+}
+
+void MainWindow::on_actionContentManager_ViewTextbooksByTerm_hastextbooks_triggered()
+{
+
+}
+
+void MainWindow::on_actionContentManager_ViewCourses_nocourses_triggered()
+{
+
+}
+
+void MainWindow::on_actionContentManager_ViewCourses_hascourses_triggered()
+{
+
+}
+

@@ -29,6 +29,15 @@ int main(int argc, char *argv[])
 
 
     conMan->connectToHost(address, port);
+
+//    Textbook *t1 = new Textbook();
+//    Textbook *t2 = new Textbook();
+//    if(t1->equals(t2))
+//        qDebug() << "HUZZAH";
+//    else
+//        qDebug() << "NOOOO";
+
+
    // conMan->testSend(adr);
 /*
     //test send and parse of chapter w/ nested sections

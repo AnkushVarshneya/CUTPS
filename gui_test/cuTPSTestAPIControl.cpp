@@ -8,6 +8,10 @@ void cuTPSTestAPIControl::setConnectionManager(ConnectionManager* c){
     conMan = c;
 }
 
+bool cuTPSTestAPIControl::linkTextbook(Textbook* textbook, Course* course){
+    return true;
+}
+
 //API call studentViewTextbooks where a student number and a term are arguments
 //To send over to the server in which the server will query the database
 //For the necessary textbooks required for the registered courses

@@ -31,7 +31,7 @@ INSERT INTO Term (termID,startDate,endDate)
 VALUES (1,"20140905","20141209");
 
 INSERT INTO Term (termID,startDate,endDate)
-VALUES (2,"20150105","20150509");
+VALUES (2,"20150105","20151209");
 
 INSERT INTO Course (courseCode,section,instructor,termID)
 VALUES ("PHIL1002","C","Peter Dinklage",1);

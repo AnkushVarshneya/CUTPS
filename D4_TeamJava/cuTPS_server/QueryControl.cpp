@@ -1,12 +1,6 @@
-#include "login.h"
-#include "ui_login.h"
+#include "QueryControl.h"
 
-Login::Login(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::Login)
-{
-    ui->setupUi(this);
-
+QueryControl::QueryControl() {
     // setup db connection
     QSqlDatabase db=QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("../cuTPS.db");
@@ -82,12 +76,7 @@ Login::Login(QWidget *parent) :
     }
 }
 
-Login::~Login()
-{
-    delete ui;
-}
-
-QList<Term*>& Login::viewAllTerm() {
+QList<Term*>& QueryControl::viewAllTerm() {
     QList<Term*> *terms = new QList<Term*>();
     // get all terms
     QSqlQuery termQuery;
@@ -108,7 +97,7 @@ QList<Term*>& Login::viewAllTerm() {
     return *terms;
 }
 
-bool Login::resetDatabase(){
+bool QueryControl::resetDatabase(){
     bool noError = true;
     QSqlQuery query;
 
@@ -120,18 +109,19 @@ bool Login::resetDatabase(){
     noError = noError && query.exec("drop table if exists Student_RegisteredIn_Course;");
     noError = noError && query.exec("drop table if exists Course;");
     noError = noError && query.exec("drop table if exists Term;");
+    noError = noError && query.exec("drop table if exists Course_Assigned_Textbook;");
     noError = noError && query.exec("drop table if exists Textbook;");
     noError = noError && query.exec("drop table if exists Chapter;");
     noError = noError && query.exec("drop table if exists Section;");
     noError = noError && query.exec("drop table if exists ShoppingCart;");
     noError = noError && query.exec("drop table if exists ShoppinCart_Contains_PurchasableItem;");
     noError = noError && query.exec("drop table if exists PurchasableItem;");
-    noError = noError && query.exec("drop table if exists Course_Assigned_Textbook;");
+    noError = noError && query.exec("drop table if exists Orders;");
 
     // creating the Table called Role
-    noError = noError && query.exec("create table Role( "
-                                        "roleID integer NOT NULL primary key, "
-                                        "roleType varchar(20) "
+    noError = noError && query.exec("create table Role("
+                                        "roleID integer NOT NULL primary key,"
+                                        "roleType varchar(20)"
                                     ");");
     // insert default Role(s)
     noError = noError && query.exec("insert into Role (roleID, roleType) values (1, 'Student');");
@@ -139,13 +129,13 @@ bool Login::resetDatabase(){
     noError = noError && query.exec("insert into Role (roleID, roleType) values (3, 'Administrator');");
 
     // creating the Table called User
-    noError = noError && query.exec("create table User( "
-                                        "userName varchar(50) NOT NULL primary key, "
-                                        "fullName varchar(50), "
-                                        "password varchar(20), "
-                                        "roleID integer NOT NULL, "
-                                        "foreign key (roleID) references Role(roleID) on delete cascade "
+    noError = noError && query.exec("create table User("
+                                        "userName varchar(50) NOT NULL primary key,"
+                                        "fullName varchar(50),"
+                                        "password varchar(20),"
+                                        "roleID integer NOT NULL references Role(roleID) on delete cascade"
                                     ");");
+
     // insert default User(s)
     noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
                                         "VALUES ('Nooyen', 'Robert Nguyen', 'hunter', 3);");
@@ -159,11 +149,10 @@ bool Login::resetDatabase(){
                                         "VALUES ('LorettaBetta','Loretta Lee','hunter3',1);");
 
     // creating the Table called Student
-    noError = noError && query.exec("create table Student( "
-                                        "studentNumber varchar(10) NOT NULL primary key, "
-                                        "cmail varchar(100) NOT NULL UNIQUE, "
-                                        "userName varchar(50) NOT NULL, "
-                                        "foreign key (userName) references User(userName) on delete cascade "
+    noError = noError && query.exec("create table Student("
+                                        "studentNumber varchar(10) NOT NULL primary key,"
+                                        "cmail varchar(100) NOT NULL UNIQUE,"
+                                        "userName varchar(50) NOT NULL references User(userName) on delete cascade"
                                     ");");
 
     // insert default Students(s)
@@ -175,20 +164,19 @@ bool Login::resetDatabase(){
                                         "VALUES ('123456789','somestudent@cmail.carleton.ca','LorettaBetta');");
 
     // creating the Table called PaymentInformation
-    noError = noError && query.exec("create table PaymentInformation( "
-                                        "creditCardNumber varchar(50) NOT NULL, "
-                                        "cardType varchar(50), "
-                                        "cvv varchar(50), "
-                                        "expirationDate varchar(10), "
-                                        "nameOnCard varchar(50), "
-                                        "postalCode varchar(7), "
-                                        "province varchar(50), "
-                                        "city varchar(50), "
-                                        "streetName varchar(50), "
-                                        "houseNumber integer, "
-                                        "studentNumber varchar(10) NOT NULL, "
-                                        "foreign key (studentNumber) references Student(studentNumber) on delete cascade, "
-                                        "primary key(studentNumber, creditCardNumber) "
+    noError = noError && query.exec("create table PaymentInformation("
+                                        "creditCardNumber varchar(50) NOT NULL,"
+                                        "cardType varchar(50),"
+                                        "cvv varchar(50),"
+                                        "expirationDate varchar(10),"
+                                        "nameOnCard varchar(50),"
+                                        "postalCode varchar(7),"
+                                        "province varchar(50),"
+                                        "city varchar(50),"
+                                        "streetName varchar(50),"
+                                        "houseNumber integer,"
+                                        "studentNumber varchar(10) NOT NULL references Student(studentNumber) on delete cascade,"
+                                        "primary key(studentNumber, creditCardNumber)"
                                     ");");
 
     // insert default PaymentInformation(s)
@@ -196,12 +184,12 @@ bool Login::resetDatabase(){
                                         "Values ('2345-5675-1234', 'Master Card', '756','19760420','Ankush Dabess Varshneya','H8R8H8','Ontario','Ottawa','Swag St.',420,'100853074');");
 
     //creating the Table called Student_RegisteredIn_Course
-    noError = noError && query.exec("create table Student_RegisteredIn_Course( "
-                                        "studentNumber varchar(10) NOT NULL references Student(studentNumber), "
-                                        "courseCode varchar(8) NOT NULL references Course(courseCode), "
-                                        "section varchar(1) NOT NULL references Course(section), "
-                                        "termID integer NOT NULL references Course(termID), "
-                                        "primary key(studentNumber, courseCode, section, termID) "
+    noError = noError && query.exec("create table Student_RegisteredIn_Course("
+                                        "studentNumber varchar(10) NOT NULL references Student(studentNumber) on delete cascade,"
+                                        "courseCode varchar(8) NOT NULL references Course(courseCode) on delete cascade,"
+                                        "section varchar(1) NOT NULL references Course(section) on delete cascade,"
+                                        "termID integer NOT NULL references Course(termID) on delete cascade,"
+                                        "primary key(studentNumber, courseCode, section, termID)"
                                     ");");
 
     // insert default Student_RegisteredIn_Course(s)
@@ -213,13 +201,12 @@ bool Login::resetDatabase(){
                                         "VALUES ('195372839','PHIL1002','C',1);");
 
     //creating the Table called Course
-    noError = noError && query.exec("create table Course( "
-                                        "courseCode varchar(8) NOT NULL, "
-                                        "section varchar(1) NOT NULL, "
-                                        "instructor varchar(20), "
-                                        "termID integer NOT NULL, "
-                                        "foreign key (termID) references Term(termID) on delete cascade, "
-                                        "primary key(courseCode, section, termID) "
+    noError = noError && query.exec("create table Course("
+                                        "courseCode varchar(8) NOT NULL,"
+                                        "section varchar(1) NOT NULL,"
+                                        "instructor varchar(20),"
+                                        "termID integer NOT NULL references Term(termID) on delete cascade,"
+                                        "primary key(courseCode, section, termID)"
                                     ");");
 
     // insert default Course(s)
@@ -231,11 +218,12 @@ bool Login::resetDatabase(){
                                         "VALUES ('PHIL1002','C','Peter Dinklage',1);");
 
     // creating the Table called Term
-    noError = noError && query.exec("create table Term( "
-                                        "termID integer NOT NULL primary key, "
-                                        "startDate varchar(10), "
-                                        "endDate varchar(10) "
+    noError = noError && query.exec("create table Term("
+                                        "termID integer NOT NULL primary key,"
+                                        "startDate varchar(10),"
+                                        "endDate varchar(10)"
                                     ");");
+
     // insert default Terms(s)
     noError = noError && query.exec("INSERT INTO Term (termID,startDate,endDate) "
                                         "VALUES (1,'20140905','20141209');");
@@ -243,16 +231,15 @@ bool Login::resetDatabase(){
                                         "VALUES (2,'20150105','20151209');");
 
     //creating the Table called Textbook
-    noError = noError && query.exec("create table Textbook( "
-                                        "ISBN varchar(20) NOT NULL primary key, "
-                                        "coverImageLocation varchar(100), "
-                                        "desc varchar(200), "
-                                        "author varchar(50), "
-                                        "textBookTitle varchar(50), "
-                                        "publisher varchar(50), "
-                                        "edition varchar(50), "
-                                        "itemID integer NOT NULL, "
-                                        "foreign key (itemID) references PurchasableItem(itemID) on delete cascade "
+    noError = noError && query.exec("create table Textbook("
+                                        "ISBN varchar(20) NOT NULL primary key,"
+                                        "coverImageLocation varchar(100),"
+                                        "desc varchar(200),"
+                                        "author varchar(50),"
+                                        "textBookTitle varchar(50),"
+                                        "publisher varchar(50),"
+                                        "edition varchar(50),"
+                                        "itemID integer NOT NULL references PurchasableItem(itemID) on delete cascade"
                                     ");");
 
     // insert default Textbook(s)
@@ -262,14 +249,12 @@ bool Login::resetDatabase(){
                                         "VALUES ('222-2-22-222222-0','./COMP3804.png','COMP3804 course pack is required!','Author of COMP3804','COMP3804 A Course Pack','Carleton Course Pack Inc.','1st',7);");
 
    // creating the Table called Chapter
-    noError = noError && query.exec("create table Chapter( "
-                                        "ISBN varchar(20) NOT NULL, "
-                                        "chapterNumber integer NOT NULL, "
-                                        "chapterTitle varchar(50), "
-                                        "itemID integer NOT NULL, "
-                                        "foreign key (ISBN) references Textbook(ISBN) on delete cascade, "
-                                        "foreign key (itemID) references PurchasableItem(itemID) on delete cascade, "
-                                        "primary key(ISBN, chapterNumber) "
+    noError = noError && query.exec("create table Chapter("
+                                        "ISBN varchar(20) NOT NULL references Textbook(ISBN) on delete cascade,"
+                                        "chapterNumber integer NOT NULL,"
+                                        "chapterTitle varchar(50),"
+                                        "itemID integer NOT NULL references PurchasableItem(itemID) on delete cascade,"
+                                        "primary key(ISBN, chapterNumber)"
                                     ");");
 
     // insert default Chapter(s)
@@ -283,16 +268,13 @@ bool Login::resetDatabase(){
                                         "VALUES ('222-2-22-222222-0',2,'COMP3804 Midterm',11);");
 
     // creating the Table called Section
-    noError = noError && query.exec("create table Section( "
-                                        "ISBN varchar(20) NOT NULL, "
-                                        "chapterNumber integer NOT NULL, "
-                                        "sectionNumber integer NOT NULL, "
-                                        "sectionTitle varchar(50), "
-                                        "itemID integer NOT NULL, "
-                                        "foreign key (ISBN) references Chapter(ISBN) on delete cascade, "
-                                        "foreign key (chapterNumber) references Chapter(chapterNumber) on delete cascade, "
-                                        "foreign key (itemID) references PurchasableItem(itemID) on delete cascade, "
-                                        "primary key(ISBN, chapterNumber, sectionNumber) "
+    noError = noError && query.exec("create table Section("
+                                    "ISBN varchar(20) NOT NULL references Chapter(ISBN) on delete cascade,"
+                                        "chapterNumber integer NOT NULL references Chapter(chapterNumber) on delete cascade,"
+                                        "sectionNumber integer NOT NULL,"
+                                        "sectionTitle varchar(50),"
+                                        "itemID integer NOT NULL references PurchasableItem(itemID) on delete cascade,"
+                                        "primary key(ISBN, chapterNumber, sectionNumber)"
                                     ");");
 
     // insert default Section(s)
@@ -310,10 +292,10 @@ bool Login::resetDatabase(){
                                         "VALUES ('222-2-22-222222-0',2,1,'COMP3804 Midterm mark break-up',12);");
 
     // creating the Table called PurchasableItem
-    noError = noError && query.exec("create table PurchasableItem( "
-                                        "itemID integer NOT NULL primary key, "
-                                        "price decimal(18,2), "
-                                        "availability boolean "
+    noError = noError && query.exec("create table PurchasableItem("
+                                        "itemID integer NOT NULL primary key,"
+                                        "price decimal(18,2),"
+                                        "availability boolean"
                                     ");");
 
     // insert default PurchasableItem(s)
@@ -343,12 +325,12 @@ bool Login::resetDatabase(){
                                         "VALUES (12,12.99,0);");
 
     // creating the Table called Course_Assigned_Textbook
-    noError = noError && query.exec("create table Course_Assigned_Textbook( "
-                                        "ISBN varchar(20) NOT NULL references Textbook(ISBN), "
-                                        "courseCode varchar(8) NOT NULL references Course(courseCode), "
-                                        "section varchar(1) NOT NULL references Course(section), "
-                                        "termID integer NOT NULL references Course(termID), "
-                                        "primary key(ISBN, courseCode, section, termID) "
+    noError = noError && query.exec("create table Course_Assigned_Textbook("
+                                        "ISBN varchar(20) NOT NULL references Textbook(ISBN) on delete cascade,"
+                                        "courseCode varchar(8) NOT NULL references Course(courseCode) on delete cascade,"
+                                        "section varchar(1) NOT NULL references Course(section) on delete cascade,"
+                                        "termID integer NOT NULL references Course(termID) on delete cascade,"
+                                        "primary key(ISBN, courseCode, section, termID)"
                                     ");");
 
     // insert default Course_Assigned_Textbook(s)
@@ -357,13 +339,45 @@ bool Login::resetDatabase(){
     noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
                                         "VALUES ('222-2-22-222222-0','COMP3804','A',1);");
 
+    // creating the Table called ShoppingCart
+    noError = noError && query.exec("create table ShoppingCart("
+                                        "shoppingCartID integer NOT NULL primary key,"
+                                        "studentNumber varchar(10) NOT NULL references Student(studentNumber) on delete cascade"
+                                    ");");
+
+    // insert default ShoppingCart(s)
+
+    // creating the Table called ShoppinCart_Contains_PurchasableItem
+    noError = noError && query.exec("create table ShoppinCart_Contains_PurchasableItem("
+                                        "shoppingCartID integer NOT NULL references ShoppingCart(shoppingCartID) on delete cascade,"
+                                        "itemID integer NOT NULL references PurchasableItem(itemID) on delete cascade,"
+                                        "quantity integer,"
+                                        "primary key(shoppingCartID, itemID)"
+                                    ");");
+
+    // insert default ShoppinCart_Contains_PurchasableItem(s)
+
+    // creating the Table called Orders
+    noError = noError && query.exec("create table Orders("
+                                        "orderID integer NOT NULL primary key,"
+                                        "studentNumber varchar(10) NOT NULL references Student(studentNumber) on delete cascade,"
+                                        "itemID integer NOT NULL references PurchasableItem(itemID) on delete cascade"
+                                    ");");
+
+    // insert default Orders(s)
+
+
     //commit transaction
     noError = noError && query.exec("commit;");
 
     return noError;
 }
 
-QList<Textbook*>& Login::viewAllTextbooks(qint32 termID){
+bool QueryControl::addPurchasableItemTO (){
+
+}
+
+QList<Textbook*>& QueryControl::viewAllTextbooks(qint32 termID){
     QList<Textbook*> *textbooks = new QList<Textbook*>();
 
     // get all textbooks for the term
@@ -462,7 +476,7 @@ QList<Textbook*>& Login::viewAllTextbooks(qint32 termID){
     return *textbooks;
 }
 
-QList<Course*>& Login::viewCourses(qint32 termID) {
+QList<Course*>& QueryControl::viewCourses(qint32 termID) {
     QList<Course*> *courses = new QList<Course*>();
 
     // get all courses in the term
@@ -589,7 +603,7 @@ QList<Course*>& Login::viewCourses(qint32 termID) {
     return *courses;
 }
 
-bool Login::linkTextbook(Textbook *textbook, Course *course, qint32 termID){
+bool QueryControl::linkTextbook(Textbook *textbook, Course *course, qint32 termID){
     // link a text book to a course
     QSqlQuery linkQuery;
 
@@ -603,7 +617,7 @@ bool Login::linkTextbook(Textbook *textbook, Course *course, qint32 termID){
     return linkQuery.exec();
 }
 
-bool Login::createCourse(Course *course, qint32 termID){
+bool QueryControl::createCourse(Course *course, qint32 termID){
     // create a course
     QSqlQuery courseQuery;
 
@@ -617,7 +631,7 @@ bool Login::createCourse(Course *course, qint32 termID){
     return courseQuery.exec();
 }
 
-bool Login::createTextbook(Textbook *textbook){
+bool QueryControl::createTextbook(Textbook *textbook){
     bool noError = true;
 
     //get the current max item id
@@ -728,7 +742,7 @@ bool Login::createTextbook(Textbook *textbook){
     return noError;
 }
 
-bool Login::saveBillingInformation(const QString studentNumber, PaymentInformation *info){
+bool QueryControl::saveBillingInformation(const QString studentNumber, PaymentInformation *info){
 
     //check if there is a student with that id
     QSqlQuery studentQuery;
@@ -787,7 +801,7 @@ bool Login::saveBillingInformation(const QString studentNumber, PaymentInformati
 }
 
 
-PaymentInformation& Login::getExistingBillingInfo(QString studentNumber) const{
+PaymentInformation& QueryControl::getExistingBillingInfo(QString studentNumber) const{
     PaymentInformation *info;
 
     // get the student payment information
@@ -837,7 +851,7 @@ PaymentInformation& Login::getExistingBillingInfo(QString studentNumber) const{
     return *info;
 }
 
-QList<Course*>& Login::studentViewTextbooks(QString studentNumber, qint32 termID) const{
+QList<Course*>& QueryControl::studentViewTextbooks(QString studentNumber, qint32 termID) const{
     QList<Course*> *courses = new QList<Course*>();
 
     // get all courses in the term for a perticular student

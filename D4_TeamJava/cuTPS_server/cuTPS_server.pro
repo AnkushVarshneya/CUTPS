@@ -13,7 +13,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-        login.cpp \
         CUtpsDataObject.cpp \
         User.cpp \
         Student.cpp \
@@ -26,10 +25,11 @@ SOURCES += main.cpp \
         paymentInformation.cpp \
         BillingAddress.cpp \
         CreditCardInformation.cpp \
-        ShoppingCart.cpp
+        ShoppingCart.cpp \
+    QueryControl.cpp
 
 
-HEADERS  += login.h \
+HEADERS  += \
         CUtpsDataObject.h \
         User.h \
         Student.h \
@@ -42,6 +42,5 @@ HEADERS  += login.h \
         paymentInformation.h \
         BillingAddress.h \
         CreditCardInformation.h \
-        ShoppingCart.h
-
-FORMS    += login.ui
+        ShoppingCart.h \
+    QueryControl.h

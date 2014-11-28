@@ -1,7 +1,6 @@
-#ifndef LOGIN_H
-#define LOGIN_H
+#ifndef QUERYCONTROL_H
+#define QUERYCONTROL_H
 
-#include <QMainWindow>
 #include <QtSql>
 #include <QDebug>
 #include <QFileInfo>
@@ -11,20 +10,13 @@
 #include "Textbook.h"
 #include "Chapter.h"
 
-namespace Ui {
-class Login;
-}
-
-class Login : public QMainWindow
+class QueryControl
 {
-    Q_OBJECT
 
 public:
-    explicit Login(QWidget *parent = 0);
-    ~Login();
+    QueryControl();
 
-private:
-    Ui::Login *ui;
+    bool addPurchasableItemTO();
     QList<Course*>& studentViewTextbooks(QString, qint32) const;
     PaymentInformation& getExistingBillingInfo(QString) const;
     bool saveBillingInformation(const QString, PaymentInformation*);
@@ -38,8 +30,7 @@ private:
 
     bool resetDatabase();
 
-
-
+    private:
 };
 
-#endif // LOGIN_H
+#endif

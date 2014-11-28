@@ -13,9 +13,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    ContentManagerInterfaceWindow.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    ContentManagerInterfaceWindow.h
 
 FORMS    += mainwindow.ui \
-    studentInterfaceForm.ui
+    studentInterfaceForm.ui \
+    ContentManagerInterfaceWindow.ui

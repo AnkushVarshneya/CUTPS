@@ -25,7 +25,8 @@ ContentManagerInterfaceWindow::~ContentManagerInterfaceWindow()
 //Options to Create Textbook, Modify Textbook, and Delete Textbooks are shown
 void ContentManagerInterfaceWindow::on_manageTextbooksOption_clicked()
 {
-
+    manageTextbooksInterface.show();
+    this->hide();
 }
 
 
@@ -34,3 +35,5 @@ void ContentManagerInterfaceWindow::on_manageCoursesOption_clicked()
 {
 
 }
+
+

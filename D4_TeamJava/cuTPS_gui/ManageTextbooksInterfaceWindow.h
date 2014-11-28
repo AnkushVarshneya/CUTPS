@@ -2,7 +2,7 @@
 #define MANAGETEXTBOOKSINTERFACEWINDOW_H
 
 #include <QWidget>
-#include "createtextbookformwindow.h"
+#include "CreateTextbookFormWindow.h"
 
 namespace Ui {
 class ManageTextbooksInterfaceWindow;
@@ -18,6 +18,8 @@ public:
 
 private slots:
     void on_createTextbookOption_clicked();
+
+    void on_deleteTextbookOption_clicked();
 
 private:
     Ui::ManageTextbooksInterfaceWindow *ui;

@@ -1,5 +1,7 @@
-#include "createchapterformwindow.h"
-#include "ui_createchapterformwindow.h"
+#include "CreateChapterFormWindow.h"
+#include "ui_CreateChapterFormWindow.h"
+
+#include "CreateTextbookFormWindow.h"
 
 CreateChapterFormWindow::CreateChapterFormWindow(QWidget *parent) :
     QWidget(parent),
@@ -11,4 +13,16 @@ CreateChapterFormWindow::CreateChapterFormWindow(QWidget *parent) :
 CreateChapterFormWindow::~CreateChapterFormWindow()
 {
     delete ui;
+}
+
+void CreateChapterFormWindow::on_viewEditSectionButton_clicked()
+{
+    createSectionForm.show();
+    createSectionForm.parentWindow = this;
+    this->hide();
+}
+
+void CreateChapterFormWindow::on_pushButton_clicked()
+{
+
 }

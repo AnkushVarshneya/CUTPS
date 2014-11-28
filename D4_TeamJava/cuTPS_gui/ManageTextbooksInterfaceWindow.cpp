@@ -1,5 +1,5 @@
-#include "managetextbooksinterfacewindow.h"
-#include "ui_managetextbooksinterfacewindow.h"
+#include "ManageTextbooksInterfaceWindow.h"
+#include "ui_ManageTextbooksInterfaceWindow.h"
 
 ManageTextbooksInterfaceWindow::ManageTextbooksInterfaceWindow(QWidget *parent) :
     QWidget(parent),
@@ -17,4 +17,9 @@ void ManageTextbooksInterfaceWindow::on_createTextbookOption_clicked()
 {
     createTextbookForm.show();
     this->hide();
+}
+
+void ManageTextbooksInterfaceWindow::on_deleteTextbookOption_clicked()
+{
+
 }

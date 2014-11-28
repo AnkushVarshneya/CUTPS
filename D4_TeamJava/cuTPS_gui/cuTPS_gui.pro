@@ -17,11 +17,18 @@ SOURCES += main.cpp\
     ContentManagerInterfaceWindow.cpp \
     managetextbooksinterfacewindow.cpp \
     createtextbookformwindow.cpp \
-    createchapterformwindow.cpp
+    createchapterformwindow.cpp \
+    ManageContentControl.cpp \
+    Term.cpp \
+    CUtpsDataObject.cpp
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
     managetextbooksinterfacewindow.h \
+    ManageContentControl.h \
+    types.h \
+    Term.h \
+    CUtpsDataObject.h \
     createtextbookformwindow.h \
     createchapterformwindow.h
 

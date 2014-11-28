@@ -19,12 +19,15 @@ ContentManagerInterfaceWindow::~ContentManagerInterfaceWindow()
 }
 
 
+
+
 //On clicking the ManageTextbooksOption, A list of textbooks are shown
 //Options to Create Textbook, Modify Textbook, and Delete Textbooks are shown
 void ContentManagerInterfaceWindow::on_manageTextbooksOption_clicked()
 {
 
 }
+
 
 //On clicking the ManageCoursesOption, A new Interface window is shown specifically for course management
 void ContentManagerInterfaceWindow::on_manageCoursesOption_clicked()

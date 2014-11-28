@@ -14,11 +14,27 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ContentManagerInterfaceWindow.cpp
+    ContentManagerInterfaceWindow.cpp \
+    managetextbooksinterfacewindow.cpp \
+    createtextbookformwindow.cpp \
+    createchapterformwindow.cpp \
+    ManageContentControl.cpp \
+    Term.cpp \
+    CUtpsDataObject.cpp
 
 HEADERS  += mainwindow.h \
-    ContentManagerInterfaceWindow.h
+    ContentManagerInterfaceWindow.h \
+    managetextbooksinterfacewindow.h \
+    ManageContentControl.h \
+    types.h \
+    Term.h \
+    CUtpsDataObject.h \
+    createtextbookformwindow.h \
+    createchapterformwindow.h
 
 FORMS    += mainwindow.ui \
-    studentInterfaceForm.ui \
-    ContentManagerInterfaceWindow.ui
+    ContentManagerInterfaceWindow.ui \
+    studentinterfacewindow.ui \
+    managetextbooksinterfacewindow.ui \
+    createtextbookformwindow.ui \
+    createchapterformwindow.ui

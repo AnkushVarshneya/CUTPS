@@ -2,6 +2,7 @@
 #define CONTENTMANAGERINTERFACEWINDOW_H
 
 #include <QWidget>
+#include "managetextbooksinterfacewindow.h"
 
 namespace Ui {
 class ContentManagerInterfaceWindow;
@@ -22,6 +23,7 @@ private slots:
 
 private:
     Ui::ContentManagerInterfaceWindow *ui;
+    ManageTextbooksInterfaceWindow manageTextbooksInterface;
 };
 
 #endif // CONTENTMANAGERINTERFACEWINDOW_H

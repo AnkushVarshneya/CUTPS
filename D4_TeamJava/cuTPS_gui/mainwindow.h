@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "ContentManagerInterfaceWindow.h"
+#include "StudentInterfaceWindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +25,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     ContentManagerInterfaceWindow contentManagerUI;
+    StudentInterfaceWindow studentInterface;
 
 
 };

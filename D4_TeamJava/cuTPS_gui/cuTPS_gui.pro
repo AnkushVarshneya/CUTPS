@@ -20,7 +20,12 @@ SOURCES += main.cpp\
     createchapterformwindow.cpp \
     ManageContentControl.cpp \
     Term.cpp \
-    CUtpsDataObject.cpp
+    CUtpsDataObject.cpp \
+    Textbook.cpp \
+    Chapter.cpp \
+    Section.cpp \
+    PurchaseablItem.cpp \
+    StudentInterfaceWindow.cpp
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
@@ -30,11 +35,16 @@ HEADERS  += mainwindow.h \
     Term.h \
     CUtpsDataObject.h \
     createtextbookformwindow.h \
-    createchapterformwindow.h
+    createchapterformwindow.h \
+    Textbook.h \
+    Chapter.h \
+    Section.h \
+    PurchasableItem.h \
+    StudentInterfaceWindow.h
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \
-    studentinterfacewindow.ui \
     managetextbooksinterfacewindow.ui \
     createtextbookformwindow.ui \
-    createchapterformwindow.ui
+    createchapterformwindow.ui \
+    StudentInterfaceWindow.ui

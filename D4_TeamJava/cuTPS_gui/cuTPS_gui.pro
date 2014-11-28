@@ -14,10 +14,17 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ContentManagerInterfaceWindow.cpp
+    ContentManagerInterfaceWindow.cpp \
+    ManageContentControl.cpp \
+    Term.cpp \
+    CUtpsDataObject.cpp
 
 HEADERS  += mainwindow.h \
-    ContentManagerInterfaceWindow.h
+    ContentManagerInterfaceWindow.h \
+    ManageContentControl.h \
+    types.h \
+    Term.h \
+    CUtpsDataObject.h
 
 FORMS    += mainwindow.ui \
     studentInterfaceForm.ui \

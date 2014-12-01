@@ -2,7 +2,7 @@
 #define CONTENTMANAGERINTERFACEWINDOW_H
 
 #include <QWidget>
-#include "managetextbooksinterfacewindow.h"
+#include "ManageTextbooksInterfaceWindow.h"
 
 namespace Ui {
 class ContentManagerInterfaceWindow;

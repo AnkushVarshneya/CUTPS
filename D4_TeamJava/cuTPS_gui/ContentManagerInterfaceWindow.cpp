@@ -26,6 +26,7 @@ ContentManagerInterfaceWindow::~ContentManagerInterfaceWindow()
 void ContentManagerInterfaceWindow::on_manageTextbooksOption_clicked()
 {
     manageTextbooksInterface.show();
+    manageTextbooksInterface.parentWindow = this;
     this->hide();
 }
 

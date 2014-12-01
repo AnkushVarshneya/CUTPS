@@ -4,6 +4,8 @@
 #include <QWidget>
 #include "CreateTextbookFormWindow.h"
 
+class ContentManagerInterfaceWindow;
+
 namespace Ui {
 class ManageTextbooksInterfaceWindow;
 }
@@ -16,10 +18,14 @@ public:
     explicit ManageTextbooksInterfaceWindow(QWidget *parent = 0);
     ~ManageTextbooksInterfaceWindow();
 
+    ContentManagerInterfaceWindow *parentWindow;
+
 private slots:
     void on_createTextbookOption_clicked();
 
     void on_deleteTextbookOption_clicked();
+
+    void on_backButton_clicked();
 
 private:
     Ui::ManageTextbooksInterfaceWindow *ui;

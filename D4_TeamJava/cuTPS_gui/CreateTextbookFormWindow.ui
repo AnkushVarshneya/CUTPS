@@ -127,7 +127,7 @@
     <string>Author:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="authorTextbok">
+  <widget class="QLineEdit" name="authorTextbox">
    <property name="geometry">
     <rect>
      <x>100</x>

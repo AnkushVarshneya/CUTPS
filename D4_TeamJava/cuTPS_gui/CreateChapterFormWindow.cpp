@@ -24,5 +24,6 @@ void CreateChapterFormWindow::on_viewEditSectionButton_clicked()
 
 void CreateChapterFormWindow::on_pushButton_clicked()
 {
-
+    parentWindow->show();
+    this->hide();
 }

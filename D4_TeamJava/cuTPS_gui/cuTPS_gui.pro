@@ -15,9 +15,10 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     ContentManagerInterfaceWindow.cpp \
-    managetextbooksinterfacewindow.cpp \
-    createtextbookformwindow.cpp \
-    createchapterformwindow.cpp \
+    ManageTextbooksInterfaceWindow.cpp \
+    CreateTextbookFormWindow.cpp \
+    CreateChapterFormWindow.cpp \
+    CreateSectionFormWindow.cpp \
     ManageContentControl.cpp \
     Term.cpp \
     CUtpsDataObject.cpp \
@@ -29,13 +30,14 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
-    managetextbooksinterfacewindow.h \
+    ManageTextbooksInterfaceWindow.h \
     ManageContentControl.h \
     types.h \
     Term.h \
     CUtpsDataObject.h \
-    createtextbookformwindow.h \
-    createchapterformwindow.h \
+    CreateTextbookFormWindow.h \
+    CreateChapterFormWindow.h \
+    CreateSectionFormWindow.h \
     Textbook.h \
     Chapter.h \
     Section.h \
@@ -44,7 +46,8 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \
-    managetextbooksinterfacewindow.ui \
-    createtextbookformwindow.ui \
-    createchapterformwindow.ui \
+    ManageTextbooksInterfaceWindow.ui \
+    CreateTextbookFormWindow.ui \
+    CreateChapterFormWindow.ui \
+    CreateSectionFormWindow.ui \
     StudentInterfaceWindow.ui

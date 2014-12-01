@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     Chapter.cpp \
     Section.cpp \
     PurchaseablItem.cpp \
-    StudentInterfaceWindow.cpp
+    StudentInterfaceWindow.cpp \
+    ContentInputOutputManager.cpp
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
@@ -42,7 +43,8 @@ HEADERS  += mainwindow.h \
     Chapter.h \
     Section.h \
     PurchasableItem.h \
-    StudentInterfaceWindow.h
+    StudentInterfaceWindow.h \
+    ContentInputOutputManager.h
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \

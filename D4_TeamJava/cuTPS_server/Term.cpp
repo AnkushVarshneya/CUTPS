@@ -28,11 +28,13 @@ void Term::read(const QJsonObject &json){
     startDate = QDate::fromString(json["startDate"].toString(), "yyyyMMdd");
     endDate = QDate::fromString(json["endDate"].toString(), "yyyyMMdd");
     termID = json["termID"].toDouble();
+    termName = json["termName"].toString();
 }
 
 void Term::write(QJsonObject &json) const{
     json["startDate"] = startDate.toString("yyyyMMdd");
     json["endDate"] = endDate.toString("yyyyMMdd");
     json["termID"] = termID;
+    json["termName"] = termName;
 }
 

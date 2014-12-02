@@ -22,6 +22,9 @@ public:
     bool resetDatabase();
     bool resetSchema();
 
+    // term options
+    QList<Term*>* retrieveTermList();
+
     // Course operations
     bool createCourse(Course*, qint32);
     bool updateCourse(Course*, qint32);

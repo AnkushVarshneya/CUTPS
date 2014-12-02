@@ -118,4 +118,3 @@ std::ostream& operator<<(std::ostream& o,  Course& course){
       << "course.getTerm()"
       << "Instructor: ";
 }
-

@@ -32,47 +32,63 @@ QueryControl::~QueryControl() {
  *  test cases
  */
 void QueryControl::test(){
+     QJsonObject json;
+
     qDebug() << resetDatabase();
 
     QList<Term*> *termlist= this->retrieveTermList();
-/*
+
     // test for terms
     foreach(Term *trm, *termlist){
-        QJsonObject json = QJsonObject();
+        json = QJsonObject();
         trm->write(json);
         qDebug() <<json;
     }
-*/
 
-    // test for course
-
-    Term *term = termlist->at(1);
+    Term *term = termlist->at(0);
 
     Course *course = new Course("COMP3004","N","Dr. Laurendeau");
-    course->setTerm(*term);
+    course->setTerm(term);
 
     // create the course
-    qDebug() << this->createCourse(course, term->getTermID());
+    this->createCourse(course, term->getTermID());
 
     // get the courses to check if it was created
     foreach(Course *crs,  *(this->retrieveCourseList(term->getTermID()))){
-        QJsonObject json = QJsonObject();
+        json = QJsonObject();
         crs->write(json);
-        qDebug() <<json;
+        //qDebug() <<json;
     }
 
     // modify the course
-    course->setCourseCode("COMP 3005");
-    course->setCourseSection("L");
-    qDebug() << this->updateCourse(course, term->getTermID());
+    course->setInstructor("L Nel");
+    this->updateCourse(course, term->getTermID());
 
     // get the courses to check if it was modified
     foreach(Course *crs,  *(this->retrieveCourseList(term->getTermID()))){
-        QJsonObject json = QJsonObject();
+        json = QJsonObject();
+        crs->write(json);
+        //qDebug() <<json;
+    }
+
+    // get a student
+    Student *student = this->retrieveStudent("100853074");
+    // get the students payment information
+    PaymentInformation *paymentInformation = this->retrievePaymentInformation(student);
+    student->setPayInfo(*paymentInformation);
+    json = QJsonObject();
+    student->write(json);
+    qDebug() <<json;
+
+    //link student to a new new course
+    this->updateCourseStudentLink(course, term->getTermID(), student);
+
+    // get course for a student
+    foreach(Course *crs,  *(this->retrieveStudentCourseList(student->getStudentNum(), term->getTermID()))){
+        json = QJsonObject();
         crs->write(json);
         qDebug() <<json;
     }
-
 
 /*
     // test for view studentView
@@ -601,10 +617,10 @@ QList<Course*>* QueryControl::retrieveStudentCourseList(QString studentNumber, q
                                    courseQuery.value(courseQuery.record().indexOf("section")).toString(),
                                    courseQuery.value(courseQuery.record().indexOf("instructor")).toString());
 
-        course->setTerm(*(new Term(QDate::fromString(courseQuery.value(courseQuery.record().indexOf("startDate")).toString(), "yyyyMMdd"),
+        course->setTerm(new Term(QDate::fromString(courseQuery.value(courseQuery.record().indexOf("startDate")).toString(), "yyyyMMdd"),
                                 QDate::fromString(courseQuery.value(courseQuery.record().indexOf("endDate")).toString(), "yyyyMMdd"),
                                 courseQuery.value(courseQuery.record().indexOf("termID")).toInt(),
-                                courseQuery.value(courseQuery.record().indexOf("termName")).toString())));
+                                courseQuery.value(courseQuery.record().indexOf("termName")).toString()));
 
         courses->push_back(course);
     }
@@ -648,10 +664,10 @@ QList<Course*>* QueryControl::retrieveCourseList(qint32 termID) {
                                    courseQuery.value(courseQuery.record().indexOf("section")).toString(),
                                    courseQuery.value(courseQuery.record().indexOf("instructor")).toString());
 
-        course->setTerm(*(new Term(QDate::fromString(courseQuery.value(courseQuery.record().indexOf("startDate")).toString(), "yyyyMMdd"),
+        course->setTerm(new Term(QDate::fromString(courseQuery.value(courseQuery.record().indexOf("startDate")).toString(), "yyyyMMdd"),
                                 QDate::fromString(courseQuery.value(courseQuery.record().indexOf("endDate")).toString(), "yyyyMMdd"),
                                 courseQuery.value(courseQuery.record().indexOf("termID")).toInt(),
-                                courseQuery.value(courseQuery.record().indexOf("termName")).toString())));
+                                courseQuery.value(courseQuery.record().indexOf("termName")).toString()));
 
         courses->push_back(course);
     }
@@ -1541,13 +1557,12 @@ Student* QueryControl::retrieveStudent(QString studentNumber){
                                 "Student.cmail, "
                                 "User.userName, "
                                 "User.password, "
-                                "User.firstName, "
-                                "User.lastName "
+                                "User.fullName "
                             "FROM Student "
                             "JOIN User ON "
                                "Student.userName = User.userName "
                             "WHERE Student.studentNumber =:studentNumber "
-                                "ORDER BY User.firstName ASC, User.lastName ASC;");
+                                "ORDER BY User.fullName ASC;");
     studentQuery.bindValue(":studentNumber", studentNumber);
     studentQuery.exec();
 
@@ -1556,8 +1571,7 @@ Student* QueryControl::retrieveStudent(QString studentNumber){
                                    studentQuery.value(studentQuery.record().indexOf("cmail")).toString(),
                                    studentQuery.value(studentQuery.record().indexOf("userName")).toString(),
                                    studentQuery.value(studentQuery.record().indexOf("password")).toString(),
-                                   studentQuery.value(studentQuery.record().indexOf("firstName")).toString(),
-                                   studentQuery.value(studentQuery.record().indexOf("lastName")).toString());
+                                   studentQuery.value(studentQuery.record().indexOf("fullName")).toString());
     }
 
     return student;
@@ -1581,8 +1595,7 @@ QList<Student*>* QueryControl::retrieveStudentList(Course *course, qint32 termID
                                 "Student.cmail, "
                                 "User.userName, "
                                 "User.password, "
-                                "User.firstName, "
-                                "User.lastName "
+                                "User.fullName "
                             "FROM Student "
                             "JOIN User ON "
                                "Student.userName = User.userName "
@@ -1593,7 +1606,7 @@ QList<Student*>* QueryControl::retrieveStudentList(Course *course, qint32 termID
                                 "Student_RegisteredIn_Course.section = Course.section AND "
                                 "Student_RegisteredIn_Course.termID = Course.termID "
                             "WHERE Course.courseCode=:courseCode AND Course.section=:section AND Course.termID=:termID "
-                                "ORDER BY User.firstName ASC, User.lastName ASC;");
+                                "ORDER BY User.fullName ASC;");
     studentQuery.bindValue(":courseCode", course->getCourseCode());
     studentQuery.bindValue(":section", course->getCourseSection());
     studentQuery.bindValue(":termID", termID);
@@ -1604,8 +1617,7 @@ QList<Student*>* QueryControl::retrieveStudentList(Course *course, qint32 termID
                                    studentQuery.value(studentQuery.record().indexOf("cmail")).toString(),
                                    studentQuery.value(studentQuery.record().indexOf("userName")).toString(),
                                    studentQuery.value(studentQuery.record().indexOf("password")).toString(),
-                                   studentQuery.value(studentQuery.record().indexOf("firstName")).toString(),
-                                   studentQuery.value(studentQuery.record().indexOf("lastName")).toString()));
+                                   studentQuery.value(studentQuery.record().indexOf("fullName")).toString()));
     }
 
     return Students;

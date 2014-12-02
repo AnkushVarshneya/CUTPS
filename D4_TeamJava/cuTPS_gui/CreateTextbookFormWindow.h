@@ -7,6 +7,8 @@
 #include "Textbook.h"
 #include "Chapter.h"
 
+#include <QPushButton>
+
 class ManageTextbooksInterfaceWindow;
 
 namespace Ui {
@@ -23,13 +25,20 @@ public:
 
     ManageTextbooksInterfaceWindow *parentWindow;
 
+    Ui::CreateTextbookFormWindow *getUI();
+
+    QPushButton* getBackButton();
+    QPushButton* getViewEditChaptersButton();
+    QPushButton* getAddChapterButton();
+    QPushButton* getCreateButton();
+
+
 private slots:
+  /*
     void on_viewEditChaptersButton_clicked();
 
-    void on_backButton_clicked();
-
     void on_createButton_clicked();
-
+*/
 private:
     Ui::CreateTextbookFormWindow *ui;
     CreateChapterFormWindow createChapterForm;

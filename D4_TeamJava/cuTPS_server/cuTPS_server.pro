@@ -26,7 +26,10 @@ SOURCES += main.cpp \
         BillingAddress.cpp \
         CreditCardInformation.cpp \
         ShoppingCart.cpp \
-    QueryControl.cpp
+    QueryControl.cpp \
+    ServerListenerControl.cpp \
+    ServerStorageControl.cpp \
+    ServerSerializer.cpp
 
 
 HEADERS  += \
@@ -43,4 +46,7 @@ HEADERS  += \
         BillingAddress.h \
         CreditCardInformation.h \
         ShoppingCart.h \
-    QueryControl.h
+    QueryControl.h \
+    ServerListenerControl.h \
+    ServerStorageControl.h \
+    ServerSerializer.h

@@ -15,7 +15,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_studentInterfaceButton_clicked()
 {
-
+    studentInterface.show();
+    this->hide();
 }
 
 void MainWindow::on_contentManagerInterfaceButton_clicked()

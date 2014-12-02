@@ -22,7 +22,7 @@ using namespace std;
 
 class Term : CUtpsDataObject{
 public:
-    Term(QDate = QDate::fromString("20140905","yyyyMMdd"),QDate = QDate::fromString("20141209","yyyyMMdd"), QString = "fall2014");
+    Term(QDate = QDate::fromString("20140905","yyyyMMdd"),QDate = QDate::fromString("20141209","yyyyMMdd"), qint32 = -1, QString = "fall2014");
     ~Term();
 
     QDate           getStartDate() const;
@@ -37,7 +37,8 @@ public:
 private:
     QDate           startDate;
     QDate           endDate;
-    QString         termID;
+    qint32          termID;
+    QString         termName;
 };
 
 

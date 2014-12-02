@@ -2,7 +2,7 @@
 #include "Term.h"
 
 
-Term::Term(QDate a, QDate b, QString id): startDate(a), endDate(b), termID(id){}
+Term::Term(QDate a, QDate b, qint32 id, QString name): startDate(a), endDate(b), termID(id), termName(name){}
 
 Term::~Term(){
 }
@@ -10,7 +10,7 @@ Term::~Term(){
 QDate Term::getStartDate() const{return startDate;}
 QDate Term::getEndDate() const{return endDate;}
 
-QString Term::getTermID() const{return termID;}
+qint32 Term::getTermID() const{return termID;}
 
 void Term::setStartDate(int year, int month, int day){
     startDate.setDate(year, month, day);
@@ -18,7 +18,7 @@ void Term::setStartDate(int year, int month, int day){
 void Term::setEndDate(int year, int month, int day){
     endDate.setDate(year, month, day);
 }
-void Term::setTermID(QString a){termID = a;}
+void Term::setTermID(qint32 a){termID = a;}
 
 
 

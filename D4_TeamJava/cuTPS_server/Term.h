@@ -27,10 +27,12 @@ public:
 
     QDate           getStartDate() const;
     QDate           getEndDate() const;
-    QString         getTermID() const;
+    qint32          getTermID() const;
+    QString         getTermName() const;
     void            setStartDate(int,int,int);
     void            setEndDate(int,int,int);
-    void            setTermID(QString);
+    void            setTermID(qint32);
+    void            setTermName(QString);
     void            read(const QJsonObject &json);
     void            write(QJsonObject &json) const;
 

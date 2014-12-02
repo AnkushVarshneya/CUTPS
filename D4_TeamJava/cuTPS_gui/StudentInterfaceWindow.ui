@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1221</width>
-    <height>606</height>
+    <width>613</width>
+    <height>484</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="viewShoppingCartOption">
    <property name="geometry">
     <rect>
-     <x>1050</x>
+     <x>440</x>
      <y>20</y>
      <width>141</width>
      <height>81</height>
@@ -24,6 +24,113 @@
    </property>
    <property name="text">
     <string>ViewShoppingCart</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="termSelectOption">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>190</y>
+     <width>78</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Fall 2014</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Winter 2015</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Early Summer 2015</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Late Summer 2015</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Full Summer 2015</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="addTextbookToCartOption">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>190</y>
+     <width>171</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&amp;Add Textbook to Cart</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="quantityLabel">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>170</y>
+     <width>58</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Quantity</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="quantityOption">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>190</y>
+     <width>54</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>180</y>
+     <width>151</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&amp;View Content Details</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="textbookListWidget">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>230</y>
+     <width>221</width>
+     <height>231</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="termLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>170</y>
+     <width>58</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Term</string>
    </property>
   </widget>
  </widget>

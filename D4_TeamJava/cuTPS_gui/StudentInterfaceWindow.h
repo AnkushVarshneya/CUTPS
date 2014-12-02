@@ -2,6 +2,7 @@
 #define STUDENTINTERFACEWINDOW_H
 
 #include <QWidget>
+#include "Textbook.h"
 
 namespace Ui {
 class StudentInterfaceWindow;

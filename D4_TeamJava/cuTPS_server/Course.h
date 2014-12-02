@@ -42,7 +42,7 @@ public:
     //Setters
     void                setCourseCode(QString);
     void                setCourseSection(QString);
-    void                setTerm(Term&);
+    void                setTerm(Term*);
     void                setInstructor(QString);
     void                addStudent(Student*);
     void                addTextbook(Textbook*);

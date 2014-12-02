@@ -14,7 +14,9 @@ Course::Course(QString cCode, QString section, QString instruct) :
 }
 
 //Students and Textbooks persist after a Course is deleted
-Course::~Course(){}
+Course::~Course(){
+    delete term;
+}
 
 //GETTERS
 QString Course::getCourseCode()                    const{return courseCode;}
@@ -27,7 +29,10 @@ QList<Textbook*>& Course::getRequiredTextbooks()        {return requiredTextbook
 //SETTERS
 void Course::setCourseCode(QString c){courseCode = c;}
 void Course::setCourseSection(QString s){courseSection = s;}
-void Course::setTerm(Term& t){*term = t;}
+void Course::setTerm(Term* t){
+    delete term;
+    term = t;
+}
 void Course::setInstructor(QString i){instructor = i;}
 
 //Adds a Student to the Course

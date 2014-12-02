@@ -22,7 +22,7 @@ SOURCES += main.cpp \
         Textbook.cpp \
         Chapter.cpp \
         Section.cpp \
-        paymentInformation.cpp \
+        PaymentInformation.cpp \
         BillingAddress.cpp \
         CreditCardInformation.cpp \
         ShoppingCart.cpp \
@@ -39,7 +39,7 @@ HEADERS  += \
         Textbook.h \
         Chapter.h \
         Section.h \
-        paymentInformation.h \
+        PaymentInformation.h \
         BillingAddress.h \
         CreditCardInformation.h \
         ShoppingCart.h \

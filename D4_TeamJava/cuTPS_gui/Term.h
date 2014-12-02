@@ -22,22 +22,25 @@ using namespace std;
 
 class Term : CUtpsDataObject{
 public:
-    Term(QDate = QDate::fromString("20140905","yyyyMMdd"),QDate = QDate::fromString("20141209","yyyyMMdd"), QString = "fall2014");
+    Term(QDate = QDate::fromString("20140905","yyyyMMdd"),QDate = QDate::fromString("20141209","yyyyMMdd"), qint32 = -1, QString = "fall2014");
     ~Term();
 
     QDate           getStartDate() const;
     QDate           getEndDate() const;
-    QString         getTermID() const;
+    qint32          getTermID() const;
+    QString         getTermName() const;
     void            setStartDate(int,int,int);
     void            setEndDate(int,int,int);
-    void            setTermID(QString);
+    void            setTermID(qint32);
+    void            setTermName(QString);
     void            read(const QJsonObject &json);
     void            write(QJsonObject &json) const;
 
 private:
     QDate           startDate;
     QDate           endDate;
-    QString         termID;
+    qint32          termID;
+    QString         termName;
 };
 
 

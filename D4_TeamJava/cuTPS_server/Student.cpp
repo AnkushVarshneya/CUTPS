@@ -12,8 +12,8 @@
 
 //Default Constructor
 Student::Student(QString stuNum, QString cm, QString userName, QString pass,
-                 QString fName, QString lName)
-    : studentNum(stuNum), cMail(cm), User(userName,pass,fName,lName){}
+                 QString fName)
+    : studentNum(stuNum), cMail(cm), User(userName,pass,fName){}
 
 //Getters
 QString                 Student::getStudentNum() const {return studentNum;}

@@ -18,6 +18,9 @@ private slots:
 
 
 private:
+    ContentManagerInterfaceWindow* cm_interface_window;
+    CreateChapterFormWindow* create_chapter_form_window;
+
 
 };
 

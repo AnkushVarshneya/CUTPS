@@ -32,13 +32,6 @@ public:
     QPushButton* getAddChapterButton();
     QPushButton* getCreateButton();
 
-
-private slots:
-  /*
-    void on_viewEditChaptersButton_clicked();
-
-    void on_createButton_clicked();
-*/
 private:
     Ui::EditTextbookFormWindow *ui;
     EditChapterFormWindow editChapterForm;

@@ -16,6 +16,7 @@ MainInputOutputManager::MainInputOutputManager()
 void MainInputOutputManager::on_contentIOManager_deleted()
 {
     qDebug() << "wheee";
+    contentManagerInterface->show();
 }
 
 void MainInputOutputManager::on_contentManager_clicked()
@@ -30,20 +31,25 @@ void MainInputOutputManager::on_contentManager_clicked()
 
 void MainInputOutputManager::on_student_clicked()
 {
-
+    studentIOManager = new StudentInputOutputManager();
+    studentInterface = new StudentInterfaceWindow();
+    studentInterface->show();
+    mainWindow.hide();
 }
 
 void MainInputOutputManager::on_manageTextbooks_clicked()
 {
     contentManagerInterface->hide();
+    delete contentManagerInterface;
     contentIOManager = new ContentInputOutputManager();
 
     connect(contentIOManager,SIGNAL(destroyed()),this,SLOT(on_contentIOManager_deleted()));
 
-    qDebug() << "ayyy";
+    qDebug() << "manage textbooks";
 }
 
 void MainInputOutputManager::on_manageCourses_clicked()
 {
-
+    contentManagerInterface->hide();
+    delete contentManagerInterface;
 }

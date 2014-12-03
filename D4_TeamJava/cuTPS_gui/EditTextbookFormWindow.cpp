@@ -16,24 +16,7 @@ EditTextbookFormWindow::~EditTextbookFormWindow()
 {
     delete ui;
 }
-/*
-void EditTextbookFormWindow::on_viewEditChaptersButton_clicked()
-{
-    editChapterForm.show();
-    editChapterForm.parentWindow = this;
-    this->hide();
-}
 
-
-void EditTextbookFormWindow::on_createButton_clicked()
-{
-    Textbook *t = new Textbook(ui->titleTextbox->text(),    ui->authorTextbox->text(),      ui->editionTextbox->text(),
-                               ui->publisherTextbox->text(),ui->isbnTextbox->text(),        ui->descriptionTextbox->toPlainText(),
-                               0,                   ui->priceSpinBox->value(),       ui->availabilityCheckBox->isChecked());
-
-    qDebug() << "i fucked up";
-}
-*/
 Ui::EditTextbookFormWindow* EditTextbookFormWindow::getUI()
 {
     return ui;
@@ -46,7 +29,7 @@ QPushButton *EditTextbookFormWindow::getBackButton()
 
 QPushButton *EditTextbookFormWindow::getViewEditChaptersButton()
 {
-    return ui->viewEditChaptersButton;
+    return ui->editChapterButton;
 }
 
 QPushButton *EditTextbookFormWindow::getCreateButton()
@@ -56,5 +39,5 @@ QPushButton *EditTextbookFormWindow::getCreateButton()
 
 QPushButton *EditTextbookFormWindow::getAddChapterButton()
 {
-    return ui->editChapterButton;
+    return ui->createChapterButton;
 }

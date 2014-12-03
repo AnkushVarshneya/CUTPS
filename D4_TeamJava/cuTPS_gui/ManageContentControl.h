@@ -1,7 +1,12 @@
 /*Class responsible for managing content by delegating functionality of update/retrieve operations to the ContentUpdateControl
  *While keeping a temporary model to return back to the Content Manager Interface subsystem
  *
- *Traceability: SS-02-02 (Part of Content Management Subsystem
+ *Combines Control Classes: ViewTextbooksControl,
+ *CreateTextbookControl, ModifyTextbookControl,
+ *DeleteTextbookControl, ModifyAvailabilityControl,
+ *ModifyPricesControl, ModifyTextbookBasicInfoControl
+ *
+ *Traceability: SS-02-02 (Part of Content Management Subsystem)
  *
  */
 

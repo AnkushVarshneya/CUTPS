@@ -34,6 +34,13 @@ SOURCES += main.cpp\
     BillingAddress.cpp \
     CreditCardInformation.cpp \
     ShoppingCart.cpp \
+    ShoppingManagementFacade.cpp \
+    ShopInputControl.cpp \
+    ShoppingControl.cpp \
+    ShopUpdateControl.cpp \
+    Shop.cpp \
+    ContentManagementFacade.cpp \
+    ContentManagementInputControl.cpp \
     EditChapterFormWindow.cpp \
     EditTextbookFormWindow.cpp \
     EditSectionFormWindow.cpp
@@ -60,6 +67,13 @@ HEADERS  += mainwindow.h \
     BillingAddress.h \
     CreditCardInformation.h \
     ShoppingCart.h \
+    ShoppingManagementFacade.h \
+    ShopInputControl.h \
+    ShoppingControl.h \
+    ShopUpdateControl.h \
+    Shop.h \
+    ContentManagementFacade.h \
+    ContentManagementInputControl.h \
     EditChapterFormWindow.h \
     EditSectionFormWindow.h \
     EditTextbookFormWindow.h

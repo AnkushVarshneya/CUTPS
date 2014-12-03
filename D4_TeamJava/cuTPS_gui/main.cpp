@@ -12,14 +12,14 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    /*
+
     MainWindow w;
     w.show();
-*/
+
 
     //ContentInputOutputManager b;
 
-    MainInputOutputManager mainIOManager;
+    //MainInputOutputManager mainIOManager;
 
     return a.exec();
 }

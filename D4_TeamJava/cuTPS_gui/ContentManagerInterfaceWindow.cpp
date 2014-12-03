@@ -27,7 +27,7 @@ ContentManagerInterfaceWindow::~ContentManagerInterfaceWindow()
 //Options to Create Textbook, Modify Textbook, and Delete Textbooks are shown
 void ContentManagerInterfaceWindow::on_manageTextbooksOption_clicked()
 {
-    contentIOManager.createTextbookForm->show();
+    contentIOManager.editTextbookForm->show();
     this->hide();
 }
 

@@ -2,7 +2,8 @@
 #define MANAGETEXTBOOKSINTERFACEWINDOW_H
 
 #include <QWidget>
-#include "CreateTextbookFormWindow.h"
+#include "EditTextbookFormWindow.h"
+#include <QPushButton>
 
 class ContentManagerInterfaceWindow;
 
@@ -20,16 +21,23 @@ public:
 
     ContentManagerInterfaceWindow *parentWindow;
 
+    QPushButton* getBackButton();
+    QPushButton* getEditTextbookButton();
+    QPushButton* getModifyTextbookButton();
+    QPushButton* getDeleteTextbookButton();
+
+
+/*
 private slots:
-    void on_createTextbookOption_clicked();
+    void on_editTextbookOption_clicked();
 
     void on_deleteTextbookOption_clicked();
 
     void on_backButton_clicked();
-
+*/
 private:
     Ui::ManageTextbooksInterfaceWindow *ui;
-    CreateTextbookFormWindow createTextbookForm;
+    EditTextbookFormWindow editTextbookForm;
 };
 
 #endif // MANAGETEXTBOOKSINTERFACEWINDOW_H

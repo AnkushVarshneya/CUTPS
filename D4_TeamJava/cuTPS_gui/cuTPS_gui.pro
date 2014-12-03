@@ -43,7 +43,15 @@ SOURCES += main.cpp\
     ContentManagementInputControl.cpp \
     EditChapterFormWindow.cpp \
     EditTextbookFormWindow.cpp \
-    EditSectionFormWindow.cpp
+    EditSectionFormWindow.cpp \
+    ContentManagementUpdateControl.cpp \
+    CourseManagementFacade.cpp \
+    CourseManagementInputControl.cpp \
+    ManageCourseControl.cpp \
+    CourseManagementUpdateControl.cpp \
+    ClientCommunicatorManagementControl.cpp \
+    ClientCommunicatorSerializer.cpp \
+    ClientCommunicatorRequestManager.cpp
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
@@ -76,7 +84,15 @@ HEADERS  += mainwindow.h \
     ContentManagementInputControl.h \
     EditChapterFormWindow.h \
     EditSectionFormWindow.h \
-    EditTextbookFormWindow.h
+    EditTextbookFormWindow.h \
+    ContentManagementUpdateControl.h \
+    CourseManagementFacade.h \
+    CourseManagementInputControl.h \
+    ManageCourseControl.h \
+    CourseManagementUpdateControl.h \
+    ClientCommunicatorManagementControl.h \
+    ClientCommunicatorSerializer.h \
+    ClientCommunicatorRequestManager.h
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \

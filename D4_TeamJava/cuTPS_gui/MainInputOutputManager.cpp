@@ -3,12 +3,8 @@
 
 MainInputOutputManager::MainInputOutputManager()
 {
-
-
     connect(mainWindow.getContentManagerButton(),SIGNAL(clicked()),this,SLOT(on_contentManager_clicked()));
     connect(mainWindow.getStudentButton(),SIGNAL(clicked()),this,SLOT(on_student_clicked()));
-
-
 
     mainWindow.show();
 }
@@ -16,6 +12,7 @@ MainInputOutputManager::MainInputOutputManager()
 void MainInputOutputManager::on_contentIOManager_deleted()
 {
     qDebug() << "wheee";
+    contentManagerInterface = new ContentManagerInterfaceWindow();
     contentManagerInterface->show();
 }
 

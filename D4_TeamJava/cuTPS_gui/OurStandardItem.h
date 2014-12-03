@@ -6,6 +6,7 @@
 #include "Textbook.h"
 #include "Chapter.h"
 #include "Section.h"
+#include "Course.h"
 #include <QDebug>
 
 class OurStandardItem : public QStandardItem
@@ -14,9 +15,11 @@ class OurStandardItem : public QStandardItem
 public:
     //explicit OurStandardItem(QObject *parent = 0);
     explicit OurStandardItem(PurchasableItem *item);
-    explicit OurStandardItem(Textbook *textbook);
+    explicit OurStandardItem(Textbook *textbook, bool makeItemsForChildren = true);
+    explicit OurStandardItem(Course *course);
     OurStandardItem(Chapter *chapter, OurStandardItem *parent);
     OurStandardItem(Section *section, OurStandardItem *parent);
+
 
 signals:
 

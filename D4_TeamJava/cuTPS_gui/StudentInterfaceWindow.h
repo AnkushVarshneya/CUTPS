@@ -25,6 +25,9 @@ public:
     QPushButton*        getViewCartOption();
     QComboBox*          getTermSelectOption();
     QSpinBox*           getQuantityOption();
+    QStandardItemModel* getCourseTreeView();
+
+    void                setViewModel(QAbstractItemView *view, QStandardItemModel *mod);
 
 
 private slots:

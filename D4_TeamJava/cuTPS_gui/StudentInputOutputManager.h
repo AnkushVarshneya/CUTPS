@@ -10,6 +10,7 @@
 #include <QObject>
 #include "StudentInterfaceWindow.h"
 #include "ShoppingManagementFacade.h"
+#include "OurStandardItem.h"
 
 class StudentInputOutputManager : public QObject
 {
@@ -22,8 +23,8 @@ private:
     ShoppingManagementFacade *shopFacade;
 
     QList<Course*>            fakeCourses;
-    Course*                   crs1;
-    Course*                   crs2;
+    Course                   *crs1;
+    Course                   *crs2;
 
 
 private slots:

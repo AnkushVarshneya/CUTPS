@@ -48,6 +48,11 @@ StudentInputOutputManager::StudentInputOutputManager()
     fakeCourses.append(crs1);
     fakeCourses.append(crs2);
 
+    OurStandardItem *osicrs1 = new OurStandardItem(crs1);
+    OurStandardItem *osicrs2 = new OurStandardItem(crs2);
+    qDebug() << "made a course item, did it work?";
+    qDebug() << osicrs1->data();
+
 }
 
 

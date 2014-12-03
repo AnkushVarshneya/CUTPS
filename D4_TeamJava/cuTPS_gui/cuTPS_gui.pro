@@ -40,7 +40,7 @@ SOURCES += main.cpp\
     ShopUpdateControl.cpp \
     Shop.cpp \
     ContentManagementFacade.cpp \
-    ContentManagementInputControl.cpp
+    ContentManagementInputControl.cpp \
     EditChapterFormWindow.cpp \
     EditTextbookFormWindow.cpp \
     EditSectionFormWindow.cpp
@@ -73,7 +73,7 @@ HEADERS  += mainwindow.h \
     ShopUpdateControl.h \
     Shop.h \
     ContentManagementFacade.h \
-    ContentManagementInputControl.h
+    ContentManagementInputControl.h \
     EditChapterFormWindow.h \
     EditSectionFormWindow.h \
     EditTextbookFormWindow.h

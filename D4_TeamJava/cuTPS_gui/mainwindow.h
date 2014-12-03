@@ -5,6 +5,8 @@
 #include "ContentManagerInterfaceWindow.h"
 #include "StudentInterfaceWindow.h"
 
+#include <QPushButton>
+
 namespace Ui {
 class MainWindow;
 }
@@ -17,15 +19,18 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    QPushButton *getContentManagerButton();
+    QPushButton *getStudentButton();
+/*
 private slots:
     void on_studentInterfaceButton_clicked();
 
     void on_contentManagerInterfaceButton_clicked();
-
+*/
 private:
     Ui::MainWindow *ui;
-    ContentManagerInterfaceWindow contentManagerUI;
-    StudentInterfaceWindow studentInterface;
+    ContentManagerInterfaceWindow *contentManagerUI;
+    StudentInterfaceWindow *studentInterface;
 
 
 };

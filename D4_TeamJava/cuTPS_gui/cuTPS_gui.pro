@@ -28,6 +28,7 @@ SOURCES += main.cpp\
     PurchaseablItem.cpp \
     StudentInterfaceWindow.cpp \
     ContentInputOutputManager.cpp \
+    MainInputOutputManager.cpp \
     StudentInputOutputManager.cpp \
     Course.cpp \
     Student.cpp \
@@ -54,6 +55,7 @@ HEADERS  += mainwindow.h \
     PurchasableItem.h \
     StudentInterfaceWindow.h \
     ContentInputOutputManager.h \
+    MainInputOutputManager.h \
     StudentInputOutputManager.h \
     Course.h \
     Student.h \

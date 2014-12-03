@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreateSectionFormWindow</class>
- <widget class="QWidget" name="CreateSectionFormWindow">
+ <class>EditSectionFormWindow</class>
+ <widget class="QWidget" name="EditSectionFormWindow">
   <property name="geometry">
    <rect>
     <x>0</x>

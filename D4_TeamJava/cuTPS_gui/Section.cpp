@@ -16,6 +16,7 @@ Section::~Section(){cout<<"in section destructor"<<endl;}
 QString Section::getItemTitle() const   {return title;}
 qint32 Section::getSectionNumber()      {return sectionNumber;}
 
+
 //SETTERS
 void Section::setItemTitle(QString a){title = a;}
 void Section::setSectionNumber(qint32 a){sectionNumber = a;}

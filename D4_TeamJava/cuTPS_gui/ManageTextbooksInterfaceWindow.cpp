@@ -15,20 +15,24 @@ ManageTextbooksInterfaceWindow::~ManageTextbooksInterfaceWindow()
     delete ui;
 }
 
-void ManageTextbooksInterfaceWindow::on_createTextbookOption_clicked()
+
+//Button getters
+QPushButton* ManageTextbooksInterfaceWindow::getBackButton()
 {
-    createTextbookForm.show();
-    createTextbookForm.parentWindow = this;
-    this->hide();
+    return ui->backButton;
 }
 
-void ManageTextbooksInterfaceWindow::on_deleteTextbookOption_clicked()
+QPushButton* ManageTextbooksInterfaceWindow::getEditTextbookButton()
 {
-
+    return ui->editTextbookOption;
 }
 
-void ManageTextbooksInterfaceWindow::on_backButton_clicked()
+QPushButton* ManageTextbooksInterfaceWindow::getModifyTextbookButton()
 {
-    parentWindow->show();
-    this->hide();
+    return ui->modifyTextbookOption;
+}
+
+QPushButton* ManageTextbooksInterfaceWindow::getDeleteTextbookButton()
+{
+    return ui->deleteTextbookOption;
 }

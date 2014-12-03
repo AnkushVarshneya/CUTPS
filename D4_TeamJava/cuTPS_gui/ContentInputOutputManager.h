@@ -2,10 +2,12 @@
 #define CONTENTINPUTOUTPUTMANAGER_H
 
 //#include "ContentManagerInterfaceWindow.h"
-#include "CreateChapterFormWindow.h"
-#include "CreateSectionFormWindow.h"
-#include "CreateTextbookFormWindow.h"
+#include "EditChapterFormWindow.h"
+#include "EditSectionFormWindow.h"
+#include "EditTextbookFormWindow.h"
 #include "ManageTextbooksInterfaceWindow.h"
+
+class MainInputOutputManager;
 
 
 
@@ -16,15 +18,32 @@ public:
     ContentInputOutputManager();
 
 private slots:
-    void on_textbook_back_button();
-    void on_textbook_viewEditChapters_button();
-    void on_textbook_create_button();
-    void on_textbook_addChapter_button();
+    void on_manageTextbooksInterface_back_button();
+    void on_manageTextbooksInterface_createTextbook_button();
+    void on_manageTextbooksInterface_editTextbook_button();
+    void on_manageTextbooksInterface_deleteTextbook_button();
+
+    void on_editTextbookForm_back_button();
+    void on_editTextbookForm_create_button();
+    void on_editTextbookForm_editChapter_button();
+    void on_editTextbookForm_createChapter_button();
+
+    void on_editChapterForm_back_button();
+    void on_editChapterForm_editSection_button();
+    void on_editChapterForm_create_button();
+    void on_editChapterForm_createSection_button();
+
+    void on_editSectionForm_back_button();
+    void on_editSectionForm_create_button();
+
+
+
 
 private:
-    CreateTextbookFormWindow* createTextbookForm;
-    CreateChapterFormWindow* createChapterForm;
-    CreateSectionFormWindow* createSectionForm;
+    ManageTextbooksInterfaceWindow*     manageTextbooksInterface;
+    EditTextbookFormWindow*           editTextbookForm;
+    EditChapterFormWindow*            editChapterForm;
+    EditSectionFormWindow*            editSectionForm;
 
 
 };

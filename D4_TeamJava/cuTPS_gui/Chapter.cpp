@@ -30,6 +30,14 @@ QList<Section*>& Chapter::getChapterSections()        {return sections;}
 qint32 Chapter::getChapterNumber()              const {return chapterNumber;}
 QString Chapter::getItemTitle()                 const {return title;}
 
+Section* Chapter::getSection(qint32 num){
+    QList<Section*>::iterator i;
+    for (i = sections.begin(); i != sections.end(); i++) {
+        if ((*i)->getSectionNumber() == num)
+            return *i;
+    }
+    return NULL;
+}
 
 //SETTERS
 void Chapter::setItemTitle(QString a){title = a;}

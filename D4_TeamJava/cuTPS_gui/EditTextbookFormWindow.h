@@ -2,7 +2,7 @@
 #define CREATETEXTBOOKFORMWINDOW_H
 
 #include <QWidget>
-#include "CreateChapterFormWindow.h"
+#include "EditChapterFormWindow.h"
 
 #include "Textbook.h"
 #include "Chapter.h"
@@ -12,36 +12,29 @@
 class ManageTextbooksInterfaceWindow;
 
 namespace Ui {
-class CreateTextbookFormWindow;
+class EditTextbookFormWindow;
 }
 
-class CreateTextbookFormWindow : public QWidget
+class EditTextbookFormWindow : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit CreateTextbookFormWindow(QWidget *parent = 0);
-    ~CreateTextbookFormWindow();
+    explicit EditTextbookFormWindow(QWidget *parent = 0);
+    ~EditTextbookFormWindow();
 
     ManageTextbooksInterfaceWindow *parentWindow;
 
-    Ui::CreateTextbookFormWindow *getUI();
+    Ui::EditTextbookFormWindow *getUI();
 
     QPushButton* getBackButton();
     QPushButton* getViewEditChaptersButton();
     QPushButton* getAddChapterButton();
     QPushButton* getCreateButton();
 
-
-private slots:
-  /*
-    void on_viewEditChaptersButton_clicked();
-
-    void on_createButton_clicked();
-*/
 private:
-    Ui::CreateTextbookFormWindow *ui;
-    CreateChapterFormWindow createChapterForm;
+    Ui::EditTextbookFormWindow *ui;
+    EditChapterFormWindow editChapterForm;
 };
 
 #endif // CREATETEXTBOOKFORMWINDOW_H

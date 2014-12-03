@@ -4,6 +4,8 @@
  *
  * Traceability: SS-06 (Part of Server Subsystem) */
 
+#include "ServerSerializer.h"
+#include "ServerStorageControl.h"
 
 
 #ifndef SERVERLISTENERCONTROL_H
@@ -13,8 +15,12 @@ class ServerListenerControl
 {
 public:
     ServerListenerControl();
-
+    QJsonObject processCommand(QJsonObject);
+    static ServerListenerControl* getInstance();
 private:
+    ServerSerializer serializer;
+    ServerStorageControl storage;
+    static ServerListenerControl* instance;
 
 };
 

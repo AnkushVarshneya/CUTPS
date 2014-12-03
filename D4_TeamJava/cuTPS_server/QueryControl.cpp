@@ -11,6 +11,10 @@ QueryControl::QueryControl() {
         qDebug() << "FAILED TO CONNECT TO DATA BASE";
     else {
         qDebug() << "CONNECT TO DATA BASE";
+
+        //enable it for on cascade
+        QSqlQuery query;
+        query.exec("PRAGMA foreign_keys = ON;");
         test();
     }
 }
@@ -34,11 +38,11 @@ QueryControl::~QueryControl() {
 void QueryControl::test(){
      QJsonObject json;
 
-    qDebug() << resetDatabase();
+    qDebug() << this->resetDatabase();
 
+
+    qDebug() << "\ntest for retrieveTermList\n";
     QList<Term*> *termlist= this->retrieveTermList();
-
-    // test for terms
     foreach(Term *trm, *termlist){
         json = QJsonObject();
         trm->write(json);
@@ -50,31 +54,35 @@ void QueryControl::test(){
     Course *course = new Course("COMP3004","N","Dr. Laurendeau");
     course->setTerm(term);
 
-    // create the course
-      qDebug() << this->createCourse(course, term->getTermID());
+    qDebug() << "\ntest for createCourse\n";
+    qDebug() << this->createCourse(course, term->getTermID());
 
-    // get the courses to check if it was created
+    qDebug() << "\ntest for retrieveCourseList after createCourse\n";
     foreach(Course *crs,  *(this->retrieveCourseList(term->getTermID()))){
         json = QJsonObject();
         crs->write(json);
-        //qDebug() <<json;
+        qDebug() <<json;
     }
 
-    // modify the course
+    qDebug() << "\ntest for updateCourse\n";
     course->setInstructor("L Nel");
     qDebug() << this->updateCourse(course, term->getTermID());
 
-    // get the courses to check if it was modified
+    qDebug() << "\ntest for retrieveCourseList after updateCourse\n";
     foreach(Course *crs,  *(this->retrieveCourseList(term->getTermID()))){
         json = QJsonObject();
         crs->write(json);
-        //qDebug() <<json;
+        qDebug() <<json;
     }
 
-    // get a student
+    qDebug() << "\ntest for retrieveStudent\n";
     Student *student = this->retrieveStudent("100853074");
+    json = QJsonObject();
+    student->write(json);
+    qDebug() <<json;
 
-    // get the students payment information
+
+    qDebug() << "\ntest for retrievePaymentInformation\n";
     PaymentInformation *paymentInformation = this->retrievePaymentInformation(student);
     student->setPayInfo(*paymentInformation);
     json = QJsonObject();
@@ -83,14 +91,13 @@ void QueryControl::test(){
 
     delete(paymentInformation);
 
-    // set the students payment information
+    qDebug() << "\ntest for savePaymentInformation\n";
     paymentInformation = new PaymentInformation(); // will use default const
     qDebug() << this->savePaymentInformation(student, paymentInformation);
 
     delete(paymentInformation);
 
-
-    // get the students changed payment information
+    qDebug() << "\ntest for retrieveCourseList after savePaymentInformation\n";
     paymentInformation = this->retrievePaymentInformation(student);
     student->setPayInfo(*paymentInformation);
     json = QJsonObject();
@@ -98,59 +105,105 @@ void QueryControl::test(){
     qDebug() <<json;
 
 
-    // get students course without new course
+    qDebug() << "\ntest for retrieveStudentCourseList\n";
     foreach(Course *crs,  *(this->retrieveStudentCourseList(student->getStudentNum(), term->getTermID()))){
         json = QJsonObject();
         crs->write(json);
         qDebug() <<json;
     }
 
-    //link student to a new new course
+    qDebug() << "\ntest for updateCourseStudentLink\n";
     qDebug() << this->updateCourseStudentLink(course, term->getTermID(), student);
 
-    // get students course with new course
+    qDebug() << "\ntest for retrieveStudentCourseList after updateCourseStudentLink after createCourse\n";
     foreach(Course *crs,  *(this->retrieveStudentCourseList(student->getStudentNum(), term->getTermID()))){
         json = QJsonObject();
         crs->write(json);
         qDebug() <<json;
     }
 
-    //delete a course
-     qDebug() << this->deleteCourse(course, term->getTermID());
+    qDebug() << "\ntest for createTextbook";
+    Textbook *textbook = new Textbook();
+    qDebug() << this->createTextbook(textbook);
 
-    // get students course with new course deleted
-    foreach(Course *crs,  *(this->retrieveStudentCourseList(student->getStudentNum(), term->getTermID()))){
-        json = QJsonObject();
-        crs->write(json);
-        qDebug() <<json;
-    }
+    QString isbn = textbook->getISBN();
+    delete(textbook);
 
-
-    /*
-    // test for view studentView
-    foreach(Course *crs, studentViewTextbooks("100853074", 1)){
-        QJsonObject json = QJsonObject();
-        crs->write(json);
-        qDebug() <<json;
-    }
-
-    // test for getExistingBillingInfo
-    QJsonObject json = QJsonObject();
-    PaymentInformation info = getExistingBillingInfo("100853074");
-    info.write(json);
+    qDebug() << "\ntest for retrieveTextbook after createTextbook";
+    textbook = this->retrieveTextbook(isbn);
+    json = QJsonObject();
+    textbook->write(json);
     qDebug() <<json;
 
-    // test for saveBillingInformation use default values by calling default const.
-    info.setBillInfo(*(new BillingAddress()));
-    info.setCreditCardInfo(*(new CreditCardInformation()));
+    qDebug() << "\ntest for updateCourseTextbookLink";
+    qDebug() << this->updateCourseTextbookLink(course, term->getTermID(), textbook);
 
-    if(saveBillingInformation("100853074", &info)) {
-        qDebug()<<"changed it!";
+    qDebug() << "\ntest for retrieveTextbookList after updateCourseTextbookLink";
+    foreach(Textbook *tbks,  *(this->retrieveTextbookList(course, term->getTermID()))){
         json = QJsonObject();
-        PaymentInformation info2  = getExistingBillingInfo("100853074");
-        info2.write(json);
+        tbks->write(json);
         qDebug() <<json;
     }
+
+    qDebug() << "\ntest for updateTextbook";
+    textbook->setEdition("900");
+    textbook->setAuthor("i dont know");
+    qDebug() << this->updateTextbook(textbook);
+
+    qDebug() << "\ntest for retrieveTextbook after updateTextbook";
+    textbook = this->retrieveTextbook(isbn);
+    json = QJsonObject();
+    textbook->write(json);
+    qDebug() <<json;
+
+    qDebug() << "\ntest for retrieveTextbookList after updateTextbook";
+    qDebug() << this->updateTextbook(textbook);
+    foreach(Textbook *tbks,  *(this->retrieveTextbookList(course, term->getTermID()))){
+        json = QJsonObject();
+        tbks->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for deleteTextbook";
+    qDebug() << this->deleteTextbook(textbook);
+
+    qDebug() << "\ntest for retrieveTextbook after deleteTextbook";
+    textbook = this->retrieveTextbook(isbn);
+    json = QJsonObject();
+    textbook->write(json);
+    qDebug() <<json;
+
+    qDebug() << "\ntest for retrieveTextbookList after deleteTextbook";
+    qDebug() << this->updateTextbook(textbook);
+    foreach(Textbook *tbks,  *(this->retrieveTextbookList(course, term->getTermID()))){
+        json = QJsonObject();
+        tbks->write(json);
+        qDebug() <<json;
+    }
+
+
+/*
+    Chapter *chapter = new Chapter();
+    Section *section = new Section();
+    Course *course = new Course();
+    chapter->addSection(section);
+    textbook->addChapter(chapter);
+*/
+
+
+
+
+    qDebug() << "\ntest for deleteCourse\n";
+    qDebug() << this->deleteCourse(course, term->getTermID());
+
+    qDebug() << "\ntest for retrieveStudentCourseList after deleteCourse\n";
+    foreach(Course *crs,  *(this->retrieveStudentCourseList(student->getStudentNum(), term->getTermID()))){
+        json = QJsonObject();
+        crs->write(json);
+        qDebug() <<json;
+    }
+
+    /*
 
     //test for creating a textbook
     Textbook *textbook = new Textbook();
@@ -205,120 +258,120 @@ bool QueryControl::resetDatabase() {
     noError = noError && resetSchema();
 
     // begain transaction
-    noError = noError && query.exec("begin transaction;");
+    noError = noError && query.exec("begin transaction;");                                                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
 
     // load default values
 
     // insert default User(s)
     noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
-                                        "VALUES ('Nooyen', 'Robert Nguyen', 'hunter', 3);");
+                                        "VALUES ('Nooyen', 'Robert Nguyen', 'hunter', 3);");                                                                                                                        //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
-                                        "VALUES ('BurryInAHurry', 'Graham Burry', 'huntermanager', 2);");
+                                        "VALUES ('BurryInAHurry', 'Graham Burry', 'huntermanager', 2);");                                                                                                           //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
-                                        "VALUES ('Kushlord', 'Ankush Varshneya', 'hunter1', 1);");
+                                        "VALUES ('Kushlord', 'Ankush Varshneya', 'hunter1', 1);");                                                                                                                  //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
-                                        "VALUES ('Mooreloaded', 'Ryan Moore', 'hunter2', 1);");
+                                        "VALUES ('Mooreloaded', 'Ryan Moore', 'hunter2', 1);");                                                                                                                     //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO User (userName,fullName,password,roleID) "
-                                        "VALUES ('LorettaBetta','Loretta Lee','hunter3',1);");
+                                        "VALUES ('LorettaBetta','Loretta Lee','hunter3',1);");                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     // insert default Students(s)
     noError = noError && query.exec("INSERT INTO Student (studentNumber,cmail,userName) "
-                                        "VALUES ('100853074','ankushlord@cmail.carleton.ca','Kushlord');");
+                                        "VALUES ('100853074','ankushlord@cmail.carleton.ca','Kushlord');");                                                                                                         //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO Student (studentNumber,cmail,userName) "
-                                        "VALUES ('195372839','ryanmoore@cmail.carleton.ca','Mooreloaded');");
+                                        "VALUES ('195372839','ryanmoore@cmail.carleton.ca','Mooreloaded');");                                                                                                       //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO Student (studentNumber,cmail,userName) "
-                                        "VALUES ('123456789','somestudent@cmail.carleton.ca','LorettaBetta');");
+                                        "VALUES ('123456789','somestudent@cmail.carleton.ca','LorettaBetta');");                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
 
     // insert default PaymentInformation(s)
     noError = noError && query.exec("INSERT INTO PaymentInformation (creditCardNumber, cardType, cvv, expirationDate, nameOnCard,postalCode,province,city,streetName,houseNumber,studentNumber) "
-                                        "Values ('2345-5675-1234', 'Master Card', '756','19760420','Ankush Dabess Varshneya','H8R8H8','Ontario','Ottawa','Swag St.',420,'100853074');");
-
-    // insert default Student_RegisteredIn_Course(s)
-    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
-                                        "VALUES ('100853074','COMP3004', 'A', 1);");
-    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
-                                        "VALUES ('100853074','COMP3804', 'A', 1);");
-    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
-                                        "VALUES ('195372839','PHIL1002','C',1);");
-
-    // insert default Course(s)
-    noError = noError && query.exec("INSERT INTO Course (courseCode,section,instructor,termID) "
-                                        "VALUES ('COMP3004','A', 'Christine Laurendeau',1);");
-    noError = noError && query.exec("INSERT INTO Course (courseCode,section,instructor,termID) "
-                                        "VALUES('COMP3804', 'A', 'Amin Gheibi',1);");
-    noError = noError && query.exec("INSERT INTO Course (courseCode,section,instructor,termID) "
-                                        "VALUES ('PHIL1002','C','Peter Dinklage',1);");
+                                        "Values ('2345-5675-1234', 'Master Card', '756','19760420','Ankush Dabess Varshneya','H8R8H8','Ontario','Ottawa','Swag St.',420,'100853074');");                            //qDebug() << query.lastQuery() << query.lastError();
 
     // insert default Terms(s)
     noError = noError && query.exec("INSERT INTO Term (termID,termName,startDate,endDate) "
-                                        "VALUES (1,'fall2014','20140905','20141209');");
+                                        "VALUES (1,'fall2014','20140905','20141209');");                                                                                                                            //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO Term (termID,termName,startDate,endDate) "
-                                        "VALUES (2,'winter2015','20150105','20151209');");
+                                        "VALUES (2,'winter2015','20150105','20151209');");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
 
-    // insert default Textbook(s)
-    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
-                                        "VALUES ('111-1-11-111111-0','./COMP3004.png','COMP3004 course pack is required!','Author of COMP3004','COMP3004 A Course Pack','Carleton Course Pack Inc.','1st',1);");
-    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
-                                        "VALUES ('222-2-22-222222-0','./COMP3804.png','COMP3804 course pack is required!','Author of COMP3804','COMP3804 A Course Pack','Carleton Course Pack Inc.','1st',7);");
-
-    // insert default Chapter(s)
-    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
-                                        "VALUES ('111-1-11-111111-0',1,'Intro To COMP3004',2);");
-    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
-                                        "VALUES ('111-1-11-111111-0',2,'COMP3004 Midterm',5);");
-    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
-                                        "VALUES ('222-2-22-222222-0',1,'Intro To COMP3804',8);");
-    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
-                                        "VALUES ('222-2-22-222222-0',2,'COMP3804 Midterm',11);");
-
-    // insert default Section(s)
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('111-1-11-111111-0',1,1,'Pre-reqs for COMP3004',3);");
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('111-1-11-111111-0',1,2,'Review needed information for COMP3004',4);");
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('111-1-11-111111-0',2,1,'COMP3004 Midterm mark break-up',6);");
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('222-2-22-222222-0',1,1,'Pre-reqs for COMP3804',9);");
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('222-2-22-222222-0',1,2,'Review needed information for COMP3804',10);");
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('222-2-22-222222-0',2,1,'COMP3804 Midterm mark break-up',12);");
+    // insert default Course(s)
+    noError = noError && query.exec("INSERT INTO Course (courseCode,section,instructor,termID) "
+                                        "VALUES ('COMP3004','A', 'Christine Laurendeau',1);");                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Course (courseCode,section,instructor,termID) "
+                                        "VALUES('COMP3804', 'A', 'Amin Gheibi',1);");                                                                                                                               //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Course (courseCode,section,instructor,termID) "
+                                        "VALUES ('PHIL1002','C','Peter Dinklage',1);");                                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
 
     // insert default PurchasableItem(s)
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (1,1.99,0);");
+                                        "VALUES (1,1.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (2,2.99,0);");
+                                        "VALUES (2,2.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (3,3.99,0);");
+                                        "VALUES (3,3.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (4,4.99,0);");
+                                        "VALUES (4,4.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (5,5.99,0);");
+                                        "VALUES (5,5.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (6,6.99,0);");
+                                        "VALUES (6,6.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (7,7.99,0);");
+                                        "VALUES (7,7.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (8,8.99,0);");
+                                        "VALUES (8,8.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (9,9.99,0);");
+                                        "VALUES (9,9.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (10,10.99,0);");
+                                        "VALUES (10,10.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (11,11.99,0);");
+                                        "VALUES (11,11.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (12,12.99,0);");
+                                        "VALUES (12,12.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+
+    // insert default Textbook(s)
+    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
+                                        "VALUES ('111-1-11-111111-0','./COMP3004.png','COMP3004 course pack is required!','Author of COMP3004','COMP3004 A Course Pack','Carleton Course Pack Inc.','1st',1);");    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
+                                        "VALUES ('222-2-22-222222-0','./COMP3804.png','COMP3804 course pack is required!','Author of COMP3804','COMP3804 A Course Pack','Carleton Course Pack Inc.','1st',7);");    //qDebug() << query.lastQuery() << query.lastError();
+
+    // insert default Chapter(s)
+    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
+                                        "VALUES ('111-1-11-111111-0',1,'Intro To COMP3004',2);");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
+                                        "VALUES ('111-1-11-111111-0',2,'COMP3004 Midterm',5);");                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
+                                        "VALUES ('222-2-22-222222-0',1,'Intro To COMP3804',8);");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
+                                        "VALUES ('222-2-22-222222-0',2,'COMP3804 Midterm',11);");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+
+    // insert default Section(s)
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('111-1-11-111111-0',1,1,'Pre-reqs for COMP3004',3);");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('111-1-11-111111-0',1,2,'Review needed information for COMP3004',4);");                                                                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('111-1-11-111111-0',2,1,'COMP3004 Midterm mark break-up',6);");                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('222-2-22-222222-0',1,1,'Pre-reqs for COMP3804',9);");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('222-2-22-222222-0',1,2,'Review needed information for COMP3804',10);");                                                                                           //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+                                        "VALUES ('222-2-22-222222-0',2,1,'COMP3804 Midterm mark break-up',12);");                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
 
     // insert default Course_Assigned_Textbook(s)
     noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
-                                        "VALUES ('111-1-11-111111-0','COMP3004','A',1);");
+                                        "VALUES ('111-1-11-111111-0','COMP3004','A',1);");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
-                                        "VALUES ('222-2-22-222222-0','COMP3804','A',1);");
+                                        "VALUES ('222-2-22-222222-0','COMP3804','A',1);");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
+
+    // insert default Student_RegisteredIn_Course(s)
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('100853074','COMP3004', 'A', 1);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('100853074','COMP3804', 'A', 1);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('195372839','PHIL1002','C',1);");                                                                                                                                  //qDebug() << query.lastQuery() << query.lastError();
 
     //commit transaction
-    noError = noError && query.exec("commit;");
+    noError = noError && query.exec("commit;");                                                                                                                                                                     //qDebug() << query.lastQuery() << query.lastError();
 
     return noError;
 }
@@ -337,45 +390,50 @@ bool QueryControl::resetSchema() {
     noError = noError && query.exec("begin transaction;");
 
     // drop old schema as needed
-    noError = noError && query.exec("drop table if exists Role;");
-    noError = noError && query.exec("drop table if exists User;");
-    noError = noError && query.exec("drop table if exists Student;");
-    noError = noError && query.exec("drop table if exists PaymentInformation;");
-    noError = noError && query.exec("drop table if exists Student_RegisteredIn_Course;");
-    noError = noError && query.exec("drop table if exists Course;");
-    noError = noError && query.exec("drop table if exists Term;");
-    noError = noError && query.exec("drop table if exists Course_Assigned_Textbook;");
-    noError = noError && query.exec("drop table if exists Textbook;");
-    noError = noError && query.exec("drop table if exists Chapter;");
-    noError = noError && query.exec("drop table if exists Section;");
-    noError = noError && query.exec("drop table if exists PurchasableItem;");
-    noError = noError && query.exec("drop table if exists ShoppingCart;");
-    noError = noError && query.exec("drop table if exists Orders;");
+    noError = noError && query.exec("drop table if exists ShoppingCart;");                                      //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists Orders;");                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists Student_RegisteredIn_Course;");                       //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists Course_Assigned_Textbook;");                          //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists Course;");                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists Term;");                                              //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists Textbook;");                                          //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists Chapter;");                                           //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists Section;");                                           //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists PurchasableItem;");                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists PaymentInformation;");                                //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists Student;");                                           //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists User;");                                              //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("drop table if exists Role;");                                              //qDebug() << query.lastQuery() << query.lastError();
 
     // creating the Table called Role
     noError = noError && query.exec("create table Role("
-                                        "roleID integer NOT NULL primary key,"
-                                        "roleType varchar(20)"
-                                    ");");
+                                        "roleID integer NOT NULL,"
+                                        "roleType varchar(20),"
+                                        "PRIMARY KEY (roleID)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
     // insert default Role(s)
-    noError = noError && query.exec("insert into Role (roleID, roleType) values (1, 'Student');");
-    noError = noError && query.exec("insert into Role (roleID, roleType) values (2, 'Content Manager');");
-    noError = noError && query.exec("insert into Role (roleID, roleType) values (3, 'Administrator');");
+    noError = noError && query.exec("insert into Role (roleID, roleType) values (1, 'Student');");              //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("insert into Role (roleID, roleType) values (2, 'Content Manager');");      //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("insert into Role (roleID, roleType) values (3, 'Administrator');");        //qDebug() << query.lastQuery() << query.lastError();
 
     // creating the Table called User
     noError = noError && query.exec("create table User("
-                                        "userName varchar(50) NOT NULL primary key,"
+                                        "userName varchar(50) NOT NULL,"
                                         "fullName varchar(50),"
                                         "password varchar(20),"
-                                        "roleID integer NOT NULL references Role(roleID) on delete cascade"
-                                    ");");
+                                        "roleID integer NOT NULL,"
+                                        "FOREIGN KEY (roleID) references Role(roleID) on delete cascade,"
+                                        "PRIMARY KEY (userName)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     // creating the Table called Student
     noError = noError && query.exec("create table Student("
-                                        "studentNumber varchar(10) NOT NULL primary key,"
+                                        "studentNumber varchar(10) NOT NULL,"
                                         "cmail varchar(100) NOT NULL UNIQUE,"
-                                        "userName varchar(50) NOT NULL references User(userName) on delete cascade"
-                                    ");");
+                                        "userName varchar(50) NOT NULL,"
+                                        "FOREIGN KEY (userName) references User(userName) on delete cascade,"
+                                        "PRIMARY KEY (studentNumber)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     // creating the Table called PaymentInformation
     noError = noError && query.exec("create table PaymentInformation("
@@ -389,100 +447,119 @@ bool QueryControl::resetSchema() {
                                         "city varchar(50),"
                                         "streetName varchar(50),"
                                         "houseNumber integer,"
-                                        "studentNumber varchar(10) NOT NULL references Student(studentNumber) on delete cascade,"
-                                        "primary key(studentNumber, creditCardNumber)"
-                                    ");");
+                                        "studentNumber varchar(10) NOT NULL,"
+                                        "FOREIGN KEY (studentNumber) references Student(studentNumber) on delete cascade,"
+                                        "PRIMARY KEY (studentNumber, creditCardNumber)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     //creating the Table called Student_RegisteredIn_Course
     noError = noError && query.exec("create table Student_RegisteredIn_Course("
-                                        "studentNumber varchar(10) NOT NULL references Student(studentNumber) on delete cascade,"
-                                        "courseCode varchar(8) NOT NULL references Course(courseCode) on delete cascade,"
-                                        "section varchar(1) NOT NULL references Course(section) on delete cascade,"
-                                        "termID integer NOT NULL references Course(termID) on delete cascade,"
-                                        "primary key(studentNumber, courseCode, section, termID)"
-                                    ");");
+                                        "studentNumber varchar(10) NOT NULL,"
+                                        "courseCode varchar(8) NOT NULL,"
+                                        "section varchar(1) NOT NULL,"
+                                        "termID integer NOT NULL,"
+                                        "FOREIGN KEY (studentNumber) references Student(studentNumber) on delete cascade,"
+                                        "FOREIGN KEY (courseCode, section, termID) references Course(courseCode, section, termID) on delete cascade,"
+                                        "PRIMARY KEY (studentNumber, courseCode, section, termID)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     //creating the Table called Course
     noError = noError && query.exec("create table Course("
                                         "courseCode varchar(8) NOT NULL,"
                                         "section varchar(1) NOT NULL,"
                                         "instructor varchar(20),"
-                                        "termID integer NOT NULL references Term(termID) on delete cascade,"
-                                        "primary key(courseCode, section, termID)"
-                                    ");");
+                                        "termID integer NOT NULL,"
+                                        "FOREIGN KEY (termID) references Term(termID) on delete cascade,"
+                                        "PRIMARY KEY (courseCode, section, termID)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     // creating the Table called Term
     noError = noError && query.exec("create table Term("
-                                        "termID integer NOT NULL primary key,"
+                                        "termID integer NOT NULL,"
                                         "termName varchar(25),"
                                         "startDate varchar(10),"
-                                        "endDate varchar(10)"
-                                    ");");
+                                        "endDate varchar(10),"
+                                        "PRIMARY KEY (termID)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     //creating the Table called Textbook
     noError = noError && query.exec("create table Textbook("
-                                        "ISBN varchar(20) NOT NULL primary key,"
+                                        "ISBN varchar(20) NOT NULL,"
                                         "coverImageLocation varchar(100),"
                                         "desc varchar(200),"
                                         "author varchar(50),"
                                         "textBookTitle varchar(50),"
                                         "publisher varchar(50),"
                                         "edition varchar(50),"
-                                        "itemID integer NOT NULL references PurchasableItem(itemID) on delete cascade"
-                                    ");");
+                                        "itemID integer NOT NULL,"
+                                        "FOREIGN KEY (itemID) references PurchasableItem(itemID) on delete cascade,"
+                                        "PRIMARY KEY (ISBN)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
    // creating the Table called Chapter
     noError = noError && query.exec("create table Chapter("
-                                        "ISBN varchar(20) NOT NULL references Textbook(ISBN) on delete cascade,"
+                                        "ISBN varchar(20) NOT NULL,"
                                         "chapterNumber integer NOT NULL,"
                                         "chapterTitle varchar(50),"
-                                        "itemID integer NOT NULL references PurchasableItem(itemID) on delete cascade,"
-                                        "primary key(ISBN, chapterNumber)"
-                                    ");");
+                                        "itemID integer NOT NULL,"
+                                        "FOREIGN KEY (itemID) references PurchasableItem(itemID) on delete cascade,"
+                                        "FOREIGN KEY (ISBN) references Textbook(ISBN) on delete cascade, "
+                                        "PRIMARY KEY (ISBN, chapterNumber)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     // creating the Table called Section
     noError = noError && query.exec("create table Section("
-                                    "ISBN varchar(20) NOT NULL references Chapter(ISBN) on delete cascade,"
-                                        "chapterNumber integer NOT NULL references Chapter(chapterNumber) on delete cascade,"
+                                        "ISBN varchar(20),"
+                                        "chapterNumber integer,"
                                         "sectionNumber integer NOT NULL,"
                                         "sectionTitle varchar(50),"
-                                        "itemID integer NOT NULL references PurchasableItem(itemID) on delete cascade,"
-                                        "primary key(ISBN, chapterNumber, sectionNumber)"
-                                    ");");
+                                        "itemID integer NOT NULL,"
+                                        "FOREIGN KEY (itemID) references PurchasableItem(itemID) on delete cascade,"
+                                        "FOREIGN KEY (ISBN, chapterNumber) references Chapter(ISBN, chapterNumber) on delete cascade,"
+                                        "PRIMARY KEY (ISBN, chapterNumber, sectionNumber)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     // creating the Table called PurchasableItem
     noError = noError && query.exec("create table PurchasableItem("
-                                        "itemID integer NOT NULL primary key,"
+                                        "itemID integer NOT NULL,"
                                         "price decimal(18,2),"
-                                        "availability boolean"
-                                    ");");
+                                        "availability boolean,"
+                                        "PRIMARY KEY (itemID)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     // creating the Table called Course_Assigned_Textbook
     noError = noError && query.exec("create table Course_Assigned_Textbook("
-                                        "ISBN varchar(20) NOT NULL references Textbook(ISBN) on delete cascade,"
-                                        "courseCode varchar(8) NOT NULL references Course(courseCode) on delete cascade,"
-                                        "section varchar(1) NOT NULL references Course(section) on delete cascade,"
-                                        "termID integer NOT NULL references Course(termID) on delete cascade,"
-                                        "primary key(ISBN, courseCode, section, termID)"
-                                    ");");
+                                        "ISBN varchar(20) NOT NULL,"
+                                        "courseCode varchar(8) NOT NULL,"
+                                        "section varchar(1) NOT NULL,"
+                                        "termID integer NOT NULL,"
+                                        "FOREIGN KEY (ISBN) references Textbook(ISBN) on delete cascade,"
+                                        "FOREIGN KEY (courseCode, section, termID) references Course(courseCode, section, termID) on delete cascade,"
+                                        "PRIMARY KEY (ISBN, courseCode, section, termID)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     // creating the Table called ShoppingCart
     noError = noError && query.exec("create table ShoppingCart("
-                                        "studentNumber varchar(10) NOT NULL references Student(studentNumber) on delete cascade,"
-                                        "itemID integer NOT NULL references PurchasableItem(itemID) on delete cascade,"
+                                        "studentNumber varchar(10) NOT NULL,"
+                                        "itemID integer NOT NULL,"
                                         "quantity integer,"
-                                        "primary key(studentNumber, itemID)"
-                                    ");");
+                                        "FOREIGN KEY (studentNumber) references Student(studentNumber) on delete cascade,"
+                                        "FOREIGN KEY (itemID) references PurchasableItem(itemID) on delete cascade,"
+                                        "PRIMARY KEY (studentNumber, itemID)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     // creating the Table called Orders
     noError = noError && query.exec("create table Orders("
-                                        "orderID integer NOT NULL primary key,"
-                                        "studentNumber varchar(10) NOT NULL references Student(studentNumber) on delete cascade,"
-                                        "itemID integer NOT NULL references PurchasableItem(itemID) on delete cascade"
-                                    ");");
+                                        "orderID integer NOT NULL,"
+                                        "studentNumber varchar(10) NOT NULL,"
+                                        "itemID integer NOT NULL,"
+                                        "FOREIGN KEY (studentNumber) references Student(studentNumber) on delete cascade,"
+                                        "FOREIGN KEY (itemID) references PurchasableItem(itemID) on delete cascade,"
+                                        "PRIMARY KEY (orderID)"
+                                    ");");                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     //commit transaction
-    noError = noError && query.exec("commit;");
+    noError = noError && query.exec("commit;");                                                                 //qDebug() << query.lastQuery() << query.lastError();
 
     return noError;
 }
@@ -597,7 +674,7 @@ bool QueryControl::deleteCourse(Course *course, qint32 termID) {
     // create a course
     QSqlQuery courseQuery;
 
-    courseQuery.prepare("DELETE FROM Course SET  WHERE "
+    courseQuery.prepare("DELETE FROM Course WHERE "
                             "courseCode = :courseCode AND "
                             "section = :section AND "
                             "termID = :termID;");
@@ -725,14 +802,8 @@ QList<Course*>* QueryControl::retrieveCourseList(qint32 termID) {
 bool QueryControl::createTextbook(Textbook *textbook){
     bool noError = true;
 
-    //get the current max item id
-    int nextItemID = -1;
-    QSqlQuery maxItemID("SELECT MAX(itemID)+1 AS nextItemID FROM PurchasableItem;");
-    noError = noError && maxItemID.exec();
-    if(maxItemID.first()){
-        nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
-    }
-    textbook->setItemID(nextItemID);
+    //create its PurchasableItem first
+    noError = noError && createPurchasableItem((PurchasableItem*)textbook);
 
     // create a textbook
     QSqlQuery textBookQuery;
@@ -749,9 +820,6 @@ bool QueryControl::createTextbook(Textbook *textbook){
     textBookQuery.bindValue(":itemID", textbook->getItemID());
 
     noError = noError && textBookQuery.exec();
-
-    //create its PurchasableItem
-    noError = noError && createPurchasableItem((PurchasableItem*)textbook);
 
     return noError;
 }
@@ -822,7 +890,7 @@ bool QueryControl::deleteTextbook(Textbook *textbook){
     // delete a textbook
     QSqlQuery textBookQuery;
 
-    textBookQuery.prepare("DELETE FROM Textbook SET WHERE "
+    textBookQuery.prepare("DELETE FROM Textbook WHERE "
                             "ISBN = :ISBN;");
     textBookQuery.bindValue(":ISBN", textbook->getISBN());
 
@@ -966,14 +1034,8 @@ QList<Textbook*>* QueryControl::retrieveTextbookList(Course *course,  qint32 ter
 bool QueryControl::createChapter(Chapter *chapter, QString isbn){
     bool noError = true;
 
-    //get the current max item id
-    int nextItemID = -1;
-    QSqlQuery maxItemID("SELECT MAX(itemID)+1 AS nextItemID FROM PurchasableItem;");
-    noError = noError && maxItemID.exec();
-    if(maxItemID.first()){
-        nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
-    }
-    chapter->setItemID(nextItemID);
+    //create its PurchasableItem first
+    noError = noError && createPurchasableItem((PurchasableItem*)chapter);
 
     //create a chapter
     QSqlQuery chapterQuery;
@@ -986,9 +1048,6 @@ bool QueryControl::createChapter(Chapter *chapter, QString isbn){
     chapterQuery.bindValue(":itemID", chapter->getItemID());
 
     noError = noError && chapterQuery.exec();
-
-    //create its PurchasableItem
-    noError = noError && createPurchasableItem((PurchasableItem*)chapter);
 
     return noError;
 }
@@ -1056,7 +1115,7 @@ bool QueryControl::deleteChapter(Chapter *chapter, QString isbn){
     //delete a chapter
     QSqlQuery chapterQuery;
 
-    chapterQuery.prepare("DELETE FROM Chapter  WHERE "
+    chapterQuery.prepare("DELETE FROM Chapter WHERE "
                              "ISBN = :ISBN AND "
                              "chapterNumber = :chapterNumber;");
     chapterQuery.bindValue(":ISBN", isbn);
@@ -1182,14 +1241,8 @@ QList<Chapter*>* QueryControl::retrieveChapterList(QString isbn){
 bool QueryControl::createSection(Section *section, qint32 chapterNumber, QString isbn){
     bool noError = true;
 
-    //get the current max item id
-    int nextItemID = -1;
-    QSqlQuery maxItemID("SELECT MAX(itemID)+1 AS nextItemID FROM PurchasableItem;");
-    noError = noError && maxItemID.exec();
-    if(maxItemID.first()){
-        nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
-    }
-    section->setItemID(nextItemID);
+    //create its PurchasableItem first
+    noError = noError && createPurchasableItem((PurchasableItem*)section);
 
     //create a section
     QSqlQuery sectionQuery;
@@ -1203,9 +1256,6 @@ bool QueryControl::createSection(Section *section, qint32 chapterNumber, QString
     sectionQuery.bindValue(":itemID", section->getItemID());
 
     noError = noError && sectionQuery.exec();
-
-    //create its PurchasableItem
-    noError = noError && createPurchasableItem((PurchasableItem*)section);
 
     return noError;
 
@@ -1669,6 +1719,15 @@ QList<Student*>* QueryControl::retrieveStudentList(Course *course, qint32 termID
  */
 bool QueryControl::createPurchasableItem(PurchasableItem* purchasableItem) {
     bool noError = true;
+
+    //get the current max item id
+    int nextItemID = -1;
+    QSqlQuery maxItemID("SELECT MAX(itemID)+1 AS nextItemID FROM PurchasableItem;");
+    noError = noError && maxItemID.exec();
+    if(maxItemID.first()){
+        nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
+    }
+    purchasableItem->setItemID(nextItemID);
 
     //create PurchasableItem
     QSqlQuery purchasableItemQuery;

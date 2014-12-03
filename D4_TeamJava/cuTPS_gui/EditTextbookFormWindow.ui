@@ -150,7 +150,7 @@
     <string>Title:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="viewEditChaptersButton">
+  <widget class="QPushButton" name="editChapterButton">
    <property name="geometry">
     <rect>
      <x>470</x>
@@ -245,7 +245,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="editChapterButton">
+  <widget class="QPushButton" name="createChapterButton">
    <property name="geometry">
     <rect>
      <x>370</x>

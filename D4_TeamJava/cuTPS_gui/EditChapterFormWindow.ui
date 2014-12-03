@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Create Chapter</string>
+   <string>Edit Chapter</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -75,7 +75,7 @@
     <string>Sections:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="backButton">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -104,20 +104,20 @@
   <widget class="QPushButton" name="viewEditSectionButton">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>380</x>
      <y>290</y>
-     <width>131</width>
+     <width>101</width>
      <height>27</height>
     </rect>
    </property>
    <property name="text">
-    <string>View/Edit Section</string>
+    <string>Edit Section</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="addSectionButton">
+  <widget class="QPushButton" name="createSectionButton">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>270</x>
      <y>290</y>
      <width>101</width>
      <height>27</height>

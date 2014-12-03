@@ -15,15 +15,22 @@ EditChapterFormWindow::~EditChapterFormWindow()
     delete ui;
 }
 
-void EditChapterFormWindow::on_viewEditSectionButton_clicked()
+QPushButton* EditChapterFormWindow::getBackButton()
 {
-    editSectionForm.show();
-    editSectionForm.parentWindow = this;
-    this->hide();
+    return ui->backButton;
 }
 
-void EditChapterFormWindow::on_pushButton_clicked()
+QPushButton* EditChapterFormWindow::getCreateButton()
 {
-    parentWindow->show();
-    this->hide();
+    return ui->createButton;
+}
+
+QPushButton* EditChapterFormWindow::getEditSectionButton()
+{
+    return ui->viewEditSectionButton;
+}
+
+QPushButton* EditChapterFormWindow::getCreateSectionButton()
+{
+    return ui->createSectionButton;
 }

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "EditSectionFormWindow.h"
+#include <QPushButton>
 
 class EditTextbookFormWindow;
 
@@ -20,11 +21,10 @@ public:
 
     EditTextbookFormWindow *parentWindow;
 
-private slots:
-
-    void on_viewEditSectionButton_clicked();
-
-    void on_pushButton_clicked();
+    QPushButton* getBackButton();
+    QPushButton* getCreateButton();
+    QPushButton* getCreateSectionButton();
+    QPushButton* getEditSectionButton();
 
 private:
     Ui::EditChapterFormWindow *ui;

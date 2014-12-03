@@ -51,7 +51,7 @@ void QueryControl::test(){
     course->setTerm(term);
 
     // create the course
-    this->createCourse(course, term->getTermID());
+      qDebug() << this->createCourse(course, term->getTermID());
 
     // get the courses to check if it was created
     foreach(Course *crs,  *(this->retrieveCourseList(term->getTermID()))){
@@ -62,7 +62,7 @@ void QueryControl::test(){
 
     // modify the course
     course->setInstructor("L Nel");
-    this->updateCourse(course, term->getTermID());
+    qDebug() << this->updateCourse(course, term->getTermID());
 
     // get the courses to check if it was modified
     foreach(Course *crs,  *(this->retrieveCourseList(term->getTermID()))){
@@ -73,6 +73,7 @@ void QueryControl::test(){
 
     // get a student
     Student *student = this->retrieveStudent("100853074");
+
     // get the students payment information
     PaymentInformation *paymentInformation = this->retrievePaymentInformation(student);
     student->setPayInfo(*paymentInformation);
@@ -80,17 +81,52 @@ void QueryControl::test(){
     student->write(json);
     qDebug() <<json;
 
-    //link student to a new new course
-    this->updateCourseStudentLink(course, term->getTermID(), student);
+    delete(paymentInformation);
 
-    // get course for a student
+    // set the students payment information
+    paymentInformation = new PaymentInformation(); // will use default const
+    qDebug() << this->savePaymentInformation(student, paymentInformation);
+
+    delete(paymentInformation);
+
+
+    // get the students changed payment information
+    paymentInformation = this->retrievePaymentInformation(student);
+    student->setPayInfo(*paymentInformation);
+    json = QJsonObject();
+    student->write(json);
+    qDebug() <<json;
+
+
+    // get students course without new course
     foreach(Course *crs,  *(this->retrieveStudentCourseList(student->getStudentNum(), term->getTermID()))){
         json = QJsonObject();
         crs->write(json);
         qDebug() <<json;
     }
 
-/*
+    //link student to a new new course
+    qDebug() << this->updateCourseStudentLink(course, term->getTermID(), student);
+
+    // get students course with new course
+    foreach(Course *crs,  *(this->retrieveStudentCourseList(student->getStudentNum(), term->getTermID()))){
+        json = QJsonObject();
+        crs->write(json);
+        qDebug() <<json;
+    }
+
+    //delete a course
+     qDebug() << this->deleteCourse(course, term->getTermID());
+
+    // get students course with new course deleted
+    foreach(Course *crs,  *(this->retrieveStudentCourseList(student->getStudentNum(), term->getTermID()))){
+        json = QJsonObject();
+        crs->write(json);
+        qDebug() <<json;
+    }
+
+
+    /*
     // test for view studentView
     foreach(Course *crs, studentViewTextbooks("100853074", 1)){
         QJsonObject json = QJsonObject();

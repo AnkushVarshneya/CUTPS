@@ -12,16 +12,28 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+/*
 void MainWindow::on_studentInterfaceButton_clicked()
 {
-    studentInterface.show();
+    studentInterface = new StudentInterfaceWindow();
+    studentInterface->show();
     this->hide();
 }
 
 void MainWindow::on_contentManagerInterfaceButton_clicked()
 {
-    contentManagerUI.show();
+    contentManagerUI = new ContentManagerInterfaceWindow();
+    contentManagerUI->show();
     this->hide();
 
+}
+*/
+QPushButton* MainWindow::getContentManagerButton()
+{
+    return ui->contentManagerInterfaceButton;
+}
+
+QPushButton* MainWindow::getStudentButton()
+{
+    return ui->studentInterfaceButton;
 }

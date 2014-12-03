@@ -1,11 +1,12 @@
 #ifndef CONTENTINPUTOUTPUTMANAGER_H
 #define CONTENTINPUTOUTPUTMANAGER_H
 
-#include "ContentManagerInterfaceWindow.h"
+//#include "ContentManagerInterfaceWindow.h"
 #include "CreateChapterFormWindow.h"
 #include "CreateSectionFormWindow.h"
 #include "CreateTextbookFormWindow.h"
 #include "ManageTextbooksInterfaceWindow.h"
+
 
 
 class ContentInputOutputManager : public QObject
@@ -15,11 +16,15 @@ public:
     ContentInputOutputManager();
 
 private slots:
-
+    void on_textbook_back_button();
+    void on_textbook_viewEditChapters_button();
+    void on_textbook_create_button();
+    void on_textbook_addChapter_button();
 
 private:
-    ContentManagerInterfaceWindow* cm_interface_window;
-    CreateChapterFormWindow* create_chapter_form_window;
+    CreateTextbookFormWindow* createTextbookForm;
+    CreateChapterFormWindow* createChapterForm;
+    CreateSectionFormWindow* createSectionForm;
 
 
 };

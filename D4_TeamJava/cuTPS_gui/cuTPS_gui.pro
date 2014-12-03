@@ -16,9 +16,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     ContentManagerInterfaceWindow.cpp \
     ManageTextbooksInterfaceWindow.cpp \
-    CreateTextbookFormWindow.cpp \
-    CreateChapterFormWindow.cpp \
-    CreateSectionFormWindow.cpp \
     ManageContentControl.cpp \
     Term.cpp \
     CUtpsDataObject.cpp \
@@ -44,6 +41,9 @@ SOURCES += main.cpp\
     Shop.cpp \
     ContentManagementFacade.cpp \
     ContentManagementInputControl.cpp
+    EditChapterFormWindow.cpp \
+    EditTextbookFormWindow.cpp \
+    EditSectionFormWindow.cpp
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
@@ -52,9 +52,6 @@ HEADERS  += mainwindow.h \
     types.h \
     Term.h \
     CUtpsDataObject.h \
-    CreateTextbookFormWindow.h \
-    CreateChapterFormWindow.h \
-    CreateSectionFormWindow.h \
     Textbook.h \
     Chapter.h \
     Section.h \
@@ -77,11 +74,14 @@ HEADERS  += mainwindow.h \
     Shop.h \
     ContentManagementFacade.h \
     ContentManagementInputControl.h
+    EditChapterFormWindow.h \
+    EditSectionFormWindow.h \
+    EditTextbookFormWindow.h
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \
     ManageTextbooksInterfaceWindow.ui \
-    CreateTextbookFormWindow.ui \
-    CreateChapterFormWindow.ui \
-    CreateSectionFormWindow.ui \
-    StudentInterfaceWindow.ui
+    StudentInterfaceWindow.ui \
+    EditChapterFormWindow.ui \
+    EditSectionFormWindow.ui \
+    EditTextbookFormWindow.ui

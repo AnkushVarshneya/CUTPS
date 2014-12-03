@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     PaymentInformation.cpp \
     BillingAddress.cpp \
     CreditCardInformation.cpp \
-    ShoppingCart.cpp
+    ShoppingCart.cpp \
+    ShoppingManagementFacade.cpp
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
@@ -60,7 +61,8 @@ HEADERS  += mainwindow.h \
     PaymentInformation.h \
     BillingAddress.h \
     CreditCardInformation.h \
-    ShoppingCart.h
+    ShoppingCart.h \
+    ShoppingManagementFacade.h
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \

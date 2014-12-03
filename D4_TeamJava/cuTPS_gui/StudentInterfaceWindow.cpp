@@ -74,6 +74,8 @@ StudentInterfaceWindow::StudentInterfaceWindow(QWidget *parent) :
     treeMod->appendRow(treeItem);
     ui->itemsTreeView->setModel(treeMod);
 
+    ui->textbookListView->setModel(treeMod);
+
    // treeMod->data(ui->itemsTreeView->currentIndex());
 
 

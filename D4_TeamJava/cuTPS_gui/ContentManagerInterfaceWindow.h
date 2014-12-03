@@ -2,7 +2,14 @@
 #define CONTENTMANAGERINTERFACEWINDOW_H
 
 #include <QWidget>
+#include "ContentInputOutputManager.h"
+
+/*
 #include "ManageTextbooksInterfaceWindow.h"
+#include "EditTextbookFormWindow.h"
+*/
+
+#include <QPushButton>
 
 namespace Ui {
 class ContentManagerInterfaceWindow;
@@ -16,14 +23,19 @@ public:
     explicit ContentManagerInterfaceWindow(QWidget *parent = 0);
     ~ContentManagerInterfaceWindow();
 
+    QPushButton* getManageTextbooksButton();
+    QPushButton* getManageCoursesButton();
+
+/*
 private slots:
     void on_manageTextbooksOption_clicked();
 
     void on_manageCoursesOption_clicked();
-
+*/
 private:
     Ui::ContentManagerInterfaceWindow *ui;
-    ManageTextbooksInterfaceWindow manageTextbooksInterface;
+    //ContentInputOutputManager contentIOManager;
+    //ManageTextbooksInterfaceWindow manageTextbooksInterface;
 };
 
 #endif // CONTENTMANAGERINTERFACEWINDOW_H

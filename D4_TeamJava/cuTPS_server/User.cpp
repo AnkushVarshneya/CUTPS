@@ -12,22 +12,20 @@
 #include "User.h"
 
 //Constructor
-User::User(QString user, QString pass, QString fName, QString lName)
-    : username(user), password(pass), firstName(fName), lastName(lName){}
+User::User(QString user, QString pass, QString fName)
+    : username(user), password(pass), fullName(fName){}
 
 //Destructor
-User::~User() { } ;
+User::~User(){};
 
 
 //Getters
 QString User::getUsername() const {return username;}
-QString User::getFirstName() const {return firstName;}
-QString User::getLastName() const {return lastName;}
+QString User::getFullName() const {return fullName;}
 
 //Setters
 void User::setPass(QString a) {password = a;}
-void User::setFirstName(QString a){firstName = a;}
-void User::setLastName(QString a){lastName = a;}
+void User::setFullName(QString n){fullName = n;}
 
 //Input, a string argument,
 //returns true if this password matches with the argument
@@ -40,8 +38,7 @@ bool User::validatePass(QString a) const{
 void User::read(const QJsonObject &json){
     username = json["username"].toString();
     password = json["password"].toString();
-    firstName = json["firstName"].toString();
-    lastName = json["lastName"].toString();
+    fullName = json["fullName"].toString();
 }
 
 //Write to JSON object attributes pertaining to User
@@ -49,8 +46,7 @@ void User::read(const QJsonObject &json){
 void User::write(QJsonObject &json) const{
     json["username"] = username;
     json["password"] = password;
-    json["firstName"] = firstName;
-    json["lastName"] = lastName;
+    json["fullName"] = fullName;
 }
 
 

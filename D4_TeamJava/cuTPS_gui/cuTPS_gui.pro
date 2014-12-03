@@ -16,9 +16,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     ContentManagerInterfaceWindow.cpp \
     ManageTextbooksInterfaceWindow.cpp \
-    CreateTextbookFormWindow.cpp \
-    CreateChapterFormWindow.cpp \
-    CreateSectionFormWindow.cpp \
     ManageContentControl.cpp \
     Term.cpp \
     CUtpsDataObject.cpp \
@@ -28,6 +25,7 @@ SOURCES += main.cpp\
     PurchaseablItem.cpp \
     StudentInterfaceWindow.cpp \
     ContentInputOutputManager.cpp \
+    MainInputOutputManager.cpp \
     StudentInputOutputManager.cpp \
     Course.cpp \
     Student.cpp \
@@ -36,7 +34,26 @@ SOURCES += main.cpp\
     BillingAddress.cpp \
     CreditCardInformation.cpp \
     ShoppingCart.cpp \
-    OurStandardItem.cpp
+    OurStandardItem.cpp \
+    ShoppingManagementFacade.cpp \
+    ShopInputControl.cpp \
+    ShoppingControl.cpp \
+    ShopUpdateControl.cpp \
+    Shop.cpp \
+    ContentManagementFacade.cpp \
+    ContentManagementInputControl.cpp \
+    EditChapterFormWindow.cpp \
+    EditTextbookFormWindow.cpp \
+    EditSectionFormWindow.cpp \
+    ContentManagementUpdateControl.cpp \
+    CourseManagementFacade.cpp \
+    CourseManagementInputControl.cpp \
+    ManageCourseControl.cpp \
+    CourseManagementUpdateControl.cpp \
+    ClientCommunicatorManagementControl.cpp \
+    ClientCommunicatorSerializer.cpp \
+    ClientCommunicatorRequestManager.cpp
+
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
@@ -45,15 +62,13 @@ HEADERS  += mainwindow.h \
     types.h \
     Term.h \
     CUtpsDataObject.h \
-    CreateTextbookFormWindow.h \
-    CreateChapterFormWindow.h \
-    CreateSectionFormWindow.h \
     Textbook.h \
     Chapter.h \
     Section.h \
     PurchasableItem.h \
     StudentInterfaceWindow.h \
     ContentInputOutputManager.h \
+    MainInputOutputManager.h \
     StudentInputOutputManager.h \
     Course.h \
     Student.h \
@@ -62,12 +77,31 @@ HEADERS  += mainwindow.h \
     BillingAddress.h \
     CreditCardInformation.h \
     ShoppingCart.h \
-    OurStandardItem.h
+    OurStandardItem.h \
+    ShoppingManagementFacade.h \
+    ShopInputControl.h \
+    ShoppingControl.h \
+    ShopUpdateControl.h \
+    Shop.h \
+    ContentManagementFacade.h \
+    ContentManagementInputControl.h \
+    EditChapterFormWindow.h \
+    EditSectionFormWindow.h \
+    EditTextbookFormWindow.h \
+    ContentManagementUpdateControl.h \
+    CourseManagementFacade.h \
+    CourseManagementInputControl.h \
+    ManageCourseControl.h \
+    CourseManagementUpdateControl.h \
+    ClientCommunicatorManagementControl.h \
+    ClientCommunicatorSerializer.h \
+    ClientCommunicatorRequestManager.h
+
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \
     ManageTextbooksInterfaceWindow.ui \
-    CreateTextbookFormWindow.ui \
-    CreateChapterFormWindow.ui \
-    CreateSectionFormWindow.ui \
-    StudentInterfaceWindow.ui
+    StudentInterfaceWindow.ui \
+    EditChapterFormWindow.ui \
+    EditSectionFormWindow.ui \
+    EditTextbookFormWindow.ui

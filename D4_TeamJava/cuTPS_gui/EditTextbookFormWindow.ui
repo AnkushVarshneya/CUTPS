@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreateTextbookFormWindow</class>
- <widget class="QWidget" name="CreateTextbookFormWindow">
+ <class>EditTextbookFormWindow</class>
+ <widget class="QWidget" name="EditTextbookFormWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Create Textbook</string>
   </property>
   <widget class="QLineEdit" name="titleTextbox">
    <property name="geometry">
@@ -245,7 +245,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="createChapterButton">
+  <widget class="QPushButton" name="editChapterButton">
    <property name="geometry">
     <rect>
      <x>370</x>

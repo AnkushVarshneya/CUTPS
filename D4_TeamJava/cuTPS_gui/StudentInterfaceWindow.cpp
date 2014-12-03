@@ -86,6 +86,13 @@ StudentInterfaceWindow::~StudentInterfaceWindow()
     delete ui;
 }
 
+//getters
+QPushButton*    StudentInterfaceWindow::getAddTextbookOption() { return ui->addTextbookToCartOption; }
+QPushButton*    StudentInterfaceWindow::getViewDetailsOption() {return ui->viewDetailsOption; }
+QPushButton*    StudentInterfaceWindow::getViewCartOption() { return ui->viewShoppingCartOption; }
+QComboBox*      StudentInterfaceWindow::getTermSelectOption() { return ui->termSelectOption;  }
+QSpinBox*       StudentInterfaceWindow::getQuantityOption() { return ui->quantityOption; }
+
 void StudentInterfaceWindow::on_viewDetailsOption_clicked()
 {
     qDebug() << "getting the key from selected item";

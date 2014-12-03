@@ -2,6 +2,9 @@
 #define STUDENTINTERFACEWINDOW_H
 
 #include <QWidget>
+#include <QPushButton>
+#include <QComboBox>
+#include <QSpinBox>
 #include "Textbook.h"
 #include "OurStandardItem.h"
 #include <QStandardItemModel>
@@ -17,6 +20,12 @@ class StudentInterfaceWindow : public QWidget
 public:
     explicit StudentInterfaceWindow(QWidget *parent = 0);
     ~StudentInterfaceWindow();
+    QPushButton*        getViewDetailsOption();
+    QPushButton*        getAddTextbookOption();
+    QPushButton*        getViewCartOption();
+    QComboBox*          getTermSelectOption();
+    QSpinBox*           getQuantityOption();
+
 
 private slots:
     void on_viewDetailsOption_clicked();

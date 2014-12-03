@@ -9,10 +9,22 @@
 #ifndef SHOPPINGMANAGEMENTFACADE_H
 #define SHOPPINGMANAGEMENTFACADE_H
 
+#include "Course.h"
+#include "Textbook.h"
+#include "Chapter.h"
+#include "Section.h"
+#include "Term.h"
+#include "Student.h"
+#include <QList>
+
+
 class ShoppingManagementFacade
 {
 public:
     ShoppingManagementFacade();
+    QList<Course*>  viewContent(Student *student, Term *term);
+
+
 };
 
 #endif // SHOPPINGMANAGEMENTFACADE_H

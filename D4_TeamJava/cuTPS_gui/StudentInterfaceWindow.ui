@@ -1,21 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>StudentInterfaceWindow</class>
- <widget name="StudentInterfaceWindow" class="QWidget">
+ <widget class="QWidget" name="StudentInterfaceWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1221</width>
+    <height>606</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>cuTPS Shop</string>
   </property>
+  <widget class="QPushButton" name="viewShoppingCartOption">
+   <property name="geometry">
+    <rect>
+     <x>1050</x>
+     <y>20</y>
+     <width>141</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ViewShoppingCart</string>
+   </property>
+  </widget>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

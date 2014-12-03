@@ -28,7 +28,15 @@ SOURCES += main.cpp\
     PurchaseablItem.cpp \
     StudentInterfaceWindow.cpp \
     ContentInputOutputManager.cpp \
-    MainInputOutputManager.cpp
+    MainInputOutputManager.cpp \
+    StudentInputOutputManager.cpp \
+    Course.cpp \
+    Student.cpp \
+    User.cpp \
+    PaymentInformation.cpp \
+    BillingAddress.cpp \
+    CreditCardInformation.cpp \
+    ShoppingCart.cpp
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
@@ -46,7 +54,15 @@ HEADERS  += mainwindow.h \
     PurchasableItem.h \
     StudentInterfaceWindow.h \
     ContentInputOutputManager.h \
-    MainInputOutputManager.h
+    MainInputOutputManager.h \
+    StudentInputOutputManager.h \
+    Course.h \
+    Student.h \
+    User.h \
+    PaymentInformation.h \
+    BillingAddress.h \
+    CreditCardInformation.h \
+    ShoppingCart.h
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \

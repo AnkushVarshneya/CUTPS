@@ -24,7 +24,7 @@ class Student : public User {
 
 public:
     Student(QString = "100848921", QString = "johndoe@cmail.carleton.ca", QString = "generic"
-            , QString = "password", QString = "John Doe");
+            , QString = "password", QString = "john", QString = "doe");
     ~Student();
     QString                 getStudentNum() const;
     QString                 getcMail() const;

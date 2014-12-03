@@ -18,13 +18,15 @@
 class User : CUtpsDataObject{
 
 public:
-    User(QString = "generic" ,QString = "password",QString = "John Doe");
+    User(QString = "generic" ,QString = "password",QString = "John",QString = "Doe");
     ~User();
     QString         getUsername() const;
-    QString         getFullName() const;
+    QString         getFirstName() const;
+    QString         getLastName() const;
     virtual void    setUsername(QString) = 0;
     void            setPass(QString);
-    void            setFullName(QString);
+    void            setFirstName(QString);
+    void            setLastName(QString);
     bool            validatePass(QString) const;
     void            read(const QJsonObject &json);
     void            write(QJsonObject &json) const;
@@ -33,8 +35,8 @@ public:
 protected:
     QString         username;
     QString         password;
-    QString         fullName;
-
+    QString         firstName;
+    QString         lastName;
 
 };
 

@@ -12,8 +12,8 @@
 
 //Default Constructor
 Student::Student(QString stuNum, QString cm, QString userName, QString pass,
-                 QString fName)
-    : studentNum(stuNum), cMail(cm), User(userName,pass,fName){}
+                 QString fName, QString lName)
+    : studentNum(stuNum), cMail(cm), User(userName,pass,fName,lName){}
 
 //Getters
 QString                 Student::getStudentNum() const {return studentNum;}
@@ -100,4 +100,3 @@ void Student::write(QJsonObject &json) const{
 
 
 }
-

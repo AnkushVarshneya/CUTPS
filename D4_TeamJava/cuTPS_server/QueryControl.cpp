@@ -32,7 +32,64 @@ QueryControl::~QueryControl() {
  *  test cases
  */
 void QueryControl::test(){
+     QJsonObject json;
+
     qDebug() << resetDatabase();
+
+    QList<Term*> *termlist= this->retrieveTermList();
+
+    // test for terms
+    foreach(Term *trm, *termlist){
+        json = QJsonObject();
+        trm->write(json);
+        qDebug() <<json;
+    }
+
+    Term *term = termlist->at(0);
+
+    Course *course = new Course("COMP3004","N","Dr. Laurendeau");
+    course->setTerm(term);
+
+    // create the course
+    this->createCourse(course, term->getTermID());
+
+    // get the courses to check if it was created
+    foreach(Course *crs,  *(this->retrieveCourseList(term->getTermID()))){
+        json = QJsonObject();
+        crs->write(json);
+        //qDebug() <<json;
+    }
+
+    // modify the course
+    course->setInstructor("L Nel");
+    this->updateCourse(course, term->getTermID());
+
+    // get the courses to check if it was modified
+    foreach(Course *crs,  *(this->retrieveCourseList(term->getTermID()))){
+        json = QJsonObject();
+        crs->write(json);
+        //qDebug() <<json;
+    }
+
+    // get a student
+    Student *student = this->retrieveStudent("100853074");
+    // get the students payment information
+    PaymentInformation *paymentInformation = this->retrievePaymentInformation(student);
+    student->setPayInfo(*paymentInformation);
+    json = QJsonObject();
+    student->write(json);
+    qDebug() <<json;
+
+    //link student to a new new course
+    this->updateCourseStudentLink(course, term->getTermID(), student);
+
+    // get course for a student
+    foreach(Course *crs,  *(this->retrieveStudentCourseList(student->getStudentNum(), term->getTermID()))){
+        json = QJsonObject();
+        crs->write(json);
+        qDebug() <<json;
+    }
+
 /*
     // test for view studentView
     foreach(Course *crs, studentViewTextbooks("100853074", 1)){
@@ -157,10 +214,10 @@ bool QueryControl::resetDatabase() {
                                         "VALUES ('PHIL1002','C','Peter Dinklage',1);");
 
     // insert default Terms(s)
-    noError = noError && query.exec("INSERT INTO Term (termID,startDate,endDate) "
-                                        "VALUES (1,'20140905','20141209');");
-    noError = noError && query.exec("INSERT INTO Term (termID,startDate,endDate) "
-                                        "VALUES (2,'20150105','20151209');");
+    noError = noError && query.exec("INSERT INTO Term (termID,termName,startDate,endDate) "
+                                        "VALUES (1,'fall2014','20140905','20141209');");
+    noError = noError && query.exec("INSERT INTO Term (termID,termName,startDate,endDate) "
+                                        "VALUES (2,'winter2015','20150105','20151209');");
 
     // insert default Textbook(s)
     noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
@@ -321,6 +378,7 @@ bool QueryControl::resetSchema() {
     // creating the Table called Term
     noError = noError && query.exec("create table Term("
                                         "termID integer NOT NULL primary key,"
+                                        "termName varchar(25),"
                                         "startDate varchar(10),"
                                         "endDate varchar(10)"
                                     ");");
@@ -391,6 +449,32 @@ bool QueryControl::resetSchema() {
     noError = noError && query.exec("commit;");
 
     return noError;
+}
+
+/**
+ * @brief QueryControl::retrieveTermList
+ *  retrives a existing list of terms
+ * @return
+ *  returns a list of terms
+ */
+QList<Term*>* QueryControl::retrieveTermList(){
+    QList<Term*> *terms = new QList<Term*>();
+
+    // get all terms
+    QSqlQuery termQuery;
+    termQuery.exec("SELECT Term.termID, "
+                                "Term.termName, "
+                                "Term.startDate, "
+                                "Term.endDate "
+                            "FROM Term;");
+
+    while (termQuery.next()) {
+        terms->push_back(new Term(QDate::fromString(termQuery.value(termQuery.record().indexOf("startDate")).toString(), "yyyyMMdd"),
+                                  QDate::fromString(termQuery.value(termQuery.record().indexOf("endDate")).toString(), "yyyyMMdd"),
+                                  termQuery.value(termQuery.record().indexOf("termID")).toInt(),
+                                  termQuery.value(termQuery.record().indexOf("termName")).toString()));
+    }
+    return terms;
 }
 
 /**
@@ -511,7 +595,8 @@ QList<Course*>* QueryControl::retrieveStudentCourseList(QString studentNumber, q
                                 "Course.instructor, "
                                 "Term.startDate, "
                                 "Term.endDate, "
-                                "Term.termID "
+                                "Term.termID, "
+                                "Term.termName "
                             "FROM Course "
                             "JOIN term ON "
                                 "Course.termID = Term.TermID "
@@ -528,9 +613,16 @@ QList<Course*>* QueryControl::retrieveStudentCourseList(QString studentNumber, q
     courseQuery.exec();
 
     while (courseQuery.next()) {
-        courses->push_back(new Course(courseQuery.value(courseQuery.record().indexOf("courseCode")).toString(),
+        Course *course = new Course(courseQuery.value(courseQuery.record().indexOf("courseCode")).toString(),
                                    courseQuery.value(courseQuery.record().indexOf("section")).toString(),
-                                   courseQuery.value(courseQuery.record().indexOf("instructor")).toString()));
+                                   courseQuery.value(courseQuery.record().indexOf("instructor")).toString());
+
+        course->setTerm(new Term(QDate::fromString(courseQuery.value(courseQuery.record().indexOf("startDate")).toString(), "yyyyMMdd"),
+                                QDate::fromString(courseQuery.value(courseQuery.record().indexOf("endDate")).toString(), "yyyyMMdd"),
+                                courseQuery.value(courseQuery.record().indexOf("termID")).toInt(),
+                                courseQuery.value(courseQuery.record().indexOf("termName")).toString()));
+
+        courses->push_back(course);
     }
 
     return courses;
@@ -557,7 +649,8 @@ QList<Course*>* QueryControl::retrieveCourseList(qint32 termID) {
                                 "Course.instructor, "
                                 "Term.startDate, "
                                 "Term.endDate, "
-                                "Term.termID "
+                                "Term.termID, "
+                                "Term.termName "
                             "FROM Course "
                             "JOIN term ON "
                                 "Course.termID = Term.TermID "
@@ -567,9 +660,16 @@ QList<Course*>* QueryControl::retrieveCourseList(qint32 termID) {
     courseQuery.exec();
 
     while (courseQuery.next()) {
-        courses->push_back(new Course(courseQuery.value(courseQuery.record().indexOf("courseCode")).toString(),
+        Course *course = new Course(courseQuery.value(courseQuery.record().indexOf("courseCode")).toString(),
                                    courseQuery.value(courseQuery.record().indexOf("section")).toString(),
-                                   courseQuery.value(courseQuery.record().indexOf("instructor")).toString()));
+                                   courseQuery.value(courseQuery.record().indexOf("instructor")).toString());
+
+        course->setTerm(new Term(QDate::fromString(courseQuery.value(courseQuery.record().indexOf("startDate")).toString(), "yyyyMMdd"),
+                                QDate::fromString(courseQuery.value(courseQuery.record().indexOf("endDate")).toString(), "yyyyMMdd"),
+                                courseQuery.value(courseQuery.record().indexOf("termID")).toInt(),
+                                courseQuery.value(courseQuery.record().indexOf("termName")).toString()));
+
+        courses->push_back(course);
     }
 
     return courses;
@@ -1457,13 +1557,12 @@ Student* QueryControl::retrieveStudent(QString studentNumber){
                                 "Student.cmail, "
                                 "User.userName, "
                                 "User.password, "
-                                "User.firstName, "
-                                "User.lastName "
+                                "User.fullName "
                             "FROM Student "
                             "JOIN User ON "
                                "Student.userName = User.userName "
                             "WHERE Student.studentNumber =:studentNumber "
-                                "ORDER BY User.firstName ASC, User.lastName ASC;");
+                                "ORDER BY User.fullName ASC;");
     studentQuery.bindValue(":studentNumber", studentNumber);
     studentQuery.exec();
 
@@ -1472,8 +1571,7 @@ Student* QueryControl::retrieveStudent(QString studentNumber){
                                    studentQuery.value(studentQuery.record().indexOf("cmail")).toString(),
                                    studentQuery.value(studentQuery.record().indexOf("userName")).toString(),
                                    studentQuery.value(studentQuery.record().indexOf("password")).toString(),
-                                   studentQuery.value(studentQuery.record().indexOf("firstName")).toString(),
-                                   studentQuery.value(studentQuery.record().indexOf("lastName")).toString());
+                                   studentQuery.value(studentQuery.record().indexOf("fullName")).toString());
     }
 
     return student;
@@ -1497,8 +1595,7 @@ QList<Student*>* QueryControl::retrieveStudentList(Course *course, qint32 termID
                                 "Student.cmail, "
                                 "User.userName, "
                                 "User.password, "
-                                "User.firstName, "
-                                "User.lastName "
+                                "User.fullName "
                             "FROM Student "
                             "JOIN User ON "
                                "Student.userName = User.userName "
@@ -1509,7 +1606,7 @@ QList<Student*>* QueryControl::retrieveStudentList(Course *course, qint32 termID
                                 "Student_RegisteredIn_Course.section = Course.section AND "
                                 "Student_RegisteredIn_Course.termID = Course.termID "
                             "WHERE Course.courseCode=:courseCode AND Course.section=:section AND Course.termID=:termID "
-                                "ORDER BY User.firstName ASC, User.lastName ASC;");
+                                "ORDER BY User.fullName ASC;");
     studentQuery.bindValue(":courseCode", course->getCourseCode());
     studentQuery.bindValue(":section", course->getCourseSection());
     studentQuery.bindValue(":termID", termID);
@@ -1520,8 +1617,7 @@ QList<Student*>* QueryControl::retrieveStudentList(Course *course, qint32 termID
                                    studentQuery.value(studentQuery.record().indexOf("cmail")).toString(),
                                    studentQuery.value(studentQuery.record().indexOf("userName")).toString(),
                                    studentQuery.value(studentQuery.record().indexOf("password")).toString(),
-                                   studentQuery.value(studentQuery.record().indexOf("firstName")).toString(),
-                                   studentQuery.value(studentQuery.record().indexOf("lastName")).toString()));
+                                   studentQuery.value(studentQuery.record().indexOf("fullName")).toString()));
     }
 
     return Students;

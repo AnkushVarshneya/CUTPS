@@ -23,7 +23,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="createTextbookOption">
+  <widget class="QPushButton" name="editTextbookOption">
    <property name="geometry">
     <rect>
      <x>150</x>

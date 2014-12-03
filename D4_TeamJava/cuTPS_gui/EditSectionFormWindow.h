@@ -2,6 +2,7 @@
 #define CREATESECTIONFORMWINDOW_H
 
 #include <QWidget>
+#include <QPushButton>
 
 class EditChapterFormWindow;
 
@@ -20,8 +21,8 @@ public:
 
     EditChapterFormWindow *parentWindow;
 
-private slots:
-    void on_backButton_clicked();
+    QPushButton* getBackButton();
+    QPushButton* getCreateButton();
 
 private:
     Ui::EditSectionFormWindow *ui;

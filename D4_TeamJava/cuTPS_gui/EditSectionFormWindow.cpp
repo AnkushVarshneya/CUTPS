@@ -15,8 +15,12 @@ EditSectionFormWindow::~EditSectionFormWindow()
     delete ui;
 }
 
-void EditSectionFormWindow::on_backButton_clicked()
+QPushButton* EditSectionFormWindow::getBackButton()
 {
-    parentWindow->show();
-    this->hide();
+    return ui->backButton;
+}
+
+QPushButton* EditSectionFormWindow::getCreateButton()
+{
+    return ui->createButton;
 }

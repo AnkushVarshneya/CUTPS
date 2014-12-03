@@ -34,6 +34,7 @@ SOURCES += main.cpp\
     BillingAddress.cpp \
     CreditCardInformation.cpp \
     ShoppingCart.cpp \
+    OurStandardItem.cpp \
     ShoppingManagementFacade.cpp \
     ShopInputControl.cpp \
     ShoppingControl.cpp \
@@ -52,6 +53,7 @@ SOURCES += main.cpp\
     ClientCommunicatorManagementControl.cpp \
     ClientCommunicatorSerializer.cpp \
     ClientCommunicatorRequestManager.cpp
+
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
@@ -75,6 +77,7 @@ HEADERS  += mainwindow.h \
     BillingAddress.h \
     CreditCardInformation.h \
     ShoppingCart.h \
+    OurStandardItem.h \
     ShoppingManagementFacade.h \
     ShopInputControl.h \
     ShoppingControl.h \
@@ -93,6 +96,7 @@ HEADERS  += mainwindow.h \
     ClientCommunicatorManagementControl.h \
     ClientCommunicatorSerializer.h \
     ClientCommunicatorRequestManager.h
+
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \

@@ -20,8 +20,8 @@ QList<Course*>* ServerStorageControl::retrieveContent(Student* s, Term* t){
     QList<Course*>* result = new QList<Course*>();
     //Check for nulls
     if(s != 0 && t != 0){
+        delete result;
         //Retrieves the list courses the student is registered for the given term
-        qDeleteAll(result->begin(),result->end());
         result = q->retrieveStudentCourseList(s->getStudentNum(),t->getTermID());
         //For each Course in the student course list, retrieve the required textbooks
         for(int courseIndex = 0; courseIndex < result->size(); courseIndex++){
@@ -30,10 +30,14 @@ QList<Course*>* ServerStorageControl::retrieveContent(Student* s, Term* t){
                                                                      true);
              //And for each required textbook, retrieve the required Chapters, and for each Chapter,
             foreach (Textbook* t, *textbookList){
-                t->getChapterList() = *(q->retrieveChapterList(t->getISBN(),true));
+                QList<Chapter*>* cList =  q->retrieveChapterList(t->getISBN(),true);
+                t->getChapterList() = *cList;
+                delete cList;
                 //Retrieve the required Chapter sections.
                 foreach (Chapter* c, t->getChapterList()){
-                    c->getChapterSections() = *(q->retrieveSectionList(c->getChapterNumber(),t->getISBN(),true));
+                    QList<Section*>* sList = q->retrieveSectionList(c->getChapterNumber(),t->getISBN(),true);
+                    c->getChapterSections() = *sList;
+                    delete sList;
                 }
             }
             (*result)[courseIndex]->getRequiredTextbooks() = *textbookList;

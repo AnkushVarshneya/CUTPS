@@ -27,7 +27,12 @@ int main(int argc, char *argv[])
     }
 
     qDeleteAll(contentList->begin(),contentList->end());
+    delete contentList;
     qDeleteAll(nullList->begin(), nullList->end());
+    delete nullList;
+    qDeleteAll(termlist->begin(),termlist->end());
+    delete termlist;
+    delete student;
     //----------------------------------------------//
 
     return 0;

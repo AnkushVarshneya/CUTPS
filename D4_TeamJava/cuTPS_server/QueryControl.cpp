@@ -81,7 +81,6 @@ void QueryControl::test(){
     student->write(json);
     qDebug() <<json;
 
-
     qDebug() << "\ntest for retrievePaymentInformation\n";
     PaymentInformation *paymentInformation = this->retrievePaymentInformation(student);
     student->setPayInfo(*paymentInformation);
@@ -104,7 +103,6 @@ void QueryControl::test(){
     student->write(json);
     qDebug() <<json;
 
-
     qDebug() << "\ntest for retrieveStudentCourseList\n";
     foreach(Course *crs,  *(this->retrieveStudentCourseList(student->getStudentNum(), term->getTermID()))){
         json = QJsonObject();
@@ -122,43 +120,45 @@ void QueryControl::test(){
         qDebug() <<json;
     }
 
-    qDebug() << "\ntest for createTextbook";
+    qDebug() << "\ntest for createTextbook\n";
     Textbook *textbook = new Textbook();
     qDebug() << this->createTextbook(textbook);
 
     QString isbn = textbook->getISBN();
     delete(textbook);
 
-    qDebug() << "\ntest for retrieveTextbook after createTextbook";
+    qDebug() << "\ntest for retrieveTextbook after createTextbook\n";
     textbook = this->retrieveTextbook(isbn);
     json = QJsonObject();
     textbook->write(json);
     qDebug() <<json;
 
-    qDebug() << "\ntest for updateCourseTextbookLink";
+    qDebug() << "\ntest for updateCourseTextbookLink\n";
     qDebug() << this->updateCourseTextbookLink(course, term->getTermID(), textbook);
 
-    qDebug() << "\ntest for retrieveTextbookList after updateCourseTextbookLink";
+    qDebug() << "\ntest for retrieveTextbookList after updateCourseTextbookLink\n";
     foreach(Textbook *tbks,  *(this->retrieveTextbookList(course, term->getTermID()))){
         json = QJsonObject();
         tbks->write(json);
         qDebug() <<json;
     }
 
-    qDebug() << "\ntest for updateTextbook";
+    qDebug() << "\ntest for updateTextbook\n";
     textbook->setEdition("900");
-    textbook->setAuthor("i dont know");
+    textbook->setItemTitle("a random textbook");
+    textbook->setPrice(1000);
+
     qDebug() << this->updateTextbook(textbook);
 
     delete(textbook);
 
-    qDebug() << "\ntest for retrieveTextbook after updateTextbook";
+    qDebug() << "\ntest for retrieveTextbook after updateTextbook\n";
     textbook = this->retrieveTextbook(isbn);
     json = QJsonObject();
     textbook->write(json);
     qDebug() <<json;
 
-    qDebug() << "\ntest for retrieveTextbookList after updateTextbook";
+    qDebug() << "\ntest for retrieveTextbookList after updateTextbook\n";
     qDebug() << this->updateTextbook(textbook);
     foreach(Textbook *tbks,  *(this->retrieveTextbookList(course, term->getTermID()))){
         json = QJsonObject();
@@ -166,12 +166,134 @@ void QueryControl::test(){
         qDebug() <<json;
     }
 
-    qDebug() << "\ntest for deleteTextbook";
+    qDebug() << "\ntest for createChapter\n";
+    Chapter *chapter = new Chapter();
+    qDebug() << this->createChapter(chapter, isbn);
+
+    qint32 chapterNumber = chapter->getChapterNumber();
+    delete(chapter);
+
+    qDebug() << "\ntest for retrieveChapter after createChapter\n";
+    chapter = this->retrieveChapter(chapterNumber, isbn);
+    json = QJsonObject();
+    chapter->write(json);
+    qDebug() <<json;
+
+    qDebug() << "\ntest for retrieveChapterList after createChapter\n";
+    foreach(Chapter *chpts, *(this->retrieveChapterList(isbn))){
+        json = QJsonObject();
+        chpts->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for updateChapter\n";
+    chapter->setItemTitle("a random chapter");
+    chapter->setPrice(1000);
+
+    qDebug() << this->updateChapter(chapter, isbn);
+
+    delete(chapter);
+
+    qDebug() << "\ntest for retrieveChapter after updateChapter\n";
+    chapter = this->retrieveChapter(chapterNumber, isbn);
+    json = QJsonObject();
+    chapter->write(json);
+    qDebug() <<json;
+
+    qDebug() << "\ntest for retrieveChapterList after updateChapter\n";
+    foreach(Chapter *chpts, *(this->retrieveChapterList(isbn))){
+        json = QJsonObject();
+        chpts->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for createSection\n";
+    Section *section = new Section();
+    qDebug() << this->createSection(section, chapterNumber, isbn);
+
+    qint32 sectionNumber = section->getSectionNumber();
+    delete(section);
+
+    qDebug() << "\ntest for retrieveSection after createSection\n";
+    section = this->retrieveSection(sectionNumber, chapterNumber, isbn);
+    json = QJsonObject();
+    section->write(json);
+    qDebug() <<json;
+
+    qDebug() << "\ntest for retrieveSectionList after createSection\n";
+    foreach(Section *sec, *(this->retrieveSectionList(chapterNumber, isbn))){
+        json = QJsonObject();
+        sec->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for updateSection\n";
+    section->setItemTitle("a random section");
+    section->setPrice(1000);
+
+    qDebug() << this->updateSection(section, chapterNumber, isbn);
+
+    delete(section);
+
+    qDebug() << "\ntest for retrieveSection after updateSection\n";
+    section = this->retrieveSection(sectionNumber, chapterNumber, isbn);
+    json = QJsonObject();
+    section->write(json);
+    qDebug() <<json;
+
+    qDebug() << "\ntest for retrieveSectionList after updateSection\n";
+    foreach(Section *sec, *(this->retrieveSectionList(chapterNumber, isbn))){
+        json = QJsonObject();
+        sec->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for deleteSection\n";
+    qDebug() << this->deleteSection(section, chapterNumber, isbn);
+
+    delete(section);
+
+    qDebug() << "\ntest for retrieveSection after deleteSection\n";
+    section = this->retrieveSection(sectionNumber, chapterNumber, isbn);
+    if (section != NULL){
+        json = QJsonObject();
+        section->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for retrieveSectionList after deleteSection\n";
+    foreach(Section *sec, *(this->retrieveSectionList(chapterNumber, isbn))){
+        json = QJsonObject();
+        sec->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for deleteChapter\n";
+    qDebug() << this->deleteChapter(chapter, isbn);
+
+    delete(chapter);
+
+    qDebug() << "\ntest for retrieveChapter after deleteChapter\n";
+    chapter = this->retrieveChapter(chapterNumber, isbn);
+    if (chapter != NULL){
+        json = QJsonObject();
+        chapter->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for retrieveChapterList after deleteChapter\n";
+    foreach(Chapter *chpts, *(this->retrieveChapterList(isbn))){
+        json = QJsonObject();
+        chpts->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for deleteTextbook\n";
     qDebug() << this->deleteTextbook(textbook);
 
     delete(textbook);
 
-    qDebug() << "\ntest for retrieveTextbook after deleteTextbook";
+    qDebug() << "\ntest for retrieveTextbook after deleteTextbook\n";
     textbook = this->retrieveTextbook(isbn);
     if(textbook!=NULL) {
         json = QJsonObject();
@@ -179,24 +301,12 @@ void QueryControl::test(){
         qDebug() <<json;
     }
 
-    qDebug() << "\ntest for retrieveTextbookList after deleteTextbook";
+    qDebug() << "\ntest for retrieveTextbookList after deleteTextbook\n";
     foreach(Textbook *tbks,  *(this->retrieveTextbookList(course, term->getTermID()))){
         json = QJsonObject();
         tbks->write(json);
         qDebug() <<json;
     }
-
-
-/*
-    Chapter *chapter = new Chapter();
-    Section *section = new Section();
-    Course *course = new Course();
-    chapter->addSection(section);
-    textbook->addChapter(chapter);
-*/
-
-
-/*
 
     qDebug() << "\ntest for deleteCourse\n";
     qDebug() << this->deleteCourse(course, term->getTermID());
@@ -208,44 +318,7 @@ void QueryControl::test(){
         qDebug() <<json;
     }
 
-    /*
-
-    //test for creating a textbook
-    Textbook *textbook = new Textbook();
-    Chapter *chapter = new Chapter();
-    Section *section = new Section();
-    Course *course = new Course();
-    chapter->addSection(section);
-    textbook->addChapter(chapter);
-
-    qDebug() << createTextbook(textbook);
-    qDebug() << createCourse(course, 1);
-    qDebug() << linkTextbook(textbook, course, 1);
-
-    // test for viewCourses
-    foreach(Course *crs, viewCourses(1)){
-        QJsonObject json = QJsonObject();
-        crs->write(json);
-        qDebug() <<json<< endl;
-    }
-
-    // test for viewCourses
-    foreach(Textbook *tb, viewAllTextbooks(1)){
-        QJsonObject json = QJsonObject();
-        tb->write(json);
-        qDebug() <<json<< endl;
-    }
-
-
-    // test for viewAllTerm
-    foreach(Term *tr, viewAllTerm()){
-        QJsonObject json = QJsonObject();
-        tr->write(json);
-        qDebug() <<json<< endl;
-    }
-
-    qDebug() << resetDatabase();
-*/
+    /**/
 }
 
 /**
@@ -1296,8 +1369,8 @@ bool QueryControl::updateSection(Section *section, qint32 chapterNumber, QString
                             "sectionTitle = :sectionTitle,"
                             "itemID = :itemID"
                          " WHERE "
-                             "ISBN = :ISBN AND"
-                             "chapterNumber = :chapterNumber AND"
+                             "ISBN = :ISBN AND "
+                             "chapterNumber = :chapterNumber AND "
                              "sectionNumber = :sectionNumber;");
     sectionQuery.bindValue(":ISBN", isbn);
     sectionQuery.bindValue(":chapterNumber", chapterNumber);
@@ -1337,8 +1410,8 @@ bool QueryControl::deleteSection(Section *section, qint32 chapterNumber, QString
     QSqlQuery sectionQuery;
 
     sectionQuery.prepare("DELETE FROM Section WHERE "
-                             "ISBN = :ISBN AND"
-                             "chapterNumber = :chapterNumber AND"
+                             "ISBN = :ISBN AND "
+                             "chapterNumber = :chapterNumber AND "
                              "sectionNumber = :sectionNumber;");
     sectionQuery.bindValue(":ISBN", isbn);
     sectionQuery.bindValue(":chapterNumber", chapterNumber);

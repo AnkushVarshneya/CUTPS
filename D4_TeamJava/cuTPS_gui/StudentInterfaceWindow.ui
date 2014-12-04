@@ -35,31 +35,6 @@
      <height>26</height>
     </rect>
    </property>
-   <item>
-    <property name="text">
-     <string>Fall 2014</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Winter 2015</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Early Summer 2015</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Late Summer 2015</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Full Summer 2015</string>
-    </property>
-   </item>
   </widget>
   <widget class="QPushButton" name="addTextbookToCartOption">
    <property name="geometry">
@@ -97,16 +72,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QListWidget" name="textbookListWidget">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>230</y>
-     <width>91</width>
-     <height>231</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QLabel" name="termLabel">
    <property name="geometry">
     <rect>
@@ -120,21 +85,11 @@
     <string>Term</string>
    </property>
   </widget>
-  <widget class="QListView" name="textbookListView">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>260</y>
-     <width>161</width>
-     <height>192</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QTreeView" name="itemsTreeView">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>240</y>
+     <x>50</x>
+     <y>250</y>
      <width>221</width>
      <height>192</height>
     </rect>

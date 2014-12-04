@@ -7,7 +7,7 @@
 #include "EditTextbookFormWindow.h"
 #include "ManageTextbooksInterfaceWindow.h"
 
-class MainInputOutputManager;
+
 
 
 

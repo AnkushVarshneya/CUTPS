@@ -4,18 +4,37 @@
  *
  * Traceability: SS-06 (Part of Server Subsystem) */
 
-
+#include "ServerSerializer.h"
+#include "ServerStorageControl.h"
+#include <QTcpServer>
+#include <QTcpSocket>
 
 #ifndef SERVERLISTENERCONTROL_H
 #define SERVERLISTENERCONTROL_H
 
-class ServerListenerControl
+class ServerListenerControl : public QTcpServer
 {
+    Q_OBJECT
 public:
-    ServerListenerControl();
+    explicit ServerListenerControl(QObject *parent = 0);
+    void startServer();
+    void sendCommand(QJsonObject &json);
+    QJsonObject processCommand(QJsonObject);
+    static ServerListenerControl* getInstance();
 
 private:
+    ServerSerializer serializer;
+    ServerStorageControl storage;
+    static ServerListenerControl* instance;
+    QTcpSocket *tcpConnection;
+    qint64 bytes;
 
+signals:
+
+public slots:
+    void incomingConnection();
+    void readBytes();
+    void disconnected();
 };
 
 #endif // SERVERLISTENERCONTROL_H

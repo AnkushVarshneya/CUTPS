@@ -11,6 +11,7 @@ QDate Term::getStartDate() const{return startDate;}
 QDate Term::getEndDate() const{return endDate;}
 
 qint32 Term::getTermID() const{return termID;}
+QString Term::getTermName() const {return termName;}
 
 void Term::setStartDate(int year, int month, int day){
     startDate.setDate(year, month, day);
@@ -19,6 +20,8 @@ void Term::setEndDate(int year, int month, int day){
     endDate.setDate(year, month, day);
 }
 void Term::setTermID(qint32 a){termID = a;}
+
+void Term::setTermName(QString s){termName = s;}
 
 
 

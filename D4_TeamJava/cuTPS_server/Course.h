@@ -38,6 +38,7 @@ public:
     QString             getInstructor() const;
     QList<Student*>&    getRegisteredStudents();
     QList<Textbook*>&   getRequiredTextbooks();
+    Textbook*           getBook(int i = 0);
 
     //Setters
     void                setCourseCode(QString);

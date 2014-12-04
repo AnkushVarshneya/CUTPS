@@ -28,10 +28,8 @@ void MainInputOutputManager::on_contentManager_clicked()
 
 void MainInputOutputManager::on_student_clicked()
 {
-    studentIOManager = new StudentInputOutputManager();
-    studentInterface = new StudentInterfaceWindow();
-    studentInterface->show();
     mainWindow.hide();
+    studentIOManager = new StudentInputOutputManager();
 }
 
 void MainInputOutputManager::on_manageTextbooks_clicked()

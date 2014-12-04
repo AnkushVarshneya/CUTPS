@@ -8,11 +8,16 @@
  */
 #ifndef CONTENTMANAGEMENTFACADE_H
 #define CONTENTMANAGEMENTFACADE_H
+#include "ContentManagementInputControl.h"
+#include "ContentManagementUpdateControl.h"
 
 class ContentManagementFacade
 {
 public:
     ContentManagementFacade();
+private:
+    ContentManagementInputControl inputControl;
+    ContentManagementUpdateControl updateControl;
 };
 
 #endif // CONTENTMANAGEMENTFACADE_H

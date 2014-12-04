@@ -2085,7 +2085,7 @@ QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getAvalibilit
                             "FROM Textbook "
                             "JOIN PurchasableItem ON "
                                "Textbook.itemID = PurchasableItem.ItemID "
-                            (getAvalibilityOnly)? "WHERE PurchasableItem.avalibility=1 ":""
+                            //(getAvalibilityOnly)? "WHERE PurchasableItem.avalibility=1 ":""
                                "ORDER BY Textbook.textBookTitle ASC, Textbook.ISBN ASC;");
 
     while (textBookQuery.next()){

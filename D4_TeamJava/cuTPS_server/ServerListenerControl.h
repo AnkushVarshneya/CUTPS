@@ -18,7 +18,7 @@ class ServerListenerControl : public QTcpServer
 public:
     explicit ServerListenerControl(QObject *parent = 0);
     void startServer();
-    void sendJson(QJsonObject &json);
+    void sendCommand(QJsonObject &json);
     QJsonObject processCommand(QJsonObject);
     static ServerListenerControl* getInstance();
 

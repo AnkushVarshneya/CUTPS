@@ -7,6 +7,8 @@
  */
 
 #include "QueryControl.h"
+#include "Course.h"
+#include <QList>
 
 #ifndef SERVERSTORAGECONTROL_H
 #define SERVERSTORAGECONTROL_H
@@ -15,6 +17,7 @@ class ServerStorageControl
 {
 public:
     ServerStorageControl();
+    QList<Course*>* retrieveContent(Student*, Term*);
 
 private:
 

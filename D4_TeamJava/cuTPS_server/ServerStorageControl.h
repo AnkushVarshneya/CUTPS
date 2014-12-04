@@ -6,6 +6,8 @@
  *
  */
 
+#include "QueryControl.h"
+
 #ifndef SERVERSTORAGECONTROL_H
 #define SERVERSTORAGECONTROL_H
 
@@ -13,6 +15,10 @@ class ServerStorageControl
 {
 public:
     ServerStorageControl();
+
+private:
+
+
 
 
 };

@@ -6,6 +6,9 @@
  *
  */
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 #ifndef SERVERSERIALIZER_H
 #define SERVERSERIALIZER_H

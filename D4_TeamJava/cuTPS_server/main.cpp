@@ -1,5 +1,6 @@
 #include "QueryControl.h"
 #include "ServerStorageControl.h"
+#include "ServerListenerControl.h"
 #include <QApplication>
 #include <QDebug>
 int main(int argc, char *argv[])
@@ -35,5 +36,13 @@ int main(int argc, char *argv[])
     delete student;
     //----------------------------------------------//
 
-    return 0;
+    /*//------ Testing server ---------------//
+    ServerListenerControl testServer;
+    testServer.startServer();
+    */
+    QCoreApplication a(argc, argv);
+    ServerListenerControl testServ;
+    testServ.startServer();
+    return a.exec();
+
 }

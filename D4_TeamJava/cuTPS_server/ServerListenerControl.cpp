@@ -28,7 +28,7 @@ void    ServerListenerControl::startServer(){
 //and prepares to read bytes from the socket.
 void ServerListenerControl::incomingConnection() {
     qDebug() << "a new connection is available";
-    tcpConnection = CutpsServer::nextPendingConnection();
+    tcpConnection = ServerListenerControl::nextPendingConnection();
     connect(tcpConnection, SIGNAL(readyRead()), this, SLOT(readBytes()));
     connect(tcpConnection, SIGNAL(disconnected()), this, SLOT(disconnected()));
 }
@@ -51,16 +51,9 @@ ServerListenerControl* ServerListenerControl::getInstance(){
     return instance;
 }
 
-void ServerListenerControl::incomingConnection(){
-    qDebug() << "a new connection is available";
-    tcpConnection = ServerListenerControl::nextPendingConnection();
-    connect(tcpConnection, SIGNAL(readyRead()), this, SLOT(readBytes()));
-    connect(tcpConnection, SIGNAL(disconnected()), this, SLOT(disconnected()));
-}
 
 
 void ServerListenerControl::readBytes() {
-
    this->bytes = 0;
    this->bytes = this->tcpConnection->bytesAvailable();
    qDebug() << "in server readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
@@ -80,13 +73,14 @@ void ServerListenerControl::readBytes() {
            QJsonObject json;
            term->write(json);
            resultArray.append(json);
+           qDebug() << json;
        }
-
+       qDeleteAll(termList->begin(), termList->end());
+       delete termList;
        QJsonObject r;
        r["terms:"] = resultArray;
        this->sendCommand(r);
    }
-
 }
 
 //writes a json object to the tcp socket

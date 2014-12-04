@@ -18,12 +18,6 @@ StudentInterfaceWindow::StudentInterfaceWindow(QWidget *parent) :
     ui->viewShoppingCartOption->setIconSize(shopping_img.rect().size());
     ui->viewShoppingCartOption->setFixedSize(shopping_img.rect().size());
 
-
-//    OurStandardItem *treeItem = new OurStandardItem(treeText);
-//    treeMod = new QStandardItemModel(this);
-//    treeMod->appendRow(treeItem);
-//    ui->itemsTreeView->setModel(treeMod);
-
 }
 
 StudentInterfaceWindow::~StudentInterfaceWindow()
@@ -39,9 +33,3 @@ QComboBox*      StudentInterfaceWindow::getTermSelectOption() { return ui->termS
 QSpinBox*       StudentInterfaceWindow::getQuantityOption() { return ui->quantityOption; }
 QAbstractItemView* StudentInterfaceWindow::getCourseTreeView() { return ui->itemsTreeView; }
 
-void StudentInterfaceWindow::on_viewDetailsOption_clicked()
-{
-    qDebug() << "not implemented here anymore as interface itself doesnt have the mode;";
-   // qDebug() << treeMod->itemFromIndex(ui->itemsTreeView->currentIndex())->data();
-
-}

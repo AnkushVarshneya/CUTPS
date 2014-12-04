@@ -12,6 +12,7 @@ StudentInputOutputManager::StudentInputOutputManager()
     connect(studentInterface->getViewDetailsOption(), SIGNAL(clicked()), this, SLOT(on_studentInterface_viewDetailsOptionSelected()));
     connect(studentInterface->getTermSelectOption(), SIGNAL(activated(QString)), this, SLOT(on_studentInterface_termSelected()));
 
+
     //construct the shopping management facade
     this->shopFacade = new ShoppingManagementFacade();
     this->getTerms();
@@ -57,6 +58,10 @@ void StudentInputOutputManager::on_studentInterface_viewCartOptionSelected() {
 }
 
 void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected() {
+
+    qDebug() << courseAndTextbookModel->itemFromIndex( studentInterface->getCourseTreeView()->currentIndex() )->data();
+
+    qDebug() << studentInterface->getCourseTreeView()->currentIndex().data();
 
 }
 

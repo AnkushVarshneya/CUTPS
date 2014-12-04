@@ -31,7 +31,7 @@ public:
 
 
 private slots:
-    void on_viewDetailsOption_clicked();
+
 
 
 private:

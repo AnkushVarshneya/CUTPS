@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     }
 
     qDeleteAll(contentList->begin(),contentList->end());
+    qDeleteAll(nullList->begin(), nullList->end());
     //----------------------------------------------//
 
     return 0;

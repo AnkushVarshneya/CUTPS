@@ -22,6 +22,7 @@ QList<Course*>* ServerStorageControl::retrieveContent(Student* s, Term* t){
     //Check for nulls
     if(s != 0 && t != 0){
         //Retrieves the list courses the student is registered for the given term
+        qDeleteAll(result->begin(),result->end());
         result = q->retrieveStudentCourseList(s->getStudentNum(),t->getTermID());
         //For each Course in the student course list, retrieve the required textbooks
         //And for each required textbook, retrieve the required Chapters, and for each Chapter,
@@ -48,6 +49,4 @@ QList<Course*>* ServerStorageControl::retrieveContent(Student* s, Term* t){
         delete q;
         return result;
     }
-
-
 }

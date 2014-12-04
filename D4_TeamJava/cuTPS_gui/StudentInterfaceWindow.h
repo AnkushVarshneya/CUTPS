@@ -8,6 +8,7 @@
 #include "Textbook.h"
 #include "OurStandardItem.h"
 #include <QStandardItemModel>
+#include <QTreeView>
 
 namespace Ui {
 class StudentInterfaceWindow;
@@ -25,7 +26,7 @@ public:
     QPushButton*        getViewCartOption();
     QComboBox*          getTermSelectOption();
     QSpinBox*           getQuantityOption();
-    QAbstractItemView* getCourseTreeView();
+    QTreeView*          getCourseTreeView();
 
     void                setViewModel(QAbstractItemView *view, QStandardItemModel *mod);
 

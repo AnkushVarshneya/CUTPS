@@ -5,6 +5,16 @@ ServerStorageControl::ServerStorageControl()
 {
 }
 
+
+
+//Retrieves all of the terms that are persistently stored
+QList<Term*>* ServerStorageControl::retrieveAllTerms(){
+    QueryControl* q = new QueryControl();
+    QList<Term*>* resultTermList = q->retrieveTermList();
+    delete q;
+    return resultTermList;
+}
+
 /**
  * @brief ServerStorageControl::retrieveContent
  *  Retrieves a list of courses with textbooks and sub-content for a given student and term
@@ -74,4 +84,8 @@ ShoppingCart* ServerStorageControl::retrieveShoppingCart(Student* stu){
         delete q;
         return 0;
     }
+}
+
+bool ServerStorageControl::updateShoppingCart(Student* student, PurchasableItem* item, qint32 quantity){
+
 }

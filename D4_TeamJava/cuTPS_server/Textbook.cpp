@@ -11,10 +11,7 @@ Textbook::Textbook(QString textTitle, QString auth, QString ed,
 
 //Destructor that also destroys the chapters it has
 Textbook::~Textbook(){
-    QList<Chapter*>::iterator i;
-    for (i = chapters.begin(); i != chapters.end(); i++) {
-        delete *i;
-    }
+    qDeleteAll(chapters.begin(),chapters.end());
 }
 
 

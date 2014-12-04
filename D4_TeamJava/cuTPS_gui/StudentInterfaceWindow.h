@@ -25,7 +25,7 @@ public:
     QPushButton*        getViewCartOption();
     QComboBox*          getTermSelectOption();
     QSpinBox*           getQuantityOption();
-    QStandardItemModel* getCourseTreeView();
+    QAbstractItemView* getCourseTreeView();
 
     void                setViewModel(QAbstractItemView *view, QStandardItemModel *mod);
 
@@ -36,7 +36,7 @@ private slots:
 
 private:
     Ui::StudentInterfaceWindow *ui;
-    QStandardItemModel *treeMod;
+   // QStandardItemModel *treeMod;
 };
 
 #endif // STUDENTINTERFACEWINDOW_H

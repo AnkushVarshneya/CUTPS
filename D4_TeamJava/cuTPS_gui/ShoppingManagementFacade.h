@@ -15,6 +15,7 @@
 #include "Section.h"
 #include "Term.h"
 #include "Student.h"
+#include <QDebug>
 #include <QList>
 
 
@@ -23,6 +24,11 @@ class ShoppingManagementFacade
 public:
     ShoppingManagementFacade();
     QList<Course*>  viewContent(Student *student, Term *term);
+    QList<Term*>    getTermList();
+
+private:
+    QList<Term*>        fakeTerms;
+    QList<Course*>      fakeCourses;
 
 
 };

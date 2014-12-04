@@ -14,7 +14,7 @@
      this->setText(course->getCourseCode());
 
      for (int i = 0; i < course->getRequiredTextbooks().count(); i++) {
-         OurStandardItem *temp = new OurStandardItem(course->getBook(), false);
+         OurStandardItem *temp = new OurStandardItem(course->getBook(), true);
          this->setChild(i, temp);
      }
  }

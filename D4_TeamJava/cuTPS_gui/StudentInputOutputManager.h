@@ -8,12 +8,42 @@
 #define STUDENTINPUTOUTPUTMANAGER_H
 
 #include <QObject>
+#include "StudentInterfaceWindow.h"
+#include "ShoppingManagementFacade.h"
+#include "OurStandardItem.h"
+#include <QAbstractItemView>
+#include "Course.h"
+
 
 class StudentInputOutputManager : public QObject
 {
     Q_OBJECT
 public:
     StudentInputOutputManager();
+
+private:
+    StudentInterfaceWindow  *studentInterface;
+    ShoppingManagementFacade *shopFacade;
+
+    QStandardItemModel      *courseAndTextbookModel;
+    QStandardItemModel      *TextbookAndChildrenModel;
+    void                    setStudentInterfaceViewModel(QAbstractItemView  *view, QStandardItemModel *model);
+    void                    buildCourseAndTextbookModel();
+    void                    buildTextbookAndChildrenModel();
+    QList<Course*>            fakeCourses;
+    Course                   *crs1;
+    Course                   *crs2;
+    void                     getTerms();
+    QList<Term*>             terms;
+    Student                 *fakeStudent;
+
+
+private slots:
+    void    on_studentInterface_addTextbookOptionSelected();
+    void    on_studentInterface_viewDetailsOptionSelected();
+    void    on_studentInterface_viewCartOptionSelected();
+    void    on_studentInterface_termSelected();
+    //QList<Course*>          fakeViewContent(Student *student, Term *term);
 };
 
 #endif // STUDENTINPUTOUTPUTMANAGER_H

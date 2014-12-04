@@ -26,6 +26,12 @@ QString Course::getInstructor()                    const{return instructor;}
 QList<Student*>& Course::getRegisteredStudents()        {return students;}
 QList<Textbook*>& Course::getRequiredTextbooks()        {return requiredTextbooks;}
 
+Textbook* Course::getBook(int i ){
+    return requiredTextbooks.at(i);
+}
+
+
+
 //SETTERS
 void Course::setCourseCode(QString c){courseCode = c;}
 void Course::setCourseSection(QString s){courseSection = s;}
@@ -118,4 +124,3 @@ std::ostream& operator<<(std::ostream& o,  Course& course){
       << "course.getTerm()"
       << "Instructor: ";
 }
-

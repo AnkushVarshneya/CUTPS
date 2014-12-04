@@ -9,23 +9,27 @@
     this->setText(item->getItemTitle());
 }
 
-  OurStandardItem::OurStandardItem(Textbook *textbook) {
+ OurStandardItem::OurStandardItem(Course *course) {
+     this->setData(course->getCourseCode());
+     this->setText(course->getCourseCode());
+
+     for (int i = 0; i < course->getRequiredTextbooks().count(); i++) {
+         OurStandardItem *temp = new OurStandardItem(course->getBook(), true);
+         this->setChild(i, temp);
+     }
+ }
+
+  OurStandardItem::OurStandardItem(Textbook *textbook, bool makeItemsForChildren) {
      this->setData(textbook->getItemID());
      this->setText(textbook->getItemTitle());
 
-//     QList<Chapter*> chapters = textbook->getChapterList();
-//     QList<Chapter*>::iterator it;
-
-//     for(it = chapters.begin(); it != chapters.end(); it++) {
-//         qDebug() << *it;
-//     }
-
-
-     for(int i = 0; i < textbook->getChapterList().count(); i++){
-            qDebug() << textbook->getChapter(i + 1)->getItemTitle(); //i because there is no 0 chapter
-            OurStandardItem *temp = new OurStandardItem(textbook->getChapter(i + 1), this);
-            this->setChild(i, temp);
-     }
+      if (makeItemsForChildren) {
+         for(int i = 0; i < textbook->getChapterList().count(); i++){
+                qDebug() << textbook->getChapter(i + 1)->getItemTitle(); //i because there is no 0 chapter
+                OurStandardItem *temp = new OurStandardItem(textbook->getChapter(i + 1), this);
+                this->setChild(i, temp);
+         }
+      }
  }
 
 

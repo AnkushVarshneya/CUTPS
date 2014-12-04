@@ -49,7 +49,7 @@ void ServerListenerControl::readBytes() {
 }
 
 //writes a json object to the tcp socket
-void ServerListenerControl::sendJson(QJsonObject &json) {
+void ServerListenerControl::sendCommand(QJsonObject &json) {
         QJsonDocument jdoc = QJsonDocument(json);
         bytes = this->tcpConnection->write(jdoc.toJson());
 }

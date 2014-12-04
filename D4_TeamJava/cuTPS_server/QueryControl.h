@@ -36,22 +36,22 @@ public:
     bool createTextbook(Textbook*);
     bool updateTextbook(Textbook*);
     bool deleteTextbook(Textbook*);
-    Textbook* retrieveTextbook(QString);
-    QList<Textbook*>* retrieveTextbookList(Course*, qint32);
+    Textbook* retrieveTextbook(QString, bool);
+    QList<Textbook*>* retrieveTextbookList(Course*, qint32, bool);
 
     // Chapter operations
     bool createChapter(Chapter*, QString);
     bool updateChapter(Chapter*, QString);
     bool deleteChapter(Chapter*, QString);
-    Chapter* retrieveChapter(qint32, QString);
-    QList<Chapter*>* retrieveChapterList(QString);
+    Chapter* retrieveChapter(qint32, QString, bool);
+    QList<Chapter*>* retrieveChapterList(QString, bool);
 
     // Section operations
     bool createSection(Section*, qint32, QString);
     bool updateSection(Section*, qint32, QString);
     bool deleteSection(Section*, qint32, QString);
-    Section* retrieveSection(qint32, qint32, QString);
-    QList<Section*>* retrieveSectionList(qint32, QString);
+    Section* retrieveSection(qint32, qint32, QString, bool);
+    QList<Section*>* retrieveSectionList(qint32, QString, bool);
 
     // linking operations on course
     bool updateCourseTextbookLink(Course*, qint32, Textbook*);
@@ -67,12 +67,15 @@ public:
     bool createPurchasableItem(PurchasableItem*);
     bool updatePurchasableItem(PurchasableItem*);
     bool deletePurchasableItem(PurchasableItem*);
-    QList<PurchasableItem*>* getShoppingCartItemList(Student*);
+    QList<PurchasableItem*>* getShoppingCartItemList(Student*, bool);
+    QList<PurchasableItem*>* getPurchasableItemList(bool);
     bool addPurchasableItemToCart(PurchasableItem*, Student*);
     bool updateOrderContents(PurchasableItem*, Student*);
 
 private:
     QSqlDatabase db;
+    void connectToStorage();
+    void dissconnectFromStorage();
 };
 
 #endif

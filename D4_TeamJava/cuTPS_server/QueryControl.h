@@ -73,6 +73,8 @@ public:
 
 private:
     QSqlDatabase db;
+    void connectToStorage();
+    void dissconnectFromStorage();
 };
 
 #endif

@@ -150,6 +150,8 @@ void QueryControl::test(){
     textbook->setAuthor("i dont know");
     qDebug() << this->updateTextbook(textbook);
 
+    delete(textbook);
+
     qDebug() << "\ntest for retrieveTextbook after updateTextbook";
     textbook = this->retrieveTextbook(isbn);
     json = QJsonObject();
@@ -167,14 +169,17 @@ void QueryControl::test(){
     qDebug() << "\ntest for deleteTextbook";
     qDebug() << this->deleteTextbook(textbook);
 
+    delete(textbook);
+
     qDebug() << "\ntest for retrieveTextbook after deleteTextbook";
     textbook = this->retrieveTextbook(isbn);
-    json = QJsonObject();
-    textbook->write(json);
-    qDebug() <<json;
+    if(textbook!=NULL) {
+        json = QJsonObject();
+        textbook->write(json);
+        qDebug() <<json;
+    }
 
     qDebug() << "\ntest for retrieveTextbookList after deleteTextbook";
-    qDebug() << this->updateTextbook(textbook);
     foreach(Textbook *tbks,  *(this->retrieveTextbookList(course, term->getTermID()))){
         json = QJsonObject();
         tbks->write(json);
@@ -191,7 +196,7 @@ void QueryControl::test(){
 */
 
 
-
+/*
 
     qDebug() << "\ntest for deleteCourse\n";
     qDebug() << this->deleteCourse(course, term->getTermID());
@@ -916,7 +921,7 @@ bool QueryControl::deleteTextbook(Textbook *textbook){
  *  returns a Textbook
  */
 Textbook* QueryControl::retrieveTextbook(QString isbn){
-    Textbook *textbook;
+    Textbook *textbook = NULL;
 
     QSqlQuery textBookQuery;
     textBookQuery.prepare("SELECT Textbook.textBookTitle, "
@@ -1146,7 +1151,7 @@ bool QueryControl::deleteChapter(Chapter *chapter, QString isbn){
  *  returns a Chapter
  */
 Chapter* QueryControl::retrieveChapter(qint32 chapterNumber, QString isbn){
-    Chapter *chapter;
+    Chapter *chapter = NULL;
 
     QSqlQuery chapterQuery;
     chapterQuery.prepare("SELECT Chapter.chapterTitle, "
@@ -1364,7 +1369,7 @@ bool QueryControl::deleteSection(Section *section, qint32 chapterNumber, QString
  *  returns a Section
  */
 Section* QueryControl::retrieveSection(qint32 sectionNumber, qint32 chapterNumber, QString isbn){
-    Section *section;
+    Section *section = NULL;
 
     QSqlQuery sectionQuery;
     sectionQuery.prepare("SELECT section.sectionTitle, "
@@ -1575,7 +1580,7 @@ bool QueryControl::savePaymentInformation(Student *student, PaymentInformation *
  *  Returns PaymentInformation
  */
 PaymentInformation* QueryControl::retrievePaymentInformation(Student *student) {
-    PaymentInformation *info;
+    PaymentInformation *info = NULL;
 
     // get the student payment information
     QSqlQuery PaymentInformationQuery;
@@ -1636,7 +1641,7 @@ PaymentInformation* QueryControl::retrievePaymentInformation(Student *student) {
  *  returns a Student
  */
 Student* QueryControl::retrieveStudent(QString studentNumber){
-    Student *student;
+    Student *student = NULL;
 
     QSqlQuery studentQuery;
     studentQuery.prepare("SELECT Student.studentNumber, "

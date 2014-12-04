@@ -15,7 +15,7 @@ QueryControl::QueryControl() {
         //enable it for on cascade
         QSqlQuery query;
         query.exec("PRAGMA foreign_keys = ON;");
-        test();
+        //test();
     }
 }
 

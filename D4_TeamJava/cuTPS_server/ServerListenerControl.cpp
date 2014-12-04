@@ -7,6 +7,33 @@ ServerListenerControl::ServerListenerControl(QObject *parent):
     connect(this, SIGNAL(newConnection()), SLOT (incomingConnection()));
 }
 
+void    ServerListenerControl::startServer(){
+    int port = 1234;
+    const QString & testaddress = "0.0.0.0";
+    //const QString & testaddress = "1.2.3.4";
+    QHostAddress address = QHostAddress(testaddress);
+    if (!this->listen(address, port)){
+         qDebug() << "Could not start server.";
+         qDebug() << this->errorString();
+    }
+    else{
+         qDebug() << "Server address is: " << address;
+         qDebug() << "Listening on port: " << port << "...";
+    }
+
+
+}
+
+//Slot function that is invoked when the newConnection() signal is recieved. Gets the next pending connection
+//and prepares to read bytes from the socket.
+void ServerListenerControl::incomingConnection() {
+    qDebug() << "a new connection is available";
+    tcpConnection = ServerListenerControl::nextPendingConnection();
+    connect(tcpConnection, SIGNAL(readyRead()), this, SLOT(readBytes()));
+    connect(tcpConnection, SIGNAL(disconnected()), this, SLOT(disconnected()));
+}
+
+
 //Part of Singleton DP, default instance to 0
 ServerListenerControl* ServerListenerControl::instance = 0;
 
@@ -24,16 +51,9 @@ ServerListenerControl* ServerListenerControl::getInstance(){
     return instance;
 }
 
-void ServerListenerControl::incomingConnection(){
-    qDebug() << "a new connection is available";
-    tcpConnection = ServerListenerControl::nextPendingConnection();
-    connect(tcpConnection, SIGNAL(readyRead()), this, SLOT(readBytes()));
-    connect(tcpConnection, SIGNAL(disconnected()), this, SLOT(disconnected()));
-}
 
 
 void ServerListenerControl::readBytes() {
-
    this->bytes = 0;
    this->bytes = this->tcpConnection->bytesAvailable();
    qDebug() << "in server readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
@@ -46,6 +66,21 @@ void ServerListenerControl::readBytes() {
    cmd = jsonDoc.object()["Function:"].toString();
    qDebug() << cmd;
 
+   if(cmd == "retrieveAllTerms()"){
+       QList<Term*>* termList = storage.retrieveAllTerms();
+       QJsonArray resultArray;
+       foreach (Term *term, *termList){
+           QJsonObject json;
+           term->write(json);
+           resultArray.append(json);
+           qDebug() << json;
+       }
+       qDeleteAll(termList->begin(), termList->end());
+       delete termList;
+       QJsonObject r;
+       r["terms:"] = resultArray;
+       this->sendCommand(r);
+   }
 }
 
 //writes a json object to the tcp socket

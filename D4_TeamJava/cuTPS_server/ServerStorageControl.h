@@ -18,8 +18,12 @@ class ServerStorageControl
 {
 public:
     ServerStorageControl();
+
+    QList<Term*>*   retrieveAllTerms();
     QList<Course*>* retrieveContent(Student*, Term*);
-    ShoppingCart* retrieveShoppingCart(Student*);
+    ShoppingCart*   retrieveShoppingCart(Student*);
+    bool            updateShoppingCart(Student*, PurchasableItem*, qint32);
+
 
 private:
 

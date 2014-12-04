@@ -7,11 +7,15 @@
 
 #ifndef SHOPUPDATECONTROL_H
 #define SHOPUPDATECONTROL_H
+#include "ClientCommunicatorManagementControl.h"
 
 class ShopUpdateControl
 {
 public:
     ShopUpdateControl();
+    QList<Term*>* retrieveAllTerms();
+private:
+    ClientCommunicatorManagementControl mc;
 };
 
 #endif // SHOPUPDATECONTROL_H

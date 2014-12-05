@@ -67,19 +67,11 @@ void ServerListenerControl::readBytes() {
    qDebug() << cmd;
 
    if(cmd == "retrieveAllTerms()"){
-       QList<Term*>* termList = storage.retrieveAllTerms();
-       QJsonArray resultArray;
-       foreach (Term *term, *termList){
-           QJsonObject json;
-           term->write(json);
-           resultArray.append(json);
-           qDebug() << json;
-       }
-       qDeleteAll(termList->begin(), termList->end());
-       delete termList;
-       QJsonObject r;
-       r["terms:"] = resultArray;
-       this->sendCommand(r);
+       retrieveAllTerms(jsonDoc.object());
+   }
+
+   else if (cmd == "retrieveContent()"){
+       retrieveContent(jsonDoc.object());
    }
 }
 
@@ -93,4 +85,39 @@ void ServerListenerControl::disconnected(){
     qDebug() << "peer disconected. \n";
 }
 
+void ServerListenerControl::retrieveAllTerms(QJsonObject json){
+    QList<Term*>* termList = storage.retrieveAllTerms();
+    QJsonArray resultArray;
+    foreach (Term *term, *termList){
+        QJsonObject json;
+        term->write(json);
+        resultArray.append(json);
+        qDebug() << json;
+    }
+    qDeleteAll(termList->begin(), termList->end());
+    delete termList;
+    QJsonObject r;
+    r["terms:"] = resultArray;
+    this->sendCommand(r);
+}
+
+void ServerListenerControl::retrieveContent(QJsonObject json){
+    Student stu;
+    stu.read(json["Student"].toObject());
+    Term term;
+    term.read(json["Term"].toObject());
+    QList<Course*>* courseList = storage.retrieveContent(&stu, &term);
+    QJsonArray courseArray;
+    foreach (Course *crs, *courseList){
+        QJsonObject json;
+        crs->write(json);
+        courseArray.append(json);
+        qDebug() << json;
+    }
+    qDeleteAll(courseList->begin(), courseList->end());
+    delete courseList;
+    QJsonObject r;
+    r["courses:"] = courseArray;
+    this->sendCommand(r);
+}
 

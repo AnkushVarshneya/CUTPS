@@ -24,8 +24,6 @@ QueryControl::QueryControl() {
         }
 
         //test();
-
-        qDebug() << "CONS END";
     }
 }
 
@@ -2373,8 +2371,8 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(S
  * @return
  *  returns a list of PurchasableItem
  */
-QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getAvalibilityOnly){
-    QList<PurchasableItem*> *purchasableItems = new QList<PurchasableItem*>();
+QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bool getAvalibilityOnly){
+     QList< QPair<PurchasableItem*,qint32> > *purchasableItems = new QList< QPair<PurchasableItem*,qint32> >();
 
     QSqlQuery textBookQuery;
     QSqlQuery chapterQuery;
@@ -2388,10 +2386,11 @@ QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getAvalibilit
                                     "Textbook.publisher, "
                                     "Textbook.ISBN, "
                                     "Textbook.desc, "
+                                    "Textbook.coverImageLocation, "
                                     "Textbook.itemID, "
                                     "PurchasableItem.price, "
                                     "PurchasableItem.availability, "
-                                    "Textbook.coverImageLocation "
+                                    "ShoppingCart.quantity "
                                 "FROM Textbook "
                                 "JOIN PurchasableItem ON "
                                    "Textbook.itemID = PurchasableItem.ItemID "
@@ -2402,7 +2401,8 @@ QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getAvalibilit
                                    "Chapter.chapterNumber, "
                                    "Chapter.itemID, "
                                    "PurchasableItem.price, "
-                                   "PurchasableItem.availability "
+                                   "PurchasableItem.availability, "
+                                   "ShoppingCart.quantity "
                                "FROM Chapter "
                                "JOIN PurchasableItem ON "
                                    "Chapter.itemID = PurchasableItem.ItemID "
@@ -2413,7 +2413,8 @@ QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getAvalibilit
                                     "section.sectionNumber, "
                                     "section.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability "
+                                    "PurchasableItem.availability, "
+                                    "ShoppingCart.quantity "
                                 "FROM Section "
                                 "JOIN PurchasableItem ON "
                                     "Section.itemID = PurchasableItem.ItemID "
@@ -2427,10 +2428,11 @@ QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getAvalibilit
                                     "Textbook.publisher, "
                                     "Textbook.ISBN, "
                                     "Textbook.desc, "
+                                    "Textbook.coverImageLocation, "
                                     "Textbook.itemID, "
                                     "PurchasableItem.price, "
                                     "PurchasableItem.availability, "
-                                    "Textbook.coverImageLocation "
+                                    "ShoppingCart.quantity "
                                 "FROM Textbook "
                                 "JOIN PurchasableItem ON "
                                    "Textbook.itemID = PurchasableItem.ItemID "
@@ -2442,7 +2444,8 @@ QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getAvalibilit
                                    "Chapter.chapterNumber, "
                                    "Chapter.itemID, "
                                    "PurchasableItem.price, "
-                                   "PurchasableItem.availability "
+                                    "PurchasableItem.availability, "
+                                    "ShoppingCart.quantity "
                                "FROM Chapter "
                                "JOIN PurchasableItem ON "
                                    "Chapter.itemID = PurchasableItem.ItemID "
@@ -2454,7 +2457,8 @@ QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getAvalibilit
                                     "section.sectionNumber, "
                                     "section.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability "
+                                    "PurchasableItem.availability, "
+                                    "ShoppingCart.quantity "
                                 "FROM Section "
                                 "JOIN PurchasableItem ON "
                                     "Section.itemID = PurchasableItem.ItemID "
@@ -2474,25 +2478,26 @@ QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getAvalibilit
                                            textBookQuery.value(textBookQuery.record().indexOf("availability")).toBool());
          textbook->setCoverImageLoc(textBookQuery.value(textBookQuery.record().indexOf("coverImageLocation")).toString());
 
-         purchasableItems->push_back(textbook);
+         purchasableItems->push_back(QPair<PurchasableItem*,qint32>(textbook, textBookQuery.value(textBookQuery.record().indexOf("quantity")).toInt()));
     }
 
 
     while (chapterQuery.next()){
-       purchasableItems->push_back(new Chapter(chapterQuery.value(chapterQuery.record().indexOf("chapterTitle")).toString(),
-                                      chapterQuery.value(chapterQuery.record().indexOf("chapterNumber")).toInt(),
-                                      chapterQuery.value(chapterQuery.record().indexOf("itemID")).toInt(),
-                                      chapterQuery.value(chapterQuery.record().indexOf("price")).toDouble(),
-                                      chapterQuery.value(chapterQuery.record().indexOf("availability")).toBool()));
+         purchasableItems->push_back(QPair<PurchasableItem*,qint32>(new Chapter(chapterQuery.value(chapterQuery.record().indexOf("chapterTitle")).toString(),
+                                                                                chapterQuery.value(chapterQuery.record().indexOf("chapterNumber")).toInt(),
+                                                                                chapterQuery.value(chapterQuery.record().indexOf("itemID")).toInt(),
+                                                                                chapterQuery.value(chapterQuery.record().indexOf("price")).toDouble(),
+                                                                                chapterQuery.value(chapterQuery.record().indexOf("availability")).toBool()),
+         chapterQuery.value(chapterQuery.record().indexOf("quantity")).toInt()));
     }
 
-
     while (sectionQuery.next()){
-       purchasableItems->push_back(new Section(sectionQuery.value(sectionQuery.record().indexOf("sectionTitle")).toString(),
-                                      sectionQuery.value(sectionQuery.record().indexOf("sectionNumber")).toInt(),
-                                      sectionQuery.value(sectionQuery.record().indexOf("itemID")).toInt(),
-                                      sectionQuery.value(sectionQuery.record().indexOf("price")).toDouble(),
-                                      sectionQuery.value(sectionQuery.record().indexOf("availability")).toBool()));
+         purchasableItems->push_back(QPair<PurchasableItem*,qint32>(new Section(sectionQuery.value(sectionQuery.record().indexOf("sectionTitle")).toString(),
+                                                                                sectionQuery.value(sectionQuery.record().indexOf("sectionNumber")).toInt(),
+                                                                                sectionQuery.value(sectionQuery.record().indexOf("itemID")).toInt(),
+                                                                                sectionQuery.value(sectionQuery.record().indexOf("price")).toDouble(),
+                                                                                sectionQuery.value(sectionQuery.record().indexOf("availability")).toBool()),
+         sectionQuery.value(sectionQuery.record().indexOf("quantity")).toInt()));
     }
 
     return purchasableItems;

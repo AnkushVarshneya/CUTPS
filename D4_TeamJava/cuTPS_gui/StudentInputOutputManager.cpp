@@ -3,6 +3,7 @@
 StudentInputOutputManager::StudentInputOutputManager()
 {
     courseAndTextbookModel = new QStandardItemModel(this);
+    chaptersAndSectionsModel = new QStandardItemModel(this);
     studentInterface = new StudentInterfaceWindow();
     studentInterface->show();
 
@@ -35,6 +36,7 @@ void    StudentInputOutputManager::getTerms() {
 
 void StudentInputOutputManager::buildCourseAndTextbookModel() {
     courseAndTextbookModel->clear();
+    chaptersAndSectionsModel->clear();
     OurStandardItem *temp;
     QList<Course*>::iterator i;
     for (i = fakeCourses.begin(); i != fakeCourses.end(); i++) {
@@ -59,9 +61,18 @@ void StudentInputOutputManager::on_studentInterface_viewCartOptionSelected() {
 
 void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected() {
 
-    qDebug() << courseAndTextbookModel->itemFromIndex( studentInterface->getCourseTreeView()->currentIndex() )->data();
+    qDebug() << "wut: " << courseAndTextbookModel->itemFromIndex( studentInterface->getCourseTreeView()->currentIndex() )->data();
+    qDebug() << "thing selected: " << studentInterface->getCourseTreeView()->currentIndex().data();
 
-    qDebug() << studentInterface->getCourseTreeView()->currentIndex().data();
+    chaptersAndSectionsModel->clear();
+
+    chaptersAndSectionsModel->appendRow( courseAndTextbookModel->itemFromIndex( studentInterface->getCourseTreeView()->currentIndex() )->child(0));
+    qDebug() << "testing second model";
+    qDebug() <<  courseAndTextbookModel->itemFromIndex(studentInterface->getCourseTreeView()->currentIndex())->text();
+    qDebug() << "second model row count: " << chaptersAndSectionsModel->rowCount();
+
+//    textbookDetailsWindow = new TextbookDetailsWindow();
+//    textbookDetailsWindow->show();
 
 }
 
@@ -73,6 +84,7 @@ void StudentInputOutputManager::on_studentInterface_termSelected() {
 
     buildCourseAndTextbookModel();
     this->setStudentInterfaceViewModel(studentInterface->getCourseTreeView(), courseAndTextbookModel);
+    this->setStudentInterfaceViewModel(studentInterface->getChaptersAndSectionsTreeView(), chaptersAndSectionsModel);
 
     //hide chapters and sections in the course tree view
     for (int i = 0; i < courseAndTextbookModel->rowCount(); i ++) {
@@ -87,6 +99,5 @@ void StudentInputOutputManager::on_studentInterface_termSelected() {
                 }
             }
     }
-
 
 }

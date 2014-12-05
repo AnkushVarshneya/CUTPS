@@ -2,6 +2,9 @@
 
 ShoppingManagementFacade::ShoppingManagementFacade()
 {
+    shopUpdateControl = new ShopUpdateControl();
+
+
     //fake terms for testing
     int year, month, day;
     year = 2014;
@@ -65,8 +68,7 @@ ShoppingManagementFacade::ShoppingManagementFacade()
 }
 
 QList<Term*>    ShoppingManagementFacade::getTermList() {
-    return fakeTerms;
-
+    return *shopUpdateControl->retrieveAllTerms();
 
 }
 

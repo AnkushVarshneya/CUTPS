@@ -8,6 +8,7 @@
 #define STUDENTINPUTOUTPUTMANAGER_H
 
 #include <QObject>
+#include "TextbookDetailsWindow.h"
 #include "StudentInterfaceWindow.h"
 #include "ShoppingManagementFacade.h"
 #include "OurStandardItem.h"
@@ -24,9 +25,10 @@ public:
 private:
     StudentInterfaceWindow  *studentInterface;
     ShoppingManagementFacade *shopFacade;
+    TextbookDetailsWindow   *textbookDetailsWindow;
 
     QStandardItemModel      *courseAndTextbookModel;
-    QStandardItemModel      *TextbookAndChildrenModel;
+    QStandardItemModel      *chaptersAndSectionsModel;
     void                    setStudentInterfaceViewModel(QAbstractItemView  *view, QStandardItemModel *model);
     void                    buildCourseAndTextbookModel();
     void                    buildTextbookAndChildrenModel();

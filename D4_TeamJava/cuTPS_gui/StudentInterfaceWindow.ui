@@ -85,7 +85,7 @@
     <string>Term</string>
    </property>
   </widget>
-  <widget class="QTreeView" name="itemsTreeView">
+  <widget class="QListView" name="itemsListView">
    <property name="geometry">
     <rect>
      <x>10</x>

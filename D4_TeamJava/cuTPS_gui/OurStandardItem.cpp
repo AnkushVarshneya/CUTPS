@@ -32,6 +32,23 @@
       }
  }
 
+  OurStandardItem::OurStandardItem(Textbook *textbook, Course *course, bool makeItemsForChildren) {
+      this->setData(textbook->getItemID());
+      //this->setText(textbook->getItemTitle());
+    QString  tempStr = course->getCourseCode();
+    tempStr.append(": ");
+    tempStr.append(textbook->getItemTitle());
+    this->setText(tempStr);
+
+       if (makeItemsForChildren) {
+          for(int i = 0; i < textbook->getChapterList().count(); i++){
+                 qDebug() << textbook->getChapter(i + 1)->getItemTitle(); //i because there is no 0 chapter
+                 OurStandardItem *temp = new OurStandardItem(textbook->getChapter(i + 1), this);
+                 this->setChild(i, temp);
+          }
+       }
+  }
+
 
 
   OurStandardItem::OurStandardItem(Chapter *chapter, OurStandardItem *parent) {

@@ -31,6 +31,7 @@ QPushButton*    StudentInterfaceWindow::getViewDetailsOption() {return ui->viewD
 QPushButton*    StudentInterfaceWindow::getViewCartOption() { return ui->viewShoppingCartOption; }
 QComboBox*      StudentInterfaceWindow::getTermSelectOption() { return ui->termSelectOption;  }
 QSpinBox*       StudentInterfaceWindow::getQuantityOption() { return ui->quantityOption; }
-QTreeView* StudentInterfaceWindow::getCourseTreeView() { return ui->itemsTreeView; }
+//QTreeView* StudentInterfaceWindow::getCourseTreeView() { return ui->itemsTreeView; }
+QListView*      StudentInterfaceWindow::getCourseView() {return ui->itemsListView; }
 QTreeView* StudentInterfaceWindow::getChaptersAndSectionsTreeView() { return ui->chaptersAndSectionsTreeView; }
 

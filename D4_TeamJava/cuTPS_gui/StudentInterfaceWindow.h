@@ -9,6 +9,7 @@
 #include "OurStandardItem.h"
 #include <QStandardItemModel>
 #include <QTreeView>
+#include <QListView>
 
 namespace Ui {
 class StudentInterfaceWindow;
@@ -28,6 +29,7 @@ public:
     QSpinBox*           getQuantityOption();
     QTreeView*          getCourseTreeView();
     QTreeView*          getChaptersAndSectionsTreeView();
+    QListView*          getCourseView();
 
     void                setViewModel(QAbstractItemView *view, QStandardItemModel *mod);
 

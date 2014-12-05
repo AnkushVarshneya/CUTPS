@@ -60,7 +60,6 @@ int main(int argc, char *argv[])
     }
 
     ShoppingCart* testShoppingCart = test.retrieveShoppingCart(&testStu);
-    qDebug() << testShoppingCart->getItems().empty();
     for(int i = 0; i < testShoppingCart->getItems().size() ; i++){
         QJsonObject json;
         testShoppingCart->getItems()[i].first->write(json);

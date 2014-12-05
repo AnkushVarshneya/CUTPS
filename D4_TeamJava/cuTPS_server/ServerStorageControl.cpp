@@ -103,22 +103,17 @@ ShoppingCart* ServerStorageControl::retrieveShoppingCart(Student* stu){
  */
 bool ServerStorageControl::updateShoppingCart(Student* student, PurchasableItem* item, qint32 quantity){
     //Check for null
-    qDebug() << "In Update Shopping Cart1 ";
     QueryControl* q = new QueryControl();
     if(student != 0 || item != 0){
-
         for (int i = 0; i < quantity; i++){
             if(!q->addPurchasableItemToCart(item, student)){
                 delete q;
-                qDebug() << "In Update Shopping Cart3 ";
                 return false;
             }
         }
         delete q;
-        qDebug() << "In Update Shopping Cart4";
         return true;
     }
     delete q;
-    qDebug() << "In Update Shopping Cart5 ";
     return false;
 }

@@ -106,6 +106,10 @@ void ServerListenerControl::retrieveAllTerms(QJsonObject json){
     this->sendCommand(r);
 }
 
+//Gets the student and term arguments converted from json
+//Uses the server storage class to retrieve the content ordered by
+//The student's registered courses for a given term
+//Sends back the information to client using sendCommand()
 void ServerListenerControl::retrieveContent(QJsonObject json){
     Student stu;
     stu.read(json["Student"].toObject());
@@ -126,12 +130,36 @@ void ServerListenerControl::retrieveContent(QJsonObject json){
     this->sendCommand(r);
 }
 
+//Calls the ListenerControl's storage class to retrieve the shopping cart
+//With the passed in student argument converted from json
+//Writes the resultshopping cart to json to send back to the client
 void ServerListenerControl::retrieveShoppingCart(QJsonObject json){
-
+    Student stu;
+    stu.read(json["student"].toObject());
+    ShoppingCart* resultShoppingCart = storage.retrieveShoppingCart(&stu);
+    QJsonObject cartObject;
+    resultShoppingCart->write(cartObject);
+    QJsonObject r;
+    r["shoppingcart"] = cartObject;
+    this->sendCommand(r);
 }
 
-void ServerListenerControl::updateShoppingCart(QJsonObject){
+//Calls the ListenerControl's storage class to update the shopping cart
+//With the passed in json arguments
+//Returns back to client a sucess flag
+void ServerListenerControl::updateShoppingCart(QJsonObject json){
+    Student stu;
+    PurchasableItem* item;
+    qint32 quantity;
 
+    stu.read(json["student"].toObject());
+    item->read(json["purchasableItem"].toObject());
+    quantity = json["quantity"].toDouble();
+
+    bool success = storage.updateShoppingCart(&stu, item, quantity);
+    QJsonObject r;
+    r["success"] = success;
+    this->sendCommand(r);
 }
 
 

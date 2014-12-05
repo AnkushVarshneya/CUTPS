@@ -40,6 +40,9 @@ int main(int argc, char *argv[])
         crs->write(json);
         qDebug() <<json;
     }
+
+    qDebug() << "Testing for adding stuff to shopping cart and retrieving the shopping cart";
+
     return a.exec();
 
 }

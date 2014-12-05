@@ -57,3 +57,44 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *st
     }
     return result;
 }
+
+ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student* stu){
+    QJsonObject api_server_call;
+    QString functionCall = "retrieveShoppingCart()";
+    api_server_call["Function:"] = functionCall;
+
+    QJsonObject studentObject;
+    stu->write(studentObject);
+    api_server_call["student"] = studentObject;
+
+    requestManager.send(api_server_call);
+    requestManager.getTcp()->waitForReadyRead();
+    QJsonDocument res = requestManager.getResult();
+
+    ShoppingCart* result = new ShoppingCart();
+    result->read(res.object()["shoppingcart"].toObject());
+    return result;
+}
+
+bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, PurchasableItem *item, qint32 quantity){
+    QJsonObject api_server_call;
+    QString functionCall = "updateShoppingCart()";
+    api_server_call["Function:"] = functionCall;
+
+    QJsonObject studentObject;
+    stu->write(studentObject);
+    api_server_call["student"] = studentObject;
+
+    QJsonObject itemObject;
+    item->write(itemObject);
+    api_server_call["purchasableItem"] = itemObject;
+
+    api_server_call["quantity"] = quantity;
+
+    requestManager.send(api_server_call);
+    requestManager.getTcp()->waitForReadyRead();
+    QJsonDocument res = requestManager.getResult();
+
+    bool result = res.object()["success"].toBool();
+    return result;
+}

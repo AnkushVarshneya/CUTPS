@@ -76,5 +76,5 @@ QList<Course*>  ShoppingManagementFacade::viewContent(Student *student, Term *te
     qDebug() << "view content called with student: " << student->getStudentNum();
     qDebug() << "and term: " << term->getTermName();
 
-    return fakeCourses;
+    return *shopUpdateControl->retrieveContent(student, term);
 }

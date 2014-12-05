@@ -7,6 +7,7 @@
 using namespace std;
 int main(int argc, char *argv[])
 {
+    /*
     QueryControl w;
     ServerStorageControl s;
 
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
         crs->write(json);
         qDebug() <<json;
     }
+    */
 
     //-------------Testing updateShoppingCart() and retrieveShoppingCart() functions----
     /*
@@ -46,6 +48,7 @@ int main(int argc, char *argv[])
         }
     }
     */
+    /*
     ShoppingCart* testShoppingCart = s.retrieveShoppingCart(student);
     qDebug() << testShoppingCart->getItems().empty();
     for(int i = 0; i < testShoppingCart->getItems().size() ; i++){
@@ -56,11 +59,11 @@ int main(int argc, char *argv[])
         qDebug() << json;
         qDebug() << " Quantity: " + str;
     }
+    */
 
 
 
-
-
+    /*
     qDeleteAll(contentList->begin(),contentList->end());
     delete contentList;
     qDeleteAll(nullList->begin(), nullList->end());
@@ -68,9 +71,10 @@ int main(int argc, char *argv[])
     qDeleteAll(termlist->begin(),termlist->end());
     delete termlist;
     delete student;
+
     //----------------------------------------------//
 
-    /*//------ Testing server ---------------//
+    //------ Testing server ---------------//
     ServerListenerControl testServer;
     testServer.startServer();
     */

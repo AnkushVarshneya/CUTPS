@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
         foreach(Textbook* text, textbookContent){
             qint32 i = 1;
             test.updateShoppingCart(&testStu,(PurchasableItem*)text,i);
+            /*
             //Adding 1 chapter for each chapter in the textbooks
             foreach(Chapter* chap, text->getChapterList()){
                 test.updateShoppingCart(&testStu,(PurchasableItem*)chap,i);
@@ -56,6 +57,7 @@ int main(int argc, char *argv[])
                     test.updateShoppingCart(&testStu,(PurchasableItem*)sec,i);
                 }
             }
+            */
         }
     }
 

@@ -158,7 +158,8 @@ void ServerListenerControl::updateShoppingCart(QJsonObject json){
     if(itemObject.contains("isbn")){
         Textbook* newTextbook = new Textbook();
         newTextbook->read(itemObject);
-        bool success = storage.updateShoppingCart(&stu, item, quantity);
+        qDebug() << itemObject;
+        bool success = storage.updateShoppingCart(&stu, newTextbook, quantity);
         QJsonObject r;
         r["success"] = success;
         this->sendCommand(r);
@@ -166,7 +167,7 @@ void ServerListenerControl::updateShoppingCart(QJsonObject json){
     else if(itemObject.contains("chapterNumber")){
         Chapter* newChapter = new Chapter();
         newChapter->read(itemObject);
-        bool success = storage.updateShoppingCart(&stu, item, quantity);
+        bool success = storage.updateShoppingCart(&stu, newChapter, quantity);
         QJsonObject r;
         r["success"] = success;
         this->sendCommand(r);
@@ -174,7 +175,7 @@ void ServerListenerControl::updateShoppingCart(QJsonObject json){
     else if(itemObject.contains("sectionNumber")){
         Section* newSection = new Section();
         newSection->read(itemObject);
-        bool success = storage.updateShoppingCart(&stu, item, quantity);
+        bool success = storage.updateShoppingCart(&stu,newSection, quantity);
         QJsonObject r;
         r["success"] = success;
         this->sendCommand(r);

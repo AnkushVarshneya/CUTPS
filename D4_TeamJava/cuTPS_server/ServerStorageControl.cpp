@@ -106,7 +106,7 @@ bool ServerStorageControl::updateShoppingCart(Student* student, PurchasableItem*
     qDebug() << "In Update Shopping Cart1 ";
     QueryControl* q = new QueryControl();
     if(student != 0 || item != 0){
-        qDebug() << "In Update Shopping Cart2 ";
+
         for (int i = 0; i < quantity; i++){
             if(!q->addPurchasableItemToCart(item, student)){
                 delete q;

@@ -151,15 +151,35 @@ void ServerListenerControl::updateShoppingCart(QJsonObject json){
     Student stu;
     PurchasableItem* item;
     qint32 quantity;
-
     stu.read(json["student"].toObject());
-    item->read(json["purchasableItem"].toObject());
     quantity = json["quantity"].toDouble();
-
-    bool success = storage.updateShoppingCart(&stu, item, quantity);
-    QJsonObject r;
-    r["success"] = success;
-    this->sendCommand(r);
+    qDebug() << json;
+    QJsonObject itemObject = json["purchasableItem"].toObject();
+    if(itemObject.contains("isbn")){
+        Textbook* newTextbook = new Textbook();
+        newTextbook->read(itemObject);
+        qDebug() << itemObject;
+        bool success = storage.updateShoppingCart(&stu, newTextbook, quantity);
+        QJsonObject r;
+        r["success"] = success;
+        this->sendCommand(r);
+    }
+    else if(itemObject.contains("chapterNumber")){
+        Chapter* newChapter = new Chapter();
+        newChapter->read(itemObject);
+        bool success = storage.updateShoppingCart(&stu, newChapter, quantity);
+        QJsonObject r;
+        r["success"] = success;
+        this->sendCommand(r);
+    }
+    else if(itemObject.contains("sectionNumber")){
+        Section* newSection = new Section();
+        newSection->read(itemObject);
+        bool success = storage.updateShoppingCart(&stu,newSection, quantity);
+        QJsonObject r;
+        r["success"] = success;
+        this->sendCommand(r);
+    }
 }
 
 

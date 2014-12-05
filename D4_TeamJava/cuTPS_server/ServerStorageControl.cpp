@@ -37,15 +37,15 @@ QList<Course*>* ServerStorageControl::retrieveContent(Student* s, Term* t){
         for(int courseIndex = 0; courseIndex < result->size(); courseIndex++){
             QList<Textbook*>* textbookList = q->retrieveTextbookList((*result)[courseIndex],
                                                                      (*result)[courseIndex]->getTerm()->getTermID(),
-                                                                     false);
+                                                                     true);
              //And for each required textbook, retrieve the required Chapters, and for each Chapter,
             foreach (Textbook* t, *textbookList){
-                QList<Chapter*>* cList =  q->retrieveChapterList(t->getISBN(),false);
+                QList<Chapter*>* cList =  q->retrieveChapterList(t->getISBN(),true);
                 t->getChapterList() = *cList;
                 delete cList;
                 //Retrieve the required Chapter sections.
                 foreach (Chapter* c, t->getChapterList()){
-                    QList<Section*>* sList = q->retrieveSectionList(c->getChapterNumber(),t->getISBN(),false);
+                    QList<Section*>* sList = q->retrieveSectionList(c->getChapterNumber(),t->getISBN(),true);
                     c->getChapterSections() = *sList;
                     delete sList;
                 }
@@ -75,7 +75,7 @@ ShoppingCart* ServerStorageControl::retrieveShoppingCart(Student* stu){
     QList< QPair<PurchasableItem*,qint32> >* itemResult;
     ShoppingCart* shoppingCartResult = new ShoppingCart();
     if (stu != 0){
-        itemResult = q->getShoppingCartItemList(stu,false);
+        itemResult = q->getShoppingCartItemList(stu,true);
         shoppingCartResult->getItems() = *itemResult;
         delete q;
         itemResult->clear();

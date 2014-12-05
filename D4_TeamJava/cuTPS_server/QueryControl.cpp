@@ -23,7 +23,7 @@ QueryControl::QueryControl() {
             qDebug() <<  this->resetDatabase();
         }
 
-        test();
+        //test();
     }
 }
 

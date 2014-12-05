@@ -94,9 +94,7 @@ void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected()
 
     chaptersAndSectionsModel->clear();
     chaptersAndSectionsModel->appendRow( courseAndTextbookModel->itemFromIndex( studentInterface->getCourseView()->currentIndex() )->child(0));
-    qDebug() << "testing second model";
-    qDebug() <<  courseAndTextbookModel->itemFromIndex(studentInterface->getCourseView()->currentIndex())->text();
-    qDebug() << "second model row count: " << chaptersAndSectionsModel->rowCount();
+
 
     QVariant item_id = courseAndTextbookModel->itemFromIndex(studentInterface->getCourseView()->currentIndex())->data();
 
@@ -129,7 +127,6 @@ void StudentInputOutputManager::on_studentInterface_termSelected()
 
     buildCourseAndTextbookModel();
     this->setStudentInterfaceViewModel(studentInterface->getCourseView(), courseAndTextbookModel);
-    this->setStudentInterfaceViewModel(studentInterface->getChaptersAndSectionsTreeView(), chaptersAndSectionsModel);
 
     //hide chapters and sections in the course tree view
 //    for (int i = 0; i < courseAndTextbookModel->rowCount(); i ++) {

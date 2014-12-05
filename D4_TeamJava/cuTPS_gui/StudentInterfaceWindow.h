@@ -28,7 +28,7 @@ public:
     QComboBox*          getTermSelectOption();
     QSpinBox*           getQuantityOption();
     QTreeView*          getCourseTreeView();
-    QTreeView*          getChaptersAndSectionsTreeView();
+    //QTreeView*          getChaptersAndSectionsTreeView();
     QListView*          getCourseView();
 
     void                setViewModel(QAbstractItemView *view, QStandardItemModel *mod);

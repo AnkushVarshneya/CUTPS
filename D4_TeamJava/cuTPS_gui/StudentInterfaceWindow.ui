@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>613</width>
-    <height>484</height>
+    <width>468</width>
+    <height>357</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="viewShoppingCartOption">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>270</x>
      <y>20</y>
      <width>141</width>
      <height>81</height>
@@ -89,33 +89,23 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>240</y>
-     <width>221</width>
-     <height>81</height>
+     <y>220</y>
+     <width>411</width>
+     <height>71</height>
     </rect>
    </property>
   </widget>
   <widget class="QPushButton" name="viewDetailsOption">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>190</y>
+     <x>10</x>
+     <y>300</y>
      <width>141</width>
      <height>27</height>
     </rect>
    </property>
    <property name="text">
     <string>View Content Details</string>
-   </property>
-  </widget>
-  <widget class="QTreeView" name="chaptersAndSectionsTreeView">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>290</y>
-     <width>121</width>
-     <height>121</height>
-    </rect>
    </property>
   </widget>
  </widget>

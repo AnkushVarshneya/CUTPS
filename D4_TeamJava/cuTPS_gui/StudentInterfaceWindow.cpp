@@ -18,6 +18,7 @@ StudentInterfaceWindow::StudentInterfaceWindow(QWidget *parent) :
     ui->viewShoppingCartOption->setIconSize(shopping_img.rect().size());
     ui->viewShoppingCartOption->setFixedSize(shopping_img.rect().size());
 
+
 }
 
 StudentInterfaceWindow::~StudentInterfaceWindow()
@@ -33,5 +34,5 @@ QComboBox*      StudentInterfaceWindow::getTermSelectOption() { return ui->termS
 QSpinBox*       StudentInterfaceWindow::getQuantityOption() { return ui->quantityOption; }
 //QTreeView* StudentInterfaceWindow::getCourseTreeView() { return ui->itemsTreeView; }
 QListView*      StudentInterfaceWindow::getCourseView() {return ui->itemsListView; }
-QTreeView* StudentInterfaceWindow::getChaptersAndSectionsTreeView() { return ui->chaptersAndSectionsTreeView; }
+//QTreeView* StudentInterfaceWindow::getChaptersAndSectionsTreeView() { return ui->chaptersAndSectionsTreeView; }
 

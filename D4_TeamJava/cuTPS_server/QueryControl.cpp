@@ -45,6 +45,7 @@ QueryControl::~QueryControl() {
  * @brief QueryControl::test
  *  test cases
  */
+/*
 void QueryControl::test(){
     QJsonObject json;
 
@@ -374,9 +375,9 @@ void QueryControl::test(){
     }
 
 
-    /**/
-}
 
+}
+*/
 /**
  * @brief QueryControl::resetDatabase
  *  Reset The Schema using QueryControl::resetSchema()
@@ -473,50 +474,133 @@ bool QueryControl::resetDatabase() {
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
                                         "VALUES (12,12.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
 
-    // insert default Textbook(s)
-    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
-                                        "VALUES ('111-1-11-111111-0','./COMP3004.png','COMP3004 course pack is required!','Author of COMP3004','COMP3004 A Course Pack','Carleton Course Pack Inc.','1st',1);");    //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
-                                        "VALUES ('222-2-22-222222-0','./COMP3804.png','COMP3804 course pack is required!','Author of COMP3804','COMP3804 A Course Pack','Carleton Course Pack Inc.','1st',7);");    //qDebug() << query.lastQuery() << query.lastError();
-    /*noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
-                                        "VALUES ('333-3-33-333333-0','./COMP3004.png','COMP3004 course pack is required!','Author of COMP3004','COMP3004 A Course Pack','Carleton Course Pack Inc.','1st',1);");    //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
-                                        "VALUES ('444-4-44-444444-0','./COMP3804.png','COMP3804 course pack is required!','Author of COMP3804','COMP3804 A Course Pack','Carleton Course Pack Inc.','1st',7);");    //qDebug() << query.lastQuery() << query.lastError();
+    // insert default Textbook(s), Chapter(s), Section(s)
 
-    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
-                                        "VALUES ('555-5-55-555555-0','./COMP3004.png','COMP3004 course pack is required!','Author of COMP3004','COMP3004 A Course Pack','Carleton Course Pack Inc.','1st',1);");    //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
-                                        "VALUES ('666-6-66-666666-0','./COMP3804.png','COMP3804 course pack is required!','Author of COMP3804','COMP3804 A Course Pack','Carleton Course Pack Inc.','1st',7);");    //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
-                                        "VALUES ('777-7-77-777777-0','./COMP3004.png','COMP3004 course pack is required!','Author of COMP3004','COMP3004 A Course Pack','Carleton Course Pack Inc.','1st',1);");    //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
-                                        "VALUES ('888-8-88-888888-0','./COMP3804.png','COMP3804 course pack is required!','Author of COMP3804','COMP3804 A Course Pack','Carleton Course Pack Inc.','1st',7);");    //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Textbook (ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition,itemID) "
-                                        "VALUES ('999-9-99-999999-0','./COMP3004.png','COMP3004 course pack is required!','Author of COMP3004','COMP3004 A Course Pack','Carleton Course Pack Inc.','1st',1);");    //qDebug() << query.lastQuery() << query.lastError();
-*/
-    // insert default Chapter(s)
-    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
-                                        "VALUES ('111-1-11-111111-0',1,'Intro To COMP3004',2);");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
-                                        "VALUES ('111-1-11-111111-0',2,'COMP3004 Midterm',5);");                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
-                                        "VALUES ('222-2-22-222222-0',1,'Intro To COMP3804',8);");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
-                                        "VALUES ('222-2-22-222222-0',2,'COMP3804 Midterm',11);");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    // Textbook#1
+    noError = noError && query.exec("INSERT INTO Textbook (itemID,ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition) "
+                                        "VALUES (1,'111-1-11-111111-0','./COMP3004.png','COMP3004 course pack is required!','Author of COMP3004','COMP3004 A Course Pack','Carleton Course Pack Inc.','1st');");    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (2,'111-1-11-111111-0',1,'Intro To COMP3004');");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (3,'111-1-11-111111-0',1,1,'Pre-reqs for COMP3004');");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (4,'111-1-11-111111-0',1,2,'Review needed information for COMP3004');");                                                                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (5,'111-1-11-111111-0',2,'COMP3004 Midterm');");                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (6,'111-1-11-111111-0',2,1,'COMP3004 Midterm mark break-up');");                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
 
-    // insert default Section(s)
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('111-1-11-111111-0',1,1,'Pre-reqs for COMP3004',3);");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('111-1-11-111111-0',1,2,'Review needed information for COMP3004',4);");                                                                                            //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('111-1-11-111111-0',2,1,'COMP3004 Midterm mark break-up',6);");                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('222-2-22-222222-0',1,1,'Pre-reqs for COMP3804',9);");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('222-2-22-222222-0',1,2,'Review needed information for COMP3804',10);");                                                                                           //qDebug() << query.lastQuery() << query.lastError();
-    noError = noError && query.exec("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
-                                        "VALUES ('222-2-22-222222-0',2,1,'COMP3804 Midterm mark break-up',12);");                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    // Textbook#2
+    noError = noError && query.exec("INSERT INTO Textbook (itemID,ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition) "
+                                        "VALUES (7,'222-2-22-222222-0','./COMP3804.png','COMP3804 course pack is required!','Author of COMP3804','COMP3804 A Course Pack','Carleton Course Pack Inc.','1st');");    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (8,'222-2-22-222222-0',1,'Intro To COMP3804');");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (9,'222-2-22-222222-0',1,1,'Pre-reqs for COMP3804');");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (10,'222-2-22-222222-0',1,2,'Review needed information for COMP3804');");                                                                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (11,'222-2-22-222222-0',2,'COMP3804 Midterm');");                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (12,'222-2-22-222222-0',2,1,'COMP3804 Midterm mark break-up');");                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+
+    // Textbook#3
+    noError = noError && query.exec("INSERT INTO Textbook (itemID,ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition) "
+                                        "VALUES (12,'333-3-33-333333-0','./COMP3000.png','COMP3000 course pack is required!','Author of COMP3000','COMP3000 A Course Pack','Carleton Course Pack Inc.','1st');");    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (14,'333-3-33-333333-0',1,'Intro To COMP3000');");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (15,'333-3-33-333333-0',1,1,'Pre-reqs for COMP3000');");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (16,'333-3-33-333333-0',1,2,'Review needed information for COMP3000');");                                                                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (17,'333-3-33-333333-0',2,'COMP3000 Midterm');");                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (18,'333-3-33-333333-0',2,1,'COMP3000 Midterm mark break-up');");
+
+    // Textbook#4
+    noError = noError && query.exec("INSERT INTO Textbook (itemID,ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition) "
+                                        "VALUES (19,'444-4-44-444444-0','./COMP3203.png','COMP3203 course pack is required!','Author of COMP3203','COMP3203 A Course Pack','Carleton Course Pack Inc.','1st');");    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (20,'444-4-44-444444-0',1,'Intro To COMP3203');");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (21,'444-4-44-444444-0',1,1,'Pre-reqs for COMP3203');");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (22,'444-4-44-444444-0',1,2,'Review needed information for COMP3203');");                                                                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (23,'444-4-44-444444-0',2,'COMP3203 Midterm');");                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (24,'444-4-44-444444-0',2,1,'COMP3203 Midterm mark break-up');");
+
+    // Textbook#5
+    noError = noError && query.exec("INSERT INTO Textbook (itemID,ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition) "
+                                        "VALUES (25,'555-5-55-555555-0','./COMP3005.png','COMP3005 course pack is required!','Author of COMP3005','COMP3005 A Course Pack','Carleton Course Pack Inc.','1st');");    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (26,'555-5-55-555555-0',1,'Intro To COMP3005');");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (27,'555-5-55-555555-0',1,1,'Pre-reqs for COMP3005');");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (28,'555-5-55-555555-0',1,2,'Review needed information for COMP3005');");                                                                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (29,'555-5-55-555555-0',2,'COMP3005 Midterm');");                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (30,'555-5-55-555555-0',2,1,'COMP3005 Midterm mark break-up');");
+
+    // Textbook#6
+    noError = noError && query.exec("INSERT INTO Textbook (itemID,ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition) "
+                                        "VALUES (31,'666-6-66-666666-0','./COMP3007.png','COMP3007 course pack is required!','Author of COMP3007','COMP3007 A Course Pack','Carleton Course Pack Inc.','1st');");    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (32,'666-6-66-666666-0',1,'Intro To COMP3007');");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (33,'666-6-66-666666-0',1,1,'Pre-reqs for COMP3007');");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (34,'666-6-66-666666-0',1,2,'Review needed information for COMP3007');");                                                                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (35,'666-6-66-666666-0',2,'COMP3007 Midterm');");                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (36,'666-6-66-666666-0',2,1,'COMP3007 Midterm mark break-up');");
+
+    // Textbook#7
+    noError = noError && query.exec("INSERT INTO Textbook (itemID,ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition) "
+                                        "VALUES (37,'777-7-77-777777-0','./COMP3008.png','COMP3008 course pack is required!','Author of COMP3008','COMP3008 A Course Pack','Carleton Course Pack Inc.','1st');");    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (38,'777-7-77-777777-0',1,'Intro To COMP3008');");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (39,'777-7-77-777777-0',1,1,'Pre-reqs for COMP3008');");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (40,'777-7-77-777777-0',1,2,'Review needed information for COMP3008');");                                                                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (41,'777-7-77-777777-0',2,'COMP3008 Midterm');");                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (42,'777-7-77-777777-0',2,1,'COMP3008 Midterm mark break-up');");
+
+    // Textbook#8
+    noError = noError && query.exec("INSERT INTO Textbook (itemID,ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition) "
+                                        "VALUES (43,'888-8-88-888888-0','./COMP2406.png','COMP2406 course pack is required!','Author of COMP2406','COMP2406 A Course Pack','Carleton Course Pack Inc.','1st');");    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (44,'888-8-88-888888-0',1,'Intro To COMP2406');");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (45,'888-8-88-888888-0',1,1,'Pre-reqs for COMP2406');");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (46,'888-8-88-888888-0',1,2,'Review needed information for COMP2406');");                                                                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (47,'888-8-88-888888-0',2,'COMP2406 Midterm');");                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (48,'888-8-88-888888-0',2,1,'COMP2406 Midterm mark break-up');");
+
+    // Textbook#9
+    noError = noError && query.exec("INSERT INTO Textbook (itemID,ISBN,coverImageLocation,desc,author,textbookTitle,publisher,edition) "
+                                        "VALUES (49,'999-9-99-999999-0','./COMP2402.png','COMP2402 course pack is required!','Author of COMP2402','COMP2402 A Course Pack','Carleton Course Pack Inc.','1st');");    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (50,'999-9-99-999999-0',1,'Intro To COMP2402');");                                                                                                                   //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (51,'999-9-99-999999-0',1,1,'Pre-reqs for COMP2402');");                                                                                                             //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (52,'999-9-99-999999-0',1,2,'Review needed information for COMP2402');");                                                                                            //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Chapter (itemID,ISBN,chapterNumber,chapterTitle) "
+                                        "VALUES (53,'999-9-99-999999-0',2,'COMP2402 Midterm');");                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Section (itemID,ISBN,chapterNumber,sectionNumber,sectionTitle) "
+                                        "VALUES (54,'999-9-99-999999-0',2,1,'COMP2402 Midterm mark break-up');");
 
     // insert default Course_Assigned_Textbook(s)
     noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
@@ -2109,8 +2193,8 @@ bool QueryControl::deletePurchasableItem(PurchasableItem* purchasableItem) {
  * @return
  *  returns a list of PurchasableItem
  */
-QList<PurchasableItem*>* QueryControl::getShoppingCartItemList(Student *student, bool getAvalibilityOnly) {
-    QList<PurchasableItem*> *purchasableItems = new QList<PurchasableItem*>();
+QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(Student *student, bool getAvalibilityOnly) {
+    QList< QPair<PurchasableItem*,qint32> > *purchasableItems = new QList< QPair<PurchasableItem*,qint32> >();
 
     QSqlQuery textBookQuery;
     QSqlQuery chapterQuery;
@@ -2124,10 +2208,11 @@ QList<PurchasableItem*>* QueryControl::getShoppingCartItemList(Student *student,
                                     "Textbook.publisher, "
                                     "Textbook.ISBN, "
                                     "Textbook.desc, "
+                                    "Textbook.coverImageLocation, "
                                     "Textbook.itemID, "
                                     "PurchasableItem.price, "
                                     "PurchasableItem.availability, "
-                                    "Textbook.coverImageLocation "
+                                    "ShoppingCart.quantity "
                                 "FROM Textbook "
                                 "JOIN PurchasableItem ON "
                                    "Textbook.itemID = PurchasableItem.ItemID "
@@ -2143,7 +2228,8 @@ QList<PurchasableItem*>* QueryControl::getShoppingCartItemList(Student *student,
                                    "Chapter.chapterNumber, "
                                    "Chapter.itemID, "
                                    "PurchasableItem.price, "
-                                   "PurchasableItem.availability "
+                                   "PurchasableItem.availability, "
+                                   "ShoppingCart.quantity "
                                "FROM Chapter "
                                "JOIN PurchasableItem ON "
                                    "Chapter.itemID = PurchasableItem.ItemID "
@@ -2159,7 +2245,8 @@ QList<PurchasableItem*>* QueryControl::getShoppingCartItemList(Student *student,
                                     "section.sectionNumber, "
                                     "section.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability "
+                                    "PurchasableItem.availability, "
+                                    "ShoppingCart.quantity "
                                 "FROM Section "
                                 "JOIN PurchasableItem ON "
                                     "Section.itemID = PurchasableItem.ItemID "
@@ -2178,10 +2265,11 @@ QList<PurchasableItem*>* QueryControl::getShoppingCartItemList(Student *student,
                                     "Textbook.publisher, "
                                     "Textbook.ISBN, "
                                     "Textbook.desc, "
+                                    "Textbook.coverImageLocation, "
                                     "Textbook.itemID, "
                                     "PurchasableItem.price, "
                                     "PurchasableItem.availability, "
-                                    "Textbook.coverImageLocation "
+                                    "ShoppingCart.quantity "
                                 "FROM Textbook "
                                 "JOIN PurchasableItem ON "
                                    "Textbook.itemID = PurchasableItem.ItemID "
@@ -2199,7 +2287,8 @@ QList<PurchasableItem*>* QueryControl::getShoppingCartItemList(Student *student,
                                    "Chapter.chapterNumber, "
                                    "Chapter.itemID, "
                                    "PurchasableItem.price, "
-                                   "PurchasableItem.availability "
+                                   "PurchasableItem.availability, "
+                                   "ShoppingCart.quantity "
                                "FROM Chapter "
                                "JOIN PurchasableItem ON "
                                    "Chapter.itemID = PurchasableItem.ItemID "
@@ -2217,7 +2306,8 @@ QList<PurchasableItem*>* QueryControl::getShoppingCartItemList(Student *student,
                                     "section.sectionNumber, "
                                     "section.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability "
+                                    "PurchasableItem.availability, "
+                                    "ShoppingCart.quantity "
                                 "FROM Section "
                                 "JOIN PurchasableItem ON "
                                     "Section.itemID = PurchasableItem.ItemID "
@@ -2248,25 +2338,27 @@ QList<PurchasableItem*>* QueryControl::getShoppingCartItemList(Student *student,
                                            textBookQuery.value(textBookQuery.record().indexOf("availability")).toBool());
          textbook->setCoverImageLoc(textBookQuery.value(textBookQuery.record().indexOf("coverImageLocation")).toString());
 
-         purchasableItems->push_back(textbook);
+         purchasableItems->push_back(QPair<PurchasableItem*,qint32>(textbook, textBookQuery.value(textBookQuery.record().indexOf("quantity")).toInt()));
     }
 
     chapterQuery.exec();
     while (chapterQuery.next()){
-       purchasableItems->push_back(new Chapter(chapterQuery.value(chapterQuery.record().indexOf("chapterTitle")).toString(),
-                                      chapterQuery.value(chapterQuery.record().indexOf("chapterNumber")).toInt(),
-                                      chapterQuery.value(chapterQuery.record().indexOf("itemID")).toInt(),
-                                      chapterQuery.value(chapterQuery.record().indexOf("price")).toDouble(),
-                                      chapterQuery.value(chapterQuery.record().indexOf("availability")).toBool()));
+       purchasableItems->push_back(QPair<PurchasableItem*,qint32>(new Chapter(chapterQuery.value(chapterQuery.record().indexOf("chapterTitle")).toString(),
+                                                                              chapterQuery.value(chapterQuery.record().indexOf("chapterNumber")).toInt(),
+                                                                              chapterQuery.value(chapterQuery.record().indexOf("itemID")).toInt(),
+                                                                              chapterQuery.value(chapterQuery.record().indexOf("price")).toDouble(),
+                                                                              chapterQuery.value(chapterQuery.record().indexOf("availability")).toBool()),
+       chapterQuery.value(chapterQuery.record().indexOf("quantity")).toInt()));
     }
 
     sectionQuery.exec();
     while (sectionQuery.next()){
-       purchasableItems->push_back(new Section(sectionQuery.value(sectionQuery.record().indexOf("sectionTitle")).toString(),
-                                      sectionQuery.value(sectionQuery.record().indexOf("sectionNumber")).toInt(),
-                                      sectionQuery.value(sectionQuery.record().indexOf("itemID")).toInt(),
-                                      sectionQuery.value(sectionQuery.record().indexOf("price")).toDouble(),
-                                      sectionQuery.value(sectionQuery.record().indexOf("availability")).toBool()));
+       purchasableItems->push_back(QPair<PurchasableItem*,qint32>(new Section(sectionQuery.value(sectionQuery.record().indexOf("sectionTitle")).toString(),
+                                                                              sectionQuery.value(sectionQuery.record().indexOf("sectionNumber")).toInt(),
+                                                                              sectionQuery.value(sectionQuery.record().indexOf("itemID")).toInt(),
+                                                                              sectionQuery.value(sectionQuery.record().indexOf("price")).toDouble(),
+                                                                              sectionQuery.value(sectionQuery.record().indexOf("availability")).toBool()),
+       sectionQuery.value(sectionQuery.record().indexOf("quantity")).toInt()));
     }
 
     return purchasableItems;

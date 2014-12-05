@@ -29,7 +29,7 @@ QList<Course*>* ServerStorageControl::retrieveContent(Student* s, Term* t){
     QueryControl* q = new QueryControl();
     QList<Course*>* result = new QList<Course*>();
     //Check for nulls
-    if(s != 0 && t != 0){
+    if(s != 0 || t != 0){
         delete result;
         //Retrieves the list courses the student is registered for the given term
         result = q->retrieveStudentCourseList(s->getStudentNum(),t->getTermID());
@@ -70,6 +70,7 @@ QList<Course*>* ServerStorageControl::retrieveContent(Student* s, Term* t){
  *  returns a Shopping cart pointer
  */
 ShoppingCart* ServerStorageControl::retrieveShoppingCart(Student* stu){
+/*
     QueryControl* q = new QueryControl();
     QList<PurchasableItem*>* itemResult;
     ShoppingCart* shoppingCartResult = new ShoppingCart();
@@ -84,8 +85,32 @@ ShoppingCart* ServerStorageControl::retrieveShoppingCart(Student* stu){
         delete q;
         return 0;
     }
+*/
 }
 
-bool ServerStorageControl::updateShoppingCart(Student* student, PurchasableItem* item, qint32 quantity){
 
+/**
+ * @brief ServerStorageControl::updateShoppingCart
+ *  Adds the specific purchasable item by the quantity argument to the student's shopping cart
+ * @param student
+ *  student argument
+ * @param item
+ *  The purchasable item to be added to the shopping cart of the student
+ * @param quantity
+ *  The number of times the purchasable item is to be added to the shopping cart
+ * @return
+ *
+ */
+bool ServerStorageControl::updateShoppingCart(Student* student, PurchasableItem* item, qint32 quantity){
+    //Check for null
+    QueryControl* q = new QueryControl();
+    if(student != 0 || item != 0){
+        for (int i = 0; i < quantity; i++){
+            if(!q->addPurchasableItemToCart(item, student)){
+                return false;
+            }
+        }
+        return true;
+    }
+    return false;
 }

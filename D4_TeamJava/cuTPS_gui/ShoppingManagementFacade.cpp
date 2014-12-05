@@ -66,17 +66,15 @@ ShoppingManagementFacade::ShoppingManagementFacade()
 
     fakeCourses.append(crs1);
     fakeCourses.append(crs2);
-
+//100853074
 }
 
 QList<Term*>    ShoppingManagementFacade::getTermList() {
-    //return *shopUpdateControl->retrieveAllTerms();
-    return fakeTerms;
+    return *shopUpdateControl->retrieveAllTerms();
+    //return fakeTerms;
 }
 
 QList<Course*>  ShoppingManagementFacade::viewContent(Student *student, Term *term) {
-    qDebug() << "view content called with student: " << student->getStudentNum();
-    qDebug() << "and term: " << term->getTermName();
-    return fakeCourses;
-//    return *shopUpdateControl->retrieveContent(student, term);
+    //return fakeCourses;
+    return *shopUpdateControl->retrieveContent(student, term);
 }

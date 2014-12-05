@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     }
 
     //-------------Testing updateShoppingCart() and retrieveShoppingCart() functions----
-
+    /*
     foreach (Course* crs, *contentList){
         QList<Textbook*> textbookContent = crs->getRequiredTextbooks();
         //Adding a random number of textbooks to shopping cart for each textbook in the course
@@ -45,19 +45,18 @@ int main(int argc, char *argv[])
             s.updateShoppingCart(student,(PurchasableItem*)text,i);
         }
     }
-
+    */
     ShoppingCart* testShoppingCart = s.retrieveShoppingCart(student);
     qDebug() << testShoppingCart->getItems().empty();
     for(int i = 0; i < testShoppingCart->getItems().size() ; i++){
         QJsonObject json;
-
         testShoppingCart->getItems()[i].first->write(json);
         QString str;
         str.append(QString("%1").arg(testShoppingCart->getItems()[i].second));
         qDebug() << json;
         qDebug() << " Quantity: " + str;
-
     }
+
 
 
 

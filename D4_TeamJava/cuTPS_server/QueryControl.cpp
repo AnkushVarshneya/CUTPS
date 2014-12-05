@@ -50,15 +50,27 @@ void QueryControl::test(){
     qDebug() << "\ntest for resetDatabase\n";
     qDebug() << this->resetDatabase();
 
-
-    qDebug() << "\ntest for retrieveTextbookList on predifined course";
     foreach(Textbook *tbks,  *(this->retrieveTextbookList(new Course("COMP3004", "A", "a"), 1, true))){
+        qDebug() << "\ntest for retrieveTextbookList on predifined course\n";
         json = QJsonObject();
         tbks->write(json);
         qDebug() <<json;
+
+        foreach(Chapter *chpts, *(this->retrieveChapterList(tbks->getISBN(), true))){
+            qDebug() << "\ntest for retrieveChapterList on predifined course\n";
+            json = QJsonObject();
+            chpts->write(json);
+            qDebug() <<json;
+
+            foreach(Section *sec, *(this->retrieveSectionList(chpts->getChapterNumber(), tbks->getISBN(), true))){
+                qDebug() << "\ntest for retrieveSectionList on predifined course\n";
+                json = QJsonObject();
+                sec->write(json);
+                qDebug() <<json;
+            }
+        }
     }
 
-    /*
     qDebug() << "\ntest for retrieveTermList\n";
     QList<Term*> *termlist= this->retrieveTermList();
     foreach(Term *trm, *termlist){
@@ -740,7 +752,7 @@ bool QueryControl::resetDatabase() {
                                         "VALUES ('100853074','COMP2402', 'E', 2);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
 
     //commit transaction
-    noError = noError && query.exec("commit;");                                                                                                                                                                     qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("commit;");                                                                                                                                                                     //qDebug() << query.lastQuery() << query.lastError();
 
     return noError;
 }

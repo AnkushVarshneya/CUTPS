@@ -39,7 +39,7 @@
   <widget class="QPushButton" name="addTextbookToCartOption">
    <property name="geometry">
     <rect>
-     <x>150</x>
+     <x>110</x>
      <y>190</y>
      <width>171</width>
      <height>27</height>
@@ -52,7 +52,7 @@
   <widget class="QLabel" name="quantityLabel">
    <property name="geometry">
     <rect>
-     <x>320</x>
+     <x>290</x>
      <y>170</y>
      <width>58</width>
      <height>16</height>
@@ -65,7 +65,7 @@
   <widget class="QSpinBox" name="quantityOption">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>290</x>
      <y>190</y>
      <width>54</width>
      <height>26</height>
@@ -88,24 +88,34 @@
   <widget class="QTreeView" name="itemsTreeView">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>250</y>
+     <x>10</x>
+     <y>240</y>
      <width>221</width>
-     <height>192</height>
+     <height>81</height>
     </rect>
    </property>
   </widget>
   <widget class="QPushButton" name="viewDetailsOption">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>180</y>
+     <x>390</x>
+     <y>190</y>
      <width>141</width>
      <height>27</height>
     </rect>
    </property>
    <property name="text">
     <string>View Content Details</string>
+   </property>
+  </widget>
+  <widget class="QTreeView" name="chaptersAndSectionsTreeView">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>290</y>
+     <width>121</width>
+     <height>121</height>
+    </rect>
    </property>
   </widget>
  </widget>

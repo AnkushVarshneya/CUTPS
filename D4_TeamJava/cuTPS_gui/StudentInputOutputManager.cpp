@@ -3,6 +3,7 @@
 StudentInputOutputManager::StudentInputOutputManager()
 {
     courseAndTextbookModel = new QStandardItemModel(this);
+    chaptersAndSectionsModel = new QStandardItemModel(this);
     studentInterface = new StudentInterfaceWindow();
     studentInterface->show();
 
@@ -17,6 +18,8 @@ StudentInputOutputManager::StudentInputOutputManager()
     this->shopFacade = new ShoppingManagementFacade();
     this->getTerms();
     fakeStudent = new Student();
+    fakeStudent->setStudentNum("100853074");
+
 
 }
 
@@ -34,10 +37,16 @@ void    StudentInputOutputManager::getTerms() {
 
 
 void StudentInputOutputManager::buildCourseAndTextbookModel() {
+    //ryan's TODO: just list books with course prefixed in text only, no need for tree for list of books.
+    //do use a tree for chapters and sections. should be able to use two views without having to explicitly
+    //hide anything.
+
+
     courseAndTextbookModel->clear();
+    chaptersAndSectionsModel->clear();
     OurStandardItem *temp;
     QList<Course*>::iterator i;
-    for (i = fakeCourses.begin(); i != fakeCourses.end(); i++) {
+    for (i = coursesAndContent.begin(); i != coursesAndContent.end(); i++) {
         qDebug() << (*i)->getCourseCode();
         temp = new OurStandardItem( *i );
         qDebug() << (*i);
@@ -59,27 +68,45 @@ void StudentInputOutputManager::on_studentInterface_viewCartOptionSelected() {
 
 void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected() {
 
-    qDebug() << courseAndTextbookModel->itemFromIndex( studentInterface->getCourseTreeView()->currentIndex() )->data();
+    qDebug() << "wut: " << courseAndTextbookModel->itemFromIndex( studentInterface->getCourseTreeView()->currentIndex() )->data();
+    qDebug() << "thing selected: " << studentInterface->getCourseTreeView()->currentIndex().data();
 
-    qDebug() << studentInterface->getCourseTreeView()->currentIndex().data();
+    QList<Course*>::iterator it;
+    QList<Textbook*>::iterator at;
+
+    for(it = coursesAndContent.begin(); it != coursesAndContent.end(); it ++) {
+        //qDebug() << (*it)->getRequiredTextbooks();
+        for (at = (*it)->getRequiredTextbooks().begin(); at != (*it)->getRequiredTextbooks().end(); at++) {
+            qDebug() << "not crashed? isbn is: " << (*at)->getISBN();
+        }
+
+    }
+
+    chaptersAndSectionsModel->clear();
+
+    chaptersAndSectionsModel->appendRow( courseAndTextbookModel->itemFromIndex( studentInterface->getCourseTreeView()->currentIndex() )->child(0));
+    qDebug() << "testing second model";
+    qDebug() <<  courseAndTextbookModel->itemFromIndex(studentInterface->getCourseTreeView()->currentIndex())->text();
+    qDebug() << "second model row count: " << chaptersAndSectionsModel->rowCount();
+
+//    textbookDetailsWindow = new TextbookDetailsWindow();
+//    textbookDetailsWindow->show();
 
 }
 
 void StudentInputOutputManager::on_studentInterface_termSelected() {
     qDebug() << "a term has been selected";
     qDebug() << terms.value( studentInterface->getTermSelectOption()->currentIndex() )->getTermName();
-   fakeCourses = shopFacade->viewContent(fakeStudent,
+
+   coursesAndContent = shopFacade->viewContent(fakeStudent,
                             terms.at( studentInterface->getTermSelectOption()->currentIndex() ));
 
     buildCourseAndTextbookModel();
     this->setStudentInterfaceViewModel(studentInterface->getCourseTreeView(), courseAndTextbookModel);
+    this->setStudentInterfaceViewModel(studentInterface->getChaptersAndSectionsTreeView(), chaptersAndSectionsModel);
 
     //hide chapters and sections in the course tree view
     for (int i = 0; i < courseAndTextbookModel->rowCount(); i ++) {
-//        qDebug() << courseAndTextbookModel->item(i)->data();
-//        qDebug() << "item has children?" << courseAndTextbookModel->item(i)->hasChildren();
-
-        //rowCount() returns number of children when parent is valid, parent has default value of own model index.
             for(int j = 0; j < courseAndTextbookModel->item(i)->rowCount(); j++)
             {
                 for (int k = 0; k < courseAndTextbookModel->item(i)->child(j)->rowCount(); k++) {
@@ -87,6 +114,5 @@ void StudentInputOutputManager::on_studentInterface_termSelected() {
                 }
             }
     }
-
 
 }

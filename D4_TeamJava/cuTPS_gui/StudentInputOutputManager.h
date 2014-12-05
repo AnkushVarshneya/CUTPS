@@ -8,6 +8,7 @@
 #define STUDENTINPUTOUTPUTMANAGER_H
 
 #include <QObject>
+#include "TextbookDetailsWindow.h"
 #include "StudentInterfaceWindow.h"
 #include "ShoppingManagementFacade.h"
 #include "OurStandardItem.h"
@@ -24,13 +25,14 @@ public:
 private:
     StudentInterfaceWindow  *studentInterface;
     ShoppingManagementFacade *shopFacade;
+    TextbookDetailsWindow   *textbookDetailsWindow;
 
     QStandardItemModel      *courseAndTextbookModel;
-    QStandardItemModel      *TextbookAndChildrenModel;
+    QStandardItemModel      *chaptersAndSectionsModel;
     void                    setStudentInterfaceViewModel(QAbstractItemView  *view, QStandardItemModel *model);
     void                    buildCourseAndTextbookModel();
     void                    buildTextbookAndChildrenModel();
-    QList<Course*>            fakeCourses;
+    QList<Course*>            coursesAndContent;
     Course                   *crs1;
     Course                   *crs2;
     void                     getTerms();
@@ -43,7 +45,6 @@ private slots:
     void    on_studentInterface_viewDetailsOptionSelected();
     void    on_studentInterface_viewCartOptionSelected();
     void    on_studentInterface_termSelected();
-    //QList<Course*>          fakeViewContent(Student *student, Term *term);
 };
 
 #endif // STUDENTINPUTOUTPUTMANAGER_H

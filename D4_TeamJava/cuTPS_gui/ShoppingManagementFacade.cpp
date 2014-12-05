@@ -2,6 +2,9 @@
 
 ShoppingManagementFacade::ShoppingManagementFacade()
 {
+    shopUpdateControl = new ShopUpdateControl();
+
+
     //fake terms for testing
     int year, month, day;
     year = 2014;
@@ -65,8 +68,7 @@ ShoppingManagementFacade::ShoppingManagementFacade()
 }
 
 QList<Term*>    ShoppingManagementFacade::getTermList() {
-    return fakeTerms;
-
+    return *shopUpdateControl->retrieveAllTerms();
 
 }
 
@@ -74,5 +76,5 @@ QList<Course*>  ShoppingManagementFacade::viewContent(Student *student, Term *te
     qDebug() << "view content called with student: " << student->getStudentNum();
     qDebug() << "and term: " << term->getTermName();
 
-    return fakeCourses;
+    return *shopUpdateControl->retrieveContent(student, term);
 }

@@ -22,7 +22,10 @@ public:
     QJsonObject processCommand(QJsonObject);
     static ServerListenerControl* getInstance();
 
+
 private:
+    void retrieveAllTerms(QJsonObject);
+    void retrieveContent(QJsonObject);
     ServerSerializer serializer;
     ServerStorageControl storage;
     static ServerListenerControl* instance;

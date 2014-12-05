@@ -2,13 +2,13 @@
  *Traceability: SS-05 (Client Communicator Subsystem)
  */
 
-#ifndef SERIALIZER_H
-#define SERIALIZER_H
+#ifndef CLIENTCOMMUNICATORSERIALIZER_H
+#define CLIENTCOMMUNICATORSERIALIZER_H
 
-class Serializer
+class ClientCommunicatorSerializer
 {
 public:
-    Serializer();
+    ClientCommunicatorSerializer();
 };
 
-#endif // SERIALIZER_H
+#endif // CLIENTCOMMUNICATORSERIALIZER_H

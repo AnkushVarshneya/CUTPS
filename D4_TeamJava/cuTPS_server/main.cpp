@@ -1,5 +1,6 @@
 #include "QueryControl.h"
 #include "ServerStorageControl.h"
+#include "ServerListenerControl.h"
 #include <QApplication>
 #include <QDebug>
 int main(int argc, char *argv[])
@@ -9,6 +10,9 @@ int main(int argc, char *argv[])
 
     //--------------Testing retrieveContent()---------
     Student* student = w.retrieveStudent("100853074");
+    QJsonObject json;
+    student->write(json);
+    qDebug() << json;
     QList<Term*>* termlist= w.retrieveTermList();
     Term *term = termlist->at(0);
     QList<Course*>* contentList = s.retrieveContent(student, term);
@@ -35,5 +39,13 @@ int main(int argc, char *argv[])
     delete student;
     //----------------------------------------------//
 
-    return 0;
+    /*//------ Testing server ---------------//
+    ServerListenerControl testServer;
+    testServer.startServer();
+    */
+    QCoreApplication a(argc, argv);
+    ServerListenerControl testServ;
+    testServ.startServer();
+    return a.exec();
+
 }

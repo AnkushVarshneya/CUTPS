@@ -74,4 +74,19 @@ void StudentInputOutputManager::on_studentInterface_termSelected() {
     buildCourseAndTextbookModel();
     this->setStudentInterfaceViewModel(studentInterface->getCourseTreeView(), courseAndTextbookModel);
 
+    //hide chapters and sections in the course tree view
+    for (int i = 0; i < courseAndTextbookModel->rowCount(); i ++) {
+//        qDebug() << courseAndTextbookModel->item(i)->data();
+//        qDebug() << "item has children?" << courseAndTextbookModel->item(i)->hasChildren();
+
+        //rowCount() returns number of children when parent is valid, parent has default value of own model index.
+            for(int j = 0; j < courseAndTextbookModel->item(i)->rowCount(); j++)
+            {
+                for (int k = 0; k < courseAndTextbookModel->item(i)->child(j)->rowCount(); k++) {
+                    studentInterface->getCourseTreeView()->setRowHidden(k, courseAndTextbookModel->item(i)->child(j)->index(), true );
+                }
+            }
+    }
+
+
 }

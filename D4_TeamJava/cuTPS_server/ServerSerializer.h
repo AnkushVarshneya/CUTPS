@@ -9,7 +9,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-
+#include "CUtpsDataObject.h"
 #ifndef SERVERSERIALIZER_H
 #define SERVERSERIALIZER_H
 
@@ -17,6 +17,8 @@ class ServerSerializer
 {
 public:
     ServerSerializer();
+    //QString getCommand(const QJsonobject&);
+    //QJsonObject serializeCUTPSDataObject(CUtpsDataObject&);
 };
 
 #endif // SERVERSERIALIZER_H

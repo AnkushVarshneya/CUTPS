@@ -8,6 +8,8 @@
  */
 #ifndef CONTENTMANAGEMENTFACADE_H
 #define CONTENTMANAGEMENTFACADE_H
+#include "ContentManagementInputControl.h"
+#include "ContentManagementUpdateControl.h"
 
 #include "PurchasableItem.h"
 
@@ -26,6 +28,8 @@ public:
 
 private:
     QList<Textbook*>    fakeTextbooks;
+    ContentManagementInputControl inputControl;
+    ContentManagementUpdateControl updateControl;
 };
 
 #endif // CONTENTMANAGEMENTFACADE_H

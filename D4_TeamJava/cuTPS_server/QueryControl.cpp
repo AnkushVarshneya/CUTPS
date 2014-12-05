@@ -23,7 +23,7 @@ QueryControl::QueryControl() {
             qDebug() <<  this->resetDatabase();
         }
 
-        //test();
+        test();
     }
 }
 
@@ -50,6 +50,15 @@ void QueryControl::test(){
     qDebug() << "\ntest for resetDatabase\n";
     qDebug() << this->resetDatabase();
 
+
+    qDebug() << "\ntest for retrieveTextbookList on predifined course";
+    foreach(Textbook *tbks,  *(this->retrieveTextbookList(new Course("COMP3004", "A", "a"), 1, true))){
+        json = QJsonObject();
+        tbks->write(json);
+        qDebug() <<json;
+    }
+
+    /*
     qDebug() << "\ntest for retrieveTermList\n";
     QList<Term*> *termlist= this->retrieveTermList();
     foreach(Term *trm, *termlist){
@@ -263,26 +272,30 @@ void QueryControl::test(){
         sec->write(json);
         qDebug() <<json;
     }
-/*
+
     qDebug() << "\ntext for getShoppingCartItemList\n";
-    foreach(QPair<PurchasableItem*,qint32> pair, *(this->getShoppingCartItemList(student, false))){
+    QList< QPair<PurchasableItem*,qint32> > *list = this->getShoppingCartItemList(student, false);
+    for(int i = 0; i<list->length(); i++) {
         json = QJsonObject();
-        pair.first->write(json);
+        list->at(i).first->write(json);
         qDebug() <<json;
     }
-*/
+    delete(list);
+
     qDebug() << "\ntext for addPurchasableItemToCart\n";
     qDebug() << addPurchasableItemToCart((PurchasableItem*) textbook, student);
     qDebug() << addPurchasableItemToCart((PurchasableItem*) chapter, student);
     qDebug() << addPurchasableItemToCart((PurchasableItem*) section, student);
-/*
+
     qDebug() << "\ntext for getShoppingCartItemList after addPurchasableItemToCart\n";
-    foreach(QPair<PurchasableItem*,qint32> pair, *(this->getShoppingCartItemList(student, false))){
+    list = this->getShoppingCartItemList(student, false);
+    for(int i = 0; i<list->length(); i++) {
         json = QJsonObject();
-        pair.first->write(json);
+        list->at(i).first->write(json);
         qDebug() <<json;
     }
-*/
+    delete(list);
+
     qDebug() << "\ntext for updateOrderContents\n";
     qDebug() << updateOrderContents((PurchasableItem*) textbook, student);
     qDebug() << updateOrderContents((PurchasableItem*) chapter, student);
@@ -364,13 +377,15 @@ void QueryControl::test(){
         stu->write(json);
         qDebug() <<json;
     }
-/*
+
     qDebug() << "\ntest for getPurchasableItemList\n";
-    foreach(QPair<PurchasableItem*,qint32> pair, *(this->getPurchasableItemList(false))){
+    list = this->getPurchasableItemList(false);
+    for(int i = 0; i<list->length(); i++) {
         json = QJsonObject();
-        pair.first->write(json);
+        list->at(i).first->write(json);
         qDebug() <<json;
-    } /**/
+    }
+    delete(list);/**/
 }
 
 /**
@@ -1266,17 +1281,17 @@ bool QueryControl::deleteTextbook(Textbook *textbook){
  *  2) to retrive a chapter use QueryControl::retrieveChapter()
  * @param isbn
  *  primary key of Textbook
- * @param getAvalibilityOnly
+ * @param getavailabilityOnly
  *  if true then get only avaliable item
  *  else get all items
  * @return
  *  returns a Textbook
  */
-Textbook* QueryControl::retrieveTextbook(QString isbn, bool getAvalibilityOnly){
+Textbook* QueryControl::retrieveTextbook(QString isbn, bool getavailabilityOnly){
     Textbook *textbook = NULL;
 
     QSqlQuery textBookQuery;
-    if(!getAvalibilityOnly) {
+    if(!getavailabilityOnly) {
         textBookQuery.prepare("SELECT Textbook.textBookTitle, "
                                     "Textbook.author, "
                                     "Textbook.edition, "
@@ -1308,7 +1323,7 @@ Textbook* QueryControl::retrieveTextbook(QString isbn, bool getAvalibilityOnly){
                                 "JOIN PurchasableItem ON "
                                    "Textbook.itemID = PurchasableItem.ItemID "
                                 "WHERE Textbook.ISBN =:ISBN "
-                                    "AND PurchasableItem.avalibility=1 "
+                                    "AND PurchasableItem.availability=1 "
                                     "ORDER BY Textbook.textBookTitle ASC, Textbook.ISBN ASC;");
     }
     textBookQuery.bindValue(":ISBN", isbn);
@@ -1344,17 +1359,17 @@ Textbook* QueryControl::retrieveTextbook(QString isbn, bool getAvalibilityOnly){
  *  courseSection to get the textbook for
  * @param termID
  *  termID of the course for which the textbook is under
- * @param getAvalibilityOnly
+ * @param getavailabilityOnly
  *  if true then get only avaliable item
  *  else get all items
  * @return
  *  returns a list of Textbooks
  */
-QList<Textbook*>* QueryControl::retrieveTextbookList(Course *course,  qint32 termID, bool getAvalibilityOnly){
+QList<Textbook*>* QueryControl::retrieveTextbookList(Course *course,  qint32 termID, bool getavailabilityOnly){
     QList<Textbook*> *textbooks = new QList<Textbook*>();
 
     QSqlQuery textBookQuery;
-    if(!getAvalibilityOnly) {
+    if(!getavailabilityOnly) {
         textBookQuery.prepare("SELECT Textbook.textBookTitle, "
                                     "Textbook.author, "
                                     "Textbook.edition, "
@@ -1402,7 +1417,7 @@ QList<Textbook*>* QueryControl::retrieveTextbookList(Course *course,  qint32 ter
                                "WHERE Course.courseCode=:courseCode AND "
                                    "Course.section=:section AND "
                                    "Course.termID=:termID "
-                                   "AND PurchasableItem.avalibility=1 "
+                                   "AND PurchasableItem.availability=1 "
                                    "ORDER BY Textbook.textBookTitle ASC, Textbook.ISBN ASC;");
     }
     textBookQuery.bindValue(":courseCode", course->getCourseCode());
@@ -1552,17 +1567,17 @@ bool QueryControl::deleteChapter(Chapter *chapter, QString isbn){
  *  primary key of the chapter
  * @param isbn
  *  isbn (primary key of Textbook) to retrive the chapter under
- * @param getAvalibilityOnly
+ * @param getavailabilityOnly
  *  if true then get only avaliable item
  *  else get all items
  * @return
  *  returns a Chapter
  */
-Chapter* QueryControl::retrieveChapter(qint32 chapterNumber, QString isbn, bool getAvalibilityOnly){
+Chapter* QueryControl::retrieveChapter(qint32 chapterNumber, QString isbn, bool getavailabilityOnly){
     Chapter *chapter = NULL;
 
     QSqlQuery chapterQuery;
-    if(!getAvalibilityOnly) {
+    if(!getavailabilityOnly) {
         chapterQuery.prepare("SELECT Chapter.chapterTitle, "
                                    "Chapter.chapterNumber, "
                                    "Chapter.itemID, "
@@ -1590,7 +1605,7 @@ Chapter* QueryControl::retrieveChapter(qint32 chapterNumber, QString isbn, bool 
                                    "Chapter.itemID = PurchasableItem.ItemID "
                                "WHERE Textbook.ISBN=:ISBN AND "
                                    "Chapter.chapterNumber=:chapterNumber "
-                                   "AND PurchasableItem.avalibility=1 "
+                                   "AND PurchasableItem.availability=1 "
                                    "ORDER BY Chapter.chapterNumber ASC;");
     }
     chapterQuery.bindValue(":ISBN", isbn);
@@ -1619,17 +1634,17 @@ Chapter* QueryControl::retrieveChapter(qint32 chapterNumber, QString isbn, bool 
  *  2) to retrive a sectionlist use QueryControl::retrieveSectionList()
  * @param isbn
  *  isbn (primary key of Textbook) to retrive the chapter under
- * @param getAvalibilityOnly
+ * @param getavailabilityOnly
  *  if true then get only avaliable item
  *  else get all items
  * @return
  *  returns a list of Chapters
  */
-QList<Chapter*>* QueryControl::retrieveChapterList(QString isbn, bool getAvalibilityOnly){
+QList<Chapter*>* QueryControl::retrieveChapterList(QString isbn, bool getavailabilityOnly){
     QList<Chapter*> *chapters = new QList<Chapter*>();
 
     QSqlQuery chapterQuery;
-    if(!getAvalibilityOnly) {
+    if(!getavailabilityOnly) {
         chapterQuery.prepare("SELECT Chapter.chapterTitle, "
                                    "Chapter.chapterNumber, "
                                    "Chapter.itemID, "
@@ -1655,7 +1670,7 @@ QList<Chapter*>* QueryControl::retrieveChapterList(QString isbn, bool getAvalibi
                                "JOIN PurchasableItem ON "
                                    "Chapter.itemID = PurchasableItem.ItemID "
                                "WHERE Textbook.ISBN=:ISBN "
-                                   "AND PurchasableItem.avalibility=1 "
+                                   "AND PurchasableItem.availability=1 "
                                    "ORDER BY Chapter.chapterNumber ASC;");
     }
     chapterQuery.bindValue(":ISBN", isbn);
@@ -1811,17 +1826,17 @@ bool QueryControl::deleteSection(Section *section, qint32 chapterNumber, QString
  *  chapterNumber (primary key of chapter) to retrive the section under
  * @param isbn
  *  isbn (primary key of Textbook) to retrive the chapter under
- * @param getAvalibilityOnly
+ * @param getavailabilityOnly
  *  if true then get only avaliable item
  *  else get all items
  * @return
  *  returns a Section
  */
-Section* QueryControl::retrieveSection(qint32 sectionNumber, qint32 chapterNumber, QString isbn, bool getAvalibilityOnly){
+Section* QueryControl::retrieveSection(qint32 sectionNumber, qint32 chapterNumber, QString isbn, bool getavailabilityOnly){
     Section *section = NULL;
 
     QSqlQuery sectionQuery;
-    if(!getAvalibilityOnly) {
+    if(!getavailabilityOnly) {
         sectionQuery.prepare("SELECT section.sectionTitle, "
                                     "section.sectionNumber, "
                                     "section.itemID, "
@@ -1853,7 +1868,7 @@ Section* QueryControl::retrieveSection(qint32 sectionNumber, qint32 chapterNumbe
                                 "WHERE Chapter.ISBN=:ISBN AND "
                                     "Chapter.chapterNumber=:chapterNumber AND "
                                     "Section.sectionNumber=:sectionNumber "
-                                    "AND PurchasableItem.avalibility=1 "
+                                    "AND PurchasableItem.availability=1 "
                                     "ORDER BY Section.sectionNumber ASC;");
     }
     sectionQuery.bindValue(":ISBN", isbn);
@@ -1885,17 +1900,17 @@ Section* QueryControl::retrieveSection(qint32 sectionNumber, qint32 chapterNumbe
  *  chapterNumber (primary key of chapter) to retrive the section under
  * @param isbn
  *  isbn (primary key of Textbook) to retrive the chapter under
- * @param getAvalibilityOnly
+ * @param getavailabilityOnly
  *  if true then get only avaliable item
  *  else get all items
  * @return
  *  returns a list of Section
  */
-QList<Section*>* QueryControl::retrieveSectionList(qint32 chapterNumber, QString isbn, bool getAvalibilityOnly){
+QList<Section*>* QueryControl::retrieveSectionList(qint32 chapterNumber, QString isbn, bool getavailabilityOnly){
     QList<Section*> *sections = new QList<Section*>();
 
     QSqlQuery sectionQuery;
-    if(!getAvalibilityOnly) {
+    if(!getavailabilityOnly) {
         sectionQuery.prepare("SELECT section.sectionTitle, "
                                     "section.sectionNumber, "
                                     "section.itemID, "
@@ -1925,7 +1940,7 @@ QList<Section*>* QueryControl::retrieveSectionList(qint32 chapterNumber, QString
                                     "section.itemID = PurchasableItem.ItemID "
                                 "WHERE Chapter.ISBN=:ISBN AND "
                                     "Chapter.chapterNumber=:chapterNumber "
-                                    "AND PurchasableItem.avalibility=1 "
+                                    "AND PurchasableItem.availability=1 "
                                     "ORDER BY Section.sectionNumber ASC;");
     }
     sectionQuery.bindValue(":ISBN", isbn);
@@ -2297,20 +2312,20 @@ bool QueryControl::deletePurchasableItem(PurchasableItem* purchasableItem) {
  *  get a student shopping cart as list of PurchasableItem
  * @param student
  *  Student to get the shopping cart for
- * @param getAvalibilityOnly
+ * @param getavailabilityOnly
  *  if true then get only avaliable item
  *  else get all items
  * @return
  *  returns a list of pairs(PurchasableItem, quantity of that PurchasableItem)
  */
-QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(Student *student, bool getAvalibilityOnly) {
+QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(Student *student, bool getavailabilityOnly) {
     QList< QPair<PurchasableItem*,qint32> > *purchasableItems = new QList< QPair<PurchasableItem*,qint32> >();
 
     QSqlQuery textBookQuery;
     QSqlQuery chapterQuery;
     QSqlQuery sectionQuery;
 
-    if(!getAvalibilityOnly) {
+    if(!getavailabilityOnly) {
         // get all textbooks in shopping cart
         textBookQuery.prepare("SELECT Textbook.textBookTitle, "
                                     "Textbook.author, "
@@ -2388,7 +2403,7 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(S
                                 "JOIN Student ON "
                                     "ShoppingCart.studentNumber = Student.studentNumber "
                                 "WHERE Student.studentNumber=:studentNumber "
-                                    "AND PurchasableItem.avalibility=1 "
+                                    "AND PurchasableItem.availability=1 "
                                     "ORDER BY Textbook.textBookTitle ASC, Textbook.ISBN ASC;");
         textBookQuery.bindValue(":studentNumber", student->getStudentNum());
 
@@ -2407,7 +2422,7 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(S
                                "JOIN Student ON "
                                    "ShoppingCart.studentNumber = Student.studentNumber "
                                "WHERE Student.studentNumber=:studentNumber "
-                                   "AND PurchasableItem.avalibility=1 "
+                                   "AND PurchasableItem.availability=1 "
                                    "ORDER BY Chapter.chapterNumber ASC;");
         chapterQuery.bindValue(":studentNumber", student->getStudentNum());
 
@@ -2426,7 +2441,7 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(S
                                 "JOIN Student ON "
                                     "ShoppingCart.studentNumber = Student.studentNumber "
                                 "WHERE Student.studentNumber=:studentNumber "
-                                    "AND PurchasableItem.avalibility=1 "
+                                    "AND PurchasableItem.availability=1 "
                                     "ORDER BY Section.sectionNumber ASC;");
         sectionQuery.bindValue(":studentNumber", student->getStudentNum());
     }
@@ -2477,20 +2492,20 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(S
 /**
  * @brief QueryControl::getPurchasableItemList
  *  get all PurchasableItem in the DB
- * @param getAvalibilityOnly
+ * @param getavailabilityOnly
  *  if true then get only avaliable item
  *  else get all items
  * @return
  *  returns a list of pairs(PurchasableItem, quantity of that PurchasableItem)
  */
-QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bool getAvalibilityOnly){
+QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bool getavailabilityOnly){
      QList< QPair<PurchasableItem*,qint32> > *purchasableItems = new QList< QPair<PurchasableItem*,qint32> >();
 
     QSqlQuery textBookQuery;
     QSqlQuery chapterQuery;
     QSqlQuery sectionQuery;
 
-    if(!getAvalibilityOnly) {
+    if(!getavailabilityOnly) {
         // get all textbooks in shopping cart
         textBookQuery.exec("SELECT Textbook.textBookTitle, "
                                     "Textbook.author, "
@@ -2548,7 +2563,7 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bo
                                 "FROM Textbook "
                                 "JOIN PurchasableItem ON "
                                    "Textbook.itemID = PurchasableItem.ItemID "
-                                "WHERE PurchasableItem.avalibility=1 "
+                                "WHERE PurchasableItem.availability=1 "
                                    "ORDER BY Textbook.textBookTitle ASC, Textbook.ISBN ASC;");
 
         // get all chapters in shopping cart
@@ -2561,7 +2576,7 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bo
                                "FROM Chapter "
                                "JOIN PurchasableItem ON "
                                    "Chapter.itemID = PurchasableItem.ItemID "
-                               "WHERE PurchasableItem.avalibility=1 "
+                               "WHERE PurchasableItem.availability=1 "
                                    "ORDER BY Chapter.chapterNumber ASC;");
 
         // get all sections in shopping cart
@@ -2574,7 +2589,7 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bo
                                 "FROM Section "
                                 "JOIN PurchasableItem ON "
                                     "Section.itemID = PurchasableItem.ItemID "
-                                "WHERE PurchasableItem.avalibility=1 "
+                                "WHERE PurchasableItem.availability=1 "
                                     "ORDER BY Section.sectionNumber ASC;");
     }
 

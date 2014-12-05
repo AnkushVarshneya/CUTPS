@@ -26,6 +26,9 @@ public:
 private:
     void retrieveAllTerms(QJsonObject);
     void retrieveContent(QJsonObject);
+    void retrieveShoppingCart(QJsonObject);
+    void updateShoppingCart(QJsonObject);
+
     ServerSerializer serializer;
     ServerStorageControl storage;
     static ServerListenerControl* instance;

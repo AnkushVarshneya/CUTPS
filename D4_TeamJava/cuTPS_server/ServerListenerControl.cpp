@@ -69,9 +69,14 @@ void ServerListenerControl::readBytes() {
    if(cmd == "retrieveAllTerms()"){
        retrieveAllTerms(jsonDoc.object());
    }
-
    else if (cmd == "retrieveContent()"){
        retrieveContent(jsonDoc.object());
+   }
+   else if (cmd == "retrieveShoppingCart()"){
+       retrieveShoppingCart(jsonDoc.object());
+   }
+   else if (cmd == "updateShoppingCart()"){
+       updateShoppingCart(jsonDoc.object());
    }
 }
 
@@ -120,4 +125,14 @@ void ServerListenerControl::retrieveContent(QJsonObject json){
     r["courses:"] = courseArray;
     this->sendCommand(r);
 }
+
+void ServerListenerControl::retrieveShoppingCart(QJsonObject json){
+
+}
+
+void ServerListenerControl::updateShoppingCart(QJsonObject){
+
+}
+
+
 

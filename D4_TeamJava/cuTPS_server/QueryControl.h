@@ -67,7 +67,7 @@ public:
     bool createPurchasableItem(PurchasableItem*);
     bool updatePurchasableItem(PurchasableItem*);
     bool deletePurchasableItem(PurchasableItem*);
-    QList<PurchasableItem*>* getShoppingCartItemList(Student*, bool);
+    QList< QPair<PurchasableItem*,qint32> >* getShoppingCartItemList(Student*, bool);
     QList<PurchasableItem*>* getPurchasableItemList(bool);
     bool addPurchasableItemToCart(PurchasableItem*, Student*);
     bool updateOrderContents(PurchasableItem*, Student*);

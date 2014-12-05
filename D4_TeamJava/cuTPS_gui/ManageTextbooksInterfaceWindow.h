@@ -5,6 +5,12 @@
 #include "EditTextbookFormWindow.h"
 #include <QPushButton>
 
+#include "OurStandardItem.h"
+#include <QStandardItemModel>
+
+
+#include <QComboBox>
+
 class ContentManagerInterfaceWindow;
 
 namespace Ui {
@@ -26,15 +32,10 @@ public:
     QPushButton* getModifyTextbookButton();
     QPushButton* getDeleteTextbookButton();
 
+    QAbstractItemView* getTextbooksListView();
+    QAbstractItemView* getChaptersListView();
+    QAbstractItemView* getSectionsListView();
 
-/*
-private slots:
-    void on_editTextbookOption_clicked();
-
-    void on_deleteTextbookOption_clicked();
-
-    void on_backButton_clicked();
-*/
 private:
     Ui::ManageTextbooksInterfaceWindow *ui;
     EditTextbookFormWindow editTextbookForm;

@@ -19,8 +19,6 @@ public:
     explicit EditChapterFormWindow(QWidget *parent = 0);
     ~EditChapterFormWindow();
 
-    EditTextbookFormWindow *parentWindow;
-
     QPushButton* getBackButton();
     QPushButton* getCreateButton();
     QPushButton* getCreateSectionButton();

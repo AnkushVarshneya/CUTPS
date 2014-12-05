@@ -9,10 +9,23 @@
 #ifndef CONTENTMANAGEMENTFACADE_H
 #define CONTENTMANAGEMENTFACADE_H
 
+#include "PurchasableItem.h"
+
+#include "Textbook.h"
+#include "Chapter.h"
+#include "Section.h"
+
+#include <QDebug>
+#include <QList>
+
 class ContentManagementFacade
 {
 public:
     ContentManagementFacade();
+    QList<Textbook*>    viewAllContent();
+
+private:
+    QList<Textbook*>    fakeTextbooks;
 };
 
 #endif // CONTENTMANAGEMENTFACADE_H

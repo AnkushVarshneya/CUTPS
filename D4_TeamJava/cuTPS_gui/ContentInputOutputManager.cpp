@@ -5,10 +5,14 @@
 ContentInputOutputManager::ContentInputOutputManager()
 {
 
+    textbookModel = new QStandardItemModel(this);
+    chapterModel = new QStandardItemModel(this);
+    sectionModel = new QStandardItemModel(this);
 
 
     manageTextbooksInterface = new ManageTextbooksInterfaceWindow();
     manageTextbooksInterface->show();
+
 
 
     connect(manageTextbooksInterface->getBackButton(),SIGNAL(clicked()),this,SLOT(on_manageTextbooksInterface_back_button()));
@@ -16,21 +20,117 @@ ContentInputOutputManager::ContentInputOutputManager()
     connect(manageTextbooksInterface->getModifyTextbookButton(),SIGNAL(clicked()),this,SLOT(on_manageTextbooksInterface_editTextbook_button()));
     connect(manageTextbooksInterface->getDeleteTextbookButton(),SIGNAL(clicked()),this,SLOT(on_manageTextbooksInterface_deleteTextbook_button()));
 
+    connect(manageTextbooksInterface->getTextbooksListView(),SIGNAL(clicked(QModelIndex)),this,SLOT(on_manageTextbooksInterface_selectTextbook()));
+    connect(manageTextbooksInterface->getChaptersListView(),SIGNAL(clicked(QModelIndex)),this,SLOT(on_manageTextbooksInterface_selectChapter()));
 
+    contentManagementFacade = new ContentManagementFacade();
+    fakeTextbooks = contentManagementFacade->viewAllContent();
+    buildTextbookModel();
+
+    setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
 }
 
+void ContentInputOutputManager::buildTextbookModel() {
+    textbookModel->clear();
+    chapterModel->clear();
+    sectionModel->clear();
+    OurStandardItem *temp;
+    QList<Textbook*>::iterator i;
+    qDebug() << fakeTextbooks.length();
+    for (i = fakeTextbooks.begin(); i != fakeTextbooks.end(); i++) {
+        qDebug() << (*i)->getItemTitle();
+        temp = new OurStandardItem( *i );
+        qDebug() << (*i);
+        textbookModel->appendRow(temp);
+    }
+}
+
+void ContentInputOutputManager::buildChapterModel() {
+    chapterModel->clear();
+    sectionModel->clear();
+    OurStandardItem *temp;
+    QList<Chapter*>::iterator i;
+    qDebug() << fakeChapters.length();
+    for (i = fakeChapters.begin(); i != fakeChapters.end(); i++) {
+        qDebug() << (*i)->getItemTitle();
+        temp = new OurStandardItem( *i );
+        qDebug() << (*i);
+        chapterModel->appendRow(temp);
+    }
+}
+
+void ContentInputOutputManager::buildSectionModel() {
+    sectionModel->clear();
+    OurStandardItem *temp;
+    QList<Section*>::iterator i;
+    qDebug() << fakeSections.length();
+    for (i = fakeSections.begin(); i != fakeSections.end(); i++) {
+        qDebug() << (*i)->getItemTitle();
+        temp = new OurStandardItem( *i );
+        qDebug() << (*i);
+        sectionModel->appendRow(temp);
+    }
+}
+
+void ContentInputOutputManager::setContentManagementInterfaceViewModel(QAbstractItemView *view, QStandardItemModel *model) {
+    view->setModel(model);
+}
+
+void ContentInputOutputManager::on_manageTextbooksInterface_selectTextbook()
+{
+    qDebug() << "selected textbook";
+
+//    int selectedIndex = manageTextbooksInterface->getTextbooksListView()->currentIndex().row();
+//    qDebug() << contentManagementFacade->viewAllContent().at(selectedIndex)->getItemTitle();
+//    fakeChapters = contentManagementFacade->viewAllContent().at(selectedIndex)->getChapterList();
+    fakeChapters = getSelectedTextbook()->getChapterList();
+    buildChapterModel();
+    setContentManagementInterfaceViewModel(manageTextbooksInterface->getChaptersListView(), chapterModel);
+}
+
+void ContentInputOutputManager::on_manageTextbooksInterface_selectChapter()
+{
+    qDebug() << "selected chapter";
+//    int selectedTextbookIndex = manageTextbooksInterface->getTextbooksListView()->currentIndex().row();
+//    int selectedChapterIndex = manageTextbooksInterface->getChaptersListView()->currentIndex().row();
+//    qDebug() << contentManagementFacade->viewAllContent().at(selectedTextbookIndex)->getChapterList().at(selectedChapterIndex);
+
+
+
+//    fakeSections = contentManagementFacade->viewAllContent().at(selectedTextbookIndex)->getChapterList().at(selectedChapterIndex)->getChapterSections();
+    fakeSections = getSelectedChapter()->getChapterSections();
+    buildSectionModel();
+    setContentManagementInterfaceViewModel(manageTextbooksInterface->getSectionsListView(), sectionModel);
+}
+
+
+Chapter* ContentInputOutputManager::getSelectedChapter()
+{
+    int selectedIndex = manageTextbooksInterface->getChaptersListView()->currentIndex().row();
+    return getSelectedTextbook()->getChapterList().at(selectedIndex);
+}
+
+Textbook* ContentInputOutputManager::getSelectedTextbook()
+{
+    int selectedIndex = manageTextbooksInterface->getTextbooksListView()->currentIndex().row();
+    return contentManagementFacade->viewAllContent().at(selectedIndex);
+}
+
+Section* ContentInputOutputManager::getSelectedSection()
+{
+    int selectedIndex = manageTextbooksInterface->getSectionsListView()->currentIndex().row();
+    return getSelectedChapter()->getChapterSections().at(selectedIndex);
+}
 
 void ContentInputOutputManager::on_manageTextbooksInterface_back_button()
 {
     manageTextbooksInterface->hide();
+    delete manageTextbooksInterface;
     delete this;
 }
 
 void ContentInputOutputManager::on_manageTextbooksInterface_createTextbook_button()
 {
-    qDebug() << "ayy lmao3";
-
-
     manageTextbooksInterface->hide();
     editTextbookForm = new EditTextbookFormWindow();
     editTextbookForm->show();
@@ -64,7 +164,6 @@ void ContentInputOutputManager::on_manageTextbooksInterface_deleteTextbook_butto
 
 void ContentInputOutputManager::on_editTextbookForm_back_button()
 {
-    qDebug() << "ayy lmao";
     delete editTextbookForm;
     manageTextbooksInterface->show();
 }
@@ -77,14 +176,9 @@ void ContentInputOutputManager::on_editTextbookForm_create_button()
 
 void ContentInputOutputManager::on_editTextbookForm_editChapter_button()
 {
-    qDebug() << "ayy lmao2";
-
     editTextbookForm->hide();
     editChapterForm = new EditChapterFormWindow();
     editChapterForm->show();
-
-    //connect(editChapterForm->get)
-
 }
 
 void ContentInputOutputManager::on_editTextbookForm_createChapter_button()
@@ -98,7 +192,6 @@ void ContentInputOutputManager::on_editTextbookForm_createChapter_button()
 void ContentInputOutputManager::on_editChapterForm_back_button()
 {
     qDebug() << "go back to the edittextbookform";
-
     editChapterForm->hide();
     delete editChapterForm;
     editTextbookForm->show();

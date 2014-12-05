@@ -22,22 +22,8 @@ Ui::EditTextbookFormWindow* EditTextbookFormWindow::getUI()
     return ui;
 }
 
-QPushButton *EditTextbookFormWindow::getBackButton()
-{
-    return ui->backButton;
-}
-
-QPushButton *EditTextbookFormWindow::getViewEditChaptersButton()
-{
-    return ui->editChapterButton;
-}
-
-QPushButton *EditTextbookFormWindow::getCreateButton()
-{
-    return ui->createButton;
-}
-
-QPushButton *EditTextbookFormWindow::getAddChapterButton()
-{
-    return ui->createChapterButton;
-}
+//Button getters
+QPushButton *EditTextbookFormWindow::getBackButton()                { return ui->backButton; }
+QPushButton *EditTextbookFormWindow::getViewEditChaptersButton()    { return ui->editChapterButton; }
+QPushButton *EditTextbookFormWindow::getCreateButton()              { return ui->createButton; }
+QPushButton *EditTextbookFormWindow::getAddChapterButton()          { return ui->createChapterButton; }

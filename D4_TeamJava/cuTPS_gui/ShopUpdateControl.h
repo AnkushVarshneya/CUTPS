@@ -14,6 +14,7 @@ class ShopUpdateControl
 public:
     ShopUpdateControl();
     QList<Term*>* retrieveAllTerms();
+    QList<Course*>* retrieveContent(Student*, Term*);
 private:
     ClientCommunicatorManagementControl mc;
 };

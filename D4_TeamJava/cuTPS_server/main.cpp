@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
     QueryControl w;
     ServerStorageControl s;
 
+    qDebug() << "starting tests" ;
     //--------------Testing retrieveContent()---------
     Student* student = w.retrieveStudent("100853074");
     QJsonObject json;

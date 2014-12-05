@@ -1,14 +1,15 @@
 #ifndef CONTENTINPUTOUTPUTMANAGER_H
 #define CONTENTINPUTOUTPUTMANAGER_H
 
-//#include "ContentManagerInterfaceWindow.h"
 #include "EditChapterFormWindow.h"
 #include "EditSectionFormWindow.h"
 #include "EditTextbookFormWindow.h"
 #include "ManageTextbooksInterfaceWindow.h"
 
+#include "OurStandardItem.h"
+#include <QAbstractItemView>
 
-
+#include "ContentManagementFacade.h"
 
 
 class ContentInputOutputManager : public QObject
@@ -18,6 +19,10 @@ public:
     ContentInputOutputManager();
 
 private slots:
+
+
+
+
     void on_manageTextbooksInterface_back_button();
     void on_manageTextbooksInterface_createTextbook_button();
     void on_manageTextbooksInterface_editTextbook_button();
@@ -36,15 +41,37 @@ private slots:
     void on_editSectionForm_back_button();
     void on_editSectionForm_create_button();
 
+    void on_manageTextbooksInterface_selectTextbook();
+    void on_manageTextbooksInterface_selectChapter();
+
 
 
 
 private:
     ManageTextbooksInterfaceWindow*     manageTextbooksInterface;
-    EditTextbookFormWindow*           editTextbookForm;
-    EditChapterFormWindow*            editChapterForm;
-    EditSectionFormWindow*            editSectionForm;
+    EditTextbookFormWindow*             editTextbookForm;
+    EditChapterFormWindow*              editChapterForm;
+    EditSectionFormWindow*              editSectionForm;
 
+    ContentManagementFacade*            contentManagementFacade;
+
+    QStandardItemModel*                 textbookModel;
+    QStandardItemModel*                 chapterModel;
+    QStandardItemModel*                 sectionModel;
+
+    QList<Textbook*>                    fakeTextbooks;
+    QList<Chapter*>                     fakeChapters;
+    QList<Section*>                     fakeSections;
+
+    void setContentManagementInterfaceViewModel(QAbstractItemView*, QStandardItemModel*);
+
+    void buildTextbookModel();
+    void buildChapterModel();
+    void buildSectionModel();
+
+    Textbook*   getSelectedTextbook();
+    Chapter*    getSelectedChapter();
+    Section*    getSelectedSection();
 
 };
 

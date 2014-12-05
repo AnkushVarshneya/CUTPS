@@ -11,11 +11,23 @@
 #include "ContentManagementInputControl.h"
 #include "ContentManagementUpdateControl.h"
 
+#include "PurchasableItem.h"
+
+#include "Textbook.h"
+#include "Chapter.h"
+#include "Section.h"
+
+#include <QDebug>
+#include <QList>
+
 class ContentManagementFacade
 {
 public:
     ContentManagementFacade();
+    QList<Textbook*>    viewAllContent();
+
 private:
+    QList<Textbook*>    fakeTextbooks;
     ContentManagementInputControl inputControl;
     ContentManagementUpdateControl updateControl;
 };

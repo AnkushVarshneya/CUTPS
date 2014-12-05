@@ -20,30 +20,5 @@ ContentManagerInterfaceWindow::~ContentManagerInterfaceWindow()
     delete ui;
 }
 
-
-
-/*
-//On clicking the ManageTextbooksOption, A list of textbooks are shown
-//Options to Create Textbook, Modify Textbook, and Delete Textbooks are shown
-void ContentManagerInterfaceWindow::on_manageTextbooksOption_clicked()
-{
-    contentIOManager.editTextbookForm->show();
-    this->hide();
-}
-
-
-//On clicking the ManageCoursesOption, A new Interface window is shown specifically for course management
-void ContentManagerInterfaceWindow::on_manageCoursesOption_clicked()
-{
-
-}
-*/
-QPushButton* ContentManagerInterfaceWindow::getManageTextbooksButton()
-{
-    return ui->manageTextbooksOption;
-}
-
-QPushButton* ContentManagerInterfaceWindow::getManageCoursesButton()
-{
-    return ui->manageCoursesOption;
-}
+QPushButton* ContentManagerInterfaceWindow::getManageTextbooksButton()  { return ui->manageTextbooksOption; }
+QPushButton* ContentManagerInterfaceWindow::getManageCoursesButton()    { return ui->manageCoursesOption; }

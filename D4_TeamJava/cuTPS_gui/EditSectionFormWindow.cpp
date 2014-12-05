@@ -15,12 +15,5 @@ EditSectionFormWindow::~EditSectionFormWindow()
     delete ui;
 }
 
-QPushButton* EditSectionFormWindow::getBackButton()
-{
-    return ui->backButton;
-}
-
-QPushButton* EditSectionFormWindow::getCreateButton()
-{
-    return ui->createButton;
-}
+QPushButton* EditSectionFormWindow::getBackButton()     { return ui->backButton; }
+QPushButton* EditSectionFormWindow::getCreateButton()   { return ui->createButton; }

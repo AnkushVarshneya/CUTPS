@@ -23,8 +23,6 @@ public:
     explicit EditTextbookFormWindow(QWidget *parent = 0);
     ~EditTextbookFormWindow();
 
-    ManageTextbooksInterfaceWindow *parentWindow;
-
     Ui::EditTextbookFormWindow *getUI();
 
     QPushButton* getBackButton();

@@ -408,9 +408,9 @@ bool QueryControl::resetDatabase() {
     noError = noError && query.exec("INSERT INTO Student (studentNumber,cmail,userName) "
                                         "VALUES ('100853074','ankushlord@cmail.carleton.ca','Kushlord');");                                                                                                         //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO Student (studentNumber,cmail,userName) "
-                                        "VALUES ('195372839','ryanmoore@cmail.carleton.ca','Mooreloaded');");                                                                                                       //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES ('100853075','ryanmoore@cmail.carleton.ca','Mooreloaded');");                                                                                                       //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO Student (studentNumber,cmail,userName) "
-                                        "VALUES ('123456789','somestudent@cmail.carleton.ca','LorettaBetta');");                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES ('100853076','somestudent@cmail.carleton.ca','LorettaBetta');");                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
 
     // insert default PaymentInformation(s)
     noError = noError && query.exec("INSERT INTO PaymentInformation (creditCardNumber, cardType, cvv, expirationDate, nameOnCard,postalCode,province,city,streetName,houseNumber,studentNumber) "
@@ -445,113 +445,113 @@ bool QueryControl::resetDatabase() {
 
     // insert default PurchasableItem(s)
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (1,1.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (1,1.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (2,2.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (2,2.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (3,3.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (3,3.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (4,4.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (4,4.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (5,5.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (5,5.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
                                         "VALUES (6,6.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (7,7.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (7,1.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (8,8.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (8,2.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (9,9.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (9,3.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (10,10.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (10,4.99,1);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (11,11.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (11,5.99,1);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (12,12.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (12,6.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (13,1.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (13,1.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (14,2.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (14,2.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (15,3.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (15,3.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (16,4.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (16,4.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (17,5.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (17,5.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
                                         "VALUES (18,6.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (19,7.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (19,1.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (20,8.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (20,2.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (21,9.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (21,3.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (22,10.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (22,4.99,1);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (23,11.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (23,5.99,1);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (24,12.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (24,6.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (25,1.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (25,1.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (26,2.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (26,2.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (27,3.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (27,3.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (28,4.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (28,4.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (29,5.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (29,5.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
                                         "VALUES (30,6.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (31,7.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (31,1.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (32,8.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (32,2.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (33,9.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (33,3.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (34,10.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (34,4.99,1);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (35,11.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (35,5.99,1);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (36,12.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (36,6.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (37,1.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (37,1.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (38,2.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (38,2.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (39,3.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (39,3.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (40,4.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (40,4.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (41,5.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (41,5.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
                                         "VALUES (42,6.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (43,7.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (43,1.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (44,8.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (44,2.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (45,9.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (45,3.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (46,10.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (46,4.99,1);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (47,11.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (47,5.99,1);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (48,12.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (48,6.99,0);");                                                                                                                                                    //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (49,4.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (49,1.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (50,5.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (50,2.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (51,6.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (51,3.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (52,7.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (52,4.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (53,8.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (53,5.99,1);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO PurchasableItem (itemID,price,availability) "
-                                        "VALUES (54,9.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
+                                        "VALUES (54,6.99,0);");                                                                                                                                                      //qDebug() << query.lastQuery() << query.lastError();
 
     // insert default Textbook(s), Chapter(s), Section(s)
 
@@ -686,12 +686,43 @@ bool QueryControl::resetDatabase() {
                                         "VALUES ('111-1-11-111111-0','COMP3004','A',1);");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
                                         "VALUES ('222-2-22-222222-0','COMP3804','B',1);");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
+                                        "VALUES ('333-3-33-333333-0','COMP3000','C',1);");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
+                                        "VALUES ('444-4-44-444444-0','COMP3203','D',1);");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
+
+
+    noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
+                                        "VALUES ('555-5-55-555555-0','COMP3005','A',2);");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
+                                        "VALUES ('666-6-66-666666-0','COMP3007','B',2);");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
+                                        "VALUES ('777-7-77-777777-0','COMP3008','C',2);");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
+                                        "VALUES ('888-8-88-888888-0','COMP2406','D',2);");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
+                                        "VALUES ('999-9-99-999999-0','COMP2402','E',2);");                                                                                                                          //qDebug() << query.lastQuery() << query.lastError();
 
     // insert default Student_RegisteredIn_Course(s)
     noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
                                         "VALUES ('100853074','COMP3004', 'A', 1);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
     noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
                                         "VALUES ('100853074','COMP3804', 'B', 1);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('100853074','COMP3000', 'C', 1);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('100853074','COMP3203', 'D', 1);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
+
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('100853074','COMP3005', 'A', 2);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('100853074','COMP3007', 'B', 2);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('100853074','COMP3008', 'C', 2);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('100853074','COMP2406', 'D', 2);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
+    noError = noError && query.exec("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+                                        "VALUES ('100853074','COMP2402', 'E', 2);");                                                                                                                                //qDebug() << query.lastQuery() << query.lastError();
 
     //commit transaction
     noError = noError && query.exec("commit;");                                                                                                                                                                     qDebug() << query.lastQuery() << query.lastError();

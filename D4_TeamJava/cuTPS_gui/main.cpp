@@ -49,7 +49,6 @@ int main(int argc, char *argv[])
         foreach(Textbook* text, textbookContent){
             qint32 i = 1;
             test.updateShoppingCart(&testStu,(PurchasableItem*)text,i);
-            /*
             //Adding 1 chapter for each chapter in the textbooks
             foreach(Chapter* chap, text->getChapterList()){
                 test.updateShoppingCart(&testStu,(PurchasableItem*)chap,i);
@@ -57,7 +56,6 @@ int main(int argc, char *argv[])
                     test.updateShoppingCart(&testStu,(PurchasableItem*)sec,i);
                 }
             }
-            */
         }
     }
 
@@ -73,27 +71,7 @@ int main(int argc, char *argv[])
     }
 
 
-/*
-    foreach (Course* crs, *courses){
-        QList<Textbook*> textbookContent = crs->getRequiredTextbooks();
-        //Adding a random number of textbooks to shopping cart for each textbook in the course
-        foreach(Textbook* text, textbookContent){
-            qint32 i = qrand() % 50 + 1;
-            s.updateShoppingCart(student,(PurchasableItem*)text,i);
-        }
-    }
-/*
-    ShoppingCart* testShoppingCart = s.retrieveShoppingCart(student);
-    qDebug() << testShoppingCart->getItems().empty();
-    for(int i = 0; i < testShoppingCart->getItems().size() ; i++){
-        QJsonObject json;
-        testShoppingCart->getItems()[i].first->write(json);
-        QString str;
-        str.append(QString("%1").arg(testShoppingCart->getItems()[i].second));
-        qDebug() << json;
-        qDebug() << " Quantity: " + str;
-    }
-    */
+
     return a.exec();
 
 }

@@ -37,15 +37,15 @@ QList<Course*>* ServerStorageControl::retrieveContent(Student* s, Term* t){
         for(int courseIndex = 0; courseIndex < result->size(); courseIndex++){
             QList<Textbook*>* textbookList = q->retrieveTextbookList((*result)[courseIndex],
                                                                      (*result)[courseIndex]->getTerm()->getTermID(),
-                                                                     true);
+                                                                     false);
              //And for each required textbook, retrieve the required Chapters, and for each Chapter,
             foreach (Textbook* t, *textbookList){
-                QList<Chapter*>* cList =  q->retrieveChapterList(t->getISBN(),true);
+                QList<Chapter*>* cList =  q->retrieveChapterList(t->getISBN(),false);
                 t->getChapterList() = *cList;
                 delete cList;
                 //Retrieve the required Chapter sections.
                 foreach (Chapter* c, t->getChapterList()){
-                    QList<Section*>* sList = q->retrieveSectionList(c->getChapterNumber(),t->getISBN(),true);
+                    QList<Section*>* sList = q->retrieveSectionList(c->getChapterNumber(),t->getISBN(),false);
                     c->getChapterSections() = *sList;
                     delete sList;
                 }
@@ -70,22 +70,22 @@ QList<Course*>* ServerStorageControl::retrieveContent(Student* s, Term* t){
  *  returns a Shopping cart pointer
  */
 ShoppingCart* ServerStorageControl::retrieveShoppingCart(Student* stu){
-/*
+
     QueryControl* q = new QueryControl();
-    QList<PurchasableItem*>* itemResult;
+    QList< QPair<PurchasableItem*,qint32> >* itemResult;
     ShoppingCart* shoppingCartResult = new ShoppingCart();
     if (stu != 0){
-        itemResult = q->getShoppingCartItemList(stu,true);
+        itemResult = q->getShoppingCartItemList(stu,false);
         shoppingCartResult->getItems() = *itemResult;
         delete q;
-        qDeleteAll(itemResult->begin(),itemResult->end());
+        itemResult->clear();
         return shoppingCartResult;
     }
     else{
         delete q;
         return 0;
     }
-*/
+
 }
 
 
@@ -107,10 +107,13 @@ bool ServerStorageControl::updateShoppingCart(Student* student, PurchasableItem*
     if(student != 0 || item != 0){
         for (int i = 0; i < quantity; i++){
             if(!q->addPurchasableItemToCart(item, student)){
+                delete q;
                 return false;
             }
         }
+        delete q;
         return true;
     }
+    delete q;
     return false;
 }

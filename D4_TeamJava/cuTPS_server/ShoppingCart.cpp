@@ -13,8 +13,8 @@ ShoppingCart::ShoppingCart(){}
 ShoppingCart::~ShoppingCart(){emptyShoppingCart();}
 
 //Getters
-QMap<PurchasableItem*,qint32>& ShoppingCart::getItems(){return items;}
-qint32 ShoppingCart::getShoppingCartID()const{return id;}
+QList< QPair<PurchasableItem*,qint32> >& ShoppingCart::getItems(){return items;}
+
 
 
 
@@ -23,15 +23,13 @@ qint32 ShoppingCart::getShoppingCartID()const{return id;}
 
 //Empty shopping cart's contents
 void ShoppingCart::emptyShoppingCart(){  
-    qDeleteAll(items.begin(), items.end());
     items.clear();
 }
 
 //Read and write json concrete functions
 
 void ShoppingCart::read(const QJsonObject &json){
-    id = json["id"].toDouble();
-
+    /*
     QJsonArray itemArray= json["items"].toArray();
     for(int i = 0; i < itemArray.size(); ++i){
         QJsonObject itemObject = itemArray[i].toObject();
@@ -51,16 +49,22 @@ void ShoppingCart::read(const QJsonObject &json){
             items.append(newSection);
         }
     }
+    */
 }
 
 void ShoppingCart::write(QJsonObject &json) const{
-    json["id"] = id;
 
+    /*
     QJsonArray itemArray;
-    foreach(PurchasableItem* item, items){
+    foreach(QPair<PurchasableItem*,qint32> item, items){
+        QJsonObject pairObject;
         QJsonObject itemObject;
+
+        itemObject["item"]
         item->write(itemObject);
         itemArray.append(itemObject);
     }
     json["items"] = itemArray;
+    */
+
 }

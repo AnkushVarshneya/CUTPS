@@ -25,13 +25,13 @@ class ShoppingCart : public CUtpsDataObject{
 public:
     ShoppingCart();
     ~ShoppingCart();
-    QList<QPair<PurchasableItem*,qint32>>&    getItems();
+    QList< QPair<PurchasableItem*,qint32> >&    getItems();
     void                                      emptyShoppingCart();
     void                                      read(const QJsonObject &json);
     void                                      write(QJsonObject &json) const;
 
 private:
-    QPair<PurchasableItem*,qint32>            items;
+    QList< QPair<PurchasableItem*,qint32> >            items;
 };
 
 #endif // SHOPPINGCART_H

@@ -70,6 +70,7 @@ QList<Course*>* ServerStorageControl::retrieveContent(Student* s, Term* t){
  *  returns a Shopping cart pointer
  */
 ShoppingCart* ServerStorageControl::retrieveShoppingCart(Student* stu){
+/*
     QueryControl* q = new QueryControl();
     QList<PurchasableItem*>* itemResult;
     ShoppingCart* shoppingCartResult = new ShoppingCart();
@@ -84,6 +85,7 @@ ShoppingCart* ServerStorageControl::retrieveShoppingCart(Student* stu){
         delete q;
         return 0;
     }
+*/
 }
 
 

@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
     QueryControl w;
     ServerStorageControl s;
-
+    w.resetDatabase();
     qDebug() << "starting tests" ;
     //--------------Testing retrieveContent()---------
     Student* student = w.retrieveStudent("100853074");

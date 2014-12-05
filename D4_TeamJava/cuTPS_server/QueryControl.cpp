@@ -24,6 +24,8 @@ QueryControl::QueryControl() {
         }
 
         //test();
+
+        qDebug() << "CONS END";
     }
 }
 

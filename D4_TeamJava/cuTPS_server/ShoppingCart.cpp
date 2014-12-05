@@ -4,41 +4,32 @@
 #include "Chapter.h"
 #include "Section.h"
 
-using namespace std;
 
 
 //Constructor
-ShoppingCart::ShoppingCart(qint32 i): id(i){cout<< "In Shopping cart constructor" <<endl;}
+ShoppingCart::ShoppingCart(){}
 
 //Destructor
-ShoppingCart::~ShoppingCart(){
-    emptyShoppingCart();
-    cout << "In Shopping cart destructor" <<endl;
-}
+ShoppingCart::~ShoppingCart(){emptyShoppingCart();}
 
 //Getters
-QList<PurchasableItem*>& ShoppingCart::getItems(){return items;}
-qint32 ShoppingCart::getShoppingCartID()const{return id;}
+QList< QPair<PurchasableItem*,qint32> >& ShoppingCart::getItems(){return items;}
 
-//Setters
-void ShoppingCart::setShoppingCartID(qint32 i){id = i;}
 
-//Append a PurchasableItem to the end of the items list
-void ShoppingCart::addItem(PurchasableItem* item){
-    items.push_back(item);
-}
+
+
+
 
 
 //Empty shopping cart's contents
 void ShoppingCart::emptyShoppingCart(){  
-     items.clear();
+    items.clear();
 }
 
 //Read and write json concrete functions
 
 void ShoppingCart::read(const QJsonObject &json){
-    id = json["id"].toDouble();
-
+    /*
     QJsonArray itemArray= json["items"].toArray();
     for(int i = 0; i < itemArray.size(); ++i){
         QJsonObject itemObject = itemArray[i].toObject();
@@ -58,16 +49,22 @@ void ShoppingCart::read(const QJsonObject &json){
             items.append(newSection);
         }
     }
+    */
 }
 
 void ShoppingCart::write(QJsonObject &json) const{
-    json["id"] = id;
 
+    /*
     QJsonArray itemArray;
-    foreach(PurchasableItem* item, items){
+    foreach(QPair<PurchasableItem*,qint32> item, items){
+        QJsonObject pairObject;
         QJsonObject itemObject;
+
+        itemObject["item"]
         item->write(itemObject);
         itemArray.append(itemObject);
     }
     json["items"] = itemArray;
+    */
+
 }

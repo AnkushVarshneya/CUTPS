@@ -19,11 +19,13 @@ class ServerStorageControl
 public:
     ServerStorageControl();
 
+    //Student API
     QList<Term*>*   retrieveAllTerms();
     QList<Course*>* retrieveContent(Student*, Term*);
     ShoppingCart*   retrieveShoppingCart(Student*);
     bool            updateShoppingCart(Student*, PurchasableItem*, qint32);
 
+    //Content Manager API
 
 private:
 

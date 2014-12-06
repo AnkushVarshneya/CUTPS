@@ -98,7 +98,7 @@ ShoppingCart* ServerStorageControl::retrieveShoppingCart(Student* stu){
  *  The purchasable item to be added to the shopping cart of the student
  * @param quantity
  *  The number of times the purchasable item is to be added to the shopping cart
- * @return
+ * @return boolean
  *
  */
 bool ServerStorageControl::updateShoppingCart(Student* student, PurchasableItem* item, qint32 quantity){
@@ -118,7 +118,29 @@ bool ServerStorageControl::updateShoppingCart(Student* student, PurchasableItem*
     return false;
 }
 
-
+/**
+ * @brief ServerStorageControl::retrieveAllContent()
+ * Retrieves all of the content in the database in the form of a list of textbooks, with lists of chapters and chapter sections
+ * in them
+ *
+ * @return QList<Textbook*>*
+ *
+ */
 QList<Textbook*>* ServerStorageControl::retrieveAllContent(){
+    QueryControl* q = new QueryControl();
+    QList<Textbook*>* result = q->retrieveAllTextbookList();
+    foreach (Textbook* text, *result){
+        QList<Chapter*>* cList =  q->retrieveChapterList(text->getISBN(),false);
+        text->getChapterList() = *cList;
+        delete cList;
+        foreach(Chapter* chap, text->getChapterList()){
+            QList<Section*>* sList = q->retrieveSectionList(chap->getChapterNumber(),text->getISBN(),false);
+            chap->getChapterSections() = *sList;
+            delete sList;
+        }
+    }
 
+    delete q;
+
+    return result;
 }

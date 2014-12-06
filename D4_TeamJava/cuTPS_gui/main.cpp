@@ -69,7 +69,17 @@ int main(int argc, char *argv[])
         qDebug() << " Quantity: " + str;
     }
 
+    qDebug() << "Testing for retrieving all content";
+    ContentManagementUpdateControl cmTest;
 
+    QList<Textbook*>* testResult = cmTest.retrieveAllContent();
+
+    foreach(Textbook* text, *testResult){
+        QJsonObject json;
+        text->write(json);
+
+        qDebug() << json;
+    }
 
     return a.exec();
 

@@ -55,7 +55,7 @@ public:
     bool updateCourseStudentLink(Course*, qint32, Student*);
 
     // Student operation
-    bool savePaymentInformation(Student*, PaymentInformation*);
+    bool updatePaymentInformation(Student*, PaymentInformation*);
     PaymentInformation* retrievePaymentInformation(Student*);
     Student* retrieveStudent(QString);
     QList<Student*>* retrieveStudentList(Course*, qint32);
@@ -64,7 +64,7 @@ public:
     bool updatePurchasableItem(PurchasableItem*);
     bool deletePurchasableItem(PurchasableItem*);
     QList< QPair<PurchasableItem*,qint32> >* getShoppingCartItemList(Student*, bool);
-    QList< QPair<PurchasableItem*,qint32> >* getPurchasableItemList(bool);
+    QList<PurchasableItem*>* getPurchasableItemList(bool);
     bool addPurchasableItemToCart(PurchasableItem*, Student*);
     bool updateOrderContents(PurchasableItem*, Student*);
 

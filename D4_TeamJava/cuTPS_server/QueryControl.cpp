@@ -125,9 +125,9 @@ void QueryControl::test(){
 
     delete(paymentInformation);
 
-    qDebug() << "\ntest for savePaymentInformation\n";
+    qDebug() << "\ntest for updatePaymentInformation\n";
     paymentInformation = new PaymentInformation(); // will use default const
-    qDebug() << this->savePaymentInformation(student, paymentInformation);
+    qDebug() << this->updatePaymentInformation(student, paymentInformation);
 
     delete(paymentInformation);
 
@@ -391,7 +391,7 @@ void QueryControl::test(){
         qDebug() <<json;
     }
 
-    qDebug() << "\ntest for retrieveStudentList after updateCourseStudentLink after createCourse\n";
+    qDebug() << "\ntest for retrieveStudentList after updateCourseStudentLink after deleteCourse\n";
     foreach(Student *stu, *(this->retrieveStudentList(course, term->getTermID()))){
         json = QJsonObject();
         stu->write(json);
@@ -399,13 +399,12 @@ void QueryControl::test(){
     }
 
     qDebug() << "\ntest for getPurchasableItemList\n";
-    list = this->getPurchasableItemList(false);
-    for(int i = 0; i<list->length(); i++) {
+    foreach (PurchasableItem *pi, *(this->getPurchasableItemList(false))){
         json = QJsonObject();
-        list->at(i).first->write(json);
+        pi->write(json);
         qDebug() <<json;
     }
-    delete(list);/**/
+/**/
 }
 
 /**
@@ -1912,49 +1911,54 @@ bool QueryControl::updateCourseStudentLink(Course *course, qint32 termID, Studen
 }
 
 /**
- * @brief QueryControl::savePaymentInformation
- *  Save payment information for a student
+ * @brief QueryControl::updatePaymentInformation
+ *  creates a new PaymentInformation or replace/update
+ *  a existing PaymentInformation in DB for a student
+ *  Note:
+ *  1) Student primary ID Student::studentNum
+ *     must remain not change otherwize operation will not
+ *     create a new PaymentInformation or replace/update
+ *     a existing PaymentInformation in DB for a student
  * @param student
- *  Student to save the payment information under
+ *  Student to create or replace/update PaymentInformation under
  * @param info
- *  payment information to save
+ *  PaymentInformation object to create or replace/update to DB
  * @return
  *  Returns if operation was a success
  */
-bool QueryControl::savePaymentInformation(Student *student, PaymentInformation *info) {
+bool QueryControl::updatePaymentInformation(Student *student, PaymentInformation *info) {
 
-        // edit payment information
-        QSqlQuery PaymentInformationQuery;
+    // edit payment information
+    QSqlQuery PaymentInformationQuery;
 
-        PaymentInformationQuery.prepare("REPLACE INTO PaymentInformation (creditCardNumber, cardType, cvv, expirationDate, nameOnCard, postalCode, province, city, streetName, houseNumber, studentNumber) "
-                                            "VALUES(:creditCardNumber, :cardType, :cvv, :expirationDate, :nameOnCard, :postalCode, :province, :city, :streetName, :houseNumber, :studentNumber);");
-        PaymentInformationQuery.bindValue(":creditCardNumber", info->getCreditCardInfo().getCreditCardNo());
-        PaymentInformationQuery.bindValue(":cardType", info->getCreditCardInfo().getCardType());
-        PaymentInformationQuery.bindValue(":cvv", info->getCreditCardInfo().getCVV());
-        PaymentInformationQuery.bindValue(":expirationDate", info->getCreditCardInfo().getExpDate());
-        PaymentInformationQuery.bindValue(":nameOnCard", info->getCreditCardInfo().getNameOnCard());
-        PaymentInformationQuery.bindValue(":postalCode", info->getBillInfo().getPostalCode());
-        PaymentInformationQuery.bindValue(":province", info->getBillInfo().getProvince());
-        PaymentInformationQuery.bindValue(":city", info->getBillInfo().getCity());
-        PaymentInformationQuery.bindValue(":streetName", info->getBillInfo().getStreetName());
-        PaymentInformationQuery.bindValue(":houseNumber", info->getBillInfo().getHouseNumber());
-        PaymentInformationQuery.bindValue(":studentNumber", student->getStudentNum());
+    PaymentInformationQuery.prepare("REPLACE INTO PaymentInformation (creditCardNumber, cardType, cvv, expirationDate, nameOnCard, postalCode, province, city, streetName, houseNumber, studentNumber) "
+                                        "VALUES(:creditCardNumber, :cardType, :cvv, :expirationDate, :nameOnCard, :postalCode, :province, :city, :streetName, :houseNumber, :studentNumber);");
+    PaymentInformationQuery.bindValue(":creditCardNumber", info->getCreditCardInfo().getCreditCardNo());
+    PaymentInformationQuery.bindValue(":cardType", info->getCreditCardInfo().getCardType());
+    PaymentInformationQuery.bindValue(":cvv", info->getCreditCardInfo().getCVV());
+    PaymentInformationQuery.bindValue(":expirationDate", info->getCreditCardInfo().getExpDate());
+    PaymentInformationQuery.bindValue(":nameOnCard", info->getCreditCardInfo().getNameOnCard());
+    PaymentInformationQuery.bindValue(":postalCode", info->getBillInfo().getPostalCode());
+    PaymentInformationQuery.bindValue(":province", info->getBillInfo().getProvince());
+    PaymentInformationQuery.bindValue(":city", info->getBillInfo().getCity());
+    PaymentInformationQuery.bindValue(":streetName", info->getBillInfo().getStreetName());
+    PaymentInformationQuery.bindValue(":houseNumber", info->getBillInfo().getHouseNumber());
+    PaymentInformationQuery.bindValue(":studentNumber", student->getStudentNum());
 
+    // update name of user as the name on its payment information changed
+    QSqlQuery nameQuery;
+    nameQuery.prepare("UPDATE User SET "
+                        "fullName=:fullName "
+                      "WHERE userName= "
+                        "( "
+                            "SELECT userName FROM Student "
+                            "WHERE Student.studentNumber=:studentNumber "
+                        "); ");
 
-        // edit name
-        QSqlQuery nameQuery;
-        nameQuery.prepare(  "UPDATE User SET "
-                                "fullName=:fullName "
-                            "WHERE userName= "
-                                "( "
-                                    "SELECT userName FROM Student "
-                                    "WHERE Student.studentNumber=:studentNumber "
-                                "); ");
+    nameQuery.bindValue(":fullName", info->getBillInfo().getName());
+    nameQuery.bindValue(":studentNumber", student->getStudentNum());
 
-        nameQuery.bindValue(":fullName", info->getBillInfo().getName());
-        nameQuery.bindValue(":studentNumber", student->getStudentNum());
-
-        return PaymentInformationQuery.exec() && nameQuery.exec();
+    return PaymentInformationQuery.exec() && nameQuery.exec();
 }
 
 /**
@@ -2357,17 +2361,17 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(S
  *  if true then get only avaliable item
  *  else get all items
  * @return
- *  returns a list of pairs(PurchasableItem, quantity of that PurchasableItem)
+ *  returns a list of PurchasableItem
  */
-QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bool getavailabilityOnly){
-     QList< QPair<PurchasableItem*,qint32> > *purchasableItems = new QList< QPair<PurchasableItem*,qint32> >();
+QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getavailabilityOnly){
+     QList<PurchasableItem*> *purchasableItems = new QList<PurchasableItem*>();
 
     QSqlQuery textBookQuery;
     QSqlQuery chapterQuery;
     QSqlQuery sectionQuery;
 
     if(!getavailabilityOnly) {
-        // get all textbooks in shopping cart
+        // get all textbooks
         textBookQuery.exec("SELECT Textbook.textBookTitle, "
                                     "Textbook.author, "
                                     "Textbook.edition, "
@@ -2377,39 +2381,36 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bo
                                     "Textbook.coverImageLocation, "
                                     "Textbook.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability, "
-                                    "ShoppingCart.quantity "
+                                    "PurchasableItem.availability "
                                 "FROM Textbook "
                                 "JOIN PurchasableItem ON "
                                    "Textbook.itemID = PurchasableItem.ItemID "
                                    "ORDER BY Textbook.textBookTitle ASC, Textbook.ISBN ASC;");
 
-        // get all chapters in shopping cart
+        // get all chapters
         chapterQuery.exec("SELECT Chapter.chapterTitle, "
                                    "Chapter.chapterNumber, "
                                    "Chapter.itemID, "
                                    "PurchasableItem.price, "
-                                   "PurchasableItem.availability, "
-                                   "ShoppingCart.quantity "
+                                   "PurchasableItem.availability "
                                "FROM Chapter "
                                "JOIN PurchasableItem ON "
                                    "Chapter.itemID = PurchasableItem.ItemID "
                                    "ORDER BY Chapter.chapterNumber ASC;");
 
-        // get all sections in shopping cart
+        // get all sections
         sectionQuery.exec("SELECT section.sectionTitle, "
                                     "section.sectionNumber, "
                                     "section.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability, "
-                                    "ShoppingCart.quantity "
+                                    "PurchasableItem.availability "
                                 "FROM Section "
                                 "JOIN PurchasableItem ON "
                                     "Section.itemID = PurchasableItem.ItemID "
                                     "ORDER BY Section.sectionNumber ASC;");
     }
     else {
-        // get all textbooks in shopping cart
+        // get all textbooks
         textBookQuery.exec("SELECT Textbook.textBookTitle, "
                                     "Textbook.author, "
                                     "Textbook.edition, "
@@ -2419,34 +2420,31 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bo
                                     "Textbook.coverImageLocation, "
                                     "Textbook.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability, "
-                                    "ShoppingCart.quantity "
+                                    "PurchasableItem.availability "
                                 "FROM Textbook "
                                 "JOIN PurchasableItem ON "
                                    "Textbook.itemID = PurchasableItem.ItemID "
                                 "WHERE PurchasableItem.availability=1 "
                                    "ORDER BY Textbook.textBookTitle ASC, Textbook.ISBN ASC;");
 
-        // get all chapters in shopping cart
+        // get all chapters
         chapterQuery.exec("SELECT Chapter.chapterTitle, "
                                    "Chapter.chapterNumber, "
                                    "Chapter.itemID, "
                                    "PurchasableItem.price, "
-                                    "PurchasableItem.availability, "
-                                    "ShoppingCart.quantity "
+                                   "PurchasableItem.availability "
                                "FROM Chapter "
                                "JOIN PurchasableItem ON "
                                    "Chapter.itemID = PurchasableItem.ItemID "
                                "WHERE PurchasableItem.availability=1 "
                                    "ORDER BY Chapter.chapterNumber ASC;");
 
-        // get all sections in shopping cart
+        // get all sections
         sectionQuery.exec("SELECT section.sectionTitle, "
                                     "section.sectionNumber, "
                                     "section.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability, "
-                                    "ShoppingCart.quantity "
+                                    "PurchasableItem.availability "
                                 "FROM Section "
                                 "JOIN PurchasableItem ON "
                                     "Section.itemID = PurchasableItem.ItemID "
@@ -2466,28 +2464,29 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bo
                                            textBookQuery.value(textBookQuery.record().indexOf("availability")).toBool());
          textbook->setCoverImageLoc(textBookQuery.value(textBookQuery.record().indexOf("coverImageLocation")).toString());
 
-         purchasableItems->push_back(QPair<PurchasableItem*,qint32>(textbook, textBookQuery.value(textBookQuery.record().indexOf("quantity")).toInt()));
+         purchasableItems->push_back(textbook);
     }
 
 
     while (chapterQuery.next()){
-         purchasableItems->push_back(QPair<PurchasableItem*,qint32>(new Chapter(chapterQuery.value(chapterQuery.record().indexOf("chapterTitle")).toString(),
-                                                                                chapterQuery.value(chapterQuery.record().indexOf("chapterNumber")).toInt(),
-                                                                                chapterQuery.value(chapterQuery.record().indexOf("itemID")).toInt(),
-                                                                                chapterQuery.value(chapterQuery.record().indexOf("price")).toDouble(),
-                                                                                chapterQuery.value(chapterQuery.record().indexOf("availability")).toBool()),
-         chapterQuery.value(chapterQuery.record().indexOf("quantity")).toInt()));
+         purchasableItems->push_back(new Chapter(chapterQuery.value(chapterQuery.record().indexOf("chapterTitle")).toString(),
+                                                                    chapterQuery.value(chapterQuery.record().indexOf("chapterNumber")).toInt(),
+                                                                    chapterQuery.value(chapterQuery.record().indexOf("itemID")).toInt(),
+                                                                    chapterQuery.value(chapterQuery.record().indexOf("price")).toDouble(),
+                                                                    chapterQuery.value(chapterQuery.record().indexOf("availability")).toBool()));
     }
 
     while (sectionQuery.next()){
-         purchasableItems->push_back(QPair<PurchasableItem*,qint32>(new Section(sectionQuery.value(sectionQuery.record().indexOf("sectionTitle")).toString(),
-                                                                                sectionQuery.value(sectionQuery.record().indexOf("sectionNumber")).toInt(),
-                                                                                sectionQuery.value(sectionQuery.record().indexOf("itemID")).toInt(),
-                                                                                sectionQuery.value(sectionQuery.record().indexOf("price")).toDouble(),
-                                                                                sectionQuery.value(sectionQuery.record().indexOf("availability")).toBool()),
-         sectionQuery.value(sectionQuery.record().indexOf("quantity")).toInt()));
+         purchasableItems->push_back(new Section(sectionQuery.value(sectionQuery.record().indexOf("sectionTitle")).toString(),
+                                                                    sectionQuery.value(sectionQuery.record().indexOf("sectionNumber")).toInt(),
+                                                                    sectionQuery.value(sectionQuery.record().indexOf("itemID")).toInt(),
+                                                                    sectionQuery.value(sectionQuery.record().indexOf("price")).toDouble(),
+                                                                    sectionQuery.value(sectionQuery.record().indexOf("availability")).toBool()));
     }
 
+    qDebug() << textBookQuery.lastQuery() << textBookQuery.lastError();
+    qDebug() << chapterQuery.lastQuery() << chapterQuery.lastError();
+    qDebug() << sectionQuery.lastQuery() << sectionQuery.lastError();
     return purchasableItems;
 }
 

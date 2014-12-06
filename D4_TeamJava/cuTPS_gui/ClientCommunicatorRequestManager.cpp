@@ -22,7 +22,7 @@ QJsonDocument ClientCommunicatorRequestManager::getResult() { return result ; }
 QTcpSocket* ClientCommunicatorRequestManager::getTcp() { return this->tcpConnection ; }
 qint64 ClientCommunicatorRequestManager::getBytes() { return this->bytes ; }
 
-void ClientCommunicatorRequestManager::resetResult(){this->result = QJsonDocument();}
+void ClientCommunicatorRequestManager::resetBuffer(){buffer = QByteArray();}
 void ClientCommunicatorRequestManager::setBytes(qint64 bytes) {this->bytes = bytes ; }
 
 void ClientCommunicatorRequestManager::send(QJsonObject &json){
@@ -41,10 +41,14 @@ void ClientCommunicatorRequestManager::readyRead(){
     this->bytes = this->tcpConnection->bytesAvailable();
     qDebug() << "in client readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
 
-    char *data = new char[this->bytes];
-    bytes = this->tcpConnection->read(data, bytes);
+    //char *data = new char[this->bytes];
+    while (!this->tcpConnection->atEnd()){
+        buffer.append(this->tcpConnection->readAll());
+    }
+    //bytes = this->tcpConnection->read(buffer, bytes);
+    bytes = buffer.length();
     qDebug() << "bytes read: " << bytes << "\n";
-    result = QJsonDocument::fromJson(data);
+    result = QJsonDocument::fromJson(buffer);
     //qDebug() << result.toJson();
 
 

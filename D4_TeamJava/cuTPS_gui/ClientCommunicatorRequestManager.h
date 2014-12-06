@@ -22,7 +22,7 @@ public:
     QTcpSocket* getTcp();
     qint64 getBytes();
     void setBytes(qint64 bytes);
-    void        resetResult();
+    void        resetBuffer();
 private:
     QTcpSocket *tcpConnection;
     QDataStream dataStream;

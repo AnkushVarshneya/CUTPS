@@ -8,7 +8,8 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QueryControl w;
-    w.test();
+    //Test queries
+    //w.test();
     /*    ServerStorageControl s;
 
     qDebug() << "starting tests" ;

@@ -107,10 +107,10 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
     requestManager.send(api_server_call);
 
     QJsonDocument res;
-    while (res.isEmpty()) {
+    //while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
         res = requestManager.getResult();
-    }
+    //}
 
 
     QList<Textbook*>* result = new QList<Textbook*>();

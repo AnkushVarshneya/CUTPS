@@ -105,11 +105,17 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
     api_server_call["Function:"] = functionCall;
 
     requestManager.send(api_server_call);
-    requestManager.getTcp()->waitForReadyRead();
-    QJsonDocument res = requestManager.getResult();
-    qDebug() << res;
+
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
+
+
     QList<Textbook*>* result = new QList<Textbook*>();
     QJsonArray contentArray = res.object()["allContent"].toArray();
+    requestManager.resetResult();
     if(!contentArray.isEmpty()){
 
         for (int conIndex = 0; conIndex<contentArray.size();++conIndex){

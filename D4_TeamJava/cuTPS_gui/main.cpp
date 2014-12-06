@@ -22,52 +22,52 @@ int main(int argc, char *argv[])
 
     MainInputOutputManager mainIOManager;
 
-    //Testing for client
-    ShopUpdateControl test;
-    QList<Term*>* terms = test.retrieveAllTerms();
-    foreach(Term *trm, *terms){
-        QJsonObject json;
-        trm->write(json);
-        qDebug() <<json;
-    }
+//    //Testing for client
+//    ShopUpdateControl test;
+//    QList<Term*>* terms = test.retrieveAllTerms();
+//    foreach(Term *trm, *terms){
+//        QJsonObject json;
+//        trm->write(json);
+//        qDebug() <<json;
+//    }
 
-    //Testing for retrieving content
-    Student testStu;
-    testStu.setStudentNum("100853074");
-    QList<Course*>* courses = test.retrieveContent(&testStu,(*terms)[0]);
-    foreach(Course *crs, *courses){
-        QJsonObject json;
-        crs->write(json);
-        qDebug() <<json;
-    }
+//    //Testing for retrieving content
+//    Student testStu;
+//    testStu.setStudentNum("100853074");
+//    QList<Course*>* courses = test.retrieveContent(&testStu,(*terms)[0]);
+//    foreach(Course *crs, *courses){
+//        QJsonObject json;
+//        crs->write(json);
+//        qDebug() <<json;
+//    }
 
-    qDebug() << "Testing for adding stuff to shopping cart and retrieving the shopping cart";
+//    qDebug() << "Testing for adding stuff to shopping cart and retrieving the shopping cart";
 
-    foreach (Course* crs, *courses){
-        QList<Textbook*> textbookContent = crs->getRequiredTextbooks();
-        //Adding  1 textbooks to shopping cart for each textbook in the course
-        foreach(Textbook* text, textbookContent){
-            qint32 i = 1;
-            test.updateShoppingCart(&testStu,(PurchasableItem*)text,i);
-            //Adding 1 chapter for each chapter in the textbooks
-            foreach(Chapter* chap, text->getChapterList()){
-                test.updateShoppingCart(&testStu,(PurchasableItem*)chap,i);
-                foreach(Section* sec, chap->getChapterSections()){
-                    test.updateShoppingCart(&testStu,(PurchasableItem*)sec,i);
-                }
-            }
-        }
-    }
+//    foreach (Course* crs, *courses){
+//        QList<Textbook*> textbookContent = crs->getRequiredTextbooks();
+//        //Adding  1 textbooks to shopping cart for each textbook in the course
+//        foreach(Textbook* text, textbookContent){
+//            qint32 i = 1;
+//            test.updateShoppingCart(&testStu,(PurchasableItem*)text,i);
+//            //Adding 1 chapter for each chapter in the textbooks
+//            foreach(Chapter* chap, text->getChapterList()){
+//                test.updateShoppingCart(&testStu,(PurchasableItem*)chap,i);
+//                foreach(Section* sec, chap->getChapterSections()){
+//                    test.updateShoppingCart(&testStu,(PurchasableItem*)sec,i);
+//                }
+//            }
+//        }
+//    }
 
-    ShoppingCart* testShoppingCart = test.retrieveShoppingCart(&testStu);
-    for(int i = 0; i < testShoppingCart->getItems().size() ; i++){
-        QJsonObject json;
-        testShoppingCart->getItems()[i].first->write(json);
-        QString str;
-        str.append(QString("%1").arg(testShoppingCart->getItems()[i].second));
-        qDebug() << json;
-        qDebug() << " Quantity: " + str;
-    }
+//    ShoppingCart* testShoppingCart = test.retrieveShoppingCart(&testStu);
+//    for(int i = 0; i < testShoppingCart->getItems().size() ; i++){
+//        QJsonObject json;
+//        testShoppingCart->getItems()[i].first->write(json);
+//        QString str;
+//        str.append(QString("%1").arg(testShoppingCart->getItems()[i].second));
+//        qDebug() << json;
+//        qDebug() << " Quantity: " + str;
+//    }
 
     qDebug() << "Testing for retrieving all content";
     ContentManagementUpdateControl cmTest;

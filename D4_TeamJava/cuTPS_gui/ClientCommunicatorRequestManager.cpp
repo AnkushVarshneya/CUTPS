@@ -1,4 +1,6 @@
 #include "ClientCommunicatorRequestManager.h"
+#include <stdio.h>
+#include <string.h>
 
 ClientCommunicatorRequestManager::ClientCommunicatorRequestManager(QObject *parent) :
     QObject(parent),
@@ -22,6 +24,7 @@ QJsonDocument ClientCommunicatorRequestManager::getResult() { return result ; }
 QTcpSocket* ClientCommunicatorRequestManager::getTcp() { return this->tcpConnection ; }
 qint64 ClientCommunicatorRequestManager::getBytes() { return this->bytes ; }
 
+void ClientCommunicatorRequestManager::resetResult(){this->result = QJsonDocument();}
 void ClientCommunicatorRequestManager::setBytes(qint64 bytes) {this->bytes = bytes ; }
 
 void ClientCommunicatorRequestManager::send(QJsonObject &json){
@@ -36,14 +39,14 @@ void ClientCommunicatorRequestManager::readyRead(){
     qDebug() << "bytes avail: " << this->tcpConnection->bytesAvailable();
     qDebug() << "peer info: " << this->tcpConnection->peerName() << this->tcpConnection->peerAddress() << this->tcpConnection->peerPort() << "\n";
 
-    this->bytes = 0;
-    this->bytes = this->tcpConnection->bytesAvailable();
-    qDebug() << "in client readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
 
-    char *data = new char[this->bytes];
-   bytes = this->tcpConnection->read(data,bytes);
-   qDebug() << "bytes read: " << bytes << "\n";
-   result = QJsonDocument::fromJson(data);
-   qDebug() << result.toJson();
+    while (!this->tcpConnection->atEnd()){
+        qDebug() << "1";
+        this->buffer.append(this->tcpConnection->read(this->tcpConnection->bytesAvailable()));
+        qDebug() << "2";
+    }
+    qDebug() << "in client readbytes slot, bytes avail: " << buffer.length() << "\n";  //to read
+    result = QJsonDocument::fromJson(buffer);
+    //qDebug() << result.toJson();
 
 }

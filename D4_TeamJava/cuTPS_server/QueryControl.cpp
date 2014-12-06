@@ -189,6 +189,7 @@ void QueryControl::test(){
     textbook->setEdition("900");
     textbook->setItemTitle("a random textbook");
     textbook->setPrice(1000);
+    textbook->setAvailability(true);
 
     qDebug() << this->updateTextbook(textbook);
 
@@ -231,6 +232,7 @@ void QueryControl::test(){
     qDebug() << "\ntest for updateChapter\n";
     chapter->setItemTitle("a random chapter");
     chapter->setPrice(1000);
+    chapter->setAvailability(true);
 
     qDebug() << this->updateChapter(chapter, isbn);
 
@@ -272,6 +274,7 @@ void QueryControl::test(){
     qDebug() << "\ntest for updateSection\n";
     section->setItemTitle("a random section");
     section->setPrice(1000);
+    section->setAvailability(true);
 
     qDebug() << this->updateSection(section, chapterNumber, isbn);
 
@@ -1920,30 +1923,11 @@ bool QueryControl::updateCourseStudentLink(Course *course, qint32 termID, Studen
  */
 bool QueryControl::savePaymentInformation(Student *student, PaymentInformation *info) {
 
-    // check if there is a student with that id
-    QSqlQuery studentQuery;
-    studentQuery.prepare("SELECT COUNT(*) FROM student "
-                            "WHERE studentNumber =:studentNumber;");
-    studentQuery.bindValue(":studentNumber", student->getStudentNum());
-    studentQuery.exec();
-
-    if(studentQuery.first() && (studentQuery.value(studentQuery.record().indexOf("COUNT(*)")).toInt()>0)){
         // edit payment information
         QSqlQuery PaymentInformationQuery;
 
-        PaymentInformationQuery.prepare("UPDATE PaymentInformation SET "
-                                            "creditCardNumber=:creditCardNumber, "
-                                            "cardType=:cardType, "
-                                            "cvv=:cvv, "
-                                            "expirationDate=:expirationDate, "
-                                            "nameOnCard=:nameOnCard, "
-                                            "postalCode=:postalCode, "
-                                            "province=:province, "
-                                            "city=:city, "
-                                            "streetName=:streetName, "
-                                            "houseNumber=:houseNumber "
-                                        "WHERE studentNumber=:studentNumber; ");
-
+        PaymentInformationQuery.prepare("REPLACE INTO PaymentInformation (creditCardNumber, cardType, cvv, expirationDate, nameOnCard, postalCode, province, city, streetName, houseNumber, studentNumber) "
+                                            "VALUES(:creditCardNumber, :cardType, :cvv, :expirationDate, :nameOnCard, :postalCode, :province, :city, :streetName, :houseNumber, :studentNumber);");
         PaymentInformationQuery.bindValue(":creditCardNumber", info->getCreditCardInfo().getCreditCardNo());
         PaymentInformationQuery.bindValue(":cardType", info->getCreditCardInfo().getCardType());
         PaymentInformationQuery.bindValue(":cvv", info->getCreditCardInfo().getCVV());
@@ -1956,9 +1940,9 @@ bool QueryControl::savePaymentInformation(Student *student, PaymentInformation *
         PaymentInformationQuery.bindValue(":houseNumber", info->getBillInfo().getHouseNumber());
         PaymentInformationQuery.bindValue(":studentNumber", student->getStudentNum());
 
+
         // edit name
         QSqlQuery nameQuery;
-
         nameQuery.prepare(  "UPDATE User SET "
                                 "fullName=:fullName "
                             "WHERE userName= "
@@ -1971,9 +1955,6 @@ bool QueryControl::savePaymentInformation(Student *student, PaymentInformation *
         nameQuery.bindValue(":studentNumber", student->getStudentNum());
 
         return PaymentInformationQuery.exec() && nameQuery.exec();
-    }
-
-    return false;
 }
 
 /**

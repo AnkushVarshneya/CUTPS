@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     QueryControl w;
 
     //Test queries
-    w.test();
+    //w.test();
     /*    ServerStorageControl s;
 
     qDebug() << "starting tests" ;

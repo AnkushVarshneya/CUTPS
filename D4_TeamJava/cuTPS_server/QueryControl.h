@@ -26,14 +26,12 @@ public:
     QList<Term*>* retrieveTermList();
 
     // Course operations
-    bool createCourse(Course*, qint32);
     bool updateCourse(Course*, qint32);
     bool deleteCourse(Course*, qint32);
     QList<Course*>* retrieveStudentCourseList(QString, qint32);
     QList<Course*>* retrieveCourseList(qint32);
 
     // Textbook operations
-    bool createTextbook(Textbook*);
     bool updateTextbook(Textbook*);
     bool deleteTextbook(Textbook*);
     Textbook* retrieveTextbook(QString, bool);
@@ -41,14 +39,12 @@ public:
     QList<Textbook*>* retrieveAllTextbookList();
 
     // Chapter operations
-    bool createChapter(Chapter*, QString);
     bool updateChapter(Chapter*, QString);
     bool deleteChapter(Chapter*, QString);
     Chapter* retrieveChapter(qint32, QString, bool);
     QList<Chapter*>* retrieveChapterList(QString, bool);
 
     // Section operations
-    bool createSection(Section*, qint32, QString);
     bool updateSection(Section*, qint32, QString);
     bool deleteSection(Section*, qint32, QString);
     Section* retrieveSection(qint32, qint32, QString, bool);
@@ -59,17 +55,16 @@ public:
     bool updateCourseStudentLink(Course*, qint32, Student*);
 
     // Student operation
-    bool savePaymentInformation(Student*, PaymentInformation*);
+    bool updatePaymentInformation(Student*, PaymentInformation*);
     PaymentInformation* retrievePaymentInformation(Student*);
     Student* retrieveStudent(QString);
     QList<Student*>* retrieveStudentList(Course*, qint32);
 
     // purchasable item & shopping cart operation
-    bool createPurchasableItem(PurchasableItem*);
     bool updatePurchasableItem(PurchasableItem*);
     bool deletePurchasableItem(PurchasableItem*);
     QList< QPair<PurchasableItem*,qint32> >* getShoppingCartItemList(Student*, bool);
-    QList< QPair<PurchasableItem*,qint32> >* getPurchasableItemList(bool);
+    QList<PurchasableItem*>* getPurchasableItemList(bool);
     bool addPurchasableItemToCart(PurchasableItem*, Student*);
     bool updateOrderContents(PurchasableItem*, Student*);
 

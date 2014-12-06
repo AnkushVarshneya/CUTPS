@@ -26,6 +26,7 @@ public:
     bool            updateShoppingCart(Student*, PurchasableItem*, qint32);
 
     //Content Manager API
+    QList<Textbook*>* retrieveAllContent();
 
 private:
 

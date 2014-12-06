@@ -8,9 +8,10 @@ ServerListenerControl::ServerListenerControl(QObject *parent):
 }
 
 void    ServerListenerControl::startServer(){
-    int port = 1234;
+    int port = 60000;
+    //IP Address for communicating between clients in the VMs in this lab : 10.0.2.15
     const QString & testaddress = "0.0.0.0";
-    //const QString & testaddress = "1.2.3.4";
+    //const QString & testaddress = "10.0.2.15";
     QHostAddress address = QHostAddress(testaddress);
     if (!this->listen(address, port)){
          qDebug() << "Could not start server.";
@@ -78,12 +79,17 @@ void ServerListenerControl::readBytes() {
    else if (cmd == "updateShoppingCart()"){
        updateShoppingCart(jsonDoc.object());
    }
+   else if (cmd == "retrieveAllContent()"){
+       retrieveAllContent();
+   }
 }
 
 //writes a json object to the tcp socket
 void ServerListenerControl::sendCommand(QJsonObject &json) {
         QJsonDocument jdoc = QJsonDocument(json);
+
         bytes = this->tcpConnection->write(jdoc.toJson());
+        qDebug() << jdoc;
 }
 
 void ServerListenerControl::disconnected(){
@@ -106,6 +112,10 @@ void ServerListenerControl::retrieveAllTerms(QJsonObject json){
     this->sendCommand(r);
 }
 
+//Gets the student and term arguments converted from json
+//Uses the server storage class to retrieve the content ordered by
+//The student's registered courses for a given term
+//Sends back the information to client using sendCommand()
 void ServerListenerControl::retrieveContent(QJsonObject json){
     Student stu;
     stu.read(json["Student"].toObject());
@@ -126,13 +136,73 @@ void ServerListenerControl::retrieveContent(QJsonObject json){
     this->sendCommand(r);
 }
 
+//Calls the ListenerControl's storage class to retrieve the shopping cart
+//With the passed in student argument converted from json
+//Writes the resultshopping cart to json to send back to the client
 void ServerListenerControl::retrieveShoppingCart(QJsonObject json){
-
+    Student stu;
+    stu.read(json["student"].toObject());
+    ShoppingCart* resultShoppingCart = storage.retrieveShoppingCart(&stu);
+    QJsonObject cartObject;
+    resultShoppingCart->write(cartObject);
+    QJsonObject r;
+    r["shoppingcart"] = cartObject;
+    this->sendCommand(r);
 }
 
-void ServerListenerControl::updateShoppingCart(QJsonObject){
-
+//Calls the ListenerControl's storage class to update the shopping cart
+//With the passed in json arguments
+//Returns back to client a sucess flag
+void ServerListenerControl::updateShoppingCart(QJsonObject json){
+    Student stu;
+    PurchasableItem* item;
+    qint32 quantity;
+    stu.read(json["student"].toObject());
+    quantity = json["quantity"].toDouble();
+    qDebug() << json;
+    QJsonObject itemObject = json["purchasableItem"].toObject();
+    if(itemObject.contains("isbn")){
+        Textbook* newTextbook = new Textbook();
+        newTextbook->read(itemObject);
+        qDebug() << itemObject;
+        bool success = storage.updateShoppingCart(&stu, newTextbook, quantity);
+        QJsonObject r;
+        r["success"] = success;
+        this->sendCommand(r);
+    }
+    else if(itemObject.contains("chapterNumber")){
+        Chapter* newChapter = new Chapter();
+        newChapter->read(itemObject);
+        bool success = storage.updateShoppingCart(&stu, newChapter, quantity);
+        QJsonObject r;
+        r["success"] = success;
+        this->sendCommand(r);
+    }
+    else if(itemObject.contains("sectionNumber")){
+        Section* newSection = new Section();
+        newSection->read(itemObject);
+        bool success = storage.updateShoppingCart(&stu,newSection, quantity);
+        QJsonObject r;
+        r["success"] = success;
+        this->sendCommand(r);
+    }
 }
 
+//Handles API call to retrieve All the purchasable content in the database in the form of
+//A  list of textbooks, which has a list of chapters, and each chapter containing a list of chapter sections
+void ServerListenerControl::retrieveAllContent(){
+    QList<Textbook*>* result = storage.retrieveAllContent();
+    QJsonArray contentArray;
+    foreach (Textbook* text, *result){
+        QJsonObject textObject;
+        text->write(textObject);
+        contentArray.append(textObject);
+    }
+    QJsonObject r;
+    qDeleteAll(result->begin(), result->end());
+    delete result;
+    r["allContent"] = contentArray;
+    this->sendCommand(r);
+}
 
 

@@ -1,4 +1,4 @@
-/*
+/* Combines Classes of Serializer and ManagementControl in the Client Communicator Subsystem
  *Traceabilty: SS-05 (Part of Client Communicator Subsystem)
  */
 
@@ -17,6 +17,9 @@ public:
     ClientCommunicatorManagementControl();
     QList<Term*>* retrieveAllTerms();
     QList<Course*>* retrieveContent(Student*, Term*);
+    ShoppingCart*   retrieveShoppingCart(Student*);
+    bool            updateShoppingCart(Student*, PurchasableItem*, qint32);
+    QList<Textbook*>* retrieveAllContent();
 
 private:
     ClientCommunicatorRequestManager requestManager;

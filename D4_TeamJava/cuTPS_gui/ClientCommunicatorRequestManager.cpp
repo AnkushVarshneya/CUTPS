@@ -41,7 +41,7 @@ void ClientCommunicatorRequestManager::readyRead(){
     qDebug() << "in client readbytes slot, bytes avail: " << this->bytes << "\n";  //to read
 
     char *data = new char[this->bytes];
-   bytes = this->tcpConnection->read(data, bytes);
+   bytes = this->tcpConnection->read(data,bytes);
    qDebug() << "bytes read: " << bytes << "\n";
    result = QJsonDocument::fromJson(data);
    qDebug() << result.toJson();

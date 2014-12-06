@@ -79,12 +79,17 @@ void ServerListenerControl::readBytes() {
    else if (cmd == "updateShoppingCart()"){
        updateShoppingCart(jsonDoc.object());
    }
+   else if (cmd == "retrieveAllContent()"){
+       retrieveAllContent();
+   }
 }
 
 //writes a json object to the tcp socket
 void ServerListenerControl::sendCommand(QJsonObject &json) {
         QJsonDocument jdoc = QJsonDocument(json);
+
         bytes = this->tcpConnection->write(jdoc.toJson());
+        qDebug() << jdoc;
 }
 
 void ServerListenerControl::disconnected(){
@@ -183,5 +188,21 @@ void ServerListenerControl::updateShoppingCart(QJsonObject json){
     }
 }
 
+//Handles API call to retrieve All the purchasable content in the database in the form of
+//A  list of textbooks, which has a list of chapters, and each chapter containing a list of chapter sections
+void ServerListenerControl::retrieveAllContent(){
+    QList<Textbook*>* result = storage.retrieveAllContent();
+    QJsonArray contentArray;
+    foreach (Textbook* text, *result){
+        QJsonObject textObject;
+        text->write(textObject);
+        contentArray.append(textObject);
+    }
+    QJsonObject r;
+    qDeleteAll(result->begin(), result->end());
+    delete result;
+    r["allContent"] = contentArray;
+    this->sendCommand(r);
+}
 
 

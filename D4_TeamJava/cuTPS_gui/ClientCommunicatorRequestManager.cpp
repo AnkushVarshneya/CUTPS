@@ -1,6 +1,4 @@
 #include "ClientCommunicatorRequestManager.h"
-#include <stdio.h>
-#include <string.h>
 
 ClientCommunicatorRequestManager::ClientCommunicatorRequestManager(QObject *parent) :
     QObject(parent),

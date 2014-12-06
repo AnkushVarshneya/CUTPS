@@ -98,3 +98,29 @@ bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, Purch
     bool result = res.object()["success"].toBool();
     return result;
 }
+
+QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
+    QJsonObject api_server_call;
+    QString functionCall = "retrieveAllContent()";
+    api_server_call["Function:"] = functionCall;
+
+    requestManager.send(api_server_call);
+    requestManager.getTcp()->waitForReadyRead();
+    QJsonDocument res = requestManager.getResult();
+    qDebug() << res;
+    QList<Textbook*>* result = new QList<Textbook*>();
+    QJsonArray contentArray = res.object()["allContent"].toArray();
+    if(!contentArray.isEmpty()){
+
+        for (int conIndex = 0; conIndex<contentArray.size();++conIndex){
+            QJsonObject conObject = contentArray[conIndex].toObject();
+            Textbook* newContent = new Textbook();
+            newContent->read(conObject);
+            result->append(newContent);
+        }
+    }
+
+
+    return result;
+
+}

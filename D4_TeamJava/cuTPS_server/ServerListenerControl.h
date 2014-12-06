@@ -1,6 +1,6 @@
 /* The Listener Control responsible for listening to client requests
- * Delegating functionality of deserializing request to a command to the Serializer class
- * And delegating functionality of using the RequestManager class to communicate with the database
+ * Combined class of Serializer and Listener Control as described in the Server Subsystem (SS-06)
+ * -delegates functionality of using the RequestManager class to communicate with the database
  *
  * Traceability: SS-06 (Part of Server Subsystem) */
 
@@ -28,6 +28,7 @@ private:
     void retrieveContent(QJsonObject);
     void retrieveShoppingCart(QJsonObject);
     void updateShoppingCart(QJsonObject);
+    void retrieveAllContent();
 
     ServerSerializer serializer;
     ServerStorageControl storage;

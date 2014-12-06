@@ -18,7 +18,7 @@
 class PurchasableItem : public CUtpsDataObject{
 
 public:
-    PurchasableItem(qint32 = 1337, float = 13.37, bool = false);
+    PurchasableItem(qint32 = -1, float = 0, bool = false);
     ~PurchasableItem();
 
     qint32              getItemID() const;

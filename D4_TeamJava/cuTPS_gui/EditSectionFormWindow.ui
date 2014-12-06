@@ -39,7 +39,7 @@
     <string>Section #:</string>
    </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox">
+  <widget class="QSpinBox" name="sectionNumberSpinBox">
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -52,7 +52,7 @@
     <number>1</number>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="titleTextbox">
    <property name="geometry">
     <rect>
      <x>90</x>

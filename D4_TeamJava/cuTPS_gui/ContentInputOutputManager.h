@@ -19,10 +19,6 @@ public:
     ContentInputOutputManager();
 
 private slots:
-
-
-
-
     void on_manageTextbooksInterface_back_button();
     void on_manageTextbooksInterface_createTextbook_button();
     void on_manageTextbooksInterface_editTextbook_button();
@@ -44,9 +40,6 @@ private slots:
     void on_manageTextbooksInterface_selectTextbook();
     void on_manageTextbooksInterface_selectChapter();
 
-
-
-
 private:
     ManageTextbooksInterfaceWindow*     manageTextbooksInterface;
     EditTextbookFormWindow*             editTextbookForm;
@@ -65,14 +58,37 @@ private:
 
     void setContentManagementInterfaceViewModel(QAbstractItemView*, QStandardItemModel*);
 
-    void buildTextbookModel();
-    void buildChapterModel();
-    void buildSectionModel();
+    void        buildTextbookModel();
+    void        buildChapterModel();
+    void        buildSectionModel();
 
-    Textbook*   getSelectedTextbook();
-    Chapter*    getSelectedChapter();
-    Section*    getSelectedSection();
+    void        editTextbook_buildChapterModel();
 
+    Textbook*   manageTextbooks_getSelectedTextbook();
+    Chapter*    manageTextbooks_getSelectedChapter();
+    Section*    manageTextbooks_getSelectedSection();
+
+    Chapter*    editTextbookForm_getSelectedChapter();
+    Section*    editChapterForm_getSelectedSection();
+
+    void        connect_manageTextbooksInterface();
+    void        connect_editTextbookForm();
+    void        connect_editChapterForm();
+    void        connect_editSectionForm();
+
+    void update_editChapterForm_SectionList();
+    void update_editTextbookForm_ChapterList();
+
+    //0: Create
+    //1: Edit
+    bool createOrEditTFlag;
+    bool createOrEditCFlag;
+    bool createOrEditSFlag;
+
+
+    Textbook* currentTextbook;
+    Chapter* currentChapter;
+    Section* currentSection;
 };
 
 #endif // CONTENTINPUTOUTPUTMANAGER_H

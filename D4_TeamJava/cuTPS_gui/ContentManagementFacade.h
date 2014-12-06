@@ -25,11 +25,19 @@ class ContentManagementFacade
 public:
     ContentManagementFacade();
     QList<Textbook*>    viewAllContent();
+    /*
+    bool                createTextbook(Textbook*);
+    bool                modifyTextbook(Textbook*);
+    bool                modifyContentAvailability(PurchasableItem*, bool);
+    bool                modifyContentPrices(PurchasableItem*,int);
+    bool                modifyContentBasicInfo(PurchasableItem*);
+    bool                deleteContent(PurchasableItem*);
+    */
 
 private:
-    QList<Textbook*>    fakeTextbooks;
-    ContentManagementInputControl inputControl;
-    ContentManagementUpdateControl updateControl;
+    QList<Textbook*>                fakeTextbooks;
+    ContentManagementInputControl   inputControl;
+    ContentManagementUpdateControl  updateControl;
 };
 
 #endif // CONTENTMANAGEMENTFACADE_H

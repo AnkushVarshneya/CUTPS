@@ -1226,6 +1226,9 @@ bool QueryControl::createTextbook(Textbook *textbook){
 bool QueryControl::updateTextbook(Textbook *textbook){
     bool noError = true;
 
+    //update its PurchasableItem first
+    noError = noError && updatePurchasableItem((PurchasableItem*)textbook);
+
     // update a textbook
     QSqlQuery textBookQuery;
 
@@ -1250,9 +1253,6 @@ bool QueryControl::updateTextbook(Textbook *textbook){
     textBookQuery.bindValue(":itemID", textbook->getItemID());
 
     noError = noError && textBookQuery.exec();
-
-    //update its PurchasableItem
-    noError = noError && updatePurchasableItem((PurchasableItem*)textbook);
 
     return noError;
 }
@@ -1555,6 +1555,9 @@ bool QueryControl::createChapter(Chapter *chapter, QString isbn){
 bool QueryControl::updateChapter(Chapter *chapter, QString isbn){
     bool noError = true;
 
+    //update its PurchasableItem first
+    noError = noError && updatePurchasableItem((PurchasableItem*)chapter);
+
     //update a chapter
     QSqlQuery chapterQuery;
 
@@ -1572,9 +1575,6 @@ bool QueryControl::updateChapter(Chapter *chapter, QString isbn){
     chapterQuery.bindValue(":itemID", chapter->getItemID());
 
     noError = noError && chapterQuery.exec();
-
-    //update its PurchasableItem
-    noError = noError && updatePurchasableItem((PurchasableItem*)chapter);
 
     return noError;
 }
@@ -1807,6 +1807,9 @@ bool QueryControl::createSection(Section *section, qint32 chapterNumber, QString
 bool QueryControl::updateSection(Section *section, qint32 chapterNumber, QString isbn){
     bool noError = true;
 
+    //update its PurchasableItem first
+    noError = noError && updatePurchasableItem((PurchasableItem*)section);
+
     //update a section
     QSqlQuery sectionQuery;
 
@@ -1827,9 +1830,6 @@ bool QueryControl::updateSection(Section *section, qint32 chapterNumber, QString
     sectionQuery.bindValue(":itemID", section->getItemID());
 
     noError = noError && sectionQuery.exec();
-
-    //update its PurchasableItem
-    noError = noError && updatePurchasableItem((PurchasableItem*)section);
 
     return noError;
 }
@@ -2332,7 +2332,7 @@ bool QueryControl::updatePurchasableItem(PurchasableItem* purchasableItem) {
     purchasableItemQuery.prepare("UPDATE PurchasableItem SET "
                                     "itemID = :itemID,"
                                     "price = :price"
-                                    "availability = availability"
+                                    "availability = :availability"
                                  " WHERE "
                                     "itemID = :itemID;");
     purchasableItemQuery.bindValue(":itemID", purchasableItem->getItemID());

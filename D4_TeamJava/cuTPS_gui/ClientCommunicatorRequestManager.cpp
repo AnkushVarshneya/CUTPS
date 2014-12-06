@@ -6,14 +6,14 @@ ClientCommunicatorRequestManager::ClientCommunicatorRequestManager(QObject *pare
 {
     this->dataStream.setDevice(tcpConnection); //sets the i/o device of the data stream
 
-    connectToHost(QHostAddress(), 1234);
+    connectToHost(QHostAddress(), 60000);
 }
 
 void ClientCommunicatorRequestManager::connectToHost(QHostAddress host, int port) {
 
     const QString & testaddress = "0.0.0.0";
     QHostAddress address = QHostAddress(testaddress);
-    this->tcpConnection->connectToHost(address, 1234);
+    this->tcpConnection->connectToHost(address, port);
     connect(this->tcpConnection, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
 }

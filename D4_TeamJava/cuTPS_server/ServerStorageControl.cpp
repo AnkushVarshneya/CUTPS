@@ -117,3 +117,8 @@ bool ServerStorageControl::updateShoppingCart(Student* student, PurchasableItem*
     delete q;
     return false;
 }
+
+
+QList<Textbook*>* ServerStorageControl::retrieveAllContent(){
+
+}

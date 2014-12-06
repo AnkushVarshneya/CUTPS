@@ -7,9 +7,9 @@
 using namespace std;
 int main(int argc, char *argv[])
 {
-    /*
     QueryControl w;
-    ServerStorageControl s;
+    w.test();
+    /*    ServerStorageControl s;
 
     qDebug() << "starting tests" ;
     //--------------Testing retrieveContent()---------

@@ -38,6 +38,7 @@ public:
     bool deleteTextbook(Textbook*);
     Textbook* retrieveTextbook(QString, bool);
     QList<Textbook*>* retrieveTextbookList(Course*, qint32, bool);
+    QList<Textbook*>* retrieveAllTextbookList();
 
     // Chapter operations
     bool createChapter(Chapter*, QString);

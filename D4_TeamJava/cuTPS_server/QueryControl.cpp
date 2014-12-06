@@ -22,8 +22,6 @@ QueryControl::QueryControl() {
             qDebug() << "DATABASE NOT INITIALIZED... LOADING DEFAULT VALUES";
             qDebug() <<  this->resetDatabase();
         }
-
-        //test();
     }
 }
 
@@ -49,6 +47,13 @@ void QueryControl::test(){
 
     qDebug() << "\ntest for resetDatabase\n";
     qDebug() << this->resetDatabase();
+
+    qDebug() << "\ntest for retrieveTextbookList\n";
+    foreach(Textbook *tbks, *(this->retrieveAllTextbookList())){
+        json = QJsonObject();
+        tbks->write(json);
+        qDebug() <<json;
+    }
 
     foreach(Textbook *tbks,  *(this->retrieveTextbookList(new Course("COMP3004", "A", "a"), 1, true))){
         qDebug() << "\ntest for retrieveTextbookList on predifined course\n";
@@ -1436,6 +1441,49 @@ QList<Textbook*>* QueryControl::retrieveTextbookList(Course *course,  qint32 ter
     textBookQuery.bindValue(":section", course->getCourseSection());
     textBookQuery.bindValue(":termID", termID);
     textBookQuery.exec();
+
+    while (textBookQuery.next()){
+         Textbook *textbook = new Textbook(textBookQuery.value(textBookQuery.record().indexOf("textBookTitle")).toString(),
+                                           textBookQuery.value(textBookQuery.record().indexOf("author")).toString(),
+                                           textBookQuery.value(textBookQuery.record().indexOf("edition")).toString(),
+                                           textBookQuery.value(textBookQuery.record().indexOf("publisher")).toString(),
+                                           textBookQuery.value(textBookQuery.record().indexOf("ISBN")).toString(),
+                                           textBookQuery.value(textBookQuery.record().indexOf("desc")).toString(),
+                                           textBookQuery.value(textBookQuery.record().indexOf("itemID")).toInt(),
+                                           textBookQuery.value(textBookQuery.record().indexOf("price")).toDouble(),
+                                           textBookQuery.value(textBookQuery.record().indexOf("availability")).toBool());
+         textbook->setCoverImageLoc(textBookQuery.value(textBookQuery.record().indexOf("coverImageLocation")).toString());
+
+         textbooks->push_back(textbook);
+    }
+
+    return textbooks;
+}
+
+/**
+ * @brief QueryControl::retrieveAllTextbookList
+ *  retrives a existing list of all Textbooks
+ * @return
+ *  returns a list of Textbooks
+ */
+QList<Textbook*>* QueryControl::retrieveAllTextbookList(){
+    QList<Textbook*> *textbooks = new QList<Textbook*>();
+
+    QSqlQuery textBookQuery;
+
+    textBookQuery.exec("SELECT Textbook.textBookTitle, "
+                          "Textbook.author, "
+                          "Textbook.edition, "
+                          "Textbook.publisher, "
+                          "Textbook.ISBN, "
+                          "Textbook.desc, "
+                          "Textbook.itemID, "
+                          "PurchasableItem.price, "
+                          "PurchasableItem.availability, "
+                          "Textbook.coverImageLocation "
+                          "FROM Textbook "
+                          "JOIN PurchasableItem ON "
+                             "Textbook.itemID = PurchasableItem.ItemID;");
 
     while (textBookQuery.next()){
          Textbook *textbook = new Textbook(textBookQuery.value(textBookQuery.record().indexOf("textBookTitle")).toString(),

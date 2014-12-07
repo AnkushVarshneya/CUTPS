@@ -145,3 +145,25 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
     return result;
 
 }
+
+bool ClientCommunicatorManagementControl::updateContent(Textbook* text){
+    QJsonObject api_server_call;
+    QString functionCall = "updateContent()";
+    api_server_call["Function:"] = functionCall;
+
+    QJsonObject textObject;
+    text->write(textObject);
+    api_server_call["textbook"] = textObject;
+    requestManager.send(api_server_call);
+
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
+
+    bool result = res.object()["success"].toBool();
+    requestManager.resetBuffer();
+    return result;
+
+}

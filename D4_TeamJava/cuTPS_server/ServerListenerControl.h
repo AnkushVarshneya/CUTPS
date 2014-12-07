@@ -29,7 +29,7 @@ private:
     void retrieveShoppingCart(QJsonObject);
     void updateShoppingCart(QJsonObject);
     void retrieveAllContent();
-
+    void updateContent(QJsonObject);
     ServerSerializer serializer;
     ServerStorageControl storage;
     static ServerListenerControl* instance;

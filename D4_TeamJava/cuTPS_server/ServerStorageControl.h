@@ -20,20 +20,26 @@ public:
     ServerStorageControl();
 
     //Student API
-    QList<Term*>*   retrieveAllTerms();
-    QList<Course*>* retrieveContent(Student*, Term*);
-    ShoppingCart*   retrieveShoppingCart(Student*);
-    bool            updateShoppingCart(Student*, PurchasableItem*, qint32);
+    QList<Term*>*       retrieveAllTerms();
+    QList<Course*>*     retrieveContent(Student*, Term*);
+    ShoppingCart*       retrieveShoppingCart(Student*);
+    bool                updateShoppingCart(Student*, PurchasableItem*, qint32);
+    bool                updateOrderContents(Student*, ShoppingCart*);
+    bool                updatePaymentInformation(Student*, PaymentInformation*);
+    PaymentInformation* retrievePaymentInformation(Student*);
 
     //Content Manager API
     QList<Textbook*>* retrieveAllContent();
     bool              updateContent(Textbook*);
+    bool              deleteContent(PurchasableItem*);
+    bool              updateCourse(Course*, qint32);
+    bool              deleteCourse(Course*, qint32);
+    bool              updateCourseStudentLink(Course*, qint32, Student*);
+    bool              updateCourseTextbookLink(Course*, qint32, Textbook*);
+
 
 
 private:
-
-
-
 
 };
 

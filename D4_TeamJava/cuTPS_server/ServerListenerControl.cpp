@@ -327,6 +327,38 @@ void ServerListenerControl::deleteContent(QJsonObject json){
 
 }
 
+//Handles API call by the course manager client to retrieve the courses list
+//For a given term argument, returns back to client a list of courses as a json object
+void ServerListenerControl::retrieveCourseList(QJsonObject json){
+    Term selectedTerm;
+    selectedTerm.read(json["term"].toObject());
+    QList<Course*>* resultList = storage.retrieveCourseList(selectedTerm.getTermID());
+    QJsonArray courseArray;
+    foreach (Course *crs, *resultList){
+        QJsonObject json;
+        crs->write(json);
+        courseArray.append(json);
+    }
+    QJsonObject result;
+    result["courses:"] = courseArray;
+    this->sendCommand(result);
+}
+
+//Handles API call to retrieve all of the textbooks only (no chapters/sections)
+//For the Course Manager subsystem to link textbooks to courses to
+void ServerListenerControl::retrieveAllTextbooks(QJsonObject json){
+    QList<Textbook*>* result = storage.retrieveAllTextbook();
+    QJsonArray textbookArray;
+    foreach(Textbook *text, *result){
+        QJsonObject json;
+        text->write(json);
+        textbookArray.append(json);
+    }
+    QJsonObject r;
+    r["textbooks:"] = textbookArray;
+    this->sendCommand(r);
+}
+
 //Handles API call to update the given course for a given term
 //Sends the success flag determining if the update worked or not
 //Is sent back to client
@@ -366,6 +398,8 @@ void ServerListenerControl::updateCourseStudentLink(QJsonObject json){
     sendSuccess(success);
 }
 
+//Handles API call to assign a textbook to a course for a given term
+//Returns back to client a boolean flag to indicate success
 void ServerListenerControl::updateCourseTextbookLink(QJsonObject json){
     Course assignedCrs;
     assignedCrs.read(json["course"].toObject());

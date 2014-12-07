@@ -11,3 +11,7 @@ QList<Textbook*>* ContentManagementUpdateControl::retrieveAllContent(){
 bool ContentManagementUpdateControl::updateContent(Textbook* text){
     return clientComm.updateContent(text);
 }
+
+bool ContentManagementUpdateControl::deleteContent(PurchasableItem* item){
+    return clientComm.deleteContent(item);
+}

@@ -21,6 +21,7 @@ public:
     bool            updateShoppingCart(Student*, PurchasableItem*, qint32);
     QList<Textbook*>* retrieveAllContent();
     bool        updateContent(Textbook*);
+    bool        deleteContent(PurchasableItem*);
 
 private:
     ClientCommunicatorRequestManager requestManager;

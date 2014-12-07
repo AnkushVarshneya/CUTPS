@@ -167,3 +167,24 @@ bool ClientCommunicatorManagementControl::updateContent(Textbook* text){
     return result;
 
 }
+
+bool ClientCommunicatorManagementControl::deleteContent(PurchasableItem *item){
+    QJsonObject api_server_call;
+    QString functionCall = "deleteContent()";
+    api_server_call["Function:"] = functionCall;
+
+    QJsonObject itemObject;
+    item->write(itemObject);
+    api_server_call["purchasableItem"] = itemObject;
+
+    requestManager.send(api_server_call);
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
+
+    bool result = res.object()["success"].toBool();
+    requestManager.resetBuffer();
+    return result;
+}

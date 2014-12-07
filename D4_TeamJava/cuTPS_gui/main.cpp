@@ -92,6 +92,13 @@ int main(int argc, char *argv[])
     bool result = cmTest.updateContent(newTextbook);
     qDebug() << result;
     qDebug() << "End Testing for updateContent()";
+
+
+    qDebug() << "Testing for deleteContent()";
+    result = cmTest.deleteContent(newTextbook);
+    qDebug() << result;
+
+    qDebug() << "End testing for deleteContent()";
     return a.exec();
 
 }

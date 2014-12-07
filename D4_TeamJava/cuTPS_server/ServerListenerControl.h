@@ -30,6 +30,7 @@ private:
     void updateShoppingCart(QJsonObject);
     void retrieveAllContent();
     void updateContent(QJsonObject);
+    void deleteContent(QJsonObject);
     ServerSerializer serializer;
     ServerStorageControl storage;
     static ServerListenerControl* instance;

@@ -361,10 +361,23 @@ void ServerListenerControl::updateCourseStudentLink(QJsonObject json){
 
     Term inTerm;
     inTerm.read(json["term"].toObject());
+
+    bool success = storage.updateCourseStudentLink(&assignedCrs, inTerm.getTermID(), &assignedStu);
+    sendSuccess(success);
 }
 
 void ServerListenerControl::updateCourseTextbookLink(QJsonObject json){
+    Course assignedCrs;
+    assignedCrs.read(json["course"].toObject());
 
+    Term inTerm;
+    inTerm.read(json["term"].toObject());
+
+    Textbook assignedText;
+    assignedText.read(json["textbook"].toObject());
+
+    bool success = storage.updateCourseTextbookLink(&assignedCrs,inTerm.getTermID(), &assignedText);
+    sendSuccess(success);
 }
 
 

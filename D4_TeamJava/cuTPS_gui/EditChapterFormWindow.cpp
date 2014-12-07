@@ -15,7 +15,17 @@ EditChapterFormWindow::~EditChapterFormWindow()
     delete ui;
 }
 
+//Button getters
 QPushButton* EditChapterFormWindow::getBackButton()             { return ui->backButton; }
 QPushButton* EditChapterFormWindow::getCreateButton()           { return ui->createButton; }
 QPushButton* EditChapterFormWindow::getEditSectionButton()      { return ui->viewEditSectionButton; }
 QPushButton* EditChapterFormWindow::getCreateSectionButton()    { return ui->createSectionButton; }
+
+//Field getters
+QLineEdit*      EditChapterFormWindow::getTitleTextbox()        { return ui->titleTextbox; }
+QSpinBox*       EditChapterFormWindow::getChapterNumberSpinBox(){ return ui->chapterNumberSpinBox; }
+QDoubleSpinBox* EditChapterFormWindow::getPriceSpinBox()        { return ui->priceSpinBox; }
+QCheckBox*      EditChapterFormWindow::getAvailabilityCheckBox(){ return ui->availabilityCheckBox; }
+
+//List getter
+QListView*      EditChapterFormWindow::getSectionsListView()    { return ui->sectionsList; }

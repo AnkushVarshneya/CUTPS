@@ -8,6 +8,11 @@
 #include "Chapter.h"
 
 #include <QPushButton>
+#include <QLineEdit>
+#include <QDoubleSpinBox>
+#include <QCheckBox>
+#include <QTextEdit>
+#include <QListView>
 
 class ManageTextbooksInterfaceWindow;
 
@@ -29,6 +34,20 @@ public:
     QPushButton* getViewEditChaptersButton();
     QPushButton* getAddChapterButton();
     QPushButton* getCreateButton();
+
+    QLineEdit*      getTitleTextbox();
+    QLineEdit*      getAuthorTextbox();
+    QLineEdit*      getEditionTextbox();
+    QLineEdit*      getPublisherTextbox();
+    QLineEdit*      getISBNTextbox();
+    QLineEdit*      getCoverImageTextbox();
+    QDoubleSpinBox* getPriceSpinBox();
+    QCheckBox*      getAvailabilityCheckBox();
+    QTextEdit*      getDescriptionTextbox();
+
+    QListView*      getChaptersListView();
+
+
 
 private:
     Ui::EditTextbookFormWindow *ui;

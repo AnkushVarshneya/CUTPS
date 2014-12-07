@@ -169,7 +169,7 @@
     <string>Price:</string>
    </property>
   </widget>
-  <widget class="QListView" name="chaptersList">
+  <widget class="QListView" name="sectionsList">
    <property name="geometry">
     <rect>
      <x>290</x>

@@ -25,8 +25,9 @@ class ContentManagementFacade
 public:
     ContentManagementFacade();
     QList<Textbook*>    viewAllContent();
+
+    bool                updateContent(Textbook*);
     /*
-    bool                createTextbook(Textbook*);
     bool                modifyTextbook(Textbook*);
     bool                modifyContentAvailability(PurchasableItem*, bool);
     bool                modifyContentPrices(PurchasableItem*,int);

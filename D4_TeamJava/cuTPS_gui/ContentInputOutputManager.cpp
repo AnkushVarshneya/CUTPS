@@ -200,6 +200,8 @@ void ContentInputOutputManager::on_editTextbookForm_back_button() {
 
     if(createOrEditTFlag == 0)
         delete currentTextbook;
+    fakeChapters.clear();
+    currentTextbook = 0;
 }
 void ContentInputOutputManager::on_editTextbookForm_create_button() {
     qDebug() << "create a new textbook with the fields from the form and go back to the managetextbooksinterface";
@@ -291,6 +293,8 @@ void ContentInputOutputManager::on_editChapterForm_back_button() {
     editTextbookForm->show();
     if(createOrEditCFlag == 0)
         delete currentChapter;
+    fakeSections.clear();
+    currentChapter = 0;
 }
 void ContentInputOutputManager::on_editChapterForm_create_button() {
     qDebug() << "create a new chapter with the fields from the form and go back to the edittextbookform";
@@ -361,6 +365,7 @@ void ContentInputOutputManager::on_editSectionForm_back_button() {
     editChapterForm->show();
     if(createOrEditSFlag == 0)
         delete currentSection;
+    currentSection = 0;
 }
 void ContentInputOutputManager::on_editSectionForm_create_button() {
     qDebug() << "create a new section with the fields from the form and go back to the editchapterform";    
@@ -409,7 +414,6 @@ Textbook* ContentInputOutputManager::manageTextbooks_getSelectedTextbook() {
     qDebug() << "in getselectedtextbook";
     int selectedIndex = manageTextbooksInterface->getTextbooksListView()->currentIndex().row();
     qDebug() << "got index";
-    //return contentManagementFacade->viewAllContent().at(selectedIndex);
     return fakeTextbooks.at(selectedIndex);
 }
 Section* ContentInputOutputManager::manageTextbooks_getSelectedSection() {
@@ -426,5 +430,6 @@ Chapter* ContentInputOutputManager::editTextbookForm_getSelectedChapter() {
 Section* ContentInputOutputManager::editChapterForm_getSelectedSection() {
     qDebug() << "getselectedsect";
     int selectedIndex = editChapterForm->getSectionsListView()->currentIndex().row();
-    return editTextbookForm_getSelectedChapter()->getChapterSections().at(selectedIndex);
+    //return editTextbookForm_getSelectedChapter()->getChapterSections().at(selectedIndex);
+    return currentChapter->getChapterSections().at(selectedIndex);
 }

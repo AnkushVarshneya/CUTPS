@@ -19,7 +19,6 @@ public:
     explicit ServerListenerControl(QObject *parent = 0);
     void startServer();
     void sendCommand(QJsonObject &json);
-    QJsonObject processCommand(QJsonObject);
     static ServerListenerControl* getInstance();
 
 

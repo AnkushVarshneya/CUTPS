@@ -38,10 +38,7 @@ void ServerListenerControl::incomingConnection() {
 //Part of Singleton DP, default instance to 0
 ServerListenerControl* ServerListenerControl::instance = 0;
 
-//Process the Command for the client requested message
-QJsonObject ServerListenerControl::processCommand(QJsonObject){
 
-}
 
 //Part of Singleton DP, if the instance is 0, make a new instance of the
 //ServerListener control, eitherway return that one instance.
@@ -100,6 +97,12 @@ void ServerListenerControl::readBytes() {
    else if (cmd == "deleteContent()"){
        deleteContent(jsonDoc.object());
    }
+   else if (cmd == "retrieveCourseList()"){
+       retrieveCourseList(jsonDoc.object());
+   }
+   else if (cmd == "retrieveAllTextbooks()"){
+       retrieveAllTextbooks(jsonDoc.object());
+   }
    else if (cmd == "updateCourse()"){
        updateCourse(jsonDoc.object());
    }
@@ -112,6 +115,7 @@ void ServerListenerControl::readBytes() {
    else if (cmd == "updateCourseTextbookLink()"){
        updateCourseTextbookLink(jsonDoc.object());
    }
+
 }
 
 //writes a json object to the tcp socket

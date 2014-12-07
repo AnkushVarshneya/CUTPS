@@ -54,7 +54,9 @@ SOURCES += main.cpp\
     ClientCommunicatorSerializer.cpp \
     ClientCommunicatorRequestManager.cpp \
     TextbookDetailsWindow.cpp \
-    StudentShopView.cpp
+    StudentShopView.cpp \
+    ShoppingCartWidget.cpp \
+    CheckoutDialogWidget.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -99,7 +101,9 @@ HEADERS  += mainwindow.h \
     ClientCommunicatorSerializer.h \
     ClientCommunicatorRequestManager.h \
     TextbookDetailsWindow.h \
-    StudentShopView.h
+    StudentShopView.h \
+    ShoppingCartWidget.h \
+    CheckoutDialogWidget.h
 
 
 FORMS    += mainwindow.ui \
@@ -110,4 +114,6 @@ FORMS    += mainwindow.ui \
     EditSectionFormWindow.ui \
     EditTextbookFormWindow.ui \
     TextbookDetailsWindow.ui \
-    StudentShopView.ui
+    StudentShopView.ui \
+    ShoppingCartWidget.ui \
+    CheckoutDialogWidget.ui

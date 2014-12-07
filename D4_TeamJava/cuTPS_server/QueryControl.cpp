@@ -90,7 +90,7 @@ void QueryControl::test(){
     course->setTerm(term);
 
     qDebug() << "\ntest for createCourse\n";
-    qDebug() << this->createCourse(course, term->getTermID());
+    qDebug() << this->updateCourse(course, term->getTermID());
 
     qDebug() << "\ntest for retrieveCourseList after createCourse\n";
     foreach(Course *crs,  *(this->retrieveCourseList(term->getTermID()))){
@@ -125,9 +125,9 @@ void QueryControl::test(){
 
     delete(paymentInformation);
 
-    qDebug() << "\ntest for savePaymentInformation\n";
+    qDebug() << "\ntest for updatePaymentInformation\n";
     paymentInformation = new PaymentInformation(); // will use default const
-    qDebug() << this->savePaymentInformation(student, paymentInformation);
+    qDebug() << this->updatePaymentInformation(student, paymentInformation);
 
     delete(paymentInformation);
 
@@ -164,7 +164,7 @@ void QueryControl::test(){
 
     qDebug() << "\ntest for createTextbook\n";
     Textbook *textbook = new Textbook();
-    qDebug() << this->createTextbook(textbook);
+    qDebug() << this->updateTextbook(textbook);
 
     QString isbn = textbook->getISBN();
     delete(textbook);
@@ -189,6 +189,7 @@ void QueryControl::test(){
     textbook->setEdition("900");
     textbook->setItemTitle("a random textbook");
     textbook->setPrice(1000);
+    textbook->setAvailability(true);
 
     qDebug() << this->updateTextbook(textbook);
 
@@ -210,7 +211,7 @@ void QueryControl::test(){
 
     qDebug() << "\ntest for createChapter\n";
     Chapter *chapter = new Chapter();
-    qDebug() << this->createChapter(chapter, isbn);
+    qDebug() << this->updateChapter(chapter, isbn);
 
     qint32 chapterNumber = chapter->getChapterNumber();
     delete(chapter);
@@ -231,6 +232,7 @@ void QueryControl::test(){
     qDebug() << "\ntest for updateChapter\n";
     chapter->setItemTitle("a random chapter");
     chapter->setPrice(1000);
+    chapter->setAvailability(true);
 
     qDebug() << this->updateChapter(chapter, isbn);
 
@@ -251,7 +253,7 @@ void QueryControl::test(){
 
     qDebug() << "\ntest for createSection\n";
     Section *section = new Section();
-    qDebug() << this->createSection(section, chapterNumber, isbn);
+    qDebug() << this->updateSection(section, chapterNumber, isbn);
 
     qint32 sectionNumber = section->getSectionNumber();
     delete(section);
@@ -272,6 +274,7 @@ void QueryControl::test(){
     qDebug() << "\ntest for updateSection\n";
     section->setItemTitle("a random section");
     section->setPrice(1000);
+    section->setAvailability(true);
 
     qDebug() << this->updateSection(section, chapterNumber, isbn);
 
@@ -388,7 +391,7 @@ void QueryControl::test(){
         qDebug() <<json;
     }
 
-    qDebug() << "\ntest for retrieveStudentList after updateCourseStudentLink after createCourse\n";
+    qDebug() << "\ntest for retrieveStudentList after updateCourseStudentLink after deleteCourse\n";
     foreach(Student *stu, *(this->retrieveStudentList(course, term->getTermID()))){
         json = QJsonObject();
         stu->write(json);
@@ -396,13 +399,12 @@ void QueryControl::test(){
     }
 
     qDebug() << "\ntest for getPurchasableItemList\n";
-    list = this->getPurchasableItemList(false);
-    for(int i = 0; i<list->length(); i++) {
+    foreach (PurchasableItem *pi, *(this->getPurchasableItemList(false))){
         json = QJsonObject();
-        list->at(i).first->write(json);
+        pi->write(json);
         qDebug() <<json;
     }
-    delete(list);/**/
+/**/
 }
 
 /**
@@ -977,61 +979,27 @@ QList<Term*>* QueryControl::retrieveTermList(){
 }
 
 /**
- * @brief QueryControl::createCourse
- *  creates a new Course
- *  Note:
- *  1) to add a student use QueryControl::updateCourseStudentLink()
- *  2) to add a textbook use QueryControl::createTextbook() and then QueryControl::updateCourseTextbookLink()
- * @param course
- *  Course object to save to DB
- * @param termID
- *  termID to create the course under
- * @return
- *  Returns if operation was a success
- */
-bool QueryControl::createCourse(Course *course, qint32 termID) {
-    // create a course
-    QSqlQuery courseQuery;
-
-    courseQuery.prepare("INSERT INTO Course (courseCode,section,instructor,termID) "
-                            "VALUES (:courseCode,:section,:instructor,:termID);");
-    courseQuery.bindValue(":courseCode", course->getCourseCode());
-    courseQuery.bindValue(":section", course->getCourseSection());
-    courseQuery.bindValue(":instructor", course->getInstructor());
-    courseQuery.bindValue(":termID", termID);
-
-    return courseQuery.exec();
-}
-
-/**
  * @brief QueryControl::updateCourse
- *  update a existing Course in DB
+ *  creates a new Course or replace/update a existing Course in DB
  *  Note:
- *  1) primary ID  i.e Course::courseCode, Course::courseSection, termID
- *     must remain not change otherwize operation will not change any thing
- *     as the above values are needed to change a exisiting Course
- *  2) to update a existing student use
- *  3) to update a existing textbook use QueryControl::updateTextbook()
+ *  1) If you want to update existing course primary ID
+ *     i.e Course::courseCode, Course::courseSection, termID
+ *     must remain not change otherwize operation will create a new Course
+ *  2) to add a student use QueryControl::updateCourseStudentLink()
+ *  3) to add a textbook use QueryControl::updateCourseTextbookLink()
  * @param course
- *  Course object to save to DB
+ *  Course object to create or replace/update to DB
  * @param termID
- *  termID to update the course under
+ *  termID to create or replace/update the Course under
  * @return
  *  Returns if operation was a success
  */
 bool QueryControl::updateCourse(Course *course, qint32 termID) {
-    // create a course
+    // create or update/replace a Course
     QSqlQuery courseQuery;
 
-    courseQuery.prepare("UPDATE Course SET "
-                            "courseCode = :courseCode,"
-                            "section = :section,"
-                            "instructor = :instructor,"
-                            "termID = :termID"
-                        " WHERE "
-                            "courseCode = :courseCode AND "
-                            "section = :section AND "
-                            "termID = :termID;");
+    courseQuery.prepare("REPLACE INTO Course (courseCode,section,instructor,termID) "
+                            "VALUES (:courseCode,:section,:instructor,:termID);");
     courseQuery.bindValue(":courseCode", course->getCourseCode());
     courseQuery.bindValue(":section", course->getCourseSection());
     courseQuery.bindValue(":instructor", course->getInstructor());
@@ -1044,9 +1012,9 @@ bool QueryControl::updateCourse(Course *course, qint32 termID) {
  * @brief QueryControl::deleteCourse
  *  delete a existing course
  *  Note:
- *  1) primary ID  i.e Course::courseCode, Course::courseSection, termID
- *     must remain not change otherwize operation will not change any thing
- *     as the above values are needed to change a exisiting Course
+ *  1) If you want to delete existing Course primary ID
+ *     i.e Course::courseCode, Course::courseSection, termID
+ *     must remain not change otherwize operation will not delete the Course
  *  2) to delete a existing student use
  *  3) to delete a existing textbook use QueryControl::deleteTextbook()
  * @param course
@@ -1057,7 +1025,7 @@ bool QueryControl::updateCourse(Course *course, qint32 termID) {
  *  Returns if operation was a success
  */
 bool QueryControl::deleteCourse(Course *course, qint32 termID) {
-    // create a course
+    // delete a Course
     QSqlQuery courseQuery;
 
     courseQuery.prepare("DELETE FROM Course WHERE "
@@ -1175,26 +1143,29 @@ QList<Course*>* QueryControl::retrieveCourseList(qint32 termID) {
 }
 
 /**
- * @brief QueryControl::createTextbook
- *  creates a new Textbook in DB
+ * @brief QueryControl::updateTextbook
+ *  creates a new Textbook or replace/update a existing Textbook in DB
  *  Note:
- *  1) to add a chapter use QueryControl::createChapter()
- *  2) uses QueryControl::createPurchasableItem()
+ *  1) If you want to update existing Textbook primary ID
+ *     i.e Textbook::isbn, Textbook::itemID
+ *     must remain not change otherwize operation create a new Textbook
+ *  2) to create or replace/update a Chapter use QueryControl::updateChapter()
+ *  3) uses QueryControl::updatePurchasableItem()
  * @param textbook
- *  Textbook object to save to DB
+ *  Textbook object to create or replace/update to DB
  * @return
  *  Returns if operation was a success
  */
-bool QueryControl::createTextbook(Textbook *textbook){
+bool QueryControl::updateTextbook(Textbook *textbook){
     bool noError = true;
 
-    //create its PurchasableItem first
-    noError = noError && createPurchasableItem((PurchasableItem*)textbook);
+    // create or replace/update the PurchasableItem component first
+    noError = noError && updatePurchasableItem((PurchasableItem*)textbook);
 
-    // create a textbook
+    // create or replace/update a Textbook
     QSqlQuery textBookQuery;
 
-    textBookQuery.prepare("INSERT INTO Textbook (ISBN,coverImageLocation,Desc,Author,TextbookTitle,Publisher,Edition,itemID) "
+    textBookQuery.prepare("REPLACE INTO Textbook (ISBN,coverImageLocation,Desc,Author,TextbookTitle,Publisher,Edition,itemID) "
                             "VALUES (:ISBN,:coverImageLocation,:Desc,:Author,:TextbookTitle,:Publisher,:Edition,:itemID);");
     textBookQuery.bindValue(":ISBN", textbook->getISBN());
     textBookQuery.bindValue(":coverImageLocation", textbook->getCoverImageLoc());
@@ -1211,60 +1182,14 @@ bool QueryControl::createTextbook(Textbook *textbook){
 }
 
 /**
- * @brief QueryControl::updateTextbook
- *  update a existing Textbook in DB
- *  Note:
- *  1) primary ID  i.e Textbook::isbn, Textbook::itemID
- *     must remain not change otherwize operation will not change any thing
- *     as the above values are needed to change a exisiting Textbook
- *  2) to update a chapter use QueryControl::updateChapter()
- * @param textbook
- *  Textbook object to save to DB
- * @return
- *  Returns if operation was a success
- */
-bool QueryControl::updateTextbook(Textbook *textbook){
-    bool noError = true;
-
-    // update a textbook
-    QSqlQuery textBookQuery;
-
-    textBookQuery.prepare("UPDATE Textbook SET "
-                            "ISBN = :ISBN,"
-                            "coverImageLocation = :coverImageLocation,"
-                            "Desc = :Desc,"
-                            "Author = :Author,"
-                            "TextbookTitle = :TextbookTitle,"
-                            "Publisher = :Publisher,"
-                            "Edition = :Edition,"
-                            "itemID = :itemID"
-                          " WHERE "
-                            "ISBN = :ISBN;");
-    textBookQuery.bindValue(":ISBN", textbook->getISBN());
-    textBookQuery.bindValue(":coverImageLocation", textbook->getCoverImageLoc());
-    textBookQuery.bindValue(":Desc", textbook->getDesc());
-    textBookQuery.bindValue(":Author", textbook->getAuthor());
-    textBookQuery.bindValue(":TextbookTitle", textbook->getItemTitle());
-    textBookQuery.bindValue(":Publisher", textbook->getPublisher());
-    textBookQuery.bindValue(":Edition", textbook->getEdition());
-    textBookQuery.bindValue(":itemID", textbook->getItemID());
-
-    noError = noError && textBookQuery.exec();
-
-    //update its PurchasableItem
-    noError = noError && updatePurchasableItem((PurchasableItem*)textbook);
-
-    return noError;
-}
-
-/**
  * @brief QueryControl::deleteTextbook
  *  delete a existing Textbook in DB
  *  Note:
- *  1) primary ID  i.e Textbook::isbn, Textbook::itemID
- *     must remain not change otherwize operation will not change any thing
- *     as the above values are needed to change a exisiting Textbook
+ *  1) If you want to delete existing Textbook primary ID
+ *     i.e Textbook::isbn, Textbook::itemID
+ *     must remain not change otherwize operation will not delete the Textbook
  *  2) to delete a chapter use QueryControl::deleteChapter()
+ *  3) uses QueryControl::deletePurchasableItem()
  * @param textbook
  *  Textbook object to delete in DB
  * @return
@@ -1273,7 +1198,7 @@ bool QueryControl::updateTextbook(Textbook *textbook){
 bool QueryControl::deleteTextbook(Textbook *textbook){
     bool noError = true;
 
-    // delete a textbook
+    // delete a Textbook
     QSqlQuery textBookQuery;
 
     textBookQuery.prepare("DELETE FROM Textbook WHERE "
@@ -1282,7 +1207,7 @@ bool QueryControl::deleteTextbook(Textbook *textbook){
 
     noError = noError && textBookQuery.exec();
 
-    //delete its PurchasableItem
+    //delete the PurchasableItem component last
     noError = noError && deletePurchasableItem((PurchasableItem*)textbook);
 
     return noError;
@@ -1504,28 +1429,31 @@ QList<Textbook*>* QueryControl::retrieveAllTextbookList(){
 }
 
 /**
- * @brief QueryControl::createChapter
- *  creates a new Chapter in DB
+ * @brief QueryControl::updateChapter
+ *  creates a new Chapter or replace/update a existing Chapter in DB
  *  Note:
- *  1) to add a chapter use QueryControl::createSection()
- *  2) uses QueryControl::createPurchasableItem()
+ *  1) If you want to update existing Chapter primary ID
+ *     i.e Textbook::isbn, Chapter::itemID, Chapter::chapterNumber
+ *     must remain not change otherwize operation create a new Chapter
+ *  2) to create or replace/update a Section use QueryControl::updateSection()
+ *  3) uses QueryControl::updatePurchasableItem()
  * @param chapter
- *  Chapter object to save to DB
+ *  Chapter object to create or replace/update to DB
  * @param isbn
- *  isbn (primary key of Textbook) to save the chapter under
+ *  isbn (primary key of Textbook) to create or replace/update the Chapter under
  * @return
  *  Returns if operation was a success
  */
-bool QueryControl::createChapter(Chapter *chapter, QString isbn){
+bool QueryControl::updateChapter(Chapter *chapter, QString isbn){
     bool noError = true;
 
-    //create its PurchasableItem first
-    noError = noError && createPurchasableItem((PurchasableItem*)chapter);
+    // create or replace/update the PurchasableItem component first
+    noError = noError && updatePurchasableItem((PurchasableItem*)chapter);
 
-    //create a chapter
+    // create or replace/update a Chapter
     QSqlQuery chapterQuery;
 
-    chapterQuery.prepare("INSERT INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
+    chapterQuery.prepare("REPLACE INTO Chapter (ISBN,chapterNumber,chapterTitle,itemID) "
                             "VALUES (:ISBN,:chapterNumber,:chapterTitle,:itemID);");
     chapterQuery.bindValue(":ISBN", isbn);
     chapterQuery.bindValue(":chapterNumber", chapter->getChapterNumber());
@@ -1538,66 +1466,25 @@ bool QueryControl::createChapter(Chapter *chapter, QString isbn){
 }
 
 /**
- * @brief QueryControl::updateChapter
- *  update a existing Chapter in DB
- *  Note:
- *  1) primary ID  i.e Textbook::isbn, Chapter::itemID, Chapter::chapterNumber
- *     must remain not change otherwize operation will not change any thing
- *     as the above values are needed to change a exisiting Chapter
- *  2) to update a chapter use QueryControl::updateSection()
- * @param chapter
- *  Chapter object to save to DB
- * @param isbn
- *  isbn (primary key of Textbook) to save the chapter under
- * @return
- *  Returns if operation was a success
- */
-bool QueryControl::updateChapter(Chapter *chapter, QString isbn){
-    bool noError = true;
-
-    //update a chapter
-    QSqlQuery chapterQuery;
-
-    chapterQuery.prepare("UPDATE Chapter SET "
-                             "ISBN = :ISBN,"
-                             "chapterNumber = :chapterNumber,"
-                             "chapterTitle = :chapterTitle,"
-                             "itemID = :itemID"
-                         " WHERE "
-                             "ISBN = :ISBN AND "
-                             "chapterNumber = :chapterNumber;");
-    chapterQuery.bindValue(":ISBN", isbn);
-    chapterQuery.bindValue(":chapterNumber", chapter->getChapterNumber());
-    chapterQuery.bindValue(":chapterTitle", chapter->getItemTitle());
-    chapterQuery.bindValue(":itemID", chapter->getItemID());
-
-    noError = noError && chapterQuery.exec();
-
-    //update its PurchasableItem
-    noError = noError && updatePurchasableItem((PurchasableItem*)chapter);
-
-    return noError;
-}
-
-/**
  * @brief QueryControl::deleteChapter
  *  Delete a existing Chapter in DB
  *  Note:
- *  1) primary ID  i.e Textbook::isbn, Chapter::itemID, Chapter::chapterNumber
- *     must remain not change otherwize operation will not change any thing
- *     as the above values are needed to change a exisiting Chapter
+ *  1) If you want to delete existing Chapter primary ID
+ *     i.e Textbook::isbn, Chapter::itemID, Chapter::chapterNumber
+ *     must remain not change otherwize operation will not delete the Chapter
  *  2) to delete a chapter use QueryControl::deleteSection()
+ *  3) uses QueryControl::deletePurchasableItem()
  * @param chapter
  *  Chapter object to delete in DB
  * @param isbn
- *  isbn (primary key of Textbook) to delete the chapter under
+ *  isbn (primary key of Textbook) to delete the Chapter under
  * @return
  *  Returns if operation was a success
  */
 bool QueryControl::deleteChapter(Chapter *chapter, QString isbn){
     bool noError = true;
 
-    //delete a chapter
+    // delete a Chapter
     QSqlQuery chapterQuery;
 
     chapterQuery.prepare("DELETE FROM Chapter WHERE "
@@ -1608,7 +1495,7 @@ bool QueryControl::deleteChapter(Chapter *chapter, QString isbn){
 
     noError = noError && chapterQuery.exec();
 
-    //delete its PurchasableItem
+    //delete the PurchasableItem component last
     noError = noError && deletePurchasableItem((PurchasableItem*)chapter);
 
     return noError;
@@ -1748,32 +1635,32 @@ QList<Chapter*>* QueryControl::retrieveChapterList(QString isbn, bool getavailab
 }
 
 /**
- * @brief QueryControl::createSection
- *  creates a new Section in DB
+ * @brief QueryControl::updateSection
+ *  creates a new Section or replace/update a existing Section in DB
  *  Note:
- *  1) primary ID  i.e Textbook::isbn, Section::itemID, Chapter::chapterNumber, Section::sectionNumber
- *     must remain not change otherwize operation will not change the right thing
- *     as the above values are needed to change a exisiting section
- *  2) uses QueryControl::createPurchasableItem()
+ *  1) If you want to update existing Section primary ID
+ *     i.e Textbook::isbn, Section::itemID, Chapter::chapterNumber, Section::sectionNumber
+ *     must remain not change otherwize operation create a new Section
+ *  2) uses QueryControl::updatePurchasableItem()
  * @param section
- *  Section object to save to DB
+ *  Section object to create or replace/update to DB
  * @param chapterNumber
- *  chapterNumber (primary key of chapter) to save the section under
+ *  chapterNumber (primary key of chapter) to create or replace/update the section under
  * @param isbn
- *  isbn (primary key of Textbook) to save the section under
+ *  isbn (primary key of Textbook) to create or replace/update the section under
  * @return
  *  Returns if operation was a success
  */
-bool QueryControl::createSection(Section *section, qint32 chapterNumber, QString isbn){
+bool QueryControl::updateSection(Section *section, qint32 chapterNumber, QString isbn){
     bool noError = true;
 
-    //create its PurchasableItem first
-    noError = noError && createPurchasableItem((PurchasableItem*)section);
+    // create or replace/update the PurchasableItem component first
+    noError = noError && updatePurchasableItem((PurchasableItem*)section);
 
-    //create a section
+    // create or replace/update a Section
     QSqlQuery sectionQuery;
 
-    sectionQuery.prepare("INSERT INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
+    sectionQuery.prepare("REPLACE INTO Section (ISBN,chapterNumber,sectionNumber,sectionTitle,itemID) "
                             "VALUES (:ISBN,:chapterNumber,:sectionNumber,:sectionTitle,:itemID);");
     sectionQuery.bindValue(":ISBN", isbn);
     sectionQuery.bindValue(":chapterNumber", chapterNumber);
@@ -1788,62 +1675,15 @@ bool QueryControl::createSection(Section *section, qint32 chapterNumber, QString
 }
 
 /**
- * @brief QueryControl::updateSection
- *  update a existing Section in DB
- *  Note:
- *  1) primary ID  i.e Textbook::isbn, Section::itemID, Chapter::chapterNumber, Section::sectionNumber
- *     must remain not change otherwize operation will not change the right thing
- *     as the above values are needed to change a exisiting section
- *  2) uses QueryControl::updatePurchasableItem()
- * @param section
- *  Section object to save to DB
- * @param chapterNumber
- *  chapterNumber (primary key of chapter) to save the section under
- * @param isbn
- *  isbn (primary key of Textbook) to save the section under
- * @return
- *  Returns if operation was a success
- */
-bool QueryControl::updateSection(Section *section, qint32 chapterNumber, QString isbn){
-    bool noError = true;
-
-    //update a section
-    QSqlQuery sectionQuery;
-
-    sectionQuery.prepare("UPDATE Section SET "
-                            "ISBN = :ISBN,"
-                            "chapterNumber = :chapterNumber,"
-                            "sectionNumber = :sectionNumber,"
-                            "sectionTitle = :sectionTitle,"
-                            "itemID = :itemID"
-                         " WHERE "
-                             "ISBN = :ISBN AND "
-                             "chapterNumber = :chapterNumber AND "
-                             "sectionNumber = :sectionNumber;");
-    sectionQuery.bindValue(":ISBN", isbn);
-    sectionQuery.bindValue(":chapterNumber", chapterNumber);
-    sectionQuery.bindValue(":sectionNumber", section->getSectionNumber());
-    sectionQuery.bindValue(":sectionTitle", section->getItemTitle());
-    sectionQuery.bindValue(":itemID", section->getItemID());
-
-    noError = noError && sectionQuery.exec();
-
-    //update its PurchasableItem
-    noError = noError && updatePurchasableItem((PurchasableItem*)section);
-
-    return noError;
-}
-
-/**
  * @brief QueryControl::deleteSection
  *  Delete a existing Section in DB
  *  Note:
- *  1) primary ID  i.e Textbook::isbn, Section::itemID, Chapter::chapterNumber, Section::sectionNumber
- *     must remain not change otherwize operation will not change the right thing
- *     as the above values are needed to change a exisiting section
+ *  1) If you want to delete existing Section primary ID
+ *     i.e Textbook::isbn, Section::itemID, Chapter::chapterNumber, Section::sectionNumber
+ *     must remain not change otherwize operation will not delete the Section
  *  2) uses QueryControl::deletePurchasableItem()
  * @param section
- *  Section object to save to DB
+ *  Section object to delete in DB
  * @param chapterNumber
  *  chapterNumber (primary key of chapter) to delete the section under
  * @param isbn
@@ -1854,7 +1694,7 @@ bool QueryControl::updateSection(Section *section, qint32 chapterNumber, QString
 bool QueryControl::deleteSection(Section *section, qint32 chapterNumber, QString isbn){
     bool noError = true;
 
-    //delete a section
+    // delete a Section
     QSqlQuery sectionQuery;
 
     sectionQuery.prepare("DELETE FROM Section WHERE "
@@ -1867,7 +1707,7 @@ bool QueryControl::deleteSection(Section *section, qint32 chapterNumber, QString
 
     noError = noError && sectionQuery.exec();
 
-    //delete its PurchasableItem
+    //delete the PurchasableItem component last
     noError = noError && deletePurchasableItem((PurchasableItem*)section);
 
     return noError;
@@ -2034,7 +1874,7 @@ bool QueryControl::updateCourseTextbookLink(Course *course, qint32 termID, Textb
     // link a text book to a course
     QSqlQuery linkQuery;
 
-    linkQuery.prepare("INSERT INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
+    linkQuery.prepare("REPLACE INTO Course_Assigned_Textbook (ISBN,courseCode,section,termID) "
                             "VALUES (:ISBN,:courseCode,:section,:termID);");
     linkQuery.bindValue(":ISBN", textbook->getISBN());
     linkQuery.bindValue(":courseCode", course->getCourseCode());
@@ -2060,7 +1900,7 @@ bool QueryControl::updateCourseStudentLink(Course *course, qint32 termID, Studen
     // link a student book to a course
     QSqlQuery linkQuery;
 
-    linkQuery.prepare("INSERT INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
+    linkQuery.prepare("REPLACE INTO Student_RegisteredIn_Course (studentNumber,courseCode,section,termID) "
                             "VALUES (:studentNumber,:courseCode,:section,:termID);");
     linkQuery.bindValue(":studentNumber", student->getStudentNum());
     linkQuery.bindValue(":courseCode", course->getCourseCode());
@@ -2071,71 +1911,54 @@ bool QueryControl::updateCourseStudentLink(Course *course, qint32 termID, Studen
 }
 
 /**
- * @brief QueryControl::savePaymentInformation
- *  Save payment information for a student
+ * @brief QueryControl::updatePaymentInformation
+ *  creates a new PaymentInformation or replace/update
+ *  a existing PaymentInformation in DB for a student
+ *  Note:
+ *  1) Student primary ID Student::studentNum
+ *     must remain not change otherwize operation will not
+ *     create a new PaymentInformation or replace/update
+ *     a existing PaymentInformation in DB for a student
  * @param student
- *  Student to save the payment information under
+ *  Student to create or replace/update PaymentInformation under
  * @param info
- *  payment information to save
+ *  PaymentInformation object to create or replace/update to DB
  * @return
  *  Returns if operation was a success
  */
-bool QueryControl::savePaymentInformation(Student *student, PaymentInformation *info) {
+bool QueryControl::updatePaymentInformation(Student *student, PaymentInformation *info) {
 
-    // check if there is a student with that id
-    QSqlQuery studentQuery;
-    studentQuery.prepare("SELECT COUNT(*) FROM student "
-                            "WHERE studentNumber =:studentNumber;");
-    studentQuery.bindValue(":studentNumber", student->getStudentNum());
-    studentQuery.exec();
+    // edit payment information
+    QSqlQuery PaymentInformationQuery;
 
-    if(studentQuery.first() && (studentQuery.value(studentQuery.record().indexOf("COUNT(*)")).toInt()>0)){
-        // edit payment information
-        QSqlQuery PaymentInformationQuery;
+    PaymentInformationQuery.prepare("REPLACE INTO PaymentInformation (creditCardNumber, cardType, cvv, expirationDate, nameOnCard, postalCode, province, city, streetName, houseNumber, studentNumber) "
+                                        "VALUES(:creditCardNumber, :cardType, :cvv, :expirationDate, :nameOnCard, :postalCode, :province, :city, :streetName, :houseNumber, :studentNumber);");
+    PaymentInformationQuery.bindValue(":creditCardNumber", info->getCreditCardInfo().getCreditCardNo());
+    PaymentInformationQuery.bindValue(":cardType", info->getCreditCardInfo().getCardType());
+    PaymentInformationQuery.bindValue(":cvv", info->getCreditCardInfo().getCVV());
+    PaymentInformationQuery.bindValue(":expirationDate", info->getCreditCardInfo().getExpDate());
+    PaymentInformationQuery.bindValue(":nameOnCard", info->getCreditCardInfo().getNameOnCard());
+    PaymentInformationQuery.bindValue(":postalCode", info->getBillInfo().getPostalCode());
+    PaymentInformationQuery.bindValue(":province", info->getBillInfo().getProvince());
+    PaymentInformationQuery.bindValue(":city", info->getBillInfo().getCity());
+    PaymentInformationQuery.bindValue(":streetName", info->getBillInfo().getStreetName());
+    PaymentInformationQuery.bindValue(":houseNumber", info->getBillInfo().getHouseNumber());
+    PaymentInformationQuery.bindValue(":studentNumber", student->getStudentNum());
 
-        PaymentInformationQuery.prepare("UPDATE PaymentInformation SET "
-                                            "creditCardNumber=:creditCardNumber, "
-                                            "cardType=:cardType, "
-                                            "cvv=:cvv, "
-                                            "expirationDate=:expirationDate, "
-                                            "nameOnCard=:nameOnCard, "
-                                            "postalCode=:postalCode, "
-                                            "province=:province, "
-                                            "city=:city, "
-                                            "streetName=:streetName, "
-                                            "houseNumber=:houseNumber "
-                                        "WHERE studentNumber=:studentNumber; ");
+    // update name of user as the name on its payment information changed
+    QSqlQuery nameQuery;
+    nameQuery.prepare("UPDATE User SET "
+                        "fullName=:fullName "
+                      "WHERE userName= "
+                        "( "
+                            "SELECT userName FROM Student "
+                            "WHERE Student.studentNumber=:studentNumber "
+                        "); ");
 
-        PaymentInformationQuery.bindValue(":creditCardNumber", info->getCreditCardInfo().getCreditCardNo());
-        PaymentInformationQuery.bindValue(":cardType", info->getCreditCardInfo().getCardType());
-        PaymentInformationQuery.bindValue(":cvv", info->getCreditCardInfo().getCVV());
-        PaymentInformationQuery.bindValue(":expirationDate", info->getCreditCardInfo().getExpDate());
-        PaymentInformationQuery.bindValue(":nameOnCard", info->getCreditCardInfo().getNameOnCard());
-        PaymentInformationQuery.bindValue(":postalCode", info->getBillInfo().getPostalCode());
-        PaymentInformationQuery.bindValue(":province", info->getBillInfo().getProvince());
-        PaymentInformationQuery.bindValue(":city", info->getBillInfo().getCity());
-        PaymentInformationQuery.bindValue(":streetName", info->getBillInfo().getStreetName());
-        PaymentInformationQuery.bindValue(":houseNumber", info->getBillInfo().getHouseNumber());
-        PaymentInformationQuery.bindValue(":studentNumber", student->getStudentNum());
+    nameQuery.bindValue(":fullName", info->getBillInfo().getName());
+    nameQuery.bindValue(":studentNumber", student->getStudentNum());
 
-        // edit name
-        QSqlQuery nameQuery;
-
-        nameQuery.prepare(  "UPDATE User SET "
-                                "fullName=:fullName "
-                            "WHERE userName= "
-                                "( "
-                                    "SELECT userName FROM Student "
-                                    "WHERE Student.studentNumber=:studentNumber "
-                                "); ");
-
-        nameQuery.bindValue(":fullName", info->getBillInfo().getName());
-        nameQuery.bindValue(":studentNumber", student->getStudentNum());
-
-        return PaymentInformationQuery.exec() && nameQuery.exec();
-    }
-
-    return false;
+    return PaymentInformationQuery.exec() && nameQuery.exec();
 }
 
 /**
@@ -2282,29 +2105,36 @@ QList<Student*>* QueryControl::retrieveStudentList(Course *course, qint32 termID
 }
 
 /**
- * @brief QueryControl::createPurchasableItem
- *  creates a new PurchasableItem in DB
+ * @brief QueryControl::updatePurchasableItem
+ *  creates a new PurchasableItem or replace/update a existing PurchasableItem in DB
+ *  Note:
+ *  1) If you want to update existing PurchasableItem primary ID
+ *     i.e PurchasableItem::itemID
+ *     must remain not change otherwize operation create a new PurchasableItem
  * @param purchasableItem
- *  PurchasableItem object to save to DB
+ *  PurchasableItem object to create or replace/update to DB
  * @return
  *  Returns if operation was a success
  */
-bool QueryControl::createPurchasableItem(PurchasableItem* purchasableItem) {
+bool QueryControl::updatePurchasableItem(PurchasableItem* purchasableItem) {
     bool noError = true;
 
-    //get the current max item id
-    int nextItemID = -1;
-    QSqlQuery maxItemID("SELECT MAX(itemID)+1 AS nextItemID FROM PurchasableItem;");
-    noError = noError && maxItemID.exec();
-    if(maxItemID.first()){
-        nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
+    // itemID <= -1 mean item is new to generate id
+    if(purchasableItem->getItemID() > -1) {
+        //get the current max item id
+        int nextItemID = -1;
+        QSqlQuery maxItemID("SELECT MAX(itemID)+1 AS nextItemID FROM PurchasableItem;");
+        noError = noError && maxItemID.exec();
+        if(maxItemID.first()){
+            nextItemID = maxItemID.value(maxItemID.record().indexOf("nextItemID")).toInt();
+        }
+        purchasableItem->setItemID(nextItemID);
     }
-    purchasableItem->setItemID(nextItemID);
 
-    //create PurchasableItem
+    // create or replace/update PurchasableItem
     QSqlQuery purchasableItemQuery;
 
-    purchasableItemQuery.prepare("INSERT INTO PurchasableItem (itemID,price,availability) "
+    purchasableItemQuery.prepare("REPLACE INTO PurchasableItem (itemID,price,availability) "
                       "VALUES (:itemID,:price,:availability);");
     purchasableItemQuery.bindValue(":itemID", purchasableItem->getItemID());
     purchasableItemQuery.bindValue(":price", purchasableItem->getPrice());
@@ -2316,37 +2146,12 @@ bool QueryControl::createPurchasableItem(PurchasableItem* purchasableItem) {
 }
 
 /**
- * @brief QueryControl::updatePurchasableItem
- *  update a existing PurchasableItem in DB
- * @param purchasableItem
- *  PurchasableItem object to save to DB
- * @return
- *  Returns if operation was a success
- */
-bool QueryControl::updatePurchasableItem(PurchasableItem* purchasableItem) {
-    bool noError = true;
-
-    //update PurchasableItem
-    QSqlQuery purchasableItemQuery;
-
-    purchasableItemQuery.prepare("UPDATE PurchasableItem SET "
-                                    "itemID = :itemID,"
-                                    "price = :price"
-                                    "availability = availability"
-                                 " WHERE "
-                                    "itemID = :itemID;");
-    purchasableItemQuery.bindValue(":itemID", purchasableItem->getItemID());
-    purchasableItemQuery.bindValue(":price", purchasableItem->getPrice());
-    purchasableItemQuery.bindValue(":availability", purchasableItem->isAvailable());
-
-    noError = noError && purchasableItemQuery.exec();
-
-    return noError;
-}
-
-/**
  * @brief QueryControl::deletePurchasableItem
- *  delete a existing PurchasableItem in DB
+ *  Delete a existing PurchasableItem in DB
+ *  Note:
+ *  1) If you want to delete existing PurchasableItem primary ID
+ *     i.e PurchasableItem::itemID
+ *     must remain not change otherwize operation will not delete the PurchasableItem
  * @param purchasableItem
  *  PurchasableItem object to delete in DB
  * @return
@@ -2355,7 +2160,7 @@ bool QueryControl::updatePurchasableItem(PurchasableItem* purchasableItem) {
 bool QueryControl::deletePurchasableItem(PurchasableItem* purchasableItem) {
     bool noError = true;
 
-    //delete PurchasableItem
+    // delete PurchasableItem
     QSqlQuery purchasableItemQuery;
 
     purchasableItemQuery.prepare("DELETE FROM PurchasableItem WHERE "
@@ -2556,17 +2361,17 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(S
  *  if true then get only avaliable item
  *  else get all items
  * @return
- *  returns a list of pairs(PurchasableItem, quantity of that PurchasableItem)
+ *  returns a list of PurchasableItem
  */
-QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bool getavailabilityOnly){
-     QList< QPair<PurchasableItem*,qint32> > *purchasableItems = new QList< QPair<PurchasableItem*,qint32> >();
+QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getavailabilityOnly){
+     QList<PurchasableItem*> *purchasableItems = new QList<PurchasableItem*>();
 
     QSqlQuery textBookQuery;
     QSqlQuery chapterQuery;
     QSqlQuery sectionQuery;
 
     if(!getavailabilityOnly) {
-        // get all textbooks in shopping cart
+        // get all textbooks
         textBookQuery.exec("SELECT Textbook.textBookTitle, "
                                     "Textbook.author, "
                                     "Textbook.edition, "
@@ -2576,39 +2381,36 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bo
                                     "Textbook.coverImageLocation, "
                                     "Textbook.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability, "
-                                    "ShoppingCart.quantity "
+                                    "PurchasableItem.availability "
                                 "FROM Textbook "
                                 "JOIN PurchasableItem ON "
                                    "Textbook.itemID = PurchasableItem.ItemID "
                                    "ORDER BY Textbook.textBookTitle ASC, Textbook.ISBN ASC;");
 
-        // get all chapters in shopping cart
+        // get all chapters
         chapterQuery.exec("SELECT Chapter.chapterTitle, "
                                    "Chapter.chapterNumber, "
                                    "Chapter.itemID, "
                                    "PurchasableItem.price, "
-                                   "PurchasableItem.availability, "
-                                   "ShoppingCart.quantity "
+                                   "PurchasableItem.availability "
                                "FROM Chapter "
                                "JOIN PurchasableItem ON "
                                    "Chapter.itemID = PurchasableItem.ItemID "
                                    "ORDER BY Chapter.chapterNumber ASC;");
 
-        // get all sections in shopping cart
+        // get all sections
         sectionQuery.exec("SELECT section.sectionTitle, "
                                     "section.sectionNumber, "
                                     "section.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability, "
-                                    "ShoppingCart.quantity "
+                                    "PurchasableItem.availability "
                                 "FROM Section "
                                 "JOIN PurchasableItem ON "
                                     "Section.itemID = PurchasableItem.ItemID "
                                     "ORDER BY Section.sectionNumber ASC;");
     }
     else {
-        // get all textbooks in shopping cart
+        // get all textbooks
         textBookQuery.exec("SELECT Textbook.textBookTitle, "
                                     "Textbook.author, "
                                     "Textbook.edition, "
@@ -2618,34 +2420,31 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bo
                                     "Textbook.coverImageLocation, "
                                     "Textbook.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability, "
-                                    "ShoppingCart.quantity "
+                                    "PurchasableItem.availability "
                                 "FROM Textbook "
                                 "JOIN PurchasableItem ON "
                                    "Textbook.itemID = PurchasableItem.ItemID "
                                 "WHERE PurchasableItem.availability=1 "
                                    "ORDER BY Textbook.textBookTitle ASC, Textbook.ISBN ASC;");
 
-        // get all chapters in shopping cart
+        // get all chapters
         chapterQuery.exec("SELECT Chapter.chapterTitle, "
                                    "Chapter.chapterNumber, "
                                    "Chapter.itemID, "
                                    "PurchasableItem.price, "
-                                    "PurchasableItem.availability, "
-                                    "ShoppingCart.quantity "
+                                   "PurchasableItem.availability "
                                "FROM Chapter "
                                "JOIN PurchasableItem ON "
                                    "Chapter.itemID = PurchasableItem.ItemID "
                                "WHERE PurchasableItem.availability=1 "
                                    "ORDER BY Chapter.chapterNumber ASC;");
 
-        // get all sections in shopping cart
+        // get all sections
         sectionQuery.exec("SELECT section.sectionTitle, "
                                     "section.sectionNumber, "
                                     "section.itemID, "
                                     "PurchasableItem.price, "
-                                    "PurchasableItem.availability, "
-                                    "ShoppingCart.quantity "
+                                    "PurchasableItem.availability "
                                 "FROM Section "
                                 "JOIN PurchasableItem ON "
                                     "Section.itemID = PurchasableItem.ItemID "
@@ -2665,28 +2464,29 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getPurchasableItemList(bo
                                            textBookQuery.value(textBookQuery.record().indexOf("availability")).toBool());
          textbook->setCoverImageLoc(textBookQuery.value(textBookQuery.record().indexOf("coverImageLocation")).toString());
 
-         purchasableItems->push_back(QPair<PurchasableItem*,qint32>(textbook, textBookQuery.value(textBookQuery.record().indexOf("quantity")).toInt()));
+         purchasableItems->push_back(textbook);
     }
 
 
     while (chapterQuery.next()){
-         purchasableItems->push_back(QPair<PurchasableItem*,qint32>(new Chapter(chapterQuery.value(chapterQuery.record().indexOf("chapterTitle")).toString(),
-                                                                                chapterQuery.value(chapterQuery.record().indexOf("chapterNumber")).toInt(),
-                                                                                chapterQuery.value(chapterQuery.record().indexOf("itemID")).toInt(),
-                                                                                chapterQuery.value(chapterQuery.record().indexOf("price")).toDouble(),
-                                                                                chapterQuery.value(chapterQuery.record().indexOf("availability")).toBool()),
-         chapterQuery.value(chapterQuery.record().indexOf("quantity")).toInt()));
+         purchasableItems->push_back(new Chapter(chapterQuery.value(chapterQuery.record().indexOf("chapterTitle")).toString(),
+                                                                    chapterQuery.value(chapterQuery.record().indexOf("chapterNumber")).toInt(),
+                                                                    chapterQuery.value(chapterQuery.record().indexOf("itemID")).toInt(),
+                                                                    chapterQuery.value(chapterQuery.record().indexOf("price")).toDouble(),
+                                                                    chapterQuery.value(chapterQuery.record().indexOf("availability")).toBool()));
     }
 
     while (sectionQuery.next()){
-         purchasableItems->push_back(QPair<PurchasableItem*,qint32>(new Section(sectionQuery.value(sectionQuery.record().indexOf("sectionTitle")).toString(),
-                                                                                sectionQuery.value(sectionQuery.record().indexOf("sectionNumber")).toInt(),
-                                                                                sectionQuery.value(sectionQuery.record().indexOf("itemID")).toInt(),
-                                                                                sectionQuery.value(sectionQuery.record().indexOf("price")).toDouble(),
-                                                                                sectionQuery.value(sectionQuery.record().indexOf("availability")).toBool()),
-         sectionQuery.value(sectionQuery.record().indexOf("quantity")).toInt()));
+         purchasableItems->push_back(new Section(sectionQuery.value(sectionQuery.record().indexOf("sectionTitle")).toString(),
+                                                                    sectionQuery.value(sectionQuery.record().indexOf("sectionNumber")).toInt(),
+                                                                    sectionQuery.value(sectionQuery.record().indexOf("itemID")).toInt(),
+                                                                    sectionQuery.value(sectionQuery.record().indexOf("price")).toDouble(),
+                                                                    sectionQuery.value(sectionQuery.record().indexOf("availability")).toBool()));
     }
 
+    qDebug() << textBookQuery.lastQuery() << textBookQuery.lastError();
+    qDebug() << chapterQuery.lastQuery() << chapterQuery.lastError();
+    qDebug() << sectionQuery.lastQuery() << sectionQuery.lastError();
     return purchasableItems;
 }
 

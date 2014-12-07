@@ -22,12 +22,13 @@ public:
     QTcpSocket* getTcp();
     qint64 getBytes();
     void setBytes(qint64 bytes);
-
+    void        resetBuffer();
 private:
     QTcpSocket *tcpConnection;
     QDataStream dataStream;
     qint64 bytes;
     QJsonDocument result;
+    QByteArray buffer;
 
 signals:
 

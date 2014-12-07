@@ -11,8 +11,11 @@ QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
     api_server_call["Function:"] = functionCall;
 
     requestManager.send(api_server_call);
-    requestManager.getTcp()->waitForReadyRead();
-    QJsonDocument res = requestManager.getResult();
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
 
     //Placeholder to when we read back from the server to get the list of textbooks
     QList<Term*>* result = new QList<Term*>();
@@ -25,6 +28,7 @@ QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
             result->append(newTerm);
         }
     }
+    requestManager.resetBuffer();
     return result;
 }
 
@@ -42,8 +46,11 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *st
     api_server_call["Term"] = termObject;
 
     requestManager.send(api_server_call);
-    requestManager.getTcp()->waitForReadyRead();
-    QJsonDocument res = requestManager.getResult();
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
 
     QList<Course*>* result = new QList<Course*>();
     QJsonArray courseArray = res.object()["courses:"].toArray();
@@ -55,6 +62,7 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *st
             result->append(newCrs);
         }
     }
+    requestManager.resetBuffer();
     return result;
 }
 
@@ -68,11 +76,15 @@ ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student*
     api_server_call["student"] = studentObject;
 
     requestManager.send(api_server_call);
-    requestManager.getTcp()->waitForReadyRead();
-    QJsonDocument res = requestManager.getResult();
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
 
     ShoppingCart* result = new ShoppingCart();
     result->read(res.object()["shoppingcart"].toObject());
+    requestManager.resetBuffer();
     return result;
 }
 
@@ -92,9 +104,44 @@ bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, Purch
     api_server_call["quantity"] = quantity;
 
     requestManager.send(api_server_call);
-    requestManager.getTcp()->waitForReadyRead();
-    QJsonDocument res = requestManager.getResult();
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
 
     bool result = res.object()["success"].toBool();
+    requestManager.resetBuffer();
     return result;
+}
+
+QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
+    QJsonObject api_server_call;
+    QString functionCall = "retrieveAllContent()";
+    api_server_call["Function:"] = functionCall;
+
+    requestManager.send(api_server_call);
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
+
+
+    QList<Textbook*>* result = new QList<Textbook*>();
+    QJsonArray contentArray = res.object()["allContent"].toArray();
+
+    if(!contentArray.isEmpty()){
+
+        for (int conIndex = 0; conIndex<contentArray.size();++conIndex){
+            QJsonObject conObject = contentArray[conIndex].toObject();
+            Textbook* newContent = new Textbook();
+            newContent->read(conObject);
+            result->append(newContent);
+        }
+    }
+
+    requestManager.resetBuffer();
+    return result;
+
 }

@@ -2,16 +2,17 @@
 
 ContentManagementUpdateControl::ContentManagementUpdateControl()
 {
+    clientComm = ClientCommunicatorManagementControl::getInstance();
 }
 
 QList<Textbook*>* ContentManagementUpdateControl::retrieveAllContent(){
-  return clientComm.retrieveAllContent();
+  return clientComm->retrieveAllContent();
 }
 
 bool ContentManagementUpdateControl::updateContent(Textbook* text){
-    return clientComm.updateContent(text);
+    return clientComm->updateContent(text);
 }
 
 bool ContentManagementUpdateControl::deleteContent(PurchasableItem* item){
-    return clientComm.deleteContent(item);
+    return clientComm->deleteContent(item);
 }

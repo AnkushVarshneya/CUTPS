@@ -18,7 +18,7 @@ public:
     ShoppingCart* retrieveShoppingCart(Student*);
     bool    updateShoppingCart(Student*,PurchasableItem*,qint32);
 private:
-    ClientCommunicatorManagementControl mc;
+    ClientCommunicatorManagementControl* mc;
 };
 
 #endif // SHOPUPDATECONTROL_H

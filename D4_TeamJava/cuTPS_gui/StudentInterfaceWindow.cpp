@@ -13,6 +13,12 @@ StudentInterfaceWindow::StudentInterfaceWindow(QMainWindow *parent) :
 
     shopView = new StudentShopView(this);
     this->setCentralWidget(shopView);
+
+    //this->resize(this->sizeHint());
+     this->resize(shopView->frameSize());
+
+    createStatusBar();
+
     dock = new QDockWidget(tr("Textbook"), this);
     dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
     dock->hide();
@@ -26,6 +32,8 @@ StudentInterfaceWindow::~StudentInterfaceWindow()
     delete ui;
 }
 
+void            StudentInterfaceWindow::createStatusBar(){  this->statusBar()->showMessage(tr("Ready")); }
+
 //getters
 //QPushButton*    StudentInterfaceWindow::getAddTextbookOption() { return ui->addTextbookToCartOption; }
 //QPushButton*    StudentInterfaceWindow::getViewDetailsOption() {return ui->viewDetailsOption; }
@@ -34,12 +42,16 @@ StudentInterfaceWindow::~StudentInterfaceWindow()
 //QSpinBox*       StudentInterfaceWindow::getQuantityOption() { return ui->quantityOption; }
 //QListView*      StudentInterfaceWindow::getCourseView() {return ui->itemsListView; }
 
+QStatusBar*     StudentInterfaceWindow::getStatusBar() { return this->statusBar() ; }
 QPushButton*    StudentInterfaceWindow::getAddTextbookOption() { return shopView->getAddTextbookOption(); }
 QPushButton*    StudentInterfaceWindow::getViewDetailsOption() {return shopView->getViewDetailsOption(); }
 QPushButton*    StudentInterfaceWindow::getViewCartOption() { return shopView->getViewCartOption() ;}
 QComboBox*      StudentInterfaceWindow::getTermSelectOption() { return shopView->getTermSelectOption();  }
 QSpinBox*       StudentInterfaceWindow::getQuantityOption() { return shopView->getQuantityOption(); }
 QListView*      StudentInterfaceWindow::getCourseView() {return shopView->getCourseView(); }
+
+
+
 
 
 //make a dock window for a textbook

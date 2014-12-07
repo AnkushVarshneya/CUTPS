@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QtGui>
+#include <QStatusBar>
 #include <QDockWidget>
 #include <QMainWindow>
 #include <QPushButton>
@@ -28,6 +29,7 @@ class StudentInterfaceWindow : public QMainWindow
 public:
     explicit StudentInterfaceWindow(QMainWindow *parent = 0);
     ~StudentInterfaceWindow();
+    QStatusBar*         getStatusBar();
     QPushButton*        getViewDetailsOption();
     QPushButton*        getAddTextbookOption();
     QPushButton*        getViewCartOption();
@@ -46,6 +48,7 @@ private:
     Ui::StudentInterfaceWindow *ui;
     StudentShopView        *shopView;
     QDockWidget            *dock;
+    void                   createStatusBar();
 
 
    // QStandardItemModel *treeMod;

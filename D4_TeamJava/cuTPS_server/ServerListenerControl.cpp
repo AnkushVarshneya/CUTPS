@@ -363,7 +363,7 @@ void ServerListenerControl::retrieveAllTextbooks(QJsonObject json){
     this->sendCommand(r);
 }
 
-//Handles API call to update the given course for a given term
+//Handles API call to create a new or update the given course for a given term
 //Sends the success flag determining if the update worked or not
 //Is sent back to client
 void ServerListenerControl::updateCourse(QJsonObject json){

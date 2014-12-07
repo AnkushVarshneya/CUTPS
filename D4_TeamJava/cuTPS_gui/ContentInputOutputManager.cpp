@@ -222,6 +222,7 @@ void ContentInputOutputManager::on_editTextbookForm_create_button() {
         //contentManagementFacade->fakeTextbooks.push_back(currentTextbook);
     }
 
+    contentManagementFacade->updateContent(currentTextbook);
     buildTextbookModel();
     setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
 

@@ -48,3 +48,7 @@ QList<Textbook*>  ContentManagementFacade::viewAllContent() {
 
     return fakeTextbooks;
 }
+
+bool ContentManagementFacade::updateContent(Textbook* text){
+    return updateControl.updateContent(text);
+}

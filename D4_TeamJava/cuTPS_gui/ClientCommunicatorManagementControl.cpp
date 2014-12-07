@@ -25,6 +25,7 @@ QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
             result->append(newTerm);
         }
     }
+    requestManager.resetBuffer();
     return result;
 }
 
@@ -55,6 +56,7 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *st
             result->append(newCrs);
         }
     }
+    requestManager.resetBuffer();
     return result;
 }
 
@@ -73,6 +75,7 @@ ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student*
 
     ShoppingCart* result = new ShoppingCart();
     result->read(res.object()["shoppingcart"].toObject());
+    requestManager.resetBuffer();
     return result;
 }
 
@@ -96,6 +99,7 @@ bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, Purch
     QJsonDocument res = requestManager.getResult();
 
     bool result = res.object()["success"].toBool();
+    requestManager.resetBuffer();
     return result;
 }
 
@@ -105,11 +109,17 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
     api_server_call["Function:"] = functionCall;
 
     requestManager.send(api_server_call);
-    requestManager.getTcp()->waitForReadyRead();
-    QJsonDocument res = requestManager.getResult();
-    qDebug() << res;
+
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
+
+
     QList<Textbook*>* result = new QList<Textbook*>();
     QJsonArray contentArray = res.object()["allContent"].toArray();
+
     if(!contentArray.isEmpty()){
 
         for (int conIndex = 0; conIndex<contentArray.size();++conIndex){
@@ -120,7 +130,7 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
         }
     }
 
-
+    requestManager.resetBuffer();
     return result;
 
 }

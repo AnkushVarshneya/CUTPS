@@ -225,7 +225,7 @@
     <string>Publisher:</string>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="descriptionTextbox">
+  <widget class="QTextEdit" name="descriptionTextbox">
    <property name="geometry">
     <rect>
      <x>410</x>

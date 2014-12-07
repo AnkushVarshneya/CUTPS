@@ -38,9 +38,9 @@ ContentManagementFacade::ContentManagementFacade()
     sec2->setPrice(2);
     sec3->setPrice(3);
 
-
-    fakeTextbooks.append(text);
-    fakeTextbooks.append(treeText);
+    fakeTextbooks = *(updateControl.retrieveAllContent());
+    //fakeTextbooks.append(text);
+    //fakeTextbooks.append(treeText);
 }
 
 QList<Textbook*>  ContentManagementFacade::viewAllContent() {

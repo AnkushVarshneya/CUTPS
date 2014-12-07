@@ -5,6 +5,12 @@
 #include "EditSectionFormWindow.h"
 #include <QPushButton>
 
+#include <QLineEdit>
+#include <QSpinBox>
+#include <QDoubleSpinBox>
+#include <QCheckBox>
+#include <QListView>
+
 class EditTextbookFormWindow;
 
 namespace Ui {
@@ -23,6 +29,14 @@ public:
     QPushButton* getCreateButton();
     QPushButton* getCreateSectionButton();
     QPushButton* getEditSectionButton();
+
+    QLineEdit*      getTitleTextbox();
+    QSpinBox*       getChapterNumberSpinBox();
+    QDoubleSpinBox* getPriceSpinBox();
+    QCheckBox*      getAvailabilityCheckBox();
+
+    QListView*      getSectionsListView();
+
 
 private:
     Ui::EditChapterFormWindow *ui;

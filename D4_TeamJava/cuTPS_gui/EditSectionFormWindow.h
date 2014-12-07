@@ -3,6 +3,10 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QLineEdit>
+#include <QSpinBox>
+#include <QDoubleSpinBox>
+#include <QCheckBox>
 
 class EditChapterFormWindow;
 
@@ -20,6 +24,11 @@ public:
 
     QPushButton* getBackButton();
     QPushButton* getCreateButton();
+
+    QLineEdit*      getTitleTextbox();
+    QSpinBox*       getSectionNumberSpinBox();
+    QDoubleSpinBox* getPriceSpinBox();
+    QCheckBox*      getAvailabilityCheckBox();
 
 private:
     Ui::EditSectionFormWindow *ui;

@@ -11,8 +11,11 @@ QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
     api_server_call["Function:"] = functionCall;
 
     requestManager.send(api_server_call);
-    requestManager.getTcp()->waitForReadyRead();
-    QJsonDocument res = requestManager.getResult();
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
 
     //Placeholder to when we read back from the server to get the list of textbooks
     QList<Term*>* result = new QList<Term*>();
@@ -43,8 +46,11 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *st
     api_server_call["Term"] = termObject;
 
     requestManager.send(api_server_call);
-    requestManager.getTcp()->waitForReadyRead();
-    QJsonDocument res = requestManager.getResult();
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
 
     QList<Course*>* result = new QList<Course*>();
     QJsonArray courseArray = res.object()["courses:"].toArray();
@@ -70,8 +76,11 @@ ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student*
     api_server_call["student"] = studentObject;
 
     requestManager.send(api_server_call);
-    requestManager.getTcp()->waitForReadyRead();
-    QJsonDocument res = requestManager.getResult();
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
 
     ShoppingCart* result = new ShoppingCart();
     result->read(res.object()["shoppingcart"].toObject());
@@ -95,8 +104,11 @@ bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, Purch
     api_server_call["quantity"] = quantity;
 
     requestManager.send(api_server_call);
-    requestManager.getTcp()->waitForReadyRead();
-    QJsonDocument res = requestManager.getResult();
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        res = requestManager.getResult();
+    }
 
     bool result = res.object()["success"].toBool();
     requestManager.resetBuffer();
@@ -109,7 +121,6 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
     api_server_call["Function:"] = functionCall;
 
     requestManager.send(api_server_call);
-
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();

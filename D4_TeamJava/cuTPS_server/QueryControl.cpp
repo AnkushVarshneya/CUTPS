@@ -316,6 +316,32 @@ void QueryControl::test(){
     }
     delete(list);
 
+    qDebug() << "\ntext for emptyShoppingCart\n";
+    qDebug() << emptyShoppingCart(student);
+
+    qDebug() << "\ntext for getShoppingCartItemList after emptyShoppingCart\n";
+    list = this->getShoppingCartItemList(student, false);
+    for(int i = 0; i<list->length(); i++) {
+        json = QJsonObject();
+        list->at(i).first->write(json);
+        qDebug() <<json;
+    }
+    delete(list);
+
+    qDebug() << "\ntext for addPurchasableItemToCart after after emptyShoppingCart\n";
+    qDebug() << addPurchasableItemToCart((PurchasableItem*) textbook, student);
+    qDebug() << addPurchasableItemToCart((PurchasableItem*) chapter, student);
+    qDebug() << addPurchasableItemToCart((PurchasableItem*) section, student);
+
+    qDebug() << "\ntext for getShoppingCartItemList after addPurchasableItemToCart after emptyShoppingCart\n";
+    list = this->getShoppingCartItemList(student, false);
+    for(int i = 0; i<list->length(); i++) {
+        json = QJsonObject();
+        list->at(i).first->write(json);
+        qDebug() <<json;
+    }
+    delete(list);
+
     qDebug() << "\ntext for updateOrderContents\n";
     qDebug() << updateOrderContents((PurchasableItem*) textbook, student);
     qDebug() << updateOrderContents((PurchasableItem*) chapter, student);
@@ -2488,6 +2514,30 @@ QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getavailabili
     qDebug() << chapterQuery.lastQuery() << chapterQuery.lastError();
     qDebug() << sectionQuery.lastQuery() << sectionQuery.lastError();
     return purchasableItems;
+}
+
+/**
+ * @brief QueryControl::emptyShoppingCart
+ *  delete all items form shopping cart for a given student
+ * @param student
+ *  student who the shopping cart belongs to
+ * @return
+ *  Returns if operation was a success
+ */
+bool QueryControl::emptyShoppingCart(Student *student){
+
+    bool noError = true;
+
+    // delete shopping cart
+    QSqlQuery shoppingCartQuery;
+
+    shoppingCartQuery.prepare("DELETE FROM ShoppingCart WHERE "
+                            "studentNumber = :studentNumber;");
+    shoppingCartQuery.bindValue(":studentNumber", student->getStudentNum());
+
+    noError = noError && shoppingCartQuery.exec();
+
+    return noError;
 }
 
 /**

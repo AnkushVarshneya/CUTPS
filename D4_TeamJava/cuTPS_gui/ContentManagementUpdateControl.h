@@ -10,6 +10,7 @@ class ContentManagementUpdateControl
 public:
     ContentManagementUpdateControl();
     QList<Textbook*>* retrieveAllContent();
+    bool        updateContent(Textbook*);
 private:
     ClientCommunicatorManagementControl clientComm;
 };

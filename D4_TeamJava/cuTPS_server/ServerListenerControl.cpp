@@ -82,6 +82,9 @@ void ServerListenerControl::readBytes() {
    else if (cmd == "retrieveAllContent()"){
        retrieveAllContent();
    }
+   else if (cmd == "updateContent()"){
+       updateContent(jsonDoc.object());
+   }
 }
 
 //writes a json object to the tcp socket
@@ -202,6 +205,20 @@ void ServerListenerControl::retrieveAllContent(){
     qDeleteAll(result->begin(), result->end());
     delete result;
     r["allContent"] = contentArray;
+    this->sendCommand(r);
+}
+
+
+void ServerListenerControl::updateContent(QJsonObject json){
+
+    Textbook text;
+
+    text.read(json["textbook"].toObject());
+
+    bool result = storage.updateContent(&text);
+
+    QJsonObject r;
+    r["success"] = result;
     this->sendCommand(r);
 }
 

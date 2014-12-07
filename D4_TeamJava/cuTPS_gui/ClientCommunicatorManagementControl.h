@@ -20,6 +20,7 @@ public:
     ShoppingCart*   retrieveShoppingCart(Student*);
     bool            updateShoppingCart(Student*, PurchasableItem*, qint32);
     QList<Textbook*>* retrieveAllContent();
+    bool        updateContent(Textbook*);
 
 private:
     ClientCommunicatorRequestManager requestManager;

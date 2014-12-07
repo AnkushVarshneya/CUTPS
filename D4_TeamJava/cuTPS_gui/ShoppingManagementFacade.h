@@ -15,6 +15,7 @@
 #include "Section.h"
 #include "Term.h"
 #include "Student.h"
+#include "ShopUpdateControl.h"
 #include <QDebug>
 #include <QList>
 
@@ -29,6 +30,7 @@ public:
 private:
     QList<Term*>        fakeTerms;
     QList<Course*>      fakeCourses;
+    ShopUpdateControl   *shopUpdateControl;
 
 
 };

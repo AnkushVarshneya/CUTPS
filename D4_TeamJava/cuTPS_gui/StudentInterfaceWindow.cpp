@@ -5,18 +5,25 @@
 #include <QPixmap>
 #include <QIcon>
 
-StudentInterfaceWindow::StudentInterfaceWindow(QWidget *parent) :
-    QWidget(parent),
+StudentInterfaceWindow::StudentInterfaceWindow(QMainWindow *parent) :
+    QMainWindow(parent),
     ui(new Ui::StudentInterfaceWindow)
 {
     ui->setupUi(this);
 
-    //Setting the icon's image to a Shopping Cart
-    QPixmap shopping_img("../Images/shopping_cart_clipart.png");
-    QIcon ButtonIcon(shopping_img);
-    ui->viewShoppingCartOption->setIcon(ButtonIcon);
-    ui->viewShoppingCartOption->setIconSize(shopping_img.rect().size());
-    ui->viewShoppingCartOption->setFixedSize(shopping_img.rect().size());
+    shopView = new StudentShopView(this);
+    this->setCentralWidget(shopView);
+
+    //this->resize(this->sizeHint());
+     this->resize(shopView->frameSize());
+
+    createStatusBar();
+
+    dock = new QDockWidget(tr("Textbook"), this);
+    dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
+    dock->hide();
+
+    connect(dock, SIGNAL(visibilityChanged(bool)), this, SLOT(shrink()));
 
 }
 
@@ -25,11 +32,72 @@ StudentInterfaceWindow::~StudentInterfaceWindow()
     delete ui;
 }
 
+void            StudentInterfaceWindow::createStatusBar(){  this->statusBar()->showMessage(tr("Ready")); }
+
 //getters
-QPushButton*    StudentInterfaceWindow::getAddTextbookOption() { return ui->addTextbookToCartOption; }
-QPushButton*    StudentInterfaceWindow::getViewDetailsOption() {return ui->viewDetailsOption; }
-QPushButton*    StudentInterfaceWindow::getViewCartOption() { return ui->viewShoppingCartOption; }
-QComboBox*      StudentInterfaceWindow::getTermSelectOption() { return ui->termSelectOption;  }
-QSpinBox*       StudentInterfaceWindow::getQuantityOption() { return ui->quantityOption; }
-QTreeView* StudentInterfaceWindow::getCourseTreeView() { return ui->itemsTreeView; }
+//QPushButton*    StudentInterfaceWindow::getAddTextbookOption() { return ui->addTextbookToCartOption; }
+//QPushButton*    StudentInterfaceWindow::getViewDetailsOption() {return ui->viewDetailsOption; }
+//QPushButton*    StudentInterfaceWindow::getViewCartOption() { return ui->viewShoppingCartOption; }
+//QComboBox*      StudentInterfaceWindow::getTermSelectOption() { return ui->termSelectOption;  }
+//QSpinBox*       StudentInterfaceWindow::getQuantityOption() { return ui->quantityOption; }
+//QListView*      StudentInterfaceWindow::getCourseView() {return ui->itemsListView; }
+
+QStatusBar*     StudentInterfaceWindow::getStatusBar() { return this->statusBar() ; }
+QPushButton*    StudentInterfaceWindow::getAddTextbookOption() { return shopView->getAddTextbookOption(); }
+QPushButton*    StudentInterfaceWindow::getViewDetailsOption() {return shopView->getViewDetailsOption(); }
+QPushButton*    StudentInterfaceWindow::getViewCartOption() { return shopView->getViewCartOption() ;}
+QComboBox*      StudentInterfaceWindow::getTermSelectOption() { return shopView->getTermSelectOption();  }
+QSpinBox*       StudentInterfaceWindow::getQuantityOption() { return shopView->getQuantityOption(); }
+QListView*      StudentInterfaceWindow::getCourseView() {return shopView->getCourseView(); }
+
+
+
+
+
+//make a dock window for a textbook
+void StudentInterfaceWindow::createDockWindow(QWidget *widget)
+{
+
+    dock->setWidget(widget);
+    this->addDockWidget(Qt::RightDockWidgetArea, dock);
+    dock->setVisible(true);
+
+}
+
+
+void StudentInterfaceWindow::shrink()
+{
+    //this->resize( this->minimumSize() );
+    qDebug() << "dockwidg visible? " << dock->isVisible();
+    qDebug() << "dockwidg ? " << dock->isHidden();
+    qDebug() << "dockw is min? " << dock->isMinimized();
+    qDebug() << "dockw is float?" << dock->isFloating();
+
+    //if its hidden, destroy it?
+    if (!dock->isVisible())
+    {
+    this->resize(this->minimumSize());
+    } else this->resize(this->sizeHint());
+
+    //if ( dock->isMinimized() || dock->isHidden() ) { this->resize(this->sizeHint()); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

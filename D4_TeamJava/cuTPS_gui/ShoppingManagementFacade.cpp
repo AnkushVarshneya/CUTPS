@@ -2,6 +2,9 @@
 
 ShoppingManagementFacade::ShoppingManagementFacade()
 {
+    shopUpdateControl = new ShopUpdateControl();
+
+
     //fake terms for testing
     int year, month, day;
     year = 2014;
@@ -34,6 +37,7 @@ ShoppingManagementFacade::ShoppingManagementFacade()
     crs2->setTerm(tw15);
 
         Textbook    *text = new Textbook();
+        text->setItemID(42);
         Textbook    *treeText = new Textbook("all about trees", "david suzuki","3rd ed");
         Chapter *chp1 = new Chapter();
         Chapter *chp2 = new Chapter("chp2", 2, 64, 22, true);
@@ -41,6 +45,7 @@ ShoppingManagementFacade::ShoppingManagementFacade()
         treeText->addChapter(chp1);
         treeText->addChapter(chp2);
         treeText->addChapter(chp3);
+        treeText->setItemID(666);
 
         Section *sec1 = new Section("1st sec");
         sec1->setSectionNumber(1);
@@ -61,18 +66,15 @@ ShoppingManagementFacade::ShoppingManagementFacade()
 
     fakeCourses.append(crs1);
     fakeCourses.append(crs2);
-
+//100853074
 }
 
 QList<Term*>    ShoppingManagementFacade::getTermList() {
-    return fakeTerms;
-
-
+    return *shopUpdateControl->retrieveAllTerms();
+    //return fakeTerms;
 }
 
 QList<Course*>  ShoppingManagementFacade::viewContent(Student *student, Term *term) {
-    qDebug() << "view content called with student: " << student->getStudentNum();
-    qDebug() << "and term: " << term->getTermName();
-
-    return fakeCourses;
+    //return fakeCourses;
+    return *shopUpdateControl->retrieveContent(student, term);
 }

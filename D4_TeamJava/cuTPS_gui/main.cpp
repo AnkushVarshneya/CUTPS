@@ -35,6 +35,15 @@ int main(int argc, char *argv[])
     //Testing for retrieving content
     Student testStu;
     testStu.setStudentNum("100853074");
+
+
+//    QList<Course*>* courses = test.retrieveContent(&testStu,(*terms)[0]);
+//    foreach(Course *crs, *courses){
+//        QJsonObject json;
+//        crs->write(json);
+//        qDebug() <<json;
+//    }
+
     qDebug() << "Test for Retrieving all content for student";
 
     QList<Course*>* courses = test.retrieveContent(&testStu,(*terms)[0]);

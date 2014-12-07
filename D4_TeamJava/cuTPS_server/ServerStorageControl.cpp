@@ -197,6 +197,28 @@ PaymentInformation* ServerStorageControl::retrievePaymentInformation(Student *st
     return result;
 }
 
+/**
+ * @brief ServerStorageControl::emptyShoppingCart
+ *  empties a ShoppingCart for a given Student
+ * @param student
+ *  Student to the ShoppingCard belongs to
+ * @return
+ *  if ShoppingCart was emptied
+ */
+bool ServerStorageControl::emptyShoppingCart(Student *student){
+    //Check for null
+    if (student == NULL) {
+        return false;
+    }
+
+    QueryControl* q = new QueryControl();
+
+    bool noError = q->emptyShoppingCart(student);
+
+    delete q;
+
+    return noError;
+}
 
 /**
  * @brief ServerStorageControl::retrieveAllContent()

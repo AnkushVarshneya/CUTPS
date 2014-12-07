@@ -27,6 +27,7 @@ public:
     bool                updateOrderContents(Student*, ShoppingCart*);
     bool                updatePaymentInformation(Student*, PaymentInformation*);
     PaymentInformation* retrievePaymentInformation(Student*);
+    bool                emptyShoppingCart(Student*);
 
     //Content Manager API
     QList<Textbook*>* retrieveAllContent();

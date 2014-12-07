@@ -144,3 +144,29 @@ QList<Textbook*>* ServerStorageControl::retrieveAllContent(){
 
     return result;
 }
+
+/**
+ * @brief ServerStorageControl::updateContent()
+ * Update all of the content in the database by updating textbook,
+ * then all chapters in it, then all sections in those sections
+ * @param t
+ * textbook to update
+ * @return if update was successful
+ */
+bool ServerStorageControl::updateContent(Textbook *t){
+    QueryControl* q = new QueryControl();
+    bool noError = true;
+
+    // update textbook
+    noError = noError && q->updateTextbook(t);
+    foreach (Chapter *c, t->getChapterList()){
+        // update chapter
+        noError = noError && q->updateChapter(c, t->getISBN());
+        foreach (Section *s, c->getChapterSections()) {
+            // update section
+            noError = noError && q->updateSection(s, c->getChapterNumber(), t->getISBN());
+        }
+    }
+
+    return noError;
+}

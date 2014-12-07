@@ -27,6 +27,8 @@ public:
 
     //Content Manager API
     QList<Textbook*>* retrieveAllContent();
+    bool              updateContent(Textbook*);
+
 
 private:
 

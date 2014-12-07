@@ -86,6 +86,12 @@ int main(int argc, char *argv[])
     }
     qDebug() << "End Testing for retrieving all content";
 
+    qDebug() << "Testing for updateContent()";
+
+    Textbook* newTextbook = new Textbook("A Study in Scarlet", "Sherlock Holmes" , "1st ed", "Penguin", "987-0-15-298102-1", "Mystery", 456, 99.99, true);
+    bool result = cmTest.updateContent(newTextbook);
+    qDebug() << result;
+    qDebug() << "End Testing for updateContent()";
     return a.exec();
 
 }

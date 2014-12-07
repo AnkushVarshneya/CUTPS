@@ -79,6 +79,18 @@ void ServerListenerControl::readBytes() {
    else if (cmd == "updateShoppingCart()"){
        updateShoppingCart(jsonDoc.object());
    }
+   else if (cmd == "checkout()"){
+       checkout(jsonDoc.object());
+   }
+   else if (cmd == "emptyShoppingCart()"){
+       emptyShoppingCart(jsonDoc.object());
+   }
+   else if (cmd == "updatePaymentInformation()"){
+       updatePaymentInformation(jsonDoc.object());
+   }
+   else if (cmd == "retrievePaymentInformation()"){
+       retrievePaymentInformation(jsonDoc.object());
+   }
    else if (cmd == "retrieveAllContent()"){
        retrieveAllContent();
    }
@@ -87,6 +99,18 @@ void ServerListenerControl::readBytes() {
    }
    else if (cmd == "deleteContent()"){
        deleteContent(jsonDoc.object());
+   }
+   else if (cmd == "updateCourse()"){
+       updateCourse(jsonDoc.object());
+   }
+   else if (cmd == "deleteCourse()"){
+       deleteCourse(jsonDoc.object());
+   }
+   else if (cmd == "updateCourseStudentLink()"){
+       updateCourseStudentLink(jsonDoc.object());
+   }
+   else if (cmd == "updateCourseTextbookLink()"){
+       updateCourseTextbookLink(jsonDoc.object());
    }
 }
 
@@ -163,7 +187,6 @@ void ServerListenerControl::retrieveShoppingCart(QJsonObject json){
 //Returns back to client a sucess flag
 void ServerListenerControl::updateShoppingCart(QJsonObject json){
     Student stu;
-    PurchasableItem* item;
     qint32 quantity;
     stu.read(json["student"].toObject());
     quantity = json["quantity"].toDouble();
@@ -174,26 +197,71 @@ void ServerListenerControl::updateShoppingCart(QJsonObject json){
         newTextbook->read(itemObject);
         qDebug() << itemObject;
         bool success = storage.updateShoppingCart(&stu, newTextbook, quantity);
-        QJsonObject r;
-        r["success"] = success;
-        this->sendCommand(r);
+        sendSuccess(success);
     }
     else if(itemObject.contains("chapterNumber")){
         Chapter* newChapter = new Chapter();
         newChapter->read(itemObject);
         bool success = storage.updateShoppingCart(&stu, newChapter, quantity);
-        QJsonObject r;
-        r["success"] = success;
-        this->sendCommand(r);
+        sendSuccess(success);
     }
     else if(itemObject.contains("sectionNumber")){
         Section* newSection = new Section();
         newSection->read(itemObject);
         bool success = storage.updateShoppingCart(&stu,newSection, quantity);
-        QJsonObject r;
-        r["success"] = success;
-        this->sendCommand(r);
+        sendSuccess(success);
     }
+}
+
+//Handles API call to checkout the student's shopping cart
+//Deserializes the json argument, making a student and shopping cart
+//And passes along this argument to the storagecontrol, which returns a boolean
+//Flag for success, sends this flag back to client
+void ServerListenerControl::checkout(QJsonObject json){
+    Student checkoutStu;
+    checkoutStu.read(json["student"].toObject());
+
+    ShoppingCart checkoutCart;
+    checkoutCart.read(json["cart"].toObject());
+
+    bool success = storage.updateOrderContents(&checkoutStu,&checkoutCart);
+    sendSuccess(success);
+
+}
+
+//Handles API call to empty the student's shopping cart
+//Returns a success flag to the client
+void ServerListenerControl::emptyShoppingCart(QJsonObject json){
+    Student stu;
+    stu.read(json["student"].toObject());
+    bool success = storage.emptyShoppingCart(&stu);
+    sendSuccess(success);
+}
+
+//Handles API call to update the student's payment information
+//Returns a success flag to the client
+void ServerListenerControl::updatePaymentInformation(QJsonObject json){
+    Student stu;
+    stu.read(json["student"].toObject());
+    PaymentInformation updatePayInfo;
+    updatePayInfo.read(json["payInfo"].toObject());
+    bool success = storage.updatePaymentInformation(&stu, &updatePayInfo);
+    sendSuccess(success);
+}
+
+//Handles API call to retrieve the student's payment information
+void ServerListenerControl::retrievePaymentInformation(QJsonObject json){
+    Student stu;
+    stu.read(json["student"].toObject());
+
+    PaymentInformation* payInfo = storage.retrievePaymentInformation(&stu);
+    QJsonObject payInfoObject;
+    if(payInfo != 0){
+        payInfo->write(payInfoObject);
+    }
+    QJsonObject r;
+    r["payInfo"] = payInfoObject;
+    this->sendCommand(r);
 }
 
 //Handles API call to retrieve All the purchasable content in the database in the form of
@@ -224,9 +292,7 @@ void ServerListenerControl::updateContent(QJsonObject json){
 
     bool result = storage.updateContent(&text);
 
-    QJsonObject r;
-    r["success"] = result;
-    this->sendCommand(r);
+    sendSuccess(result);
 }
 
 //Handles API call to delete some PurchasableItem. First determines what kind of purchasable item it is
@@ -235,35 +301,80 @@ void ServerListenerControl::updateContent(QJsonObject json){
 //Passes back a boolean flag if the operation was succesful or not
 void ServerListenerControl::deleteContent(QJsonObject json){
 
-//    QJsonObject itemObject = json["purchasableItem"].toObject();
-//    if(itemObject.contains("isbn")){
-//        Textbook* newTextbook = new Textbook();
-//        newTextbook->read(itemObject);
+    QJsonObject itemObject = json["purchasableItem"].toObject();
+    if(itemObject.contains("isbn")){
+        Textbook* newTextbook = new Textbook();
+        newTextbook->read(itemObject);
 
-//        bool success = storage.deleteContent(newTextbook);
-//        QJsonObject r;
-//        r["success"] = success;
-//        this->sendCommand(r);
-//    }
-//    else if(itemObject.contains("chapterNumber")){
-//        Chapter* newChapter = new Chapter();
-//        newChapter->read(itemObject);
-//        bool success = storage.deleteContent(newChapter);
-//        QJsonObject r;
-//        r["success"] = success;
-//        this->sendCommand(r);
-//    }
-//    else if(itemObject.contains("sectionNumber")){
-//        Section* newSection = new Section();
-//        newSection->read(itemObject);
-//        bool success = storage.deleteContent(newSection);
-//        QJsonObject r;
-//        r["success"] = success;
-//        this->sendCommand(r);
-//    }
-    QJsonObject r;
-    r["success"] = false;
-    this->sendCommand(r);
+        bool success = storage.deleteContent(newTextbook);
+        sendSuccess(success);
+    }
+    else if(itemObject.contains("chapterNumber")){
+        Chapter* newChapter = new Chapter();
+        newChapter->read(itemObject);
+        bool success = storage.deleteContent(newChapter);
+        sendSuccess(success);
+    }
+    else if(itemObject.contains("sectionNumber")){
+        Section* newSection = new Section();
+        newSection->read(itemObject);
+        bool success = storage.deleteContent(newSection);
+        sendSuccess(success);
+    }
+    else{
+        sendSuccess(false);
+    }
+
 }
 
+//Handles API call to update the given course for a given term
+//Sends the success flag determining if the update worked or not
+//Is sent back to client
+void ServerListenerControl::updateCourse(QJsonObject json){
+    Course updateCrs;
+    updateCrs.read(json["course"].toObject());
+    Term term;
+    term.read(json["term"].toObject());
+    bool success = storage.updateCourse(&updateCrs, term.getTermID());
+    sendSuccess(success);
+}
+
+//Handles API call to delete the given course for a given term
+void ServerListenerControl::deleteCourse(QJsonObject json){
+    Course deleteCrs;
+    deleteCrs.read(json["course"].toObject());
+    Term term;
+    term.read(json["term"].toObject());
+
+    bool success = storage.deleteCourse(&deleteCrs,term.getTermID());
+    sendSuccess(success);
+}
+
+//Handles API call to update the assignment of students to a course
+//For a given term
+void ServerListenerControl::updateCourseStudentLink(QJsonObject json){
+    Course assignedCrs;
+    assignedCrs.read(json["course"].toObject());
+
+    Student assignedStu;
+    assignedStu.read(json["student"].toObject());
+
+    Term inTerm;
+    inTerm.read(json["term"].toObject());
+}
+
+void ServerListenerControl::updateCourseTextbookLink(QJsonObject json){
+
+}
+
+
+
+//General success flag message to send back to the client
+//Takes in boolean input, puts that as part of the success field of the
+//Json object, and then sends that json object over to the client
+void ServerListenerControl::sendSuccess(bool success){
+    QJsonObject r;
+    r["success"] = success;
+    this->sendCommand(r);
+}
 

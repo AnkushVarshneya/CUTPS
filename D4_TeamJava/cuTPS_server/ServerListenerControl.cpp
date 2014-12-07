@@ -85,6 +85,9 @@ void ServerListenerControl::readBytes() {
    else if (cmd == "updateContent()"){
        updateContent(jsonDoc.object());
    }
+   else if (cmd == "deleteContent()"){
+       deleteContent(jsonDoc.object());
+   }
 }
 
 //writes a json object to the tcp socket
@@ -99,6 +102,8 @@ void ServerListenerControl::disconnected(){
     qDebug() << "peer disconected. \n";
 }
 
+//API call to retrieve all terms in the database, sends back an array of terms
+//To the client
 void ServerListenerControl::retrieveAllTerms(QJsonObject json){
     QList<Term*>* termList = storage.retrieveAllTerms();
     QJsonArray resultArray;
@@ -209,6 +214,8 @@ void ServerListenerControl::retrieveAllContent(){
 }
 
 
+//Handles API call to update the content with the passed in textbook by making the ServerStorageControl
+//Gets the boolean result back (whether it was successful or not) and sends this success flag back to the client to work with
 void ServerListenerControl::updateContent(QJsonObject json){
 
     Textbook text;
@@ -219,6 +226,43 @@ void ServerListenerControl::updateContent(QJsonObject json){
 
     QJsonObject r;
     r["success"] = result;
+    this->sendCommand(r);
+}
+
+//Handles API call to delete some PurchasableItem. First determines what kind of purchasable item it is
+//(As purchasableItem is abstract and doesn't have a fully defined json read)
+//And then passes along the pointer to the storage control to delete the content
+//Passes back a boolean flag if the operation was succesful or not
+void ServerListenerControl::deleteContent(QJsonObject json){
+
+//    QJsonObject itemObject = json["purchasableItem"].toObject();
+//    if(itemObject.contains("isbn")){
+//        Textbook* newTextbook = new Textbook();
+//        newTextbook->read(itemObject);
+
+//        bool success = storage.deleteContent(newTextbook);
+//        QJsonObject r;
+//        r["success"] = success;
+//        this->sendCommand(r);
+//    }
+//    else if(itemObject.contains("chapterNumber")){
+//        Chapter* newChapter = new Chapter();
+//        newChapter->read(itemObject);
+//        bool success = storage.deleteContent(newChapter);
+//        QJsonObject r;
+//        r["success"] = success;
+//        this->sendCommand(r);
+//    }
+//    else if(itemObject.contains("sectionNumber")){
+//        Section* newSection = new Section();
+//        newSection->read(itemObject);
+//        bool success = storage.deleteContent(newSection);
+//        QJsonObject r;
+//        r["success"] = success;
+//        this->sendCommand(r);
+//    }
+    QJsonObject r;
+    r["success"] = false;
     this->sendCommand(r);
 }
 

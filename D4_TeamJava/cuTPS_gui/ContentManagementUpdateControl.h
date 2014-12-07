@@ -11,6 +11,7 @@ public:
     ContentManagementUpdateControl();
     QList<Textbook*>* retrieveAllContent();
     bool        updateContent(Textbook*);
+    bool        deleteContent(PurchasableItem*);
 private:
     ClientCommunicatorManagementControl clientComm;
 };

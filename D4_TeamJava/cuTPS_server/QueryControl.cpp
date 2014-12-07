@@ -294,7 +294,7 @@ void QueryControl::test(){
     }
 
     qDebug() << "\ntext for getShoppingCartItemList\n";
-    QList< QPair<PurchasableItem*,qint32> > *list = this->getShoppingCartItemList(student, false);
+    QList< QPair<PurchasableItem*,qint32> > *list = this->retrieveShoppingCartItemList(student, false);
     for(int i = 0; i<list->length(); i++) {
         json = QJsonObject();
         list->at(i).first->write(json);
@@ -308,7 +308,7 @@ void QueryControl::test(){
     qDebug() << addPurchasableItemToCart((PurchasableItem*) section, student);
 
     qDebug() << "\ntext for getShoppingCartItemList after addPurchasableItemToCart\n";
-    list = this->getShoppingCartItemList(student, false);
+    list = this->retrieveShoppingCartItemList(student, false);
     for(int i = 0; i<list->length(); i++) {
         json = QJsonObject();
         list->at(i).first->write(json);
@@ -320,7 +320,7 @@ void QueryControl::test(){
     qDebug() << emptyShoppingCart(student);
 
     qDebug() << "\ntext for getShoppingCartItemList after emptyShoppingCart\n";
-    list = this->getShoppingCartItemList(student, false);
+    list = this->retrieveShoppingCartItemList(student, false);
     for(int i = 0; i<list->length(); i++) {
         json = QJsonObject();
         list->at(i).first->write(json);
@@ -334,7 +334,7 @@ void QueryControl::test(){
     qDebug() << addPurchasableItemToCart((PurchasableItem*) section, student);
 
     qDebug() << "\ntext for getShoppingCartItemList after addPurchasableItemToCart after emptyShoppingCart\n";
-    list = this->getShoppingCartItemList(student, false);
+    list = this->retrieveShoppingCartItemList(student, false);
     for(int i = 0; i<list->length(); i++) {
         json = QJsonObject();
         list->at(i).first->write(json);
@@ -425,7 +425,7 @@ void QueryControl::test(){
     }
 
     qDebug() << "\ntest for getPurchasableItemList\n";
-    foreach (PurchasableItem *pi, *(this->getPurchasableItemList(false))){
+    foreach (PurchasableItem *pi, *(this->retrieveAllPurchasableItemList(false))){
         json = QJsonObject();
         pi->write(json);
         qDebug() <<json;
@@ -2209,7 +2209,7 @@ bool QueryControl::deletePurchasableItem(PurchasableItem* purchasableItem) {
  * @return
  *  returns a list of pairs(PurchasableItem, quantity of that PurchasableItem)
  */
-QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(Student *student, bool getavailabilityOnly) {
+QList< QPair<PurchasableItem*,qint32> >* QueryControl::retrieveShoppingCartItemList(Student *student, bool getavailabilityOnly) {
     QList< QPair<PurchasableItem*,qint32> > *purchasableItems = new QList< QPair<PurchasableItem*,qint32> >();
 
     QSqlQuery textBookQuery;
@@ -2389,7 +2389,7 @@ QList< QPair<PurchasableItem*,qint32> >* QueryControl::getShoppingCartItemList(S
  * @return
  *  returns a list of PurchasableItem
  */
-QList<PurchasableItem*>* QueryControl::getPurchasableItemList(bool getavailabilityOnly){
+QList<PurchasableItem*>* QueryControl::retrieveAllPurchasableItemList(bool getavailabilityOnly){
      QList<PurchasableItem*> *purchasableItems = new QList<PurchasableItem*>();
 
     QSqlQuery textBookQuery;

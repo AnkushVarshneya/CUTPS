@@ -78,7 +78,7 @@ ShoppingCart* ServerStorageControl::retrieveShoppingCart(Student* stu){
     QList< QPair<PurchasableItem*,qint32> >* itemResult;
     ShoppingCart* shoppingCartResult = new ShoppingCart();
 
-    itemResult = q->getShoppingCartItemList(stu,true);
+    itemResult = q->retrieveShoppingCartItemList(stu,true);
     shoppingCartResult->getItems() = *itemResult;
     delete q;
     itemResult->clear();
@@ -218,6 +218,29 @@ bool ServerStorageControl::emptyShoppingCart(Student *student){
     delete q;
 
     return noError;
+}
+
+/**
+ * @brief ServerStorageControl::retrieveCourseList
+ *  retrive a list of course for a given term
+ * @param termID
+ *  term the course is under
+ * @return
+ *  a list of courses
+ */
+QList<Course*>* ServerStorageControl::retrieveCourseList(qint32 termID){
+    //Check for null -> return empty list
+    if(termID < 0){
+        return new QList<Course*>();
+    }
+
+    QueryControl* q = new QueryControl();
+    QList<Course*>* result;
+
+    result = q->retrieveCourseList(termID);
+
+    delete q;
+    return result;
 }
 
 /**

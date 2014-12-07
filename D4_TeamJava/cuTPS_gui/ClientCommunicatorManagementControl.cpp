@@ -319,7 +319,7 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveCourseList(Term* te
     if(term == 0){
         return 0;
     }
-    api_server_call;
+    QJsonObject api_server_call;
     QString functionCall = "retrieveCourseList()";
     api_server_call["Function:"] = functionCall;
 
@@ -366,7 +366,7 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllTextbooks(){
     QJsonArray textArray = res.object()["textbooks:"].toArray();
     if(!textArray.isEmpty()){
         for (int tIndex = 0; tIndex<textArray.size();++tIndex){
-            QJsonObject tObject = texteArray[tIndex].toObject();
+            QJsonObject tObject = textArray[tIndex].toObject();
             Textbook* newText = new Textbook();
             newText->read(tObject);
             result->append(newText);

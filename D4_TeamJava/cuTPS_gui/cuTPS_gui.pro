@@ -53,7 +53,8 @@ SOURCES += main.cpp\
     ClientCommunicatorManagementControl.cpp \
     ClientCommunicatorSerializer.cpp \
     ClientCommunicatorRequestManager.cpp \
-    TextbookDetailsWindow.cpp
+    TextbookDetailsWindow.cpp \
+    StudentShopView.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -97,7 +98,8 @@ HEADERS  += mainwindow.h \
     ClientCommunicatorManagementControl.h \
     ClientCommunicatorSerializer.h \
     ClientCommunicatorRequestManager.h \
-    TextbookDetailsWindow.h
+    TextbookDetailsWindow.h \
+    StudentShopView.h
 
 
 FORMS    += mainwindow.ui \
@@ -107,4 +109,5 @@ FORMS    += mainwindow.ui \
     EditChapterFormWindow.ui \
     EditSectionFormWindow.ui \
     EditTextbookFormWindow.ui \
-    TextbookDetailsWindow.ui
+    TextbookDetailsWindow.ui \
+    StudentShopView.ui

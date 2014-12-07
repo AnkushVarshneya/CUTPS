@@ -2,6 +2,9 @@
 #define STUDENTINTERFACEWINDOW_H
 
 #include <QWidget>
+#include <QtGui>
+#include <QDockWidget>
+#include <QMainWindow>
 #include <QPushButton>
 #include <QComboBox>
 #include <QSpinBox>
@@ -10,17 +13,20 @@
 #include <QStandardItemModel>
 #include <QTreeView>
 #include <QListView>
+#include "StudentShopView.h"
+#include <QSize>
+
 
 namespace Ui {
 class StudentInterfaceWindow;
 }
 
-class StudentInterfaceWindow : public QWidget
+class StudentInterfaceWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit StudentInterfaceWindow(QWidget *parent = 0);
+    explicit StudentInterfaceWindow(QMainWindow *parent = 0);
     ~StudentInterfaceWindow();
     QPushButton*        getViewDetailsOption();
     QPushButton*        getAddTextbookOption();
@@ -32,14 +38,16 @@ public:
     QListView*          getCourseView();
 
     void                setViewModel(QAbstractItemView *view, QStandardItemModel *mod);
+    void                createDockWindow(QWidget *widget);
 
-
-private slots:
-
-
-
+public slots:
+    void                shrink();
 private:
     Ui::StudentInterfaceWindow *ui;
+    StudentShopView        *shopView;
+    QDockWidget            *dock;
+
+
    // QStandardItemModel *treeMod;
 };
 

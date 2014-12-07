@@ -23,6 +23,7 @@ StudentInputOutputManager::StudentInputOutputManager()
 
 }
 
+
 void    StudentInputOutputManager::getTerms() {
     terms = shopFacade->getTermList();
 
@@ -78,8 +79,7 @@ void StudentInputOutputManager::on_studentInterface_viewCartOptionSelected() {
 void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected()
 {
 
-    qDebug() << "wut: " << courseAndTextbookModel->itemFromIndex( studentInterface->getCourseView()->currentIndex() )->data();
-    qDebug() << "thing selected: " << studentInterface->getCourseView()->currentIndex().data();
+
 
     QList<Course*>::iterator it;
     QList<Textbook*>::iterator at;
@@ -95,7 +95,6 @@ void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected()
     chaptersAndSectionsModel->clear();
     chaptersAndSectionsModel->appendRow( courseAndTextbookModel->itemFromIndex( studentInterface->getCourseView()->currentIndex() )->child(0));
 
-
     QVariant item_id = courseAndTextbookModel->itemFromIndex(studentInterface->getCourseView()->currentIndex())->data();
 
     for(it = coursesAndContent.begin(); it != coursesAndContent.end(); it ++)
@@ -108,6 +107,9 @@ void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected()
                 qDebug() << "is indeed same.";
                // textbookDetailsWindow = new TextbookDetailsWindow(*(*at));
                 textbookDetailsWindow = new TextbookDetailsWindow(*(*at), studentInterface->getCourseView()->currentIndex(), courseAndTextbookModel );
+                //testing textbok dock widget
+                studentInterface->createDockWindow(textbookDetailsWindow);
+
                 qDebug() << "textbook window constructed";
                 textbookDetailsWindow->show();
             }

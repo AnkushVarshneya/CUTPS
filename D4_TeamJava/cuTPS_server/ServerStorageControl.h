@@ -32,6 +32,7 @@ public:
     //Content Manager API
     QList<Course*>*     retrieveCourseList(qint32);
     QList<Textbook*>*   retrieveAllContent();
+    QList<Textbook*>*   retrieveAllTextbook();
     bool                updateContent(Textbook*);
     bool                deleteContent(PurchasableItem*);
     bool                updateCourse(Course*, qint32);

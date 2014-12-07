@@ -13,7 +13,7 @@ public:
     bool        updateContent(Textbook*);
     bool        deleteContent(PurchasableItem*);
 private:
-    ClientCommunicatorManagementControl clientComm;
+    ClientCommunicatorManagementControl* clientComm;
 };
 
 #endif // CONTENTMANAGEMENTUPDATECONTROL_H

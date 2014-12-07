@@ -1,4 +1,8 @@
 /* Combines Classes of Serializer and ManagementControl in the Client Communicator Subsystem
+ *This Class makes use of the Singleton design pattern, as potentially the client can be using
+ *Both the Content management and Course management features, in which their management facades
+ *Have an UpdateControl which has this class. To avoid potential problems in having
+ *Multiple TCP connections with the server for one client, we use this singleton design pattern
  *Traceabilty: SS-05 (Part of Client Communicator Subsystem)
  */
 
@@ -15,6 +19,7 @@ class ClientCommunicatorManagementControl
 {
 public:
     ClientCommunicatorManagementControl();
+    static ClientCommunicatorManagementControl* getInstance();
     QList<Term*>* retrieveAllTerms();
     QList<Course*>* retrieveContent(Student*, Term*);
     ShoppingCart*   retrieveShoppingCart(Student*);
@@ -26,6 +31,7 @@ public:
 private:
     ClientCommunicatorRequestManager requestManager;
     ClientCommunicatorSerializer    serializer;
+    static ClientCommunicatorManagementControl* instance;
 };
 
 #endif // CLIENTCOMMUNICATORMANAGEMENTCONTROL_H

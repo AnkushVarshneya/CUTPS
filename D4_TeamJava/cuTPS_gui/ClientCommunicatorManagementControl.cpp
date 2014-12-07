@@ -4,6 +4,18 @@ ClientCommunicatorManagementControl::ClientCommunicatorManagementControl()
 {
 }
 
+ClientCommunicatorManagementControl* ClientCommunicatorManagementControl::instance = 0;
+
+
+//Part of Singleton DP, if the instance is 0, make a new instance of the
+//ClientCommunicatorManagementControl, eitherway return that one instance.
+ClientCommunicatorManagementControl*  ClientCommunicatorManagementControl::getInstance(){
+    if (instance == 0){
+        instance = new ClientCommunicatorManagementControl();
+    }
+    return instance;
+}
+
 QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
     QJsonObject api_server_call;
     //Set API call to initiate on serverside

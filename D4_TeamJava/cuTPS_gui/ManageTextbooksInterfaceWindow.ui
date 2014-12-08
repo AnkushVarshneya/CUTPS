@@ -42,7 +42,7 @@
   <widget class="QPushButton" name="modifyTextbookOption">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>40</x>
      <y>290</y>
      <width>121</width>
      <height>27</height>

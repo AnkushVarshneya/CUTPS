@@ -32,8 +32,8 @@
 
       if (makeItemsForChildren) {
          for(int i = 0; i < textbook->getChapterList().count(); i++){
-                qDebug() << textbook->getChapter(i + 1)->getItemTitle(); //i because there is no 0 chapter
-                OurStandardItem *temp = new OurStandardItem(textbook->getChapter(i + 1), this);
+                qDebug() << textbook->getChapterList()[i]->getItemTitle(); //i because there is no 0 chapter
+                OurStandardItem *temp = new OurStandardItem(textbook->getChapterList()[i], this);
                 this->setChild(i, temp);
          }
       }
@@ -49,7 +49,7 @@
 
        if (makeItemsForChildren) {
           for(int i = 0; i < textbook->getChapterList().count(); i++){
-                 qDebug() << textbook->getChapter(i + 1)->getItemTitle(); //i because there is no 0 chapter
+                 qDebug() << textbook->getChapterList()[i]->getItemTitle(); //i because there is no 0 chapter
                  OurStandardItem *temp = new OurStandardItem(textbook->getChapter(i + 1), this);
                  this->setChild(i, temp);
           }
@@ -60,7 +60,11 @@
 
   OurStandardItem::OurStandardItem(Chapter *chapter, OurStandardItem *parent) {
       qDebug() << "making item from chapter";
+
+      if(chapter == 0)
+          qDebug() << "NULL";
      this->setData(chapter->getItemID());
+      qDebug() << "making1";
      this->setText(chapter->getItemTitle());
       qDebug() << "Passed setting data and set text";
      for(int i = 0; i < chapter->getChapterSections().count(); i ++) {

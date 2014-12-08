@@ -24,10 +24,19 @@ public:
     QList<Course*>* retrieveContent(Student*, Term*);
     ShoppingCart*   retrieveShoppingCart(Student*);
     bool            updateShoppingCart(Student*, PurchasableItem*, qint32);
+    bool            checkout(Student*,ShoppingCart*);
+    bool            emptyShoppingCart(Student*);
+    bool            updatePaymentInformation(Student*, PaymentInformation*);
+    PaymentInformation* retrieveStudentPaymentInformation(Student*);
     QList<Textbook*>* retrieveAllContent();
     bool        updateContent(Textbook*);
     bool        deleteContent(PurchasableItem*);
-
+    QList<Course*>* retrieveCourseList(Term*);
+    QList<Textbook*>* retrieveAllTextbooks();
+    bool        updateCourse(Course*, Term*);
+    bool        deleteCourse(Course*, Term*);
+    bool        registerStudentToCourse(Course*, Student*, Term*);
+    bool        assignTextbookToCourse(Course*, Textbook*, Term*);
 private:
     ClientCommunicatorRequestManager requestManager;
     ClientCommunicatorSerializer    serializer;

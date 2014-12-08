@@ -222,7 +222,11 @@ void ContentInputOutputManager::on_editTextbookForm_create_button() {
         //contentManagementFacade->fakeTextbooks.push_back(currentTextbook);
     }
 
-    contentManagementFacade->updateContent(currentTextbook);
+    QJsonObject json;
+    currentTextbook->write(json);
+    qDebug()<< json;
+    qDebug() << contentManagementFacade->updateContent(currentTextbook);
+
     buildTextbookModel();
     setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
 

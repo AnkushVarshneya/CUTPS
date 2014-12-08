@@ -427,6 +427,116 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveCourseList(Term* te
 
 }
 
+
+QList<Student*>* ClientCommunicatorManagementControl::retrieveCourseStudents(Course *course, Term *term){
+
+    QJsonObject api_server_call;
+    QString functionCall = "retrieveCourseStudents()";
+    api_server_call["Function:"] = functionCall;
+
+    QJsonObject courseObject;
+    course->write(courseObject);
+    api_server_call["course"] = courseObject;
+
+    QJsonObject termObject;
+    term->write(termObject);
+    api_server_call["term"] = termObject;
+
+    requestManager.send(api_server_call);
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+        }
+        res = requestManager.getResult();
+    }
+
+    QList<Student*>* result = new QList<Student*>();
+    QJsonArray stuArray = res.object()["students:"].toArray();
+    if(!stuArray.isEmpty()){
+        for (int sIndex = 0; sIndex<stuArray.size();++sIndex){
+            QJsonObject sObject = stuArray[sIndex].toObject();
+            Student* newStu = new Student();
+            newStu->read(sObject);
+            result->append(newStu);
+        }
+    }
+    requestManager.resetBuffer();
+    return result;
+}
+
+QList<Student*>* ClientCommunicatorManagementControl::retrieveAllStudents(){
+
+    QJsonObject api_server_call;
+    QString functionCall = "retrieveAllStudents()";
+    api_server_call["Function:"] = functionCall;
+
+    requestManager.send(api_server_call);
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+        }
+        res = requestManager.getResult();
+    }
+
+    QList<Student*>* result = new QList<Student*>();
+    QJsonArray stuArray = res.object()["students:"].toArray();
+    if(!stuArray.isEmpty()){
+        for (int sIndex = 0; sIndex<stuArray.size();++sIndex){
+            QJsonObject sObject = stuArray[sIndex].toObject();
+            Student* newStu = new Student();
+            newStu->read(sObject);
+            result->append(newStu);
+        }
+    }
+    requestManager.resetBuffer();
+    return result;
+}
+
+QList<Textbook*>* ClientCommunicatorManagementControl::retrieveCourseTextbooks(Course *course, Term *term){
+
+    QJsonObject api_server_call;
+    QString functionCall = "retrieveCourseTextbooks()";
+    api_server_call["Function:"] = functionCall;
+
+    QJsonObject courseObject;
+    course->write(courseObject);
+    api_server_call["course"] = courseObject;
+
+    QJsonObject termObject;
+    term->write(termObject);
+    api_server_call["term"] = termObject;
+
+    requestManager.send(api_server_call);
+    QJsonDocument res;
+    while (res.isEmpty()) {
+        requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+        }
+        res = requestManager.getResult();
+    }
+
+    QList<Textbook*>* result = new QList<Textbook*>();
+    QJsonArray textArray = res.object()["textbooks:"].toArray();
+    if(!textArray.isEmpty()){
+        for (int tIndex = 0; tIndex<textArray.size();++tIndex){
+            QJsonObject tObject = textArray[tIndex].toObject();
+            Textbook* newText = new Textbook();
+            newText->read(tObject);
+            result->append(newText);
+        }
+    }
+    requestManager.resetBuffer();
+    return result;
+}
+
 QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllTextbooks(){
 
     QJsonObject api_server_call;
@@ -440,7 +550,6 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllTextbooks(){
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
             return 0;
-            //        return 0;
         }
         res = requestManager.getResult();
     }

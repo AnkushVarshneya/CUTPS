@@ -40,7 +40,10 @@ private:
 
     //Course Manager API (Shared by CM and Admin)
     void retrieveCourseList(QJsonObject);
-    void retrieveAllTextbooks(QJsonObject);
+    void retrieveCourseStudents(QJsonObject);
+    void retrieveAllStudents();
+    void retrieveCourseTextbooks(QJsonObject);
+    void retrieveAllTextbooks();
     void updateCourse(QJsonObject);
     void deleteCourse(QJsonObject);
     void updateCourseStudentLink(QJsonObject);

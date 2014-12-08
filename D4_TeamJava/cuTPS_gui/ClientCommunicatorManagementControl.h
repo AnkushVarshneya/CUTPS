@@ -32,6 +32,9 @@ public:
     bool        updateContent(Textbook*);
     bool        deleteContent(PurchasableItem*);
     QList<Course*>* retrieveCourseList(Term*);
+    QList<Student*>*    retrieveCourseStudents(Course*, Term*);
+    QList<Student*>*    retrieveAllStudents();
+    QList<Textbook*>*   retrieveCourseTextbooks(Course*, Term*);
     QList<Textbook*>* retrieveAllTextbooks();
     bool        updateCourse(Course*, Term*);
     bool        deleteCourse(Course*, Term*);

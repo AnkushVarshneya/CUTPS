@@ -61,7 +61,8 @@ SOURCES += main.cpp \
     ModifyCourseFormWindow.cpp \
     LinkTextbookFormWindow.cpp \
     LinkStudentFormWindow.cpp \
-    CourseInputOutputManager.cpp
+    CourseInputOutputManager.cpp \
+    CheckoutFormDialog.cpp
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
@@ -112,7 +113,8 @@ HEADERS  += mainwindow.h \
     ModifyCourseFormWindow.h \
     LinkTextbookFormWindow.h \
     LinkStudentFormWindow.h \
-    CourseInputOutputManager.h
+    CourseInputOutputManager.h \
+    CheckoutFormDialog.h
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \
@@ -128,4 +130,5 @@ FORMS    += mainwindow.ui \
     ManageCoursesInterfaceWindow.ui \
     ModifyCourseFormWindow.ui \
     LinkTextbookFormWindow.ui \
-    LinkStudentFormWindow.ui
+    LinkStudentFormWindow.ui \
+    CheckoutFormDialog.ui

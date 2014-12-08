@@ -48,6 +48,13 @@ void QueryControl::test(){
     qDebug() << "\ntest for resetDatabase\n";
     qDebug() << this->resetDatabase();
 
+    qDebug() << "\ntest for retrieveAllStudentList\n";
+    foreach(Student *stu, *(this->retrieveAllStudentList())){
+        json = QJsonObject();
+        stu->write(json);
+        qDebug() <<json;
+    }
+
     qDebug() << "\ntest for retrieveTextbookList\n";
     foreach(Textbook *tbks, *(this->retrieveAllTextbookList())){
         json = QJsonObject();
@@ -2087,6 +2094,9 @@ Student* QueryControl::retrieveStudent(QString studentNumber){
 /**
  * @brief QueryControl::retrieveStudentList
  *  retrieve a list of students for a course
+ * Note:
+ *  1) to retrieve payment information use QueryControl::retrieveStudent()
+ *  2) to get students shopping cart use QueryControl::getShoppingCartItemList()
  * @param course
  *  Course to get students for
  * @param termID
@@ -2118,6 +2128,40 @@ QList<Student*>* QueryControl::retrieveStudentList(Course *course, qint32 termID
     studentQuery.bindValue(":section", course->getCourseSection());
     studentQuery.bindValue(":termID", termID);
     studentQuery.exec();
+
+    while (studentQuery.next()){
+        Students->push_back(new Student(studentQuery.value(studentQuery.record().indexOf("studentNumber")).toString(),
+                                   studentQuery.value(studentQuery.record().indexOf("cmail")).toString(),
+                                   studentQuery.value(studentQuery.record().indexOf("userName")).toString(),
+                                   studentQuery.value(studentQuery.record().indexOf("password")).toString(),
+                                   studentQuery.value(studentQuery.record().indexOf("fullName")).toString()));
+    }
+
+    return Students;
+}
+
+/**
+ * @brief QueryControl::retrieveAllStudentList
+ *  retrieve a list of all students
+ * Note:
+ *  1) to retrieve payment information use QueryControl::retrieveStudent()
+ *  2) to get students shopping cart use QueryControl::getShoppingCartItemList()
+ * @return
+ *  returns a list of students
+ */
+QList<Student*>* QueryControl::retrieveAllStudentList() {
+    QList<Student*> *Students = new QList<Student*>();
+
+    QSqlQuery studentQuery;
+    studentQuery.exec("SELECT Student.studentNumber, "
+                                "Student.cmail, "
+                                "User.userName, "
+                                "User.password, "
+                                "User.fullName "
+                            "FROM Student "
+                            "JOIN User ON "
+                               "Student.userName = User.userName "
+                                "ORDER BY User.fullName ASC;");
 
     while (studentQuery.next()){
         Students->push_back(new Student(studentQuery.value(studentQuery.record().indexOf("studentNumber")).toString(),

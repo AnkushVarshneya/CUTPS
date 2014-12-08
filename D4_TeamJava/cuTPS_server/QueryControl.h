@@ -58,7 +58,7 @@ public:
     PaymentInformation* retrievePaymentInformation(Student*);
     Student*            retrieveStudent(QString);
     QList<Student*>*    retrieveStudentList(Course*, qint32);
-
+    QList<Student*>*    retrieveAllStudentList();
     // purchasable item & shopping cart operation
     bool                                        updatePurchasableItem(PurchasableItem*);
     bool                                        deletePurchasableItem(PurchasableItem*);

@@ -88,4 +88,6 @@ void TextbookDetailsWindow::setTextbookAndModel(Textbook &textbook, QModelIndex 
 //getters
 QPushButton*     TextbookDetailsWindow::getAddSelectedItemOption() { return ui->addSelectedItemOption ; }
 QPushButton*     TextbookDetailsWindow::getCloseOption() { return ui->closeOption ; }
+QToolButton*     TextbookDetailsWindow::getAddCurrentTextbookOption() { return ui->addCurrentTextbookOption ; }
+QTreeView*       TextbookDetailsWindow::getChaptersAndSectionsView() { return ui->chaptersAndSectionsTreeView; }
 

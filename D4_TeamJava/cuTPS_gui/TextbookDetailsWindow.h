@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QToolButton>
 #include <QWidget>
+#include <QTreeView>
 #include "Textbook.h"
 #include <QDebug>
 #include <QStandardItemModel>
@@ -26,15 +27,16 @@ public:
     TextbookDetailsWindow(Textbook &textbook, QModelIndex idx, QStandardItemModel *model, QWidget *parent = 0);
     ~TextbookDetailsWindow();
 
-    void                setTextbookAndModel(Textbook &textbook, QModelIndex idx, QStandardItemModel *model);
+    void                                setTextbookAndModel(Textbook &textbook, QModelIndex idx, QStandardItemModel *model);
 
-    QPushButton*         getAddSelectedItemOption();
-    QPushButton*         getCloseOption();
-
+    QPushButton*                        getAddSelectedItemOption();
+    QPushButton*                        getCloseOption();
+    QToolButton*                        getAddCurrentTextbookOption();
+    QTreeView*                          getChaptersAndSectionsView();
 private:
-    Ui::TextbookDetailsWindow *ui;
-    QStandardItemModel  *chaptersAndSectionsModel;
-    static TextbookDetailsWindow*      instance;
+    Ui::TextbookDetailsWindow           *ui;
+    QStandardItemModel                  *chaptersAndSectionsModel;
+    static TextbookDetailsWindow*       instance;
 };
 
 #endif // TEXTBOOKDETAILSWINDOW_H

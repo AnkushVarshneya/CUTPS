@@ -47,7 +47,7 @@ private:
     Course                   *crs2;
     void                     getTerms();
     QList<Term*>             terms;
-
+    Textbook*                lastTextbookDetailsOpened;
     Student                 *currentStudent;
 
 
@@ -56,8 +56,11 @@ private slots:
     void    on_studentInterface_viewDetailsOptionSelected();
     void    on_studentInterface_viewCartOptionSelected();
     void    on_studentInterface_termSelected();
-
+    void    on_textbookDetailsWindow_addSelectedItemOptionSelected();
+    void    on_textbookDetailsWindow_addCurrentTextbookOptionSelected();
     void    on_textbookDetailsWindow_closeOptionSelected();
+    void    on_cartWidget_closeOptionSelected();
+    void    on_cartWidget_checkoutOptionSelected();
 };
 
 #endif // STUDENTINPUTOUTPUTMANAGER_H

@@ -19,23 +19,41 @@ public:
     explicit ServerListenerControl(QObject *parent = 0);
     void startServer();
     void sendCommand(QJsonObject &json);
-    QJsonObject processCommand(QJsonObject);
     static ServerListenerControl* getInstance();
 
 
 private:
+    //Student API
     void retrieveAllTerms(QJsonObject);
     void retrieveContent(QJsonObject);
     void retrieveShoppingCart(QJsonObject);
     void updateShoppingCart(QJsonObject);
+    void checkout(QJsonObject);
+    void emptyShoppingCart(QJsonObject);
+    void updatePaymentInformation(QJsonObject);
+    void retrievePaymentInformation(QJsonObject);
+
+    //ContentManager API
     void retrieveAllContent();
     void updateContent(QJsonObject);
     void deleteContent(QJsonObject);
+
+    //Course Manager API (Shared by CM and Admin)
+    void retrieveCourseList(QJsonObject);
+    void retrieveAllTextbooks(QJsonObject);
+    void updateCourse(QJsonObject);
+    void deleteCourse(QJsonObject);
+    void updateCourseStudentLink(QJsonObject);
+    void updateCourseTextbookLink(QJsonObject);
+
+    void sendSuccess(bool);
     ServerSerializer serializer;
     ServerStorageControl storage;
     static ServerListenerControl* instance;
     QTcpSocket *tcpConnection;
     qint64 bytes;
+
+
 
 signals:
 

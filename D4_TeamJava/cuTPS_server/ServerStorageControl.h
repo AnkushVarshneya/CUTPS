@@ -30,14 +30,15 @@ public:
     bool                emptyShoppingCart(Student*);
 
     //Content Manager API
-    QList<Textbook*>* retrieveAllContent();
-    bool              updateContent(Textbook*);
-    bool              deleteContent(PurchasableItem*);
-    bool              updateCourse(Course*, qint32);
-    bool              deleteCourse(Course*, qint32);
-    bool              updateCourseStudentLink(Course*, qint32, Student*);
-    bool              updateCourseTextbookLink(Course*, qint32, Textbook*);
-
+    QList<Course*>*     retrieveCourseList(qint32);
+    QList<Textbook*>*   retrieveAllContent();
+    QList<Textbook*>*   retrieveAllTextbook();
+    bool                updateContent(Textbook*);
+    bool                deleteContent(PurchasableItem*);
+    bool                updateCourse(Course*, qint32);
+    bool                deleteCourse(Course*, qint32);
+    bool                updateCourseStudentLink(Course*, qint32, Student*);
+    bool                updateCourseTextbookLink(Course*, qint32, Textbook*);
 
 
 private:

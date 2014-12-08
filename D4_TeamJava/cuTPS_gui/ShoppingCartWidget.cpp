@@ -19,14 +19,23 @@ ShoppingCartWidget* ShoppingCartWidget::getInstance()
 return instance;
 }
 
+//getters
+QPushButton* ShoppingCartWidget::getCloseOption() { return ui->closeOption; }
+QPushButton* ShoppingCartWidget::getCheckoutOption() { return ui->checkoutOption; }
 
-ShoppingCartWidget::~ShoppingCartWidget()
-{
-    delete ui;
-}
 
+//setters
 void ShoppingCartWidget::setCartViewModel(QStandardItemModel *mod)
 {
     if(mod != NULL) { ui->cartListView->setModel(mod) ; }
 }
 
+void ShoppingCartWidget::setOrderTotalText(QString text)
+{
+    ui->orderTotalDisplay->setText(text);
+}
+
+ShoppingCartWidget::~ShoppingCartWidget()
+{
+    delete ui;
+}

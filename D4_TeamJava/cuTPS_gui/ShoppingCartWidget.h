@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QtGui>
+#include <QPushButton>
 
 namespace Ui {
 class ShoppingCartWidget;
@@ -16,8 +17,11 @@ public:
     explicit ShoppingCartWidget(QWidget *parent = 0);
     static ShoppingCartWidget*      getInstance(); //singleton pattern
     ~ShoppingCartWidget();
+    QPushButton*                    getCloseOption();
+    QPushButton*                    getCheckoutOption();
 
-    void                setCartViewModel(QStandardItemModel *mod);
+    void                            setOrderTotalText(QString);
+    void                            setCartViewModel(QStandardItemModel *mod);
 
 private:
     Ui::ShoppingCartWidget *ui;

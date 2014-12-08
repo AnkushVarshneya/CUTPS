@@ -12,7 +12,7 @@ TARGET = cuTPS_gui
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
+SOURCES += main.cpp \
         mainwindow.cpp \
     ContentManagerInterfaceWindow.cpp \
     ManageTextbooksInterfaceWindow.cpp \
@@ -56,8 +56,11 @@ SOURCES += main.cpp\
     TextbookDetailsWindow.cpp \
     StudentShopView.cpp \
     ShoppingCartWidget.cpp \
-    CheckoutDialogWidget.cpp
-
+    CheckoutDialogWidget.cpp \
+    ManageCoursesInterfaceWindow.cpp \
+    ModifyCourseFormWindow.cpp \
+    LinkTextbookFormWindow.cpp \
+    LinkStudentFormWindow.cpp
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
@@ -103,8 +106,11 @@ HEADERS  += mainwindow.h \
     TextbookDetailsWindow.h \
     StudentShopView.h \
     ShoppingCartWidget.h \
-    CheckoutDialogWidget.h
-
+    CheckoutDialogWidget.h \
+    ManageCoursesInterfaceWindow.h \
+    ModifyCourseFormWindow.h \
+    LinkTextbookFormWindow.h \
+    LinkStudentFormWindow.h
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \
@@ -116,4 +122,8 @@ FORMS    += mainwindow.ui \
     TextbookDetailsWindow.ui \
     StudentShopView.ui \
     ShoppingCartWidget.ui \
-    CheckoutDialogWidget.ui
+    CheckoutDialogWidget.ui \
+    ManageCoursesInterfaceWindow.ui \
+    ModifyCourseFormWindow.ui \
+    LinkTextbookFormWindow.ui \
+    LinkStudentFormWindow.ui

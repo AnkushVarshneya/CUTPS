@@ -7,20 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>281</width>
-    <height>407</height>
+    <height>343</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
    <enum>Qt::ActionsContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">cuTPS</string>
   </property>
   <widget class="QListView" name="cartListView">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>160</y>
+     <y>90</y>
      <width>256</width>
      <height>181</height>
     </rect>
@@ -66,7 +66,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>30</y>
+     <y>10</y>
      <width>191</width>
      <height>41</height>
     </rect>
@@ -77,14 +77,14 @@
     </font>
    </property>
    <property name="text">
-    <string>User's Shopping Cart</string>
+    <string>Your Shopping Cart</string>
    </property>
   </widget>
   <widget class="QPushButton" name="checkoutOption">
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>360</y>
+     <y>290</y>
      <width>88</width>
      <height>27</height>
     </rect>
@@ -97,13 +97,39 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>360</y>
+     <y>290</y>
      <width>88</width>
      <height>27</height>
     </rect>
    </property>
    <property name="text">
     <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="orderTotalLabel">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Order Total:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="orderTotalDisplay">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>60</y>
+     <width>58</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

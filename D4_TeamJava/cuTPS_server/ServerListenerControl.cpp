@@ -351,7 +351,7 @@ void ServerListenerControl::retrieveCourseList(QJsonObject json){
 //Handles API call to retrieve all of the textbooks only (no chapters/sections)
 //For the Course Manager subsystem to link textbooks to courses to
 void ServerListenerControl::retrieveAllTextbooks(QJsonObject json){
-    QList<Textbook*>* result = storage.retrieveAllTextbook();
+    QList<Textbook*>* result = storage.retrieveAllTextbookList();
     QJsonArray textbookArray;
     foreach(Textbook *text, *result){
         QJsonObject json;

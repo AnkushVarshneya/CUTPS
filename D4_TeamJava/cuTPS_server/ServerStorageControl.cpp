@@ -244,6 +244,77 @@ QList<Course*>* ServerStorageControl::retrieveCourseList(qint32 termID){
 }
 
 /**
+ * @brief ServerStorageControl::retrieveStudentList
+ *  retrieve all Students in a course in the form of a list of Students,
+ * @param course
+ *  course to retrieve Students for for
+ * @param termID
+ *  term course is under
+ * @return
+ *  a list of Students
+ */
+QList<Student*>* ServerStorageControl::retrieveStudentList(Course* course, qint32 termID){
+    QueryControl* q = new QueryControl();
+    QList<Student*>* result = q->retrieveStudentList(course, termID);
+
+    delete q;
+
+    return result;
+}
+
+/**
+ * @brief ServerStorageControl::retrieveAllStudentList()
+ * Retrieves all of the Students in the database in the form of a list of Students
+ * @return
+ *  list of Students
+ */
+QList<Student*>* ServerStorageControl::retrieveAllStudentList(){
+    QueryControl* q = new QueryControl();
+    QList<Student*>* result = q->retrieveAllStudentList();
+
+    delete q;
+
+    return result;
+}
+
+/**
+ * @brief ServerStorageControl::retrieveTextbookList
+ *  retrieve all Textbooks in a course in the form of a list of Textbooks,
+ *  without lists of chapters and chapter sections in them
+ * @param course
+ *  course to retrieve Textbooks for for
+ * @param termID
+ *  term course is under
+ * @return
+ *  a list of Textbooks
+ */
+QList<Textbook*>* ServerStorageControl::retrieveTextbookList(Course* course, qint32 termID){
+    QueryControl* q = new QueryControl();
+    QList<Textbook*>* result = q->retrieveTextbookList(course, termID, true);
+
+    delete q;
+
+    return result;
+}
+
+
+/**
+ * @brief ServerStorageControl::retrieveAllTextbookList()
+ * Retrieves all of the Rextbooks in the database in the form of a list of Textbooks,
+ * without lists of chapters and chapter sections in them
+ * @return
+ *  list of Textbooks
+ */
+QList<Textbook*>* ServerStorageControl::retrieveAllTextbookList(){
+    QueryControl* q = new QueryControl();
+    QList<Textbook*>* result = q->retrieveAllTextbookList();
+
+    delete q;
+
+    return result;
+}
+
+/**
  * @brief ServerStorageControl::retrieveAllContent()
  * Retrieves all of the content in the database in the form of a list of textbooks,
  * with lists of chapters and chapter sections in them
@@ -269,24 +340,6 @@ QList<Textbook*>* ServerStorageControl::retrieveAllContent(){
 
     return result;
 }
-
-/**
- * @brief ServerStorageControl::retrieveAllContent()
- * Retrieves all of the textbook in the database in the form of a list of textbooks,
- * without lists of chapters and chapter sections in them
- * @return
- *  list of textbooks
- *
- */
-QList<Textbook*>* ServerStorageControl::retrieveAllTextbook(){
-    QueryControl* q = new QueryControl();
-    QList<Textbook*>* result = q->retrieveAllTextbookList();
-
-    delete q;
-
-    return result;
-}
-
 
 /**
  * @brief ServerStorageControl::updateContent()
@@ -324,7 +377,6 @@ bool ServerStorageControl::updateContent(Textbook *t){
 /**
  * @brief ServerStorageControl::deleteContent
  *  delete content
- *  note: this will delete any content under this content
  * @param pi
  *  PurchasableItem to delete
  * @return

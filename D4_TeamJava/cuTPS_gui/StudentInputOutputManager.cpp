@@ -4,8 +4,12 @@ StudentInputOutputManager::StudentInputOutputManager()
 {
     courseAndTextbookModel = new QStandardItemModel(this);
     chaptersAndSectionsModel = new QStandardItemModel(this);
+    cartModel = new QStandardItemModel(this);
     studentInterface = new StudentInterfaceWindow();
     studentInterface->show();
+
+//    textbookDetailsWindow = new TextbookDetailsWindow(this);
+//    textbookDetailsWindow.hide();
 
     //connect signals from boundary options to slot functions on the student i/o manager
     connect(studentInterface->getAddTextbookOption(), SIGNAL( clicked() ), this, SLOT(on_studentInterface_addTextbookOptionSelected()));
@@ -14,12 +18,22 @@ StudentInputOutputManager::StudentInputOutputManager()
     connect(studentInterface->getTermSelectOption(), SIGNAL(activated(QString)), this, SLOT(on_studentInterface_termSelected()));
 
 
+
     //construct the shopping management facade
     this->shopFacade = new ShoppingManagementFacade();
     this->getTerms();
-    fakeStudent = new Student();
-    fakeStudent->setStudentNum("100853074");
+    currentStudent = new Student();
+    currentStudent->setStudentNum("100853074");
+    shopFacade->emptyShoppingCart(currentStudent);
 
+    cartWidget = ShoppingCartWidget::getInstance();
+
+    textbookDetailsWindow = TextbookDetailsWindow::getInstance();
+    connect(textbookDetailsWindow->getCloseOption(), SIGNAL(clicked()), this, SLOT(on_textbookDetailsWindow_closeOptionSelected()));
+    connect(textbookDetailsWindow->getAddCurrentTextbookOption(), SIGNAL(clicked()),
+                                                            this, SLOT(on_textbookDetailsWindow_addCurrentTextbookOptionSelected()));
+//    connect(cartWidget->getCloseOption(),SIGNAL(clicked()), this, SLOT(on_cartWidet_closeOptionSelected()));
+//    connect(cartWidget->getCheckoutOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_checkoutOptionSelected()));
 
 }
 
@@ -73,13 +87,33 @@ void StudentInputOutputManager::on_studentInterface_addTextbookOptionSelected() 
 }
 
 void StudentInputOutputManager::on_studentInterface_viewCartOptionSelected() {
+    cartModel->clear();
+    OurStandardItem *temp;
+    float orderTotal = 0;
+    currentCart = shopFacade->viewShoppingCart(currentStudent);
+    currentItems = currentCart->getItems();
+
+    QList<QPair<PurchasableItem*, qint32> >::iterator it;
+
+    for (it = currentItems.begin(); it != currentItems.end(); it ++ )
+    {
+        temp = new OurStandardItem((*it).first,(*it).second);
+        cartModel->appendRow(temp);
+        orderTotal = orderTotal + ( (*it).first->getPrice() *
+                                    (*it).second);
+    }
+
+        cartWidget->setCartViewModel(cartModel );
+        cartWidget->setOrderTotalText( QString::number(orderTotal) );
+       // cartWidget->setUserCartLabelText( currentStudent->getFirstName())
+        connect(cartWidget->getCloseOption(),SIGNAL(clicked()), this, SLOT(on_cartWidget_closeOptionSelected()));
+        connect(cartWidget->getCheckoutOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_checkoutOptionSelected()));
+        cartWidget->show();
 
 }
 
 void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected()
 {
-
-
 
     QList<Course*>::iterator it;
     QList<Textbook*>::iterator at;
@@ -96,48 +130,66 @@ void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected()
     chaptersAndSectionsModel->appendRow( courseAndTextbookModel->itemFromIndex( studentInterface->getCourseView()->currentIndex() )->child(0));
 
     QVariant item_id = courseAndTextbookModel->itemFromIndex(studentInterface->getCourseView()->currentIndex())->data();
-
     for(it = coursesAndContent.begin(); it != coursesAndContent.end(); it ++)
     {
         for (at = (*it)->getRequiredTextbooks().begin(); at != (*it)->getRequiredTextbooks().end(); at++)
         {
-            qDebug() << "checking if item id: " << (*at)->getItemID() << " is same as " << item_id;
+
             if ((*at)->getItemID() == item_id)
             {
-                qDebug() << "is indeed same.";
-               // textbookDetailsWindow = new TextbookDetailsWindow(*(*at));
-                textbookDetailsWindow = new TextbookDetailsWindow(*(*at), studentInterface->getCourseView()->currentIndex(), courseAndTextbookModel );
-                //testing textbok dock widget
-                studentInterface->createDockWindow(textbookDetailsWindow);
+
+
+                lastTextbookDetailsOpened = (*at);
+
+                textbookDetailsWindow = TextbookDetailsWindow::getInstance();
+                textbookDetailsWindow->setTextbookAndModel(*(*at), studentInterface->getCourseView()->currentIndex(), courseAndTextbookModel);
 
                 qDebug() << "textbook window constructed";
                 textbookDetailsWindow->show();
+
             }
         }
     }
 }
-
-
 
 void StudentInputOutputManager::on_studentInterface_termSelected()
 {
     qDebug() << "a term has been selected";
     qDebug() << terms.value( studentInterface->getTermSelectOption()->currentIndex() )->getTermName();
 
-   coursesAndContent = shopFacade->viewContent(fakeStudent,
+   coursesAndContent = shopFacade->viewContent(currentStudent,
                             terms.at( studentInterface->getTermSelectOption()->currentIndex() ));
 
     buildCourseAndTextbookModel();
     this->setStudentInterfaceViewModel(studentInterface->getCourseView(), courseAndTextbookModel);
+}
 
-    //hide chapters and sections in the course tree view
-//    for (int i = 0; i < courseAndTextbookModel->rowCount(); i ++) {
-//            for(int j = 0; j < courseAndTextbookModel->item(i)->rowCount(); j++)
-//            {
-//                for (int k = 0; k < courseAndTextbookModel->item(i)->child(j)->rowCount(); k++) {
-//                    studentInterface->getCourseView()->setRowHidden(k, courseAndTextbookModel->item(i)->child(j)->index(), true );
-//                }
-//            }
-//    }
+void StudentInputOutputManager::on_textbookDetailsWindow_closeOptionSelected()
+{
+    textbookDetailsWindow->hide();
+    //delete textbookDetailsWindow;
+}
 
+void StudentInputOutputManager::on_textbookDetailsWindow_addCurrentTextbookOptionSelected()
+{
+    qDebug() << "add current textbook attempted";
+    shopFacade->addContent(currentStudent,lastTextbookDetailsOpened, 1);
+    currentCart = shopFacade->viewShoppingCart(currentStudent);
+}
+
+void StudentInputOutputManager::on_textbookDetailsWindow_addSelectedItemOptionSelected() {
+      //QVariant item_id = textbookDetailsWindow->getChaptersAndSectionsView()->currentIndex().data();
+      //shopFacade->addContent(currentStudent, textbookDetailsWindow->getChaptersAndSectionsView()->currentIndex().data(), 1);
+      currentCart = shopFacade->viewShoppingCart(currentStudent);
+}
+
+void StudentInputOutputManager::on_cartWidget_closeOptionSelected()
+{
+    //todo
+    cartWidget->hide();
+}
+
+void StudentInputOutputManager::on_cartWidget_checkoutOptionSelected()
+{
+    //todo
 }

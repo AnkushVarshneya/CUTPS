@@ -7,7 +7,21 @@ TextbookDetailsWindow::TextbookDetailsWindow(QWidget *parent) :
 {
     this->setWindowModality(Qt::WindowModal);
     ui->setupUi(this);
+    chaptersAndSectionsModel = new QStandardItemModel(this);
 }
+
+TextbookDetailsWindow*  TextbookDetailsWindow::instance = 0;
+
+//singleton instance getter
+TextbookDetailsWindow* TextbookDetailsWindow::getInstance()
+{
+    if (instance == 0){
+    instance = new TextbookDetailsWindow();
+    }
+return instance;
+}
+
+
 
 TextbookDetailsWindow::TextbookDetailsWindow(Textbook &textbook, QWidget *parent) :
     QWidget(parent),
@@ -21,6 +35,7 @@ TextbookDetailsWindow::TextbookDetailsWindow(Textbook &textbook, QWidget *parent
     ui->textbookTitleLabel->setText(textbook.getItemTitle());
 
 }
+
 
 TextbookDetailsWindow::TextbookDetailsWindow(Textbook &textbook, QModelIndex idx, QStandardItemModel *model, QWidget *parent) :
     QWidget(parent),
@@ -41,8 +56,38 @@ TextbookDetailsWindow::TextbookDetailsWindow(Textbook &textbook, QModelIndex idx
         ui->textbookTitleLabel->setText(textbook.getItemTitle());
 }
 
-
 TextbookDetailsWindow::~TextbookDetailsWindow()
 {
     delete ui;
 }
+
+//set the book and model information
+void TextbookDetailsWindow::setTextbookAndModel(Textbook &textbook, QModelIndex idx, QStandardItemModel *model)
+{
+    chaptersAndSectionsModel->clear();
+
+    QList<Chapter*>::iterator it;
+    for(it = textbook.getChapterList().begin(); it != textbook.getChapterList().end(); it++)
+    {
+        OurStandardItem *chaptersAndSectionsItem = new OurStandardItem((*it),static_cast<OurStandardItem*>(chaptersAndSectionsModel->invisibleRootItem()) );
+        chaptersAndSectionsModel->appendRow(chaptersAndSectionsItem);
+    }
+
+   //todo: chaptersAndSectionsModel->setHorizontalHeaderLabels();
+    ui->chaptersAndSectionsTreeView->setModel(chaptersAndSectionsModel);
+    ui->textbookTitleLabel->setText(textbook.getItemTitle());
+    ui->textbookAuthorLabel->setText(textbook.getAuthor());
+    ui->textbookEditionLabel->setText("Edition: " +textbook.getEdition());
+    ui->textbookPublisherLabel->setText(textbook.getPublisher());
+    ui->textbookPriceLabel->setText( QString::number(textbook.getPrice()) );
+    ui->textbookDescriptionLabel->setText(textbook.getDesc());
+
+}
+
+
+//getters
+QPushButton*     TextbookDetailsWindow::getAddSelectedItemOption() { return ui->addSelectedItemOption ; }
+QPushButton*     TextbookDetailsWindow::getCloseOption() { return ui->closeOption ; }
+QToolButton*     TextbookDetailsWindow::getAddCurrentTextbookOption() { return ui->addCurrentTextbookOption ; }
+QTreeView*       TextbookDetailsWindow::getChaptersAndSectionsView() { return ui->chaptersAndSectionsTreeView; }
+

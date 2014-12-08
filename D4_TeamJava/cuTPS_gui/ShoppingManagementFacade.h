@@ -24,13 +24,14 @@ class ShoppingManagementFacade
 {
 public:
     ShoppingManagementFacade();
-    QList<Course*>  viewContent(Student *student, Term *term);
-    QList<Term*>    getTermList();
+    QList<Course*>              viewContent(Student *student, Term *term);
+    QList<Term*>                getTermList();
+    ShoppingCart*               viewShoppingCart(Student *student);
+    void                        addContent(Student *student, Textbook *item, int quantity);
+    void                        emptyShoppingCart(Student *student);
 
 private:
-    QList<Term*>        fakeTerms;
-    QList<Course*>      fakeCourses;
-    ShopUpdateControl   *shopUpdateControl;
+    ShopUpdateControl           *shopUpdateControl;
 
 
 };

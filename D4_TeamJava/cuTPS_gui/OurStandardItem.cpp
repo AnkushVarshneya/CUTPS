@@ -9,7 +9,14 @@
     this->setText(item->getItemTitle());
 }
 
- OurStandardItem::OurStandardItem(Course *course) {
+ OurStandardItem::OurStandardItem(PurchasableItem *item, qint32 quantity)
+ {
+     this->setData(item->getItemID());
+     this->setText(item->getItemTitle() + " x " + QString::number(quantity)
+                                        + " $" + QString::number(item->getPrice()));
+ }
+
+  OurStandardItem::OurStandardItem(Course *course) {
      this->setData(course->getCourseCode());
      this->setText(course->getCourseCode());
 

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ShoppingCartWidget</class>
+ <widget class="QWidget" name="ShoppingCartWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>281</width>
+    <height>343</height>
+   </rect>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::ActionsContextMenu</enum>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">cuTPS</string>
+  </property>
+  <widget class="QListView" name="cartListView">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>90</y>
+     <width>256</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+     <horstretch>1</horstretch>
+     <verstretch>1</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>325</width>
+     <height>400</height>
+    </size>
+   </property>
+   <property name="toolTip">
+    <string>&quot;Contents of your shopping cart.&quot;</string>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Panel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="movement">
+    <enum>QListView::Free</enum>
+   </property>
+   <property name="resizeMode">
+    <enum>QListView::Adjust</enum>
+   </property>
+   <property name="spacing">
+    <number>5</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>10</y>
+     <width>191</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Your Shopping Cart</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="checkoutOption">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>290</y>
+     <width>88</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Check Out</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="closeOption">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>290</y>
+     <width>88</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Close</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="orderTotalLabel">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Order Total:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="orderTotalDisplay">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>60</y>
+     <width>58</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -41,13 +41,16 @@ public:
 
     void                setViewModel(QAbstractItemView *view, QStandardItemModel *mod);
     void                createDockWindow(QWidget *widget);
+    void                createCartWindow(QWidget *widget, Qt::DockWidgetArea area);
+    void                createCartWindow(QWidget *widget);
 
 public slots:
     void                shrink();
 private:
     Ui::StudentInterfaceWindow *ui;
     StudentShopView        *shopView;
-    QDockWidget            *dock;
+    QDockWidget            *dock;  //textbook
+    QDockWidget            *cart;
     void                   createStatusBar();
 
 

@@ -13,7 +13,9 @@
 #include "ShoppingManagementFacade.h"
 #include "OurStandardItem.h"
 #include <QAbstractItemView>
+#include <ShoppingCartWidget.h>
 #include "Course.h"
+#include <QPair>
 
 
 class StudentInputOutputManager : public QObject
@@ -23,12 +25,20 @@ public:
     StudentInputOutputManager();
 
 private:
-    StudentInterfaceWindow  *studentInterface;
-    ShoppingManagementFacade *shopFacade;
-    TextbookDetailsWindow   *textbookDetailsWindow;
+    StudentInterfaceWindow                      *studentInterface;
+    ShoppingManagementFacade                    *shopFacade;
+    TextbookDetailsWindow                       *textbookDetailsWindow;
+    ShoppingCartWidget                          *cartWidget;
+
+    ShoppingCart                                *currentCart;
+    QList<QPair <PurchasableItem*, qint32> >     currentItems;
+
+
+    QListView               *listView;
 
     QStandardItemModel      *courseAndTextbookModel;
     QStandardItemModel      *chaptersAndSectionsModel;
+    QStandardItemModel      *cartModel;
     void                    setStudentInterfaceViewModel(QAbstractItemView  *view, QStandardItemModel *model);
     void                    buildCourseAndTextbookModel();
     void                    buildTextbookAndChildrenModel();
@@ -37,7 +47,8 @@ private:
     Course                   *crs2;
     void                     getTerms();
     QList<Term*>             terms;
-    Student                 *fakeStudent;
+    Textbook*                lastTextbookDetailsOpened;
+    Student                 *currentStudent;
 
 
 private slots:
@@ -45,6 +56,11 @@ private slots:
     void    on_studentInterface_viewDetailsOptionSelected();
     void    on_studentInterface_viewCartOptionSelected();
     void    on_studentInterface_termSelected();
+    void    on_textbookDetailsWindow_addSelectedItemOptionSelected();
+    void    on_textbookDetailsWindow_addCurrentTextbookOptionSelected();
+    void    on_textbookDetailsWindow_closeOptionSelected();
+    void    on_cartWidget_closeOptionSelected();
+    void    on_cartWidget_checkoutOptionSelected();
 };
 
 #endif // STUDENTINPUTOUTPUTMANAGER_H

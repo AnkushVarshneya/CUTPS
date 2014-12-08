@@ -17,6 +17,7 @@ public:
     explicit OurStandardItem(PurchasableItem *item);
     explicit OurStandardItem(Textbook *textbook, bool makeItemsForChildren = true);
     explicit OurStandardItem(Course *course);
+    OurStandardItem(PurchasableItem *item, qint32 quantity);
     OurStandardItem(Textbook *textbook, Course *course, bool makeItemsForChildren);
     OurStandardItem(Chapter *chapter, OurStandardItem *parent);
     OurStandardItem(Section *section, OurStandardItem *parent);

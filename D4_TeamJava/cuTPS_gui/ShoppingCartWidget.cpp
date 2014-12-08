@@ -8,7 +8,25 @@ ShoppingCartWidget::ShoppingCartWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
+ShoppingCartWidget* ShoppingCartWidget::instance = 0;
+
+//singleton instance getter
+ShoppingCartWidget* ShoppingCartWidget::getInstance()
+{
+    if (instance == 0){
+    instance = new ShoppingCartWidget();
+    }
+return instance;
+}
+
+
 ShoppingCartWidget::~ShoppingCartWidget()
 {
     delete ui;
 }
+
+void ShoppingCartWidget::setCartViewModel(QStandardItemModel *mod)
+{
+    if(mod != NULL) { ui->cartListView->setModel(mod) ; }
+}
+

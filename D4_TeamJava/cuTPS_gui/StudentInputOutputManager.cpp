@@ -4,8 +4,12 @@ StudentInputOutputManager::StudentInputOutputManager()
 {
     courseAndTextbookModel = new QStandardItemModel(this);
     chaptersAndSectionsModel = new QStandardItemModel(this);
+    cartModel = new QStandardItemModel(this);
     studentInterface = new StudentInterfaceWindow();
     studentInterface->show();
+
+//    textbookDetailsWindow = new TextbookDetailsWindow(this);
+//    textbookDetailsWindow.hide();
 
     //connect signals from boundary options to slot functions on the student i/o manager
     connect(studentInterface->getAddTextbookOption(), SIGNAL( clicked() ), this, SLOT(on_studentInterface_addTextbookOptionSelected()));
@@ -14,11 +18,14 @@ StudentInputOutputManager::StudentInputOutputManager()
     connect(studentInterface->getTermSelectOption(), SIGNAL(activated(QString)), this, SLOT(on_studentInterface_termSelected()));
 
 
+
     //construct the shopping management facade
     this->shopFacade = new ShoppingManagementFacade();
     this->getTerms();
-    fakeStudent = new Student();
-    fakeStudent->setStudentNum("100853074");
+    currentStudent = new Student();
+    currentStudent->setStudentNum("100853074");
+
+    cartWidget = ShoppingCartWidget::getInstance();
 
 
 }
@@ -73,13 +80,35 @@ void StudentInputOutputManager::on_studentInterface_addTextbookOptionSelected() 
 }
 
 void StudentInputOutputManager::on_studentInterface_viewCartOptionSelected() {
+    //get the cart via the facade, which calls the shopping update control
+    //create the view widget
+    //listView = new QListView();
+    //studentInterface->createCartWindow(listView, Qt::BottomDockWidgetArea);
+    //studentInterface->createCartWindow(listView);
+
+      //get the cart object
+    //make standard items
+    //populate a model
+    //set the model
+    //display
+    OurStandardItem *temp;
+    currentCart = shopFacade->viewShoppingCart(currentStudent);
+    currentItems = currentCart->getItems();
+
+    QList<QPair<PurchasableItem*, qint32> >::iterator it;
+
+    for (it = currentItems.begin(); it != currentItems.end(); it ++ )
+    {
+        temp = new OurStandardItem((*it).first,(*it).second);
+        cartModel->appendRow(temp);
+    }
+        cartWidget->setCartViewModel(cartModel );
+        cartWidget->show();
 
 }
 
 void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected()
 {
-
-
 
     QList<Course*>::iterator it;
     QList<Textbook*>::iterator at;
@@ -106,10 +135,14 @@ void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected()
             {
                 qDebug() << "is indeed same.";
                // textbookDetailsWindow = new TextbookDetailsWindow(*(*at));
-                textbookDetailsWindow = new TextbookDetailsWindow(*(*at), studentInterface->getCourseView()->currentIndex(), courseAndTextbookModel );
+                //textbookDetailsWindow = new TextbookDetailsWindow(*(*at), studentInterface->getCourseView()->currentIndex(), courseAndTextbookModel );
                 //testing textbok dock widget
-                studentInterface->createDockWindow(textbookDetailsWindow);
+                //studentInterface->createDockWindow(textbookDetailsWindow); no go on the dock widgets
 
+                //test singleton
+                textbookDetailsWindow = TextbookDetailsWindow::getInstance();
+                textbookDetailsWindow->setTextbookAndModel(*(*at), studentInterface->getCourseView()->currentIndex(), courseAndTextbookModel);
+                connect(textbookDetailsWindow->getCloseOption(), SIGNAL(clicked()), this, SLOT(on_textbookDetailsWindow_closeOptionSelected()));
                 qDebug() << "textbook window constructed";
                 textbookDetailsWindow->show();
             }
@@ -124,20 +157,15 @@ void StudentInputOutputManager::on_studentInterface_termSelected()
     qDebug() << "a term has been selected";
     qDebug() << terms.value( studentInterface->getTermSelectOption()->currentIndex() )->getTermName();
 
-   coursesAndContent = shopFacade->viewContent(fakeStudent,
+   coursesAndContent = shopFacade->viewContent(currentStudent,
                             terms.at( studentInterface->getTermSelectOption()->currentIndex() ));
 
     buildCourseAndTextbookModel();
     this->setStudentInterfaceViewModel(studentInterface->getCourseView(), courseAndTextbookModel);
+}
 
-    //hide chapters and sections in the course tree view
-//    for (int i = 0; i < courseAndTextbookModel->rowCount(); i ++) {
-//            for(int j = 0; j < courseAndTextbookModel->item(i)->rowCount(); j++)
-//            {
-//                for (int k = 0; k < courseAndTextbookModel->item(i)->child(j)->rowCount(); k++) {
-//                    studentInterface->getCourseView()->setRowHidden(k, courseAndTextbookModel->item(i)->child(j)->index(), true );
-//                }
-//            }
-//    }
-
+void StudentInputOutputManager::on_textbookDetailsWindow_closeOptionSelected()
+{
+    textbookDetailsWindow->hide();
+    //delete textbookDetailsWindow;
 }

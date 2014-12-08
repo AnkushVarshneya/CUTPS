@@ -20,11 +20,14 @@ StudentInterfaceWindow::StudentInterfaceWindow(QMainWindow *parent) :
     createStatusBar();
 
     dock = new QDockWidget(tr("Textbook"), this);
-    dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
+    dock->setAllowedAreas(Qt::RightDockWidgetArea);
     dock->hide();
-
     connect(dock, SIGNAL(visibilityChanged(bool)), this, SLOT(shrink()));
 
+
+    cart = new QDockWidget(tr("Cart"), this);
+    cart->hide();
+    connect(cart, SIGNAL(visibilityChanged(bool)), this, SLOT(shrink()));
 }
 
 StudentInterfaceWindow::~StudentInterfaceWindow()
@@ -64,6 +67,29 @@ void StudentInterfaceWindow::createDockWindow(QWidget *widget)
 
 }
 
+void StudentInterfaceWindow::createCartWindow(QWidget *widget)
+{
+    cart->setWidget(widget);
+    this->addDockWidget(Qt::RightDockWidgetArea, cart);
+    if (dock->isVisible())
+    {
+        this->splitDockWidget(dock,cart, Qt::Vertical);
+    }
+
+    cart->setVisible(true);
+}
+
+void StudentInterfaceWindow::createCartWindow(QWidget *widget, Qt::DockWidgetArea area)
+{
+    if (area == Qt::RightDockWidgetArea)
+    {
+
+    }
+    cart->setWidget(widget);
+    this->addDockWidget(area, cart);
+    cart->setVisible(true);
+}
+
 
 void StudentInterfaceWindow::shrink()
 {
@@ -73,13 +99,13 @@ void StudentInterfaceWindow::shrink()
     qDebug() << "dockw is min? " << dock->isMinimized();
     qDebug() << "dockw is float?" << dock->isFloating();
 
-    //if its hidden, destroy it?
-    if (!dock->isVisible())
+
+    if (!dock->isVisible() && !cart->isVisible())
     {
     this->resize(this->minimumSize());
     } else this->resize(this->sizeHint());
 
-    //if ( dock->isMinimized() || dock->isHidden() ) { this->resize(this->sizeHint()); }
+
 }
 
 

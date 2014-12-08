@@ -26,6 +26,7 @@ public:
     ShoppingManagementFacade();
     QList<Course*>  viewContent(Student *student, Term *term);
     QList<Term*>    getTermList();
+    ShoppingCart*   viewShoppingCart(Student *student);
 
 private:
     QList<Term*>        fakeTerms;

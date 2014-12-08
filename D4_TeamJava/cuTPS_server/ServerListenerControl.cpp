@@ -10,7 +10,7 @@ ServerListenerControl::ServerListenerControl(QObject *parent):
 void    ServerListenerControl::startServer(){
     int port = 60000;
     //IP Address for communicating between clients in the VMs in this lab : 10.0.2.15
-    const QString & testaddress = "0.0.0.0";
+    const QString & testaddress = "10.0.2.15";
     //const QString & testaddress = "10.0.2.15";
     QHostAddress address = QHostAddress(testaddress);
     if (!this->listen(address, port)){

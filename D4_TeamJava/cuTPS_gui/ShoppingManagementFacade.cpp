@@ -20,10 +20,11 @@ ShoppingCart*   ShoppingManagementFacade::viewShoppingCart(Student *student) {
 return shopUpdateControl->retrieveShoppingCart(student);
 }
 
-void            ShoppingManagementFacade::addContent(Student *student, Textbook *item, int quantity)
+void            ShoppingManagementFacade::addContent(Student *student, PurchasableItem *item, int quantity)
 {
-    shopUpdateControl->updateShoppingCart(student, item, quantity);
+       shopUpdateControl->updateShoppingCart(student, item, quantity);
 }
+
 
 void            ShoppingManagementFacade::emptyShoppingCart(Student *student)
 {

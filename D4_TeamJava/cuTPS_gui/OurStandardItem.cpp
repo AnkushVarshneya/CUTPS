@@ -67,6 +67,7 @@
          qDebug() << chapter->getChapterSections()[i]->getItemTitle();
 
          OurStandardItem *temp = new OurStandardItem(chapter->getChapterSections()[i], this);
+         temp->setData( chapter->getChapterSections()[i]->getItemID() );
          this->setChild(i, temp);
      }
      qDebug() << "Passed setting chapter sections";
@@ -76,7 +77,7 @@
   OurStandardItem::OurStandardItem(Section *section, OurStandardItem *parent) {
       this->setData(section->getItemID());
       this->setText(section->getItemTitle());
-      qDebug() << "data" << this->data();
       qDebug() << "text" << this->text();
+      qDebug() << "data" << this->data();
 
   }

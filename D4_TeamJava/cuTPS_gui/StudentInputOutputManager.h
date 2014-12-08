@@ -25,30 +25,30 @@ public:
     StudentInputOutputManager();
 
 private:
-    StudentInterfaceWindow                      *studentInterface;
-    ShoppingManagementFacade                    *shopFacade;
-    TextbookDetailsWindow                       *textbookDetailsWindow;
-    ShoppingCartWidget                          *cartWidget;
+    StudentInterfaceWindow                       *studentInterface;
+    ShoppingManagementFacade                     *shopFacade;
+    TextbookDetailsWindow                        *textbookDetailsWindow;
+    ShoppingCartWidget                           *cartWidget;
 
-    ShoppingCart                                *currentCart;
+    ShoppingCart                                 *currentCart;
     QList<QPair <PurchasableItem*, qint32> >     currentItems;
 
 
-    QListView               *listView;
+    QListView                                    *listView;
 
-    QStandardItemModel      *courseAndTextbookModel;
-    QStandardItemModel      *chaptersAndSectionsModel;
-    QStandardItemModel      *cartModel;
-    void                    setStudentInterfaceViewModel(QAbstractItemView  *view, QStandardItemModel *model);
-    void                    buildCourseAndTextbookModel();
-    void                    buildTextbookAndChildrenModel();
-    QList<Course*>            coursesAndContent;
-    Course                   *crs1;
-    Course                   *crs2;
-    void                     getTerms();
-    QList<Term*>             terms;
-    Textbook*                lastTextbookDetailsOpened;
-    Student                 *currentStudent;
+    QStandardItemModel                           *courseAndTextbookModel;
+    QStandardItemModel                           *chaptersAndSectionsModel;
+    QStandardItemModel                           *cartModel;
+    void                                         setStudentInterfaceViewModel(QAbstractItemView  *view, QStandardItemModel *model);
+    void                                         buildCourseAndTextbookModel();
+    void                                         buildTextbookAndChildrenModel();
+    QList<Course*>                               coursesAndContent;
+    Course                                       *crs1;
+    Course                                       *crs2;
+    void                                          getTerms();
+    QList<Term*>                                  terms;
+    Textbook*                                     lastTextbookDetailsOpened;
+    Student                                      *currentStudent;
 
 
 private slots:

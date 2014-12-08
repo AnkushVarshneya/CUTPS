@@ -7,7 +7,6 @@ TextbookDetailsWindow::TextbookDetailsWindow(QWidget *parent) :
 {
     this->setWindowModality(Qt::WindowModal);
     ui->setupUi(this);
-    chaptersAndSectionsModel = new QStandardItemModel(this);
 }
 
 TextbookDetailsWindow*  TextbookDetailsWindow::instance = 0;
@@ -42,17 +41,16 @@ TextbookDetailsWindow::TextbookDetailsWindow(Textbook &textbook, QModelIndex idx
     ui(new Ui::TextbookDetailsWindow)
 {
         ui->setupUi(this);
-        chaptersAndSectionsModel = new QStandardItemModel(this);
 
         QList<Chapter*>::iterator it;
         for(it = textbook.getChapterList().begin(); it != textbook.getChapterList().end(); it++)
         {
-            OurStandardItem *chaptersAndSectionsItem = new OurStandardItem((*it),static_cast<OurStandardItem*>(chaptersAndSectionsModel->invisibleRootItem()) );
-            chaptersAndSectionsModel->appendRow(chaptersAndSectionsItem);
+            OurStandardItem *chaptersAndSectionsItem = new OurStandardItem((*it),static_cast<OurStandardItem*>(model->invisibleRootItem()) );
+            model->appendRow(chaptersAndSectionsItem);
         }
 
        //todo: chaptersAndSectionsModel->setHorizontalHeaderLabels();
-        ui->chaptersAndSectionsTreeView->setModel(chaptersAndSectionsModel);
+        ui->chaptersAndSectionsTreeView->setModel(model);
         ui->textbookTitleLabel->setText(textbook.getItemTitle());
 }
 
@@ -64,17 +62,16 @@ TextbookDetailsWindow::~TextbookDetailsWindow()
 //set the book and model information
 void TextbookDetailsWindow::setTextbookAndModel(Textbook &textbook, QModelIndex idx, QStandardItemModel *model)
 {
-    chaptersAndSectionsModel->clear();
 
     QList<Chapter*>::iterator it;
     for(it = textbook.getChapterList().begin(); it != textbook.getChapterList().end(); it++)
     {
-        OurStandardItem *chaptersAndSectionsItem = new OurStandardItem((*it),static_cast<OurStandardItem*>(chaptersAndSectionsModel->invisibleRootItem()) );
-        chaptersAndSectionsModel->appendRow(chaptersAndSectionsItem);
+        OurStandardItem *chaptersAndSectionsItem = new OurStandardItem((*it),static_cast<OurStandardItem*>(model->invisibleRootItem()) );
+        model->appendRow(chaptersAndSectionsItem);
     }
 
    //todo: chaptersAndSectionsModel->setHorizontalHeaderLabels();
-    ui->chaptersAndSectionsTreeView->setModel(chaptersAndSectionsModel);
+    ui->chaptersAndSectionsTreeView->setModel(model);
     ui->textbookTitleLabel->setText(textbook.getItemTitle());
     ui->textbookAuthorLabel->setText(textbook.getAuthor());
     ui->textbookEditionLabel->setText("Edition: " +textbook.getEdition());

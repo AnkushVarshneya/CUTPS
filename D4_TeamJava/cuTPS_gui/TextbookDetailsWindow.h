@@ -35,7 +35,6 @@ public:
     QTreeView*                          getChaptersAndSectionsView();
 private:
     Ui::TextbookDetailsWindow           *ui;
-    QStandardItemModel                  *chaptersAndSectionsModel;
     static TextbookDetailsWindow*       instance;
 };
 

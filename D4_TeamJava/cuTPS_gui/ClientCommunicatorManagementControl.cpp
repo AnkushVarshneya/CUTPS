@@ -17,6 +17,7 @@ ClientCommunicatorManagementControl*  ClientCommunicatorManagementControl::getIn
 }
 
 QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
+
     QJsonObject api_server_call;
     //Set API call to initiate on serverside
     QString functionCall = "retrieveAllTerms()";
@@ -24,10 +25,18 @@ QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
 
     requestManager.send(api_server_call);
     QJsonDocument res;
+
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
+
+    qDebug() << requestManager.getTcp()->state();
 
     //Placeholder to when we read back from the server to get the list of textbooks
     QList<Term*>* result = new QList<Term*>();
@@ -46,8 +55,11 @@ QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
 
 QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *stu, Term *term){
     if(stu == 0 || term == 0){
+        qDebug() << "Student or Term is null";
         return 0;
     }
+
+
     QJsonObject api_server_call;
     QString functionCall = "retrieveContent()";
     api_server_call["Function:"] = functionCall;
@@ -64,6 +76,11 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *st
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -85,6 +102,7 @@ ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student*
     if(stu == 0){
         return 0;
     }
+
     QJsonObject api_server_call;
     QString functionCall = "retrieveShoppingCart()";
     api_server_call["Function:"] = functionCall;
@@ -97,6 +115,11 @@ ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student*
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -110,6 +133,7 @@ bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, Purch
     if(stu == 0 || item == 0){
         return false;
     }
+
     QJsonObject api_server_call;
     QString functionCall = "updateShoppingCart()";
     api_server_call["Function:"] = functionCall;
@@ -128,6 +152,11 @@ bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, Purch
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -140,6 +169,7 @@ bool ClientCommunicatorManagementControl::checkout(Student* stu,ShoppingCart* ca
     if (stu == 0 || cart == 0){
         return false;
     }
+
     QJsonObject api_server_call;
     QString functionCall = "checkout()";
     api_server_call["Function:"] = functionCall;
@@ -155,6 +185,11 @@ bool ClientCommunicatorManagementControl::checkout(Student* stu,ShoppingCart* ca
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
     bool result = res.object()["success"].toBool();
@@ -166,6 +201,7 @@ bool ClientCommunicatorManagementControl::emptyShoppingCart(Student* stu){
     if(stu == 0){
         return false;
     }
+
     QJsonObject api_server_call;
     QString functionCall = "emptyShoppingCart()";
     api_server_call["Function:"] = functionCall;
@@ -177,6 +213,11 @@ bool ClientCommunicatorManagementControl::emptyShoppingCart(Student* stu){
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -189,6 +230,7 @@ bool ClientCommunicatorManagementControl::updatePaymentInformation(Student* stu,
     if(stu == 0 || payInfo == 0){
         return false;
     }
+
     QJsonObject api_server_call;
     QString functionCall = "updatePaymentInformation()";
     api_server_call["Function:"] = functionCall;
@@ -205,6 +247,11 @@ bool ClientCommunicatorManagementControl::updatePaymentInformation(Student* stu,
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -217,6 +264,7 @@ PaymentInformation* ClientCommunicatorManagementControl::retrieveStudentPaymentI
     if (stu == 0){
         return 0;
     }
+
     QJsonObject api_server_call;
     QString functionCall = "retrievePaymentInformation()";
     api_server_call["Function:"] = functionCall;
@@ -227,6 +275,11 @@ PaymentInformation* ClientCommunicatorManagementControl::retrieveStudentPaymentI
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
     PaymentInformation* resultPayInfo = new PaymentInformation();
@@ -236,6 +289,7 @@ PaymentInformation* ClientCommunicatorManagementControl::retrieveStudentPaymentI
 }
 
 QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
+
     QJsonObject api_server_call;
     QString functionCall = "retrieveAllContent()";
     api_server_call["Function:"] = functionCall;
@@ -244,6 +298,11 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -270,6 +329,7 @@ bool ClientCommunicatorManagementControl::updateContent(Textbook* text){
     if(text == 0){
         return false;
     }
+
     QJsonObject api_server_call;
     QString functionCall = "updateContent()";
     api_server_call["Function:"] = functionCall;
@@ -282,6 +342,11 @@ bool ClientCommunicatorManagementControl::updateContent(Textbook* text){
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -295,6 +360,7 @@ bool ClientCommunicatorManagementControl::deleteContent(PurchasableItem *item){
     if(item == 0){
         return false;
     }
+
     QJsonObject api_server_call;
     QString functionCall = "deleteContent()";
     api_server_call["Function:"] = functionCall;
@@ -307,6 +373,11 @@ bool ClientCommunicatorManagementControl::deleteContent(PurchasableItem *item){
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -319,6 +390,7 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveCourseList(Term* te
     if(term == 0){
         return 0;
     }
+
     QJsonObject api_server_call;
     QString functionCall = "retrieveCourseList()";
     api_server_call["Function:"] = functionCall;
@@ -331,6 +403,11 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveCourseList(Term* te
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -351,6 +428,7 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveCourseList(Term* te
 }
 
 QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllTextbooks(){
+
     QJsonObject api_server_call;
     QString functionCall = "retrieveAllTextbooks()";
     api_server_call["Function:"] = functionCall;
@@ -359,6 +437,11 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllTextbooks(){
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -380,6 +463,7 @@ bool ClientCommunicatorManagementControl::updateCourse(Course* crs, Term* term){
     if(crs == 0 || term == 0){
         return false;
     }
+
     QJsonObject api_server_call;
     QString functionCall = "updateCourse()";
     api_server_call["Function:"] = functionCall;
@@ -396,6 +480,11 @@ bool ClientCommunicatorManagementControl::updateCourse(Course* crs, Term* term){
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -426,6 +515,11 @@ bool ClientCommunicatorManagementControl::deleteCourse(Course* crs, Term* term){
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -459,6 +553,11 @@ bool ClientCommunicatorManagementControl::registerStudentToCourse(Course* crs, S
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 
@@ -492,6 +591,11 @@ bool ClientCommunicatorManagementControl::assignTextbookToCourse(Course* crs, Te
     QJsonDocument res;
     while (res.isEmpty()) {
         requestManager.getTcp()->waitForReadyRead();
+        if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
+            qDebug() << "Client is not connected to server, can't carry out function";
+            return 0;
+            //        return 0;
+        }
         res = requestManager.getResult();
     }
 

@@ -62,11 +62,14 @@
       qDebug() << "making item from chapter";
      this->setData(chapter->getItemID());
      this->setText(chapter->getItemTitle());
+      qDebug() << "Passed setting data and set text";
      for(int i = 0; i < chapter->getChapterSections().count(); i ++) {
-         qDebug() << chapter->getSection(i + 1)->getItemTitle();
-         OurStandardItem *temp = new OurStandardItem(chapter->getSection(i + 1), this);
+         qDebug() << chapter->getChapterSections()[i]->getItemTitle();
+
+         OurStandardItem *temp = new OurStandardItem(chapter->getChapterSections()[i], this);
          this->setChild(i, temp);
      }
+     qDebug() << "Passed setting chapter sections";
 
  }
 

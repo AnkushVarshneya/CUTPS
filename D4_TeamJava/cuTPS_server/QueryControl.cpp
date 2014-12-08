@@ -2146,7 +2146,7 @@ bool QueryControl::updatePurchasableItem(PurchasableItem* purchasableItem) {
     bool noError = true;
 
     // itemID <= -1 mean item is new to generate id
-    if(purchasableItem->getItemID() > -1) {
+    if(purchasableItem->getItemID() <= -1) {
         //get the current max item id
         int nextItemID = -1;
         QSqlQuery maxItemID("SELECT MAX(itemID)+1 AS nextItemID FROM PurchasableItem;");

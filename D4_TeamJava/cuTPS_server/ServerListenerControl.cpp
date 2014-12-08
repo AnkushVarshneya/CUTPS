@@ -100,8 +100,17 @@ void ServerListenerControl::readBytes() {
    else if (cmd == "retrieveCourseList()"){
        retrieveCourseList(jsonDoc.object());
    }
+   else if (cmd == "retrieveCourseStudents()"){
+       retrieveCourseStudents(jsonDoc.object());
+   }
+   else if (cmd == "retrieveAllStudents()"){
+       retrieveAllStudents();
+   }
+   else if (cmd == "retrieveCourseTextbooks()"){
+       retrieveCourseTextbooks(jsonDoc.object());
+   }
    else if (cmd == "retrieveAllTextbooks()"){
-       retrieveAllTextbooks(jsonDoc.object());
+       retrieveAllTextbooks();
    }
    else if (cmd == "updateCourse()"){
        updateCourse(jsonDoc.object());
@@ -115,7 +124,6 @@ void ServerListenerControl::readBytes() {
    else if (cmd == "updateCourseTextbookLink()"){
        updateCourseTextbookLink(jsonDoc.object());
    }
-
 }
 
 //writes a json object to the tcp socket
@@ -348,9 +356,65 @@ void ServerListenerControl::retrieveCourseList(QJsonObject json){
     this->sendCommand(result);
 }
 
+//Handles API call to retrieve all of the students only for a given course
+//For the Course Manager subsystem to view students in courses
+void ServerListenerControl::retrieveCourseStudents(QJsonObject json){
+    Term selectedTerm;
+    selectedTerm.read(json["term"].toObject());
+    Course selectedCourse;
+    selectedCourse.read(json["course"].toObject());
+
+     QList<Student*>* result = storage.retrieveStudentList(&selectedCourse, selectedTerm.getTermID());
+     QJsonArray studentArray;
+     foreach (Student *stu, *result){
+         QJsonObject json;
+         stu->write(json);
+         studentArray.append(json);
+     }
+     QJsonObject r;
+     r["students:"] = studentArray;
+     this->sendCommand(r);
+}
+
+//Handles API call to retrieve all of the students only
+//For the Course Manager subsystem to link students to courses
+void ServerListenerControl::retrieveAllStudents(){
+     QList<Student*>* result = storage.retrieveAllStudentList();
+     QJsonArray studentArray;
+     foreach (Student *stu, *result){
+         QJsonObject json;
+         stu->write(json);
+         studentArray.append(json);
+     }
+     QJsonObject r;
+     r["students:"] = studentArray;
+     this->sendCommand(r);
+}
+
+//Handles API call to retrieve all of the textbooks only for a given course
+//For the Course Manager subsystem to view textbooks in courses
+void ServerListenerControl::retrieveCourseTextbooks(QJsonObject json){
+    Term selectedTerm;
+    selectedTerm.read(json["term"].toObject());
+    Course selectedCourse;
+    selectedCourse.read(json["course"].toObject());
+
+     QList<Textbook*>* result = storage.retrieveTextbookList(&selectedCourse, selectedTerm.getTermID());
+     QJsonArray textbookArray;
+     foreach(Textbook *text, *result){
+         QJsonObject json;
+         text->write(json);
+         textbookArray.append(json);
+     }
+     QJsonObject r;
+     r["textbooks:"] = textbookArray;
+     this->sendCommand(r);
+}
+
+
 //Handles API call to retrieve all of the textbooks only (no chapters/sections)
-//For the Course Manager subsystem to link textbooks to courses to
-void ServerListenerControl::retrieveAllTextbooks(QJsonObject json){
+//For the Course Manager subsystem to link textbooks to courses
+void ServerListenerControl::retrieveAllTextbooks(){
     QList<Textbook*>* result = storage.retrieveAllTextbookList();
     QJsonArray textbookArray;
     foreach(Textbook *text, *result){

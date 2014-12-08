@@ -28,11 +28,13 @@ private slots:
     void on_editTextbookForm_create_button();
     void on_editTextbookForm_editChapter_button();
     void on_editTextbookForm_createChapter_button();
+    void on_editTextbookForm_deleteChapter_button();
 
     void on_editChapterForm_back_button();
     void on_editChapterForm_editSection_button();
     void on_editChapterForm_create_button();
     void on_editChapterForm_createSection_button();
+    void on_editChapterForm_deleteSection_button();
 
     void on_editSectionForm_back_button();
     void on_editSectionForm_create_button();
@@ -86,9 +88,9 @@ private:
     bool createOrEditSFlag;
 
 
-    Textbook* currentTextbook;
-    Chapter* currentChapter;
-    Section* currentSection;
+    Textbook*   currentTextbook;
+    Chapter*    currentChapter;
+    Section*    currentSection;
 };
 
 #endif // CONTENTINPUTOUTPUTMANAGER_H

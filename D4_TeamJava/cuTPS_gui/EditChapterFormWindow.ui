@@ -139,6 +139,9 @@
    <property name="prefix">
     <string>$</string>
    </property>
+   <property name="maximum">
+    <double>9999999.000000000000000</double>
+   </property>
    <property name="singleStep">
     <double>0.010000000000000</double>
    </property>
@@ -177,6 +180,19 @@
      <width>191</width>
      <height>191</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="deleteSectionButton">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>290</y>
+     <width>101</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Delete Section</string>
    </property>
   </widget>
  </widget>

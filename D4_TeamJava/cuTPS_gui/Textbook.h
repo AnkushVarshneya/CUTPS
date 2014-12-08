@@ -22,7 +22,7 @@ public:
 
     Textbook(QString = "Generic Title", QString = "Generic Author", QString = "1st ed",
              QString = "A Publisher" ,QString = "978-3-16-148410-0" ,QString = "A generic description",
-             qint32 = 555, float = 80.50 , bool = false  );
+             qint32 = -1, float = 80.50 , bool = false  );
     ~Textbook();
     QString             getAuthor           () const;
     QString             getEdition          () const;

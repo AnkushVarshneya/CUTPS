@@ -11,7 +11,7 @@ ClientCommunicatorRequestManager::ClientCommunicatorRequestManager(QObject *pare
 
 void ClientCommunicatorRequestManager::connectToHost(QHostAddress host, int port) {
 
-    const QString & testaddress = "0.0.0.0";
+    const QString & testaddress = "10.0.2.15";
     QHostAddress address = QHostAddress(testaddress);
     this->tcpConnection->connectToHost(address, port);
     connect(this->tcpConnection, SIGNAL(readyRead()), this, SLOT(readyRead()));

@@ -21,8 +21,8 @@ class ContentManagementInputControl
 {
 public:
     ContentManagementInputControl();
-    void validateUpdateContent(Textbook* text) throw(QString);
-    void validateDeleteContent(PurchasableItem* item) throw(QString);
+    void validateUpdateContent(Textbook*) throw(QString);
+    void validateDeleteContent(PurchasableItem*) throw(QString);
 
 };
 

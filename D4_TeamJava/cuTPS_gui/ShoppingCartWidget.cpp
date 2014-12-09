@@ -22,7 +22,7 @@ return instance;
 //getters
 QPushButton* ShoppingCartWidget::getCloseOption() { return ui->closeOption; }
 QPushButton* ShoppingCartWidget::getCheckoutOption() { return ui->checkoutOption; }
-
+QPushButton* ShoppingCartWidget::getEmptyCartOption() { return ui->emptyCartOption; }
 
 //setters
 void ShoppingCartWidget::setCartViewModel(QStandardItemModel *mod)

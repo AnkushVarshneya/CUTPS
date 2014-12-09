@@ -11,6 +11,14 @@
 #include "Term.h"
 #include "Student.h"
 
+#include "CourseManagementUpdateControl.h"
+#include "CourseManagementInputControl.h"
+
+#include "Course.h"
+#include "Term.h"
+#include "Student.h"
+#include "Textbook.h"
+
 class CourseManagementFacade
 {
 public:

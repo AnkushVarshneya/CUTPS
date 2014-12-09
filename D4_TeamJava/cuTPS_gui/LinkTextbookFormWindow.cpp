@@ -12,3 +12,9 @@ LinkTextbookFormWindow::~LinkTextbookFormWindow()
 {
     delete ui;
 }
+
+QPushButton*    LinkTextbookFormWindow::getBackButton()                 { return ui->backButton; }
+QPushButton*    LinkTextbookFormWindow::getLinkTextbookButton()         { return ui->linkTextbook; }
+
+QListView*      LinkTextbookFormWindow::getAllTextbooksListView()       { return ui->allTextbooksListView; }
+QListView*      LinkTextbookFormWindow::getRegisteredTextbooksListView(){ return ui->registeredTextbooksListView; }

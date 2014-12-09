@@ -11,6 +11,19 @@ QList<Course*>* CourseManagementUpdateControl::retrieveCourseList(Term* term){
     return clientComm->retrieveCourseList(term);
 }
 
+QList<Student*>* CourseManagementUpdateControl::retrieveCourseStudents(Course* crs, Term* term){
+    return clientComm->retrieveCourseStudents(crs, term);
+}
+
+QList<Student*>* CourseManagementUpdateControl::retrieveAllStudents(){
+    return clientComm->retrieveAllStudents();
+}
+
+
+QList<Textbook*>* CourseManagementUpdateControl::retrieveCourseTextbooks(Course* crs, Term* term){
+    return clientComm->retrieveCourseTextbooks(crs, term);
+}
+
 QList<Textbook*>* CourseManagementUpdateControl::retrieveAllTextbooks(){
     return clientComm->retrieveAllTextbooks();
 }

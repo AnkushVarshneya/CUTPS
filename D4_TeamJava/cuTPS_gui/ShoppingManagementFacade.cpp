@@ -12,32 +12,37 @@ QList<Term*> ShoppingManagementFacade::getTermList() {
 }
 
 QList<Course*> ShoppingManagementFacade::viewContent(Student *student, Term *term) throw (QString) {
-
+    shopInputControl->validateViewContent(student,term);
     return *shopUpdateControl->retrieveContent(student, term);
 }
 
 ShoppingCart*  ShoppingManagementFacade::viewShoppingCart(Student *student) throw (QString) {
-return shopUpdateControl->retrieveShoppingCart(student);
+    shopInputControl->validateViewShoppingCart(student);
+    return shopUpdateControl->retrieveShoppingCart(student);
 }
 
-void ShoppingManagementFacade::addContent(Student *student, PurchasableItem *item, int quantity) throw (QString)
+bool ShoppingManagementFacade::addContent(Student *student, PurchasableItem *item, int quantity) throw (QString)
 {
-       shopUpdateControl->updateShoppingCart(student, item, quantity);
+    shopInputControl->validateAddContent(student,item, quantity);
+    return shopUpdateControl->updateShoppingCart(student, item, quantity);
 }
 
 
-void ShoppingManagementFacade::emptyShoppingCart(Student *student) throw (QString)
+bool ShoppingManagementFacade::emptyShoppingCart(Student *student) throw (QString)
 {
-    shopUpdateControl->emptyShoppingCart(student);
+    shopInputControl->validateEmptyShoppingCart(student);
+    return shopUpdateControl->emptyShoppingCart(student);
 }
 
-bool ShoppingManagementFacade::checkOutShoppingCart(Student *student)
+bool ShoppingManagementFacade::checkOutShoppingCart(Student *student) throw (QString)
 {
+    shopInputControl->validateCheckOut(student);
     return shopUpdateControl->checkOutShoppingCart(student);
 }
 
-PaymentInformation* ShoppingManagementFacade::getPaymentInformation(Student *student)
+PaymentInformation* ShoppingManagementFacade::getPaymentInformation(Student *student) throw(QString)
 {
+    shopInputControl->validateRetrieveStudentPaymentInformation(student);
     PaymentInformation* info = shopUpdateControl->retrieveStudentPaymentInformation(student);
     if(info == NULL ) { info = new PaymentInformation();
         qDebug() << "qdebugging on billing info" ;

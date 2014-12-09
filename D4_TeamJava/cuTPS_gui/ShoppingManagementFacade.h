@@ -29,6 +29,7 @@ public:
     ShoppingCart*               viewShoppingCart(Student *student);
     void                        addContent(Student *student, PurchasableItem *item, int quantity);
     void                        emptyShoppingCart(Student *student);
+    PaymentInformation*         getPaymentInformation(Student *student);
 
 private:
     ShopUpdateControl           *shopUpdateControl;

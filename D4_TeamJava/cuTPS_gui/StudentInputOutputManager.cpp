@@ -2,6 +2,12 @@
 
 StudentInputOutputManager::StudentInputOutputManager()
 {
+
+    //initialize current student, models
+    currentStudent = new Student();
+    currentStudent->setStudentNum("100853074");
+
+
     courseAndTextbookModel = new QStandardItemModel(this);
     chaptersAndSectionsModel = new QStandardItemModel(this);
 
@@ -9,8 +15,17 @@ StudentInputOutputManager::StudentInputOutputManager()
     studentInterface = new StudentInterfaceWindow();
     studentInterface->show();
 
-//    textbookDetailsWindow = new TextbookDetailsWindow(this);
-//    textbookDetailsWindow.hide();
+    //initialize the shopping management facade
+    this->shopFacade = new ShoppingManagementFacade();
+    shopFacade->emptyShoppingCart(currentStudent);
+    this->getTerms();
+    paymentInfo = shopFacade->getPaymentInformation(currentStudent);
+
+//    *billingInfo = paymentInfo->getBillInfo();
+//    if (billingInfo == NULL) { billingInfo = new BillingAddress() ; }
+
+//    *ccInfo      = paymentInfo->getCreditCardInfo();
+//    if (ccInfo == NULL) { ccInfo = new CreditCardInformation() ; }
 
     //connect signals from boundary options to slot functions on the student i/o manager
     connect(studentInterface->getAddTextbookOption(), SIGNAL( clicked() ), this, SLOT(on_studentInterface_addTextbookOptionSelected()));
@@ -18,21 +33,24 @@ StudentInputOutputManager::StudentInputOutputManager()
     connect(studentInterface->getViewDetailsOption(), SIGNAL(clicked()), this, SLOT(on_studentInterface_viewDetailsOptionSelected()));
     connect(studentInterface->getTermSelectOption(), SIGNAL(activated(QString)), this, SLOT(on_studentInterface_termSelected()));
 
-    //construct the shopping management facade
-    this->shopFacade = new ShoppingManagementFacade();
-    this->getTerms();
-    currentStudent = new Student();
-    currentStudent->setStudentNum("100853074");
-    shopFacade->emptyShoppingCart(currentStudent);
-
+    //connects for cart widget
     cartWidget = ShoppingCartWidget::getInstance();
+    connect(cartWidget->getCheckoutOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_checkoutOptionSelected()));
+    connect(cartWidget->getCloseOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_closeOptionSelected()));
 
+    //connects for textbook details window
     textbookDetailsWindow = TextbookDetailsWindow::getInstance();
     connect(textbookDetailsWindow->getCloseOption(), SIGNAL(clicked()), this, SLOT(on_textbookDetailsWindow_closeOptionSelected()));
     connect(textbookDetailsWindow->getAddCurrentTextbookOption(), SIGNAL(clicked()),
                                                             this, SLOT(on_textbookDetailsWindow_addCurrentTextbookOptionSelected()));
 
     connect(textbookDetailsWindow->getAddSelectedItemOption(), SIGNAL(clicked()), this, SLOT(on_textbookDetailsWindow_addSelectedItemOptionSelected()));
+
+    //connects for the checkout form dialog
+    checkoutFormDialog = CheckoutFormDialog::getInstance();
+    connect(checkoutFormDialog->getBackOption(), SIGNAL(clicked()), this, SLOT(on_checkoutFormDialog_backOptionSelected()));
+    connect(checkoutFormDialog->getConfirmOption(), SIGNAL(clicked()), this, SLOT(on_checkoutFormDialog_confirmOptionSelected()));
+
 }
 
 
@@ -180,11 +198,46 @@ void StudentInputOutputManager::on_textbookDetailsWindow_addSelectedItemOptionSe
 
 void StudentInputOutputManager::on_cartWidget_closeOptionSelected()
 {
-    //todo
     cartWidget->hide();
 }
 
 void StudentInputOutputManager::on_cartWidget_checkoutOptionSelected()
 {
-    //todo
+    cartWidget->hide();
+    if(paymentInfo != NULL)
+    {
+
+        checkoutFormDialog->getNameLineEdit()->setText( paymentInfo->getBillInfo().getName() ) ;
+        checkoutFormDialog->getCardholderNameLineEdit()->setText( paymentInfo->getCreditCardInfo().getNameOnCard() );
+        checkoutFormDialog->getStreetNameLineEdit()->setText(paymentInfo->getBillInfo().getStreetName() );
+        checkoutFormDialog->getUnitNumberLineEdit()->setText( QString::number( paymentInfo->getBillInfo().getHouseNumber() ));
+        checkoutFormDialog->getCityLineEdit()->setText(paymentInfo->getBillInfo().getCity() );
+        checkoutFormDialog->getPostalCodeLineEdit()->setText(paymentInfo->getBillInfo().getPostalCode() );
+        checkoutFormDialog->getProvinceLineEdit()->setText(paymentInfo->getBillInfo().getProvince());
+
+        checkoutFormDialog->getCreditCardNumberLineEdit()->setText(  paymentInfo->getCreditCardInfo().getCreditCardNo()  );
+        checkoutFormDialog->getCvvLineEdit()->setText( paymentInfo->getCreditCardInfo().getCVV() );
+
+//        checkoutFormDialog->getExpYearLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().currentDate().year()   ));
+//        checkoutFormDialog->getExpMonthLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().currentDate().month() ));
+         checkoutFormDialog->getExpYearLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().year()   ));
+         checkoutFormDialog->getExpMonthLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().month() ));
+
+        qDebug() << paymentInfo->getCreditCardInfo().getExpDate();
+
+    }
+   // *paymentInfo = currentStudent->getpayInfo();
+    checkoutFormDialog->getNameLineEdit()->setText(paymentInfo->getBillInfo().getName());
+    checkoutFormDialog->show();
+}
+
+void StudentInputOutputManager::on_checkoutFormDialog_backOptionSelected()
+{
+    checkoutFormDialog->hide();
+    this->on_studentInterface_viewCartOptionSelected();
+}
+
+void StudentInputOutputManager::on_checkoutFormDialog_confirmOptionSelected()
+{
+
 }

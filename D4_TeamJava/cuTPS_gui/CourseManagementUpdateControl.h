@@ -18,7 +18,6 @@ public:
     QList<Textbook*>*   retrieveAllTextbooks();
     bool                updateCourse(Course*, Term*);
     bool                deleteCourse(Course*, Term*);
-    bool                registerStudentToCourse(Course*, Student*, Term*);
     bool                assignTextbookToCourse(Course*, Textbook*, Term*);
 private:
     ClientCommunicatorManagementControl* clientComm;

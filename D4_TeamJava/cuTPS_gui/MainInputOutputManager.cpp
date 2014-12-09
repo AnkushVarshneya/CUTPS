@@ -13,15 +13,11 @@ MainInputOutputManager::MainInputOutputManager()
 
 void MainInputOutputManager::on_contentIOManager_deleted()
 {
-    qDebug() << "wheee";
-//    contentManagerInterface = new ContentManagerInterfaceWindow();
     contentManagerInterface->show();
-
-//    connect(contentManagerInterface->getManageTextbooksButton(),SIGNAL(clicked()),this,SLOT(on_manageTextbooks_clicked()));
-//    connect(contentManagerInterface->getManageCoursesButton(),SIGNAL(clicked()),this,SLOT(on_manageCourses_clicked()));
 }
 
-void MainInputOutputManager::on_courseIOManager_deleted(){
+void MainInputOutputManager::on_courseIOManager_deleted()
+{
 
     contentManagerInterface->show();
 }
@@ -39,7 +35,26 @@ void MainInputOutputManager::on_contentManager_clicked()
 void MainInputOutputManager::on_student_clicked()
 {
     mainWindow.hide();
-    studentIOManager = new StudentInputOutputManager();
+
+    stuNumForm = new StudentNumberForm();
+    connect(stuNumForm->getOkButton(),SIGNAL(clicked()),this,SLOT(on_stuNumForm_okButton()));
+    connect(stuNumForm->getCancelButton(),SIGNAL(clicked()),this,SLOT(on_stuNumForm_cancelButton()));
+    stuNumForm->show();
+
+
+}
+
+void MainInputOutputManager::on_stuNumForm_okButton() {
+    if(stuNumForm->getStudentNumberTextBox()->text().simplified() != "") {
+        QString studentNumber = stuNumForm->getStudentNumberTextBox()->text().simplified();
+        studentIOManager = new StudentInputOutputManager(studentNumber);
+        delete stuNumForm;
+    }
+}
+
+void MainInputOutputManager::on_stuNumForm_cancelButton() {
+    mainWindow.show();
+    delete stuNumForm;
 }
 
 void MainInputOutputManager::on_manageTextbooks_clicked()

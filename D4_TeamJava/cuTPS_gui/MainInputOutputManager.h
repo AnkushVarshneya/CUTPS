@@ -13,6 +13,8 @@
 #include "StudentInputOutputManager.h"
 #include "StudentInterfaceWindow.h"
 #include "CourseInputOutputManager.h"
+#include "StudentNumberForm.h"
+#include <QString>
 
 class MainInputOutputManager : public QObject
 {
@@ -29,17 +31,20 @@ private slots:
     void on_manageTextbooks_clicked();
     void on_manageCourses_clicked();
 
+    void on_stuNumForm_okButton();
+    void on_stuNumForm_cancelButton();
+
 private:
     MainWindow mainWindow;
     ContentManagerInterfaceWindow *contentManagerInterface;
     ContentInputOutputManager *contentIOManager;
 
+    StudentNumberForm       *stuNumForm;
     StudentInterfaceWindow *studentInterface;
     StudentInputOutputManager *studentIOManager;
 
     ManageCoursesInterfaceWindow *courseInterface;
     CourseInputOutputManager *courseIOManager;
-
 };
 
 #endif // MAININPUTOUTPUTMANAGER_H

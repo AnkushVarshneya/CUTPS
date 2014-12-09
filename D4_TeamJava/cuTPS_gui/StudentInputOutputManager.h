@@ -26,7 +26,7 @@ class StudentInputOutputManager : public QObject
 {
     Q_OBJECT
 public:
-    StudentInputOutputManager();
+    StudentInputOutputManager(QString);
 
 private:
     //user interface widgets
@@ -37,6 +37,7 @@ private:
     CheckoutFormDialog                           *checkoutFormDialog;
     MessageDialog                                messageDialog;
     //important things
+    QString                                      studentNumber;
     ShoppingCart                                 *currentCart;
     QList<QPair <PurchasableItem*, qint32> >     currentItems;
     QList<Term*>                                  terms;

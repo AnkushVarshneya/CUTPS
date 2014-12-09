@@ -25,6 +25,7 @@ public:
     void validateEmptyShoppingCart(Student*) throw(QString);
     void validateRetrieveStudentPaymentInformation(Student*) throw (QString);
     void validateUpdatePaymentInformation(Student*, PaymentInformation*) throw (QString);
+    void validateCheckOut(Student*) throw (QString);
 };
 
 #endif // SHOPINPUTCONTROL_H

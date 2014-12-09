@@ -28,8 +28,7 @@ SOURCES += main.cpp \
         ShoppingCart.cpp \
     QueryControl.cpp \
     ServerListenerControl.cpp \
-    ServerStorageControl.cpp \
-    ServerSerializer.cpp
+    ServerStorageControl.cpp
 
 
 HEADERS  += \
@@ -48,5 +47,4 @@ HEADERS  += \
         ShoppingCart.h \
     QueryControl.h \
     ServerListenerControl.h \
-    ServerStorageControl.h \
-    ServerSerializer.h
+    ServerStorageControl.h

@@ -26,7 +26,7 @@
     <string>Link Textbook</string>
    </property>
   </widget>
-  <widget class="QListView" name="allTextbookListView">
+  <widget class="QListView" name="allTextbooksListView">
    <property name="geometry">
     <rect>
      <x>240</x>
@@ -62,7 +62,7 @@
     <string>Back</string>
    </property>
   </widget>
-  <widget class="QListView" name="registeredTextbookListView">
+  <widget class="QListView" name="registeredTextbooksListView">
    <property name="geometry">
     <rect>
      <x>20</x>

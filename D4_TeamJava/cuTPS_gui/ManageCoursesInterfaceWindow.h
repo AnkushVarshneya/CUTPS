@@ -22,11 +22,8 @@ public:
     QPushButton* getEditCourseButton();
     QPushButton* getDeleteCourseButton();
     QComboBox*   getTermSelectOption();
-    QPushButton* getEnrollStudentOption();
-    QPushButton* getAssignTextbookOption();
 
     QAbstractItemView* getCourseListView();
-    QAbstractItemView* getRegisteredStudentsListView();
     QAbstractItemView* getAssignedTextbooksListView();
 
 private:

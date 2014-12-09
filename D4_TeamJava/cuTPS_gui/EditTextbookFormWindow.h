@@ -1,3 +1,9 @@
+/*Provide window to Edit a Textbook. Provide a form to fill out textbook information,
+ *Along with viewing a list of its chapters (giving the option to edit, delete, or add new chapters)
+ *Provides button to save the textbook
+ *
+ *Traceability: SS-02-01 (Part of Content Manager Interface Subsystem)
+ */
 #ifndef CREATETEXTBOOKFORMWINDOW_H
 #define CREATETEXTBOOKFORMWINDOW_H
 

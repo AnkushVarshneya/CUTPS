@@ -26,7 +26,7 @@ class ShoppingManagementFacade
 public:
     ShoppingManagementFacade();
     QList<Course*>              viewContent(Student*, Term*) throw(QString);
-    QList<Term*>                getTermList();
+    QList<Term*>                getTermList() throw (QString);
     ShoppingCart*               viewShoppingCart(Student*) throw (QString);
     bool                        addContent(Student*, PurchasableItem*,int) throw (QString);
     bool                        emptyShoppingCart(Student*) throw (QString);

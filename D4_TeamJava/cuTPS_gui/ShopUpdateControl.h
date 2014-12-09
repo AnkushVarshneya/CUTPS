@@ -13,14 +13,14 @@ class ShopUpdateControl
 {
 public:
     ShopUpdateControl();
-    QList<Term*>* retrieveAllTerms();
-    QList<Course*>* retrieveContent(Student*, Term*);
-    ShoppingCart* retrieveShoppingCart(Student*);
-    bool    updateShoppingCart(Student*,PurchasableItem*,qint32);
-    bool    checkOutShoppingCart(Student*);
-    bool    emptyShoppingCart(Student*);
-    bool    updatePaymentInformation(Student*, PaymentInformation*);
-    PaymentInformation* retrieveStudentPaymentInformation(Student*);
+    QList<Term*>* retrieveAllTerms() throw (QString);
+    QList<Course*>* retrieveContent(Student*, Term*) throw (QString);
+    ShoppingCart* retrieveShoppingCart(Student*) throw (QString);
+    bool    updateShoppingCart(Student*,PurchasableItem*,qint32) throw (QString);
+    bool    checkOutShoppingCart(Student*) throw (QString);
+    bool    emptyShoppingCart(Student*) throw (QString);
+    bool    updatePaymentInformation(Student*, PaymentInformation*) throw (QString);
+    PaymentInformation* retrieveStudentPaymentInformation(Student*)throw (QString);
 
 private:
     ClientCommunicatorManagementControl* mc;

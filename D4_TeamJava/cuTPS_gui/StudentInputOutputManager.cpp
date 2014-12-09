@@ -2,72 +2,83 @@
 
 StudentInputOutputManager::StudentInputOutputManager(QString s)
 {
+    try{
+        //initialize current student, models
+        currentStudent = new Student();
+        currentStudent->setStudentNum(s);
 
-    //initialize current student, models
-    currentStudent = new Student();
-    currentStudent->setStudentNum(s);
+        courseAndTextbookModel = new QStandardItemModel(this);
+        chaptersAndSectionsModel = new QStandardItemModel(this);
 
-    courseAndTextbookModel = new QStandardItemModel(this);
-    chaptersAndSectionsModel = new QStandardItemModel(this);
+        cardTypes.append("MasterCard");
+        cardTypes.append("Visa");
 
-    cardTypes.append("MasterCard");
-    cardTypes.append("Visa");
+        cartModel = new QStandardItemModel(this);
+        studentInterface = new StudentInterfaceWindow();
+        studentInterface->show();
 
-    cartModel = new QStandardItemModel(this);
-    studentInterface = new StudentInterfaceWindow();
-    studentInterface->show();
+        //initialize the shopping management facade
+        this->shopFacade = new ShoppingManagementFacade();
+        shopFacade->emptyShoppingCart(currentStudent);
+        this->getTerms();
+        paymentInfo = shopFacade->getPaymentInformation(currentStudent);
 
-    //initialize the shopping management facade
-    this->shopFacade = new ShoppingManagementFacade();
-    shopFacade->emptyShoppingCart(currentStudent);
-    this->getTerms();
-    paymentInfo = shopFacade->getPaymentInformation(currentStudent);
+    //    *billingInfo = paymentInfo->getBillInfo();
+    //    if (billingInfo == NULL) { billingInfo = new BillingAddress() ; }
 
-//    *billingInfo = paymentInfo->getBillInfo();
-//    if (billingInfo == NULL) { billingInfo = new BillingAddress() ; }
+    //    *ccInfo      = paymentInfo->getCreditCardInfo();
+    //    if (ccInfo == NULL) { ccInfo = new CreditCardInformation() ; }
 
-//    *ccInfo      = paymentInfo->getCreditCardInfo();
-//    if (ccInfo == NULL) { ccInfo = new CreditCardInformation() ; }
+        //connect signals from boundary options to slot functions on the student i/o manager
+        connect(studentInterface->getAddTextbookOption(), SIGNAL( clicked() ), this, SLOT(on_studentInterface_addTextbookOptionSelected()));
+        connect(studentInterface->getViewCartOption(), SIGNAL(clicked()), this, SLOT(on_studentInterface_viewCartOptionSelected()));
+        connect(studentInterface->getViewDetailsOption(), SIGNAL(clicked()), this, SLOT(on_studentInterface_viewDetailsOptionSelected()));
+        connect(studentInterface->getTermSelectOption(), SIGNAL(activated(QString)), this, SLOT(on_studentInterface_termSelected()));
 
-    //connect signals from boundary options to slot functions on the student i/o manager
-    connect(studentInterface->getAddTextbookOption(), SIGNAL( clicked() ), this, SLOT(on_studentInterface_addTextbookOptionSelected()));
-    connect(studentInterface->getViewCartOption(), SIGNAL(clicked()), this, SLOT(on_studentInterface_viewCartOptionSelected()));
-    connect(studentInterface->getViewDetailsOption(), SIGNAL(clicked()), this, SLOT(on_studentInterface_viewDetailsOptionSelected()));
-    connect(studentInterface->getTermSelectOption(), SIGNAL(activated(QString)), this, SLOT(on_studentInterface_termSelected()));
+        //connects for cart widget
+        cartWidget = ShoppingCartWidget::getInstance();
+        connect(cartWidget->getCheckoutOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_checkoutOptionSelected()));
+        connect(cartWidget->getCloseOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_closeOptionSelected()));
+        connect(cartWidget->getEmptyCartOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_emptyCartOptionSelected()));
 
-    //connects for cart widget
-    cartWidget = ShoppingCartWidget::getInstance();
-    connect(cartWidget->getCheckoutOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_checkoutOptionSelected()));
-    connect(cartWidget->getCloseOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_closeOptionSelected()));
-    connect(cartWidget->getEmptyCartOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_emptyCartOptionSelected()));
+        //connects for textbook details window
+        textbookDetailsWindow = TextbookDetailsWindow::getInstance();
+        connect(textbookDetailsWindow->getCloseOption(), SIGNAL(clicked()), this, SLOT(on_textbookDetailsWindow_closeOptionSelected()));
+        connect(textbookDetailsWindow->getAddCurrentTextbookOption(), SIGNAL(clicked()),
+                                                                this, SLOT(on_textbookDetailsWindow_addCurrentTextbookOptionSelected()));
 
-    //connects for textbook details window
-    textbookDetailsWindow = TextbookDetailsWindow::getInstance();
-    connect(textbookDetailsWindow->getCloseOption(), SIGNAL(clicked()), this, SLOT(on_textbookDetailsWindow_closeOptionSelected()));
-    connect(textbookDetailsWindow->getAddCurrentTextbookOption(), SIGNAL(clicked()),
-                                                            this, SLOT(on_textbookDetailsWindow_addCurrentTextbookOptionSelected()));
+        connect(textbookDetailsWindow->getAddSelectedItemOption(), SIGNAL(clicked()), this, SLOT(on_textbookDetailsWindow_addSelectedItemOptionSelected()));
 
-    connect(textbookDetailsWindow->getAddSelectedItemOption(), SIGNAL(clicked()), this, SLOT(on_textbookDetailsWindow_addSelectedItemOptionSelected()));
+        //connects for the checkout form dialog
+        checkoutFormDialog = CheckoutFormDialog::getInstance();
+        connect(checkoutFormDialog->getBackOption(), SIGNAL(clicked()), this, SLOT(on_checkoutFormDialog_backOptionSelected()));
+        connect(checkoutFormDialog->getConfirmOption(), SIGNAL(clicked()), this, SLOT(on_checkoutFormDialog_confirmOptionSelected()));
 
-    //connects for the checkout form dialog
-    checkoutFormDialog = CheckoutFormDialog::getInstance();
-    connect(checkoutFormDialog->getBackOption(), SIGNAL(clicked()), this, SLOT(on_checkoutFormDialog_backOptionSelected()));
-    connect(checkoutFormDialog->getConfirmOption(), SIGNAL(clicked()), this, SLOT(on_checkoutFormDialog_confirmOptionSelected()));
-
+    }
+    catch(QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
+    }
 }
 
 
 void    StudentInputOutputManager::getTerms() {
-    terms = shopFacade->getTermList();
+    try{
+        terms = shopFacade->getTermList();
 
-    //populate the ui widget
-    QList<Term*>::iterator i;
-    for (i = terms.begin(); i != terms.end(); i++) {
-        qDebug() << "iterating over term list";
-        studentInterface->getTermSelectOption()->addItem((*i)->getTermName(), (*i)->getTermName() );
-        studentInterface->getTermSelectOption()->setCurrentIndex(-1);
+        //populate the ui widget
+        QList<Term*>::iterator i;
+        for (i = terms.begin(); i != terms.end(); i++) {
+            qDebug() << "iterating over term list";
+            studentInterface->getTermSelectOption()->addItem((*i)->getTermName(), (*i)->getTermName() );
+            studentInterface->getTermSelectOption()->setCurrentIndex(-1);
+        }
+        //todo: what if it fails etc
     }
-    //todo: what if it fails etc
+    catch (QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
+    }
 }
 
 
@@ -289,8 +300,16 @@ void StudentInputOutputManager::on_checkoutFormDialog_backOptionSelected()
 }
 
 void StudentInputOutputManager::on_cartWidget_emptyCartOptionSelected() {
-    shopFacade->emptyShoppingCart(currentStudent);
-    this->on_studentInterface_viewCartOptionSelected();
+    try{
+        shopFacade->emptyShoppingCart(currentStudent);
+        this->on_studentInterface_viewCartOptionSelected();
+    }
+    catch (QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
+    }
+
+
 }
 
 
@@ -300,25 +319,31 @@ void StudentInputOutputManager::on_checkoutFormDialog_confirmOptionSelected()
     reply = QMessageBox::question(checkoutFormDialog, "Proceed?", "Are you sure you wish to checkout?", QMessageBox::Yes|QMessageBox::No );
 
       if (reply == QMessageBox::Yes) {
-        checkoutFormDialog->hide();
-        studentInterface->show();
-        QMessageBox::StandardButton result;
-            if ( shopFacade->checkOutShoppingCart(currentStudent) ) {
+        try{
+              checkoutFormDialog->hide();
+              studentInterface->show();
+              QMessageBox::StandardButton result;
+                  if ( shopFacade->checkOutShoppingCart(currentStudent) ) {
 
-                result = QMessageBox::information(checkoutFormDialog,"Success!",
-                                                  "Your order has been successfully processed. You will recieve your items via e-mail momentarily. Thanks for shopping with us!",
-                                                  QMessageBox::Ok);
-                 shopFacade->emptyShoppingCart(currentStudent);
-                 cartWidget->hide();
-                 studentInterface->show();
+                      result = QMessageBox::information(checkoutFormDialog,"Success!",
+                                                        "Your order has been successfully processed. You will recieve your items via e-mail momentarily. Thanks for shopping with us!",
+                                                        QMessageBox::Ok);
+                       shopFacade->emptyShoppingCart(currentStudent);
+                       cartWidget->hide();
+                       studentInterface->show();
+                  }
+                  else {
+                           result = QMessageBox::warning(checkoutFormDialog,"Order unsuccessful!",
+                                                             "There was a problem completing your order. Try again in a moment!!",
+                                                             QMessageBox::Ok);
+
+                       }
+          }
+          catch(QString error){
+             messageDialog.getMessageTextBox()->setText(error);
+             messageDialog.show();
             }
-            else {
-                     result = QMessageBox::warning(checkoutFormDialog,"Order unsuccessful!",
-                                                       "There was a problem completing your order. Try again in a moment!!",
-                                                       QMessageBox::Ok);
-
-                 }
-        }
+      }
 }
 
 

@@ -6,6 +6,7 @@
 #include "EditTextbookFormWindow.h"
 #include "ManageTextbooksInterfaceWindow.h"
 #include "ConfirmationDialogWindow.h"
+#include "MessageDialog.h"
 
 #include "OurStandardItem.h"
 #include <QAbstractItemView>
@@ -58,6 +59,7 @@ private:
     EditSectionFormWindow*              editSectionForm;
 
     ConfirmationDialogWindow*           confirmationForm;
+    MessageDialog                       messageDialog;
 
     ContentManagementFacade*            contentManagementFacade;
 
@@ -95,6 +97,8 @@ private:
 
     void update_editChapterForm_SectionList();
     void update_editTextbookForm_ChapterList();
+
+
 
     //0: Create
     //1: Edit

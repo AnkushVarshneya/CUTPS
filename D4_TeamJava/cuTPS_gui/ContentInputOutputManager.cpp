@@ -279,7 +279,6 @@ void ContentInputOutputManager::on_manageTextbooksInterface_editTextbook_button(
     createOrEditTFlag = 1;
     editTextbookForm->getISBNTextbox()->setEnabled(false);
 }
-
 void ContentInputOutputManager::on_manageTextbooksInterface_deleteTextbook_button() {
 
     if(manageTextbooksInterface->getTextbooksListView()->currentIndex().row() == -1){
@@ -323,13 +322,12 @@ void ContentInputOutputManager::on_editTextbookForm_back_button() {
 }
 
 void ContentInputOutputManager::on_editTextbookForm_create_button() {
-    qDebug() << "create a new textbook with the fields from the form and go back to the managetextbooksinterface";
-
     foreach(Textbook *t,fakeTextbooks) {
         if((t->getISBN() == editTextbookForm->getISBNTextbox()->text())
                 &&
                (t != currentTextbook)) {
-            qDebug() << "ayyyyyyy duplicate textbook #";
+            messageDialog.getMessageTextBox()->setText("Error: Textbooks with duplicate ISBN's cannot be added. Change this textbook's ISBN so that it doesn't share its ISBN with any other textbooks.");
+            messageDialog.show();
             return;
         }
     }
@@ -465,13 +463,12 @@ void ContentInputOutputManager::on_editChapterForm_back_button() {
 }
 
 void ContentInputOutputManager::on_editChapterForm_create_button() {
-    qDebug() << "create a new chapter with the fields from the form and go back to the edittextbookform";
-
     foreach(Chapter *c,currentTextbook->getChapterList()) {
         if((c->getChapterNumber() == editChapterForm->getChapterNumberSpinBox()->value())
                 &&
                (c != currentChapter)) {
-            qDebug() << "ayyyyyyy duplicate chapter #";
+            messageDialog.getMessageTextBox()->setText("Error: Chapters in the same textbook that have duplicate chapter numbers cannot be added. Change this chapter's chapter number so that it doesn't share its chapter number with any other chapters in this textbook.");
+            messageDialog.show();
             return;
         }
     }
@@ -574,6 +571,8 @@ void ContentInputOutputManager::on_editSectionForm_create_button() {
                 &&
                (s != currentSection)) {
             qDebug() << "ayyyyyyy duplicate section #";
+            messageDialog.getMessageTextBox()->setText("Error: Sections with duplicate section numbers cannot be added. Change this section's section number so that it doesn't share its section number with any other sections in this textbook.");
+            messageDialog.show();
             return;
         }
     }

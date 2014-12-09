@@ -6,6 +6,8 @@
 #include "ModifyCourseFormWindow.h"
 #include "LinkTextbookFormWindow.h"
 
+#include "ConfirmationDialogWindow.h"
+
 #include <QAbstractItemView>
 #include "OurStandardItem.h"
 
@@ -32,10 +34,16 @@ private slots:
     void on_linkTextbookForm_linkTextbookButton();
     void on_linkTextbookForm_selectTextbook();
     void on_linkTextbookForm_selectRegisteredTextbook();
+
+    void on_deleteCourseConfirmationForm_yesButton();
+    void on_deleteCourseConfirmationForm_noButton();
 private:
     ManageCoursesInterfaceWindow* manageCoursesInterface;
     ModifyCourseFormWindow*       editCourseForm;
     LinkTextbookFormWindow*       linkTextbookForm;
+
+    ConfirmationDialogWindow*     confirmationForm;
+
     CourseManagementFacade*       courseManagementFacade;
 
     QStandardItemModel*           courseModel;
@@ -56,7 +64,7 @@ private:
 
     //0: Create
     //1: Edit
-    int                           createCFlag;
+    int                           createOrEditCFlag;
 
     void        setCourseManagementInterfaceViewModel(QAbstractItemView*, QStandardItemModel*);
 
@@ -73,6 +81,8 @@ private:
     void    connect_manageCoursesInterface();
     void    connect_editCourseForm();
     void    connect_linkTextbookForm();
+
+    void    connect_deleteCourseConfirmationForm();
 };
 
 #endif // COURSEINPUTOUTPUTMANAGER_H

@@ -28,7 +28,7 @@ private:
     void retrieveContent(QJsonObject);
     void retrieveShoppingCart(QJsonObject);
     void updateShoppingCart(QJsonObject);
-    void checkout(QJsonObject);
+    void checkOutShoppingCart(QJsonObject);
     void emptyShoppingCart(QJsonObject);
     void updatePaymentInformation(QJsonObject);
     void retrievePaymentInformation(QJsonObject);

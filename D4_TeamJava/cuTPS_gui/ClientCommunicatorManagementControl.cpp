@@ -180,8 +180,8 @@ bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, Purch
 //Communicates with server to order the contents in the shopping cart,
 //Serializes the passed in Student and ShoppingCart arguments into json
 //returns sucess flag
-bool ClientCommunicatorManagementControl::checkout(Student* stu,ShoppingCart* cart){
-    if (stu == 0 || cart == 0){
+bool ClientCommunicatorManagementControl::checkOutShoppingCart(Student* stu){
+    if (stu == 0){
         return false;
     }
 
@@ -192,9 +192,6 @@ bool ClientCommunicatorManagementControl::checkout(Student* stu,ShoppingCart* ca
     QJsonObject stuObject;
     stu->write(stuObject);
     api_server_call["student"] = stuObject;
-    QJsonObject cartObject;
-    cart->write(cartObject);
-    api_server_call["cart"] = cartObject;
 
     requestManager.send(api_server_call);
     QJsonDocument res;

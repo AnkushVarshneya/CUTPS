@@ -23,6 +23,7 @@ class CourseManagementFacade
 {
 public:
     CourseManagementFacade();
+    QList<Term*>*       retrieveAllTermList();
     QList<Course*>*     retrieveCourseList(Term*) throw(QString);
     QList<Student*>*    retrieveCourseStudents(Course*, Term*) throw(QString);
     QList<Student*>*    retrieveAllStudents();

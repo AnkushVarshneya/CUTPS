@@ -4,6 +4,10 @@ CourseManagementFacade::CourseManagementFacade()
 {
 }
 
+QList<Term*>* CourseManagementFacade::retrieveAllTermList(){
+    return updateControl.retrieveAllTermList();
+}
+
 QList<Course*>* CourseManagementFacade::retrieveCourseList(Term* term) throw(QString){
     inputControl.validateRetrieveCourseList(term);
     return updateControl.retrieveCourseList(term);

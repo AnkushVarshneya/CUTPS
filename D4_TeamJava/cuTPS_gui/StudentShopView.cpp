@@ -6,13 +6,7 @@ StudentShopView::StudentShopView(QWidget *parent) :
     ui(new Ui::StudentShopView)
 {
     ui->setupUi(this);
-    //Setting the icon's image to a Shopping Cart
-//    QPixmap shopping_img("../Images/shopping_cart_clipart.png");
-//    QIcon ButtonIcon(shopping_img);
 
-//    ui->viewShoppingCartOption->setIcon(ButtonIcon);
-//    ui->viewShoppingCartOption->setIconSize(shopping_img.rect().size());
-//    ui->viewShoppingCartOption->setFixedSize(shopping_img.rect().size());
 }
 
 StudentShopView::~StudentShopView()

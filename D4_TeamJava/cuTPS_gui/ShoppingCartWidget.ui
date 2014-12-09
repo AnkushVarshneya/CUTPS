@@ -147,7 +147,7 @@
       <item>
        <widget class="QPushButton" name="checkoutOption">
         <property name="text">
-         <string>Check Out</string>
+         <string>&amp;Check Out</string>
         </property>
        </widget>
       </item>

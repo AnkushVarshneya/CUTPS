@@ -229,7 +229,7 @@
          <string>Add the selected item</string>
         </property>
         <property name="text">
-         <string>Add Selected Item</string>
+         <string>&amp;Add Selected Item</string>
         </property>
        </widget>
       </item>

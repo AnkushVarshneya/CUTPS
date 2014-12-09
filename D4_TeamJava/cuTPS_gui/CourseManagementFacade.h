@@ -25,7 +25,6 @@ public:
     bool                assignTextbookToCourse(Course*, Textbook*, Term*) throw(QString);
 
 private:
-    //QList<Textbook*>                fakeTextbooks;
     CourseManagementInputControl   inputControl;
     CourseManagementUpdateControl  updateControl;
 };

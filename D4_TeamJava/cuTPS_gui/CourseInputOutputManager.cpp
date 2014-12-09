@@ -145,6 +145,11 @@ void CourseInputOutputManager::on_deleteCourseConfirmationForm_noButton() {
 }
 
 void CourseInputOutputManager::on_editCourseForm_backButton() {
+
+    if(createOrEditCFlag == 0)
+        delete selectedCourse;
+
+
     manageCoursesInterface->show();
     //editCourseForm->hide();
     delete editCourseForm;
@@ -161,9 +166,19 @@ void CourseInputOutputManager::on_editCourseForm_createButton() {
     if(createOrEditCFlag == 0) {
         fakeCourses->push_back(selectedCourse);
         selectedCourse->setTerm(newTerm);
+
     }
+
+
+
+
     courseManagementFacade->updateCourse(selectedCourse,newTerm);
 
+    if(createOrEditCFlag == 0) {
+        foreach(Textbook* linkedTextbook,selectedCourse->getRequiredTextbooks()){
+            courseManagementFacade->assignTextbookToCourse(selectedCourse,linkedTextbook,selectedCourse->getTerm());
+        }
+    }
     courseModel->clear();
     textbookModel->clear();
     linkedTextbookModel->clear();
@@ -216,6 +231,11 @@ void CourseInputOutputManager::on_linkTextbookForm_linkTextbookButton() {
         qDebug() << "already contains the textbook";
         return;
     }
+
+    if(createOrEditCFlag == 1){
+        courseManagementFacade->assignTextbookToCourse(selectedCourse,selectedTextbook,selectedCourse->getTerm());
+    }
+
     selectedCourse->addTextbook(selectedTextbook);
 
     fakeLinkedTextbooks->push_back(selectedTextbook);
@@ -284,6 +304,7 @@ void CourseInputOutputManager::on_manageCoursesInterface_deleteCourse_button(){
     }
 
     confirmationForm = new ConfirmationDialogWindow();
+    confirmationForm->getMessageTextBox()->setText("Are you sure you want to delete this course?");
     connect_deleteCourseConfirmationForm();
     confirmationForm->show();
 }

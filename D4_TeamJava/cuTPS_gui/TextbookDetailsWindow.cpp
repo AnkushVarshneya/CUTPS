@@ -21,15 +21,12 @@ return instance;
 }
 
 
-
 TextbookDetailsWindow::TextbookDetailsWindow(Textbook &textbook, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TextbookDetailsWindow)
-//TODO: also pass in a model and model index to get children?
+
 {
 
-    qDebug() << "inside textbook details window constructor";
-    qDebug() << textbook.getItemTitle();
     ui->setupUi(this);
     ui->textbookTitleLabel->setText(textbook.getItemTitle());
 

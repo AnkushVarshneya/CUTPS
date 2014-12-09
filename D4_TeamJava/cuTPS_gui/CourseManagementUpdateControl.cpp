@@ -5,7 +5,9 @@ CourseManagementUpdateControl::CourseManagementUpdateControl()
     clientComm = ClientCommunicatorManagementControl::getInstance();
 }
 
-
+QList<Term*>* CourseManagementUpdateControl::retrieveAllTermList(){
+    return clientComm->retrieveAllTerms();
+}
 
 QList<Course*>* CourseManagementUpdateControl::retrieveCourseList(Term* term){
     return clientComm->retrieveCourseList(term);
@@ -35,10 +37,6 @@ bool CourseManagementUpdateControl::updateCourse(Course* crs, Term* term){
 bool CourseManagementUpdateControl::deleteCourse(Course* crs, Term* term){
     return clientComm->deleteCourse(crs,term);
 
-}
-
-bool CourseManagementUpdateControl::registerStudentToCourse(Course* crs, Student* stu, Term* term){
-    return clientComm->registerStudentToCourse(crs,stu,term);
 }
 
 bool CourseManagementUpdateControl::assignTextbookToCourse(Course* crs, Textbook* text, Term* term){

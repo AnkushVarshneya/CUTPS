@@ -6,7 +6,7 @@ ShoppingManagementFacade::ShoppingManagementFacade()
 //100853074
 }
 
-QList<Term*> ShoppingManagementFacade::getTermList() {
+QList<Term*> ShoppingManagementFacade::getTermList() throw (QString) {
     return *shopUpdateControl->retrieveAllTerms();
 
 }

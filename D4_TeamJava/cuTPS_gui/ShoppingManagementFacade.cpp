@@ -6,32 +6,32 @@ ShoppingManagementFacade::ShoppingManagementFacade()
 //100853074
 }
 
-QList<Term*>        ShoppingManagementFacade::getTermList() {
+QList<Term*> ShoppingManagementFacade::getTermList() {
     return *shopUpdateControl->retrieveAllTerms();
 
 }
 
-QList<Course*>      ShoppingManagementFacade::viewContent(Student *student, Term *term) {
+QList<Course*> ShoppingManagementFacade::viewContent(Student *student, Term *term) throw (QString) {
 
     return *shopUpdateControl->retrieveContent(student, term);
 }
 
-ShoppingCart*       ShoppingManagementFacade::viewShoppingCart(Student *student) {
+ShoppingCart*  ShoppingManagementFacade::viewShoppingCart(Student *student) throw (QString) {
 return shopUpdateControl->retrieveShoppingCart(student);
 }
 
-void                ShoppingManagementFacade::addContent(Student *student, PurchasableItem *item, int quantity)
+void ShoppingManagementFacade::addContent(Student *student, PurchasableItem *item, int quantity) throw (QString)
 {
        shopUpdateControl->updateShoppingCart(student, item, quantity);
 }
 
 
-void                ShoppingManagementFacade::emptyShoppingCart(Student *student)
+void ShoppingManagementFacade::emptyShoppingCart(Student *student) throw (QString)
 {
     shopUpdateControl->emptyShoppingCart(student);
 }
 
-void                ShoppingManagementFacade::checkout(Student *student)
+void ShoppingManagementFacade::checkout(Student *student)
 {
     //shopUpdateControl->checkout(student);
 }
@@ -44,4 +44,8 @@ PaymentInformation* ShoppingManagementFacade::getPaymentInformation(Student *stu
         qDebug() << info->getBillInfo().getStreetName();
     }
     return info;
+}
+
+bool ShoppingManagementFacade::updatePaymentInformation(Student* stu, PaymentInformation* payInfo){
+    return shopUpdateControl->updatePaymentInformation(stu,payInfo);
 }

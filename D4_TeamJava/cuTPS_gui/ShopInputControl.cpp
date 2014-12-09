@@ -57,3 +57,10 @@ void ShopInputControl::validateEmptyShoppingCart(Student* student) throw(QString
     }
 
 }
+
+void ShopInputControl::validateUpdatePaymentInformation(Student* student, PaymentInformation* payInfo) throw (QString){
+    if(student == NULL){
+        throw QString("Error: No Student, Reset the program");
+    }
+
+}

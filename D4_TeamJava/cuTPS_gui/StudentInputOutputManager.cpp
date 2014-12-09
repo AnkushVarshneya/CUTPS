@@ -246,32 +246,41 @@ void StudentInputOutputManager::on_cartWidget_closeOptionSelected()
 
 void StudentInputOutputManager::on_cartWidget_checkoutOptionSelected()
 {
+    if ( currentCart->getItems().count() > 0) {
     cartWidget->hide();
     if(paymentInfo != NULL)
     {
 
-        checkoutFormDialog->getNameLineEdit()->setText( paymentInfo->getBillInfo().getName() ) ;
-        checkoutFormDialog->getCardholderNameLineEdit()->setText( paymentInfo->getCreditCardInfo().getNameOnCard() );
-        checkoutFormDialog->getStreetNameLineEdit()->setText(paymentInfo->getBillInfo().getStreetName() );
-        checkoutFormDialog->getUnitNumberLineEdit()->setText( QString::number( paymentInfo->getBillInfo().getHouseNumber() ));
-        checkoutFormDialog->getCityLineEdit()->setText(paymentInfo->getBillInfo().getCity() );
-        checkoutFormDialog->getPostalCodeLineEdit()->setText(paymentInfo->getBillInfo().getPostalCode() );
-        checkoutFormDialog->getProvinceLineEdit()->setText(paymentInfo->getBillInfo().getProvince());
+            checkoutFormDialog->getNameLineEdit()->setText( paymentInfo->getBillInfo().getName() ) ;
+            checkoutFormDialog->getCardholderNameLineEdit()->setText( paymentInfo->getCreditCardInfo().getNameOnCard() );
+            checkoutFormDialog->getStreetNameLineEdit()->setText(paymentInfo->getBillInfo().getStreetName() );
+            checkoutFormDialog->getUnitNumberLineEdit()->setText( QString::number( paymentInfo->getBillInfo().getHouseNumber() ));
+            checkoutFormDialog->getCityLineEdit()->setText(paymentInfo->getBillInfo().getCity() );
+            checkoutFormDialog->getPostalCodeLineEdit()->setText(paymentInfo->getBillInfo().getPostalCode() );
+            checkoutFormDialog->getProvinceLineEdit()->setText(paymentInfo->getBillInfo().getProvince());
 
-        checkoutFormDialog->getCreditCardNumberLineEdit()->setText(  paymentInfo->getCreditCardInfo().getCreditCardNo()  );
-        checkoutFormDialog->getCvvLineEdit()->setText( paymentInfo->getCreditCardInfo().getCVV() );
+            checkoutFormDialog->getCreditCardNumberLineEdit()->setText(  paymentInfo->getCreditCardInfo().getCreditCardNo()  );
+            checkoutFormDialog->getCvvLineEdit()->setText( paymentInfo->getCreditCardInfo().getCVV() );
 
-//        checkoutFormDialog->getExpYearLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().currentDate().year()   ));
-//        checkoutFormDialog->getExpMonthLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().currentDate().month() ));
-         checkoutFormDialog->getExpYearLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().year()   ));
-         checkoutFormDialog->getExpMonthLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().month() ));
-         checkoutFormDialog->getCardTypeEdit()->setCurrentText( paymentInfo->getCreditCardInfo().getCardType()  );
-        qDebug() << paymentInfo->getCreditCardInfo().getExpDate();
+    //        checkoutFormDialog->getExpYearLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().currentDate().year()   ));
+    //        checkoutFormDialog->getExpMonthLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().currentDate().month() ));
+             checkoutFormDialog->getExpYearLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().year()   ));
+             checkoutFormDialog->getExpMonthLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().month() ));
+             checkoutFormDialog->getCardTypeEdit()->setCurrentText( paymentInfo->getCreditCardInfo().getCardType()  );
+            qDebug() << paymentInfo->getCreditCardInfo().getExpDate();
 
+        }
+       // *paymentInfo = currentStudent->getpayInfo();
+        checkoutFormDialog->getNameLineEdit()->setText(paymentInfo->getBillInfo().getName());
+        checkoutFormDialog->show();
+
+    } else
+    {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::warning(cartWidget,"Empty cart!",
+                                          "Your shopping cart is empty. Try adding some items!",
+                                          QMessageBox::Ok);
     }
-   // *paymentInfo = currentStudent->getpayInfo();
-    checkoutFormDialog->getNameLineEdit()->setText(paymentInfo->getBillInfo().getName());
-    checkoutFormDialog->show();
 }
 
 void StudentInputOutputManager::on_checkoutFormDialog_backOptionSelected()
@@ -294,9 +303,23 @@ void StudentInputOutputManager::on_checkoutFormDialog_confirmOptionSelected()
       if (reply == QMessageBox::Yes) {
         checkoutFormDialog->hide();
         studentInterface->show();
-      } else {
-        checkoutFormDialog->hide();
-        cartWidget->show();
-      }
+        QMessageBox::StandardButton result;
+            if ( shopFacade->checkOutShoppingCart(currentStudent) ) {
 
+                result = QMessageBox::information(checkoutFormDialog,"Success!",
+                                                  "Your order has been successfully processed. You will recieve your items via e-mail momentarily. Thanks for shopping with us!",
+                                                  QMessageBox::Ok);
+                 shopFacade->emptyShoppingCart(currentStudent);
+                 cartWidget->hide();
+                 studentInterface->show();
+            }
+            else {
+                     result = QMessageBox::warning(checkoutFormDialog,"Order unsuccessful!",
+                                                       "There was a problem completing your order. Try again in a moment!!",
+                                                       QMessageBox::Ok);
+
+                 }
+        }
 }
+
+

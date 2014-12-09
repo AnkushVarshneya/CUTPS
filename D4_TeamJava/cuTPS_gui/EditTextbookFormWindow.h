@@ -1,3 +1,6 @@
+/*
+ *Traceability: SS-02-01 (Part of Content Manager Interface Subsystem)
+ */
 #ifndef CREATETEXTBOOKFORMWINDOW_H
 #define CREATETEXTBOOKFORMWINDOW_H
 

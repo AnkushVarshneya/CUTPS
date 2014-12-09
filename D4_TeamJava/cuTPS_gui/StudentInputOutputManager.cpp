@@ -7,7 +7,6 @@ StudentInputOutputManager::StudentInputOutputManager()
     currentStudent = new Student();
     currentStudent->setStudentNum("100853074");
 
-
     courseAndTextbookModel = new QStandardItemModel(this);
     chaptersAndSectionsModel = new QStandardItemModel(this);
 
@@ -128,37 +127,33 @@ void StudentInputOutputManager::on_studentInterface_viewDetailsOptionSelected()
     QList<Course*>::iterator it;
     QList<Textbook*>::iterator at;
 
-    for(it = coursesAndContent.begin(); it != coursesAndContent.end(); it ++) {
-        //qDebug() << (*it)->getRequiredTextbooks();
-        for (at = (*it)->getRequiredTextbooks().begin(); at != (*it)->getRequiredTextbooks().end(); at++) {
-            qDebug() << "not crashed? isbn is: " << (*at)->getISBN();
-        }
-
-    }
-
     chaptersAndSectionsModel->clear();
     //chaptersAndSectionsModel->appendRow( courseAndTextbookModel->itemFromIndex( studentInterface->getCourseView()->currentIndex() )->child(0));
 
+    if( studentInterface->getCourseView()->currentIndex().isValid() ) {
     QVariant item_id = courseAndTextbookModel->itemFromIndex(studentInterface->getCourseView()->currentIndex())->data();
+
     qDebug() << "variant item id: " << item_id;
-
-    for(it = coursesAndContent.begin(); it != coursesAndContent.end(); it ++)
+    if (item_id != NULL)
     {
-        for (at = (*it)->getRequiredTextbooks().begin(); at != (*it)->getRequiredTextbooks().end(); at++)
+        for(it = coursesAndContent.begin(); it != coursesAndContent.end(); it ++)
         {
-
-            if ((*at)->getItemID() == item_id)
+            for (at = (*it)->getRequiredTextbooks().begin(); at != (*it)->getRequiredTextbooks().end(); at++)
             {
 
-                lastTextbookDetailsOpened = (*at);
-                textbookDetailsWindow = TextbookDetailsWindow::getInstance();
-                textbookDetailsWindow->setTextbookAndModel(*(*at), studentInterface->getCourseView()->currentIndex(), chaptersAndSectionsModel);
-                qDebug() << "textbook window constructed";
-                textbookDetailsWindow->show();
+                if ((*at)->getItemID() == item_id)
+                {
 
+                    lastTextbookDetailsOpened = (*at);
+                    textbookDetailsWindow = TextbookDetailsWindow::getInstance();
+                    textbookDetailsWindow->setTextbookAndModel(*(*at), studentInterface->getCourseView()->currentIndex(), chaptersAndSectionsModel);
+                    qDebug() << "textbook window constructed";
+                    textbookDetailsWindow->show();
+                }
             }
         }
     }
+}
 }
 
 void StudentInputOutputManager::on_studentInterface_termSelected()
@@ -222,7 +217,7 @@ void StudentInputOutputManager::on_cartWidget_checkoutOptionSelected()
 //        checkoutFormDialog->getExpMonthLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().currentDate().month() ));
          checkoutFormDialog->getExpYearLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().year()   ));
          checkoutFormDialog->getExpMonthLineEdit()->setText( QString::number( paymentInfo->getCreditCardInfo().getExpDate().month() ));
-
+         checkoutFormDialog->getCardTypeEdit()->setCurrentText( paymentInfo->getCreditCardInfo().getCardType()  );
         qDebug() << paymentInfo->getCreditCardInfo().getExpDate();
 
     }

@@ -47,8 +47,6 @@ private:
     BillingAddress                               *billingInfo;
     CreditCardInformation                        *ccInfo;
 
-
-
     //models
     QStandardItemModel                           *courseAndTextbookModel;
     QStandardItemModel                           *chaptersAndSectionsModel;

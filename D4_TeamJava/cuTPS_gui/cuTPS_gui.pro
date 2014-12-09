@@ -66,6 +66,7 @@ SOURCES += main.cpp \
     ConfirmationDialogWindow.cpp \
     MessageDialog.cpp
 
+
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
     ManageTextbooksInterfaceWindow.h \

@@ -16,6 +16,7 @@
 #include "Term.h"
 #include "Student.h"
 #include "ShopUpdateControl.h"
+#include "ShopInputControl.h"
 #include <QDebug>
 #include <QList>
 
@@ -35,6 +36,7 @@ public:
 
 private:
     ShopUpdateControl           *shopUpdateControl;
+    ShopInputControl            *shopInputControl;
 
 
 };

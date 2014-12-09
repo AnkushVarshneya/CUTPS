@@ -62,5 +62,37 @@ void ShopInputControl::validateUpdatePaymentInformation(Student* student, Paymen
     if(student == NULL){
         throw QString("Error: No Student, Reset the program");
     }
+    if(payInfo == NULL){
+        throw QString("Error: No Payment Information, enter your payment Information");
+    }
+
+    if(payInfo->getBillInfo().getName().length() <1){
+        throw QString("Error: Blank name, enter a name ").arg(payInfo->getBillInfo().getName());
+    }
+
+    if(payInfo->getBillInfo().getHouseNumber() < 1){
+        throw QString("Error: Invalid House Number: %1, enter a positive house number").arg(payInfo->getBillInfo().getHouseNumber());
+    }
+    if(payInfo->getBillInfo().getStreetName().length() < 1){
+        throw QString("Error: Invalid Street Name: %1, enter a street name").arg(payInfo->getBillInfo().getStreetName());
+    }
+    if(payInfo->getBillInfo().getCity().length() < 1){
+        throw QString("Error: Invalid City: %1, enter a city").arg(payInfo->getBillInfo().getCity());
+    }
+    if(payInfo->getBillInfo().getProvince().length() <1){
+        throw QString("Error: Invalid Province: %1, enter a province").arg(payInfo->getBillInfo().getProvince());
+    }
+    if(payInfo->getBillInfo().getPostalCode().length() <1){
+        throw QString("Error:Invalid Postal Code: %1, enter a postal code").arg(payInfo->getBillInfo().getPostalCode());
+    }
+    if(payInfo->getCreditCardInfo().getCreditCardNo().length() <1){
+        throw QString("Error: Invalid Credit Card Info: %1, enter a credit card number").arg(payInfo->getCreditCardInfo().getCreditCardNo());
+    }
+    if(payInfo->getCreditCardInfo().getCVV().length() != 3){
+        throw QString("Error: Invalid CVV: %1, enter a CVV digit of length 3").arg(payInfo->getCreditCardInfo().getCVV());
+    }
+    if(payInfo->getCreditCardInfo().getExpDate() < QDate::fromString("20141209","yyyyMMdd")){
+        throw QString("Error: Expired Date: %1, Enter a credit card with a valid expiry date").arg(payInfo->getCreditCardInfo().getExpDate().toString("yyyyMMdd"));
+    }
 
 }

@@ -3,40 +3,46 @@
 #include "Term.h"
 CourseInputOutputManager::CourseInputOutputManager()
 {
-    manageCoursesInterface = new ManageCoursesInterfaceWindow();
-    manageCoursesInterface->show();
+    try{
+        manageCoursesInterface = new ManageCoursesInterfaceWindow();
+        manageCoursesInterface->show();
 
-    connect_manageCoursesInterface();
+        connect_manageCoursesInterface();
 
-    fakeTextbooks = new QList<Textbook*>();
-    fakeLinkedTextbooks = new QList<Textbook*>();
-    fakeCourses = new QList<Course*>();
-    fakeTerms = new QList<Term*>();
-
-
-    courseModel = new QStandardItemModel(this);
-    textbookModel = new QStandardItemModel(this);
-    linkedTextbookModel = new QStandardItemModel(this);
-
-    courseManagementFacade = new CourseManagementFacade();
-    fakeTextbooks = courseManagementFacade->retrieveAllTextbooks();
+        fakeTextbooks = new QList<Textbook*>();
+        fakeLinkedTextbooks = new QList<Textbook*>();
+        fakeCourses = new QList<Course*>();
+        fakeTerms = new QList<Term*>();
 
 
+        courseModel = new QStandardItemModel(this);
+        textbookModel = new QStandardItemModel(this);
+        linkedTextbookModel = new QStandardItemModel(this);
 
-
-    fakeTerms = courseManagementFacade->retrieveAllTermList();
-    populateTermComboBox(manageCoursesInterface->getTermSelectOption());
+        courseManagementFacade = new CourseManagementFacade();
+        fakeTextbooks = courseManagementFacade->retrieveAllTextbooks();
 
 
 
 
+        fakeTerms = courseManagementFacade->retrieveAllTermList();
+        populateTermComboBox(manageCoursesInterface->getTermSelectOption());
 
-    int selectedTermIndex = manageCoursesInterface->getTermSelectOption()->currentIndex();
-    selectedTerm = fakeTerms->at(selectedTermIndex);
 
-    fakeCourses = courseManagementFacade->retrieveCourseList(selectedTerm);
-    buildCourseModel();
-    setCourseManagementInterfaceViewModel(manageCoursesInterface->getCourseListView(),courseModel);
+
+
+
+        int selectedTermIndex = manageCoursesInterface->getTermSelectOption()->currentIndex();
+        selectedTerm = fakeTerms->at(selectedTermIndex);
+
+        fakeCourses = courseManagementFacade->retrieveCourseList(selectedTerm);
+        buildCourseModel();
+        setCourseManagementInterfaceViewModel(manageCoursesInterface->getCourseListView(),courseModel);
+    }
+    catch(QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
+    }
 
 
 
@@ -122,24 +128,31 @@ void CourseInputOutputManager::connect_deleteCourseConfirmationForm() {
 }
 
 void CourseInputOutputManager::on_deleteCourseConfirmationForm_yesButton() {
-    int selectedCourseIndex = manageCoursesInterface->getCourseListView()->currentIndex().row();
-    selectedCourse = fakeCourses->at(selectedCourseIndex);
+    try{
+        int selectedCourseIndex = manageCoursesInterface->getCourseListView()->currentIndex().row();
+        selectedCourse = fakeCourses->at(selectedCourseIndex);
+        fakeCourses->removeAll(selectedCourse);
 
-    fakeCourses->removeAll(selectedCourse);
+        fakeTextbooks = courseManagementFacade->retrieveAllTextbooks();
 
-    fakeTextbooks = courseManagementFacade->retrieveAllTextbooks();
+        courseManagementFacade->deleteCourse(selectedCourse,selectedCourse->getTerm());
 
-    courseManagementFacade->deleteCourse(selectedCourse,selectedCourse->getTerm());
+        fakeTextbooks = courseManagementFacade->retrieveAllTextbooks();
+        populateTermComboBox(manageCoursesInterface->getTermSelectOption());
+        buildCourseModel();
+        setCourseManagementInterfaceViewModel(manageCoursesInterface->getCourseListView(),courseModel);
 
-    fakeTextbooks = courseManagementFacade->retrieveAllTextbooks();
-    populateTermComboBox(manageCoursesInterface->getTermSelectOption());
-    buildCourseModel();
-    setCourseManagementInterfaceViewModel(manageCoursesInterface->getCourseListView(),courseModel);
+        linkedTextbookModel->clear();
+        setCourseManagementInterfaceViewModel(manageCoursesInterface->getAssignedTextbooksListView(),linkedTextbookModel);
 
-    linkedTextbookModel->clear();
-    setCourseManagementInterfaceViewModel(manageCoursesInterface->getAssignedTextbooksListView(),linkedTextbookModel);
+        delete confirmationForm;
+    }
+    catch(QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
+    }
     manageCoursesInterface->show();
-    delete confirmationForm;
+
 }
 void CourseInputOutputManager::on_deleteCourseConfirmationForm_noButton() {
     manageCoursesInterface->show();
@@ -147,13 +160,10 @@ void CourseInputOutputManager::on_deleteCourseConfirmationForm_noButton() {
 }
 
 void CourseInputOutputManager::on_editCourseForm_backButton() {
-
     if(createOrEditCFlag == 0)
         delete selectedCourse;
 
-
     manageCoursesInterface->show();
-    //editCourseForm->hide();
     delete editCourseForm;
 }
 void CourseInputOutputManager::on_editCourseForm_createButton() {
@@ -222,7 +232,6 @@ void CourseInputOutputManager::on_editCourseForm_linkTextbookButton() {
 
 void CourseInputOutputManager::on_linkTextbookForm_backButton() {
     editCourseForm->show();
-    //linkTextbookForm->hide();
     delete linkTextbookForm;
 }
 void CourseInputOutputManager::on_linkTextbookForm_linkTextbookButton() {
@@ -318,12 +327,18 @@ void CourseInputOutputManager::on_manageCoursesInterface_deleteCourse_button(){
 }
 
 void CourseInputOutputManager::on_manageCoursesInterface_termSelected(){
-    qDebug() << "Term Selected button clicked";
-    int selectedTermIndex = manageCoursesInterface->getTermSelectOption()->currentIndex();
-    Term* selectedTerm = fakeTerms->at(selectedTermIndex);
-    fakeCourses = courseManagementFacade->retrieveCourseList(selectedTerm);
-    buildCourseModel();
-    setCourseManagementInterfaceViewModel(manageCoursesInterface->getCourseListView(),courseModel);
+    try{
+        qDebug() << "Term Selected button clicked";
+        int selectedTermIndex = manageCoursesInterface->getTermSelectOption()->currentIndex();
+        Term* selectedTerm = fakeTerms->at(selectedTermIndex);
+        fakeCourses = courseManagementFacade->retrieveCourseList(selectedTerm);
+        buildCourseModel();
+        setCourseManagementInterfaceViewModel(manageCoursesInterface->getCourseListView(),courseModel);
+    }
+    catch(QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
+    }
 }
 
 void CourseInputOutputManager::on_manageCoursesInterface_selectCourse(){
@@ -331,24 +346,18 @@ void CourseInputOutputManager::on_manageCoursesInterface_selectCourse(){
 
     fakeLinkedTextbooks->clear();
     int selectedCourseIndex = manageCoursesInterface->getCourseListView()->currentIndex().row();
-    qDebug() << 1;
     selectedCourse = fakeCourses->at(selectedCourseIndex);
-    qDebug() << 2;
     qDebug() << selectedCourse->getRequiredTextbooks().length();
     foreach(Textbook* t, selectedCourse->getRequiredTextbooks()) {
-        qDebug() << 3;
         fakeLinkedTextbooks->push_back(t);
     }
-    qDebug() << 4;
 
     //fakeLinkedTextbooks = selectedCourse->getRequiredTextbooks();
 
 
 
     buildLinkedTextbookModel();
-    qDebug() << 5;
     setCourseManagementInterfaceViewModel(manageCoursesInterface->getAssignedTextbooksListView(),linkedTextbookModel);
-    qDebug() << 6;
 
 }
 

@@ -4,22 +4,29 @@
 
 ContentInputOutputManager::ContentInputOutputManager()
 {
-    manageTextbooksInterface = new ManageTextbooksInterfaceWindow();
-    manageTextbooksInterface->show();
+    try{
+        manageTextbooksInterface = new ManageTextbooksInterfaceWindow();
+        manageTextbooksInterface->show();
 
-    connect_manageTextbooksInterface();
+        connect_manageTextbooksInterface();
 
-    textbookModel = new QStandardItemModel(this);
-    chapterModel = new QStandardItemModel(this);
-    sectionModel = new QStandardItemModel(this);
+        textbookModel = new QStandardItemModel(this);
+        chapterModel = new QStandardItemModel(this);
+        sectionModel = new QStandardItemModel(this);
 
-    contentManagementFacade = new ContentManagementFacade();
-    fakeTextbooks = contentManagementFacade->viewAllContent();
-    buildTextbookModel();
+        contentManagementFacade = new ContentManagementFacade();
 
-    setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
+        fakeTextbooks = contentManagementFacade->viewAllContent();
+        buildTextbookModel();
 
-    manageTextbooksInterface->getTextbooksListView()->setCurrentIndex(QModelIndex());
+        setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
+
+        manageTextbooksInterface->getTextbooksListView()->setCurrentIndex(QModelIndex());
+    }
+    catch (QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
+    }
 }
 
 void ContentInputOutputManager::connect_manageTextbooksInterface() {
@@ -361,11 +368,16 @@ void ContentInputOutputManager::on_editTextbookForm_back_button() {
         delete currentTextbook;
     fakeChapters.clear();
     currentTextbook = 0;
+    try{
+        fakeTextbooks = contentManagementFacade->viewAllContent();
 
-    fakeTextbooks = contentManagementFacade->viewAllContent();
-
-    buildTextbookModel();
-    setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
+        buildTextbookModel();
+        setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
+    }
+    catch(QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
+    }
 }
 
 void ContentInputOutputManager::on_editTextbookForm_create_button() {

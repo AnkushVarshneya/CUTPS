@@ -76,6 +76,6 @@ void ContentManagementInputControl::validateDeleteContent(PurchasableItem* item)
         throw QString("No purchasable item");
     }
     if(item->getItemID() < 0){
-        throw QString("Invalid itemID: ").append(item->getItemID());
+        throw QString("Invalid itemID: %1").arg(item->getItemID());
     }
 }

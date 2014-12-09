@@ -52,7 +52,7 @@ TextbookDetailsWindow::TextbookDetailsWindow(Textbook &textbook, QModelIndex idx
        //todo: chaptersAndSectionsModel->setHorizontalHeaderLabels();
         ui->chaptersAndSectionsTreeView->setModel(model);
         ui->textbookTitleLabel->setText(textbook.getItemTitle());
-        ui->descriptionTextArea->insertPlainText( textbook.getDesc() );
+
 }
 
 TextbookDetailsWindow::~TextbookDetailsWindow()
@@ -78,7 +78,13 @@ void TextbookDetailsWindow::setTextbookAndModel(Textbook &textbook, QModelIndex 
     ui->textbookEditionLabel->setText("Edition: " +textbook.getEdition());
     ui->textbookPublisherLabel->setText(textbook.getPublisher());
     ui->textbookPriceLabel->setText( QString::number(textbook.getPrice()) );
-    ui->textbookDescriptionLabel->setText(textbook.getDesc());
+    //ui->textbookDescriptionLabel->setText(textbook.getDesc());
+
+     ui->descriptionTextArea->clear();
+     ui->descriptionTextArea->insertPlainText( textbook.getDesc() );
+
+     ui->chaptersAndSectionsTreeView->header()->setStretchLastSection(false);
+     ui->chaptersAndSectionsTreeView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents );
 
 }
 

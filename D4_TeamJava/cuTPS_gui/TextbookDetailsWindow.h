@@ -6,6 +6,7 @@
 #include <QToolButton>
 #include <QWidget>
 #include <QTreeView>
+#include <QAbstractItemModel>
 #include "Textbook.h"
 #include <QSpinBox>
 #include <QDebug>

@@ -5,7 +5,7 @@ CourseManagementFacade::CourseManagementFacade()
 }
 
 QList<Term*>* CourseManagementFacade::retrieveAllTermList(){
-    return updateControl.retrieveAllTerms();
+    return updateControl.retrieveAllTermList();
 }
 
 QList<Course*>* CourseManagementFacade::retrieveCourseList(Term* term) throw(QString){

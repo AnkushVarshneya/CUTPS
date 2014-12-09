@@ -7,15 +7,16 @@ ClientCommunicatorRequestManager::ClientCommunicatorRequestManager(QObject *pare
 {
     this->dataStream.setDevice(tcpConnection); //sets the i/o device of the data stream
 
-    connectToHost(QHostAddress(), 60000);
+
 }
 
 //Client connect to host for a given host and port argument
 void ClientCommunicatorRequestManager::connectToHost(QHostAddress host, int port) {
-
-    const QString & testaddress = "10.0.2.15";
-    QHostAddress address = QHostAddress(testaddress);
-    this->tcpConnection->connectToHost(address, port);
+    qDebug() << host;
+    qDebug() << port;
+//    const QString & testaddress = "10.0.2.15";
+//    QHostAddress address = QHostAddress(testaddress);
+    this->tcpConnection->connectToHost(host, port);
     connect(this->tcpConnection, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
 }

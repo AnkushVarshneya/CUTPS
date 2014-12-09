@@ -58,7 +58,8 @@ SOURCES += main.cpp \
     CourseInputOutputManager.cpp \
     CheckoutFormDialog.cpp \
     ConfirmationDialogWindow.cpp \
-    MessageDialog.cpp
+    MessageDialog.cpp \
+    StudentNumberForm.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -107,7 +108,8 @@ HEADERS  += mainwindow.h \
     CheckoutFormDialog.h \
     ConfirmationDialogWindow.h \
     MessageDialog.h \
-    CourseInputOutputManager.h
+    CourseInputOutputManager.h \
+    StudentNumberForm.h
 
 
 FORMS    += mainwindow.ui \
@@ -126,5 +128,6 @@ FORMS    += mainwindow.ui \
     LinkStudentFormWindow.ui \
     CheckoutFormDialog.ui \
     ConfirmationDialogWindow.ui \
-    MessageDialog.ui
+    MessageDialog.ui \
+    StudentNumberForm.ui
 

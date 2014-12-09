@@ -30,10 +30,10 @@ public:
     ShoppingCart*               viewShoppingCart(Student *student) throw (QString);
     void                        addContent(Student *student, PurchasableItem *item, int quantity) throw (QString);
     void                        emptyShoppingCart(Student *student) throw (QString);
-    PaymentInformation*         getPaymentInformation(Student *student);
+    PaymentInformation*         getPaymentInformation(Student *student) throw(QString);
 
     bool                        updatePaymentInformation(Student*, PaymentInformation*) throw (QString);
-    bool                        checkOutShoppingCart(Student *student);
+    bool                        checkOutShoppingCart(Student *student) throw(QString);
 
 
 private:

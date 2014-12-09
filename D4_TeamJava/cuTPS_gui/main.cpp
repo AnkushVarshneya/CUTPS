@@ -199,7 +199,41 @@ int main(int argc, char *argv[])
 //    }
 //    qDebug() << "End test for deleting a course";
 
+    /*
+    Term *t = new Term();
+    t->setTermID(1);
+    QJsonObject json;
 
+    Course *c = new Course("COMP3004", "A");
+
+    qDebug() << "\ntest for retrieveAllStudents\n";
+    foreach(Student *stu, *(ClientCommunicatorManagementControl::getInstance()->retrieveAllStudents())){
+        json = QJsonObject();
+        stu->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for retrieveCourseStudents\n";
+    foreach(Student *stu, *(ClientCommunicatorManagementControl::getInstance()->retrieveCourseStudents(c,t))){
+        json = QJsonObject();
+        stu->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for retrieveAllTextbooks";
+    foreach(Textbook *tbks, *(ClientCommunicatorManagementControl::getInstance()->retrieveAllTextbooks())){
+        json = QJsonObject();
+        tbks->write(json);
+        qDebug() <<json;
+    }
+
+    qDebug() << "\ntest for retrieveCourseTextbooks\n";
+    foreach(Textbook *tbks, *(ClientCommunicatorManagementControl::getInstance()->retrieveCourseTextbooks(c,t))){
+        json = QJsonObject();
+        tbks->write(json);
+        qDebug() <<json;
+    }
+*/
     return a.exec();
 
 }

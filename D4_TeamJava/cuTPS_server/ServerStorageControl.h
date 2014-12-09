@@ -31,8 +31,11 @@ public:
 
     //Content Manager API
     QList<Course*>*     retrieveCourseList(qint32);
+    QList<Student*>*    retrieveStudentList(Course*, qint32);
+    QList<Student*>*    retrieveAllStudentList();
+    QList<Textbook*>*   retrieveTextbookList(Course*, qint32);
+    QList<Textbook*>*   retrieveAllTextbookList();
     QList<Textbook*>*   retrieveAllContent();
-    QList<Textbook*>*   retrieveAllTextbook();
     bool                updateContent(Textbook*);
     bool                deleteContent(PurchasableItem*);
     bool                updateCourse(Course*, qint32);

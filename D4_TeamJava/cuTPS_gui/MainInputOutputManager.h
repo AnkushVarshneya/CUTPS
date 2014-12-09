@@ -4,8 +4,10 @@
 #include "mainwindow.h"
 #include "ContentManagerInterfaceWindow.h"
 #include "ContentInputOutputManager.h"
+#include "ManageCoursesInterfaceWindow.h"
 #include "StudentInputOutputManager.h"
 #include "StudentInterfaceWindow.h"
+#include "CourseInputOutputManager.h"
 
 class MainInputOutputManager : public QObject
 {
@@ -29,6 +31,10 @@ private:
 
     StudentInterfaceWindow *studentInterface;
     StudentInputOutputManager *studentIOManager;
+
+    ManageCoursesInterfaceWindow *courseInterface;
+    CourseInputOutputManager *courseIOManager;
+
 };
 
 #endif // MAININPUTOUTPUTMANAGER_H

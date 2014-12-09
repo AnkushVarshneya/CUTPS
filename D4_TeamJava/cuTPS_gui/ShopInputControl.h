@@ -23,6 +23,7 @@ public:
     void validateViewShoppingCart(Student*) throw(QString);
     void validateAddContent(Student*, PurchasableItem*, int) throw(QString);
     void validateEmptyShoppingCart(Student*) throw(QString);
+    void validateRetrieveStudentPaymentInformation(Student*) throw (QString);
     void validateUpdatePaymentInformation(Student*, PaymentInformation*) throw (QString);
 };
 

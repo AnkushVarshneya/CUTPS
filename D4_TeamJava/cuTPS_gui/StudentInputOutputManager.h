@@ -20,7 +20,7 @@
 #include <QDate>
 #include "BillingAddress.h"
 #include <QPair>
-
+#include "MessageDialog.h"
 
 class StudentInputOutputManager : public QObject
 {
@@ -35,7 +35,7 @@ private:
     TextbookDetailsWindow                        *textbookDetailsWindow;
     ShoppingCartWidget                           *cartWidget;
     CheckoutFormDialog                           *checkoutFormDialog;
-
+    MessageDialog                                messageDialog;
     //important things
     ShoppingCart                                 *currentCart;
     QList<QPair <PurchasableItem*, qint32> >     currentItems;

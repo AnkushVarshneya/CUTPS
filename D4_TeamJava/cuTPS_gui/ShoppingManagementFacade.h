@@ -16,6 +16,7 @@
 #include "Term.h"
 #include "Student.h"
 #include "ShopUpdateControl.h"
+#include "ShopInputControl.h"
 #include <QDebug>
 #include <QList>
 
@@ -24,16 +25,18 @@ class ShoppingManagementFacade
 {
 public:
     ShoppingManagementFacade();
-    QList<Course*>              viewContent(Student *student, Term *term);
+    QList<Course*>              viewContent(Student *student, Term *term) throw(QString);
     QList<Term*>                getTermList();
-    ShoppingCart*               viewShoppingCart(Student *student);
-    void                        addContent(Student *student, PurchasableItem *item, int quantity);
-    void                        emptyShoppingCart(Student *student);
+    ShoppingCart*               viewShoppingCart(Student *student) throw (QString);
+    void                        addContent(Student *student, PurchasableItem *item, int quantity) throw (QString);
+    void                        emptyShoppingCart(Student *student) throw (QString);
     PaymentInformation*         getPaymentInformation(Student *student);
-    void                        checkout(Student *student);
+    bool                        updatePaymentInformation(Student*, PaymentInformation*);
+    void                        checkOutShoppingCart(Student *student);
 
 private:
     ShopUpdateControl           *shopUpdateControl;
+    ShopInputControl            *shopInputControl;
 
 
 };

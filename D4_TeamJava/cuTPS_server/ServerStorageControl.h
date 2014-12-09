@@ -24,7 +24,7 @@ public:
     QList<Course*>*     retrieveContent(Student*, Term*);
     ShoppingCart*       retrieveShoppingCart(Student*);
     bool                updateShoppingCart(Student*, PurchasableItem*, qint32);
-    bool                updateOrderContents(Student*, ShoppingCart*);
+    bool                checkOutShoppingCart(Student*);
     bool                updatePaymentInformation(Student*, PaymentInformation*);
     PaymentInformation* retrievePaymentInformation(Student*);
     bool                emptyShoppingCart(Student*);

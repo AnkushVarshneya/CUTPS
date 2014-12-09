@@ -76,8 +76,8 @@ void ServerListenerControl::readBytes() {
    else if (cmd == "updateShoppingCart()"){
        updateShoppingCart(jsonDoc.object());
    }
-   else if (cmd == "checkout()"){
-       checkout(jsonDoc.object());
+   else if (cmd == "checkOutShoppingCart()"){
+       checkOutShoppingCart(jsonDoc.object());
    }
    else if (cmd == "emptyShoppingCart()"){
        emptyShoppingCart(jsonDoc.object());
@@ -229,16 +229,12 @@ void ServerListenerControl::updateShoppingCart(QJsonObject json){
 //Deserializes the json argument, making a student and shopping cart
 //And passes along this argument to the storagecontrol, which returns a boolean
 //Flag for success, sends this flag back to client
-void ServerListenerControl::checkout(QJsonObject json){
+void ServerListenerControl::checkOutShoppingCart(QJsonObject json){
     Student checkoutStu;
     checkoutStu.read(json["student"].toObject());
 
-    ShoppingCart checkoutCart;
-    checkoutCart.read(json["cart"].toObject());
-
-    bool success = storage.updateOrderContents(&checkoutStu,&checkoutCart);
+    bool success = storage.checkOutShoppingCart(&checkoutStu);
     sendSuccess(success);
-
 }
 
 //Handles API call to empty the student's shopping cart

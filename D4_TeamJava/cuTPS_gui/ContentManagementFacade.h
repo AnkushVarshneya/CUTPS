@@ -27,8 +27,8 @@ public:
     QList<Textbook*>    viewAllContent();
 
 
-    bool                updateContent(Textbook*);
-    bool                deleteContent(PurchasableItem*);
+    bool                updateContent(Textbook*) throw(QString);
+    bool                deleteContent(PurchasableItem*) throw(QString);
 
 private:
     //QList<Textbook*>                fakeTextbooks;

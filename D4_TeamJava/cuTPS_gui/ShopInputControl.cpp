@@ -43,7 +43,7 @@ void ShopInputControl::validateAddContent(Student* student, PurchasableItem* ite
     if(item->getItemID() < 0){
         throw QString("Invalid itemID: %1").arg(item->getItemID());
     }
-    if(quantity < 0){
+    if(quantity < 1){
         throw QString("Invalid quantity: %1").arg(quantity);
     }
 }

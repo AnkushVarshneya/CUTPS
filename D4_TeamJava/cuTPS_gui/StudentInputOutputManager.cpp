@@ -141,6 +141,7 @@ void StudentInputOutputManager::on_studentInterface_viewCartOptionSelected() {
     }
     catch (QString error){
         messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
     }
 
 }
@@ -193,6 +194,7 @@ void StudentInputOutputManager::on_studentInterface_termSelected()
     }
     catch (QString error){
         messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
     }
 
 }
@@ -212,6 +214,7 @@ void StudentInputOutputManager::on_textbookDetailsWindow_addCurrentTextbookOptio
     }
     catch (QString error){
         messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
     }
 
 }
@@ -230,6 +233,7 @@ void StudentInputOutputManager::on_textbookDetailsWindow_addSelectedItemOptionSe
     }
     catch (QString error){
         messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
     }
 
 }

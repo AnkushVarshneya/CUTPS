@@ -45,3 +45,7 @@ PaymentInformation* ShoppingManagementFacade::getPaymentInformation(Student *stu
     }
     return info;
 }
+
+bool ShoppingManagementFacade::updatePaymentInformation(Student* stu, PaymentInformation* payInfo){
+    return shopUpdateControl->updatePaymentInformation(stu,payInfo);
+}

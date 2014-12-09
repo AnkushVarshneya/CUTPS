@@ -239,6 +239,17 @@ QList<Course*>* ServerStorageControl::retrieveCourseList(qint32 termID){
 
     result = q->retrieveCourseList(termID);
 
+    for(int courseIndex = 0; courseIndex < result->size(); courseIndex++){
+        QList<Textbook*>* textbookList = q->retrieveTextbookList((*result)[courseIndex],
+                                                                 (*result)[courseIndex]->getTerm()->getTermID(),
+                                                                 true);
+
+        (*result)[courseIndex]->getRequiredTextbooks() = *textbookList;
+        delete textbookList;
+    }
+
+
+
     delete q;
     return result;
 }

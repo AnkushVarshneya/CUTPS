@@ -13,19 +13,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="enrollStudentButton">
-   <property name="geometry">
-    <rect>
-     <x>139</x>
-     <y>210</y>
-     <width>120</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Enroll Student</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="linkTextbookButton">
    <property name="geometry">
     <rect>

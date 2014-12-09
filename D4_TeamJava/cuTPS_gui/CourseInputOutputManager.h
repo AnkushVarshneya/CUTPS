@@ -4,7 +4,6 @@
 #include "ManageCoursesInterfaceWindow.h"
 #include "CourseManagementFacade.h"
 #include "ModifyCourseFormWindow.h"
-#include "LinkStudentFormWindow.h"
 #include "LinkTextbookFormWindow.h"
 
 #include <QAbstractItemView>
@@ -22,14 +21,11 @@ private slots:
     void on_manageCoursesInterface_editCourse_button();
     void on_manageCoursesInterface_deleteCourse_button();
     void on_manageCoursesInterface_termSelected();
-    void on_manageCoursesInterface_enrollStudent_button();
-    void on_manageCoursesInterface_assignTextbook_button();
 
     void on_manageCoursesInterface_selectCourse();
 
     void on_editCourseForm_backButton();
     void on_editCourseForm_createButton();
-    void on_editCourseForm_enrollButton();
     void on_editCourseForm_linkTextbookButton();
 
     void on_linkTextbookForm_backButton();
@@ -39,33 +35,37 @@ private slots:
 private:
     ManageCoursesInterfaceWindow* manageCoursesInterface;
     ModifyCourseFormWindow*       editCourseForm;
-    LinkStudentFormWindow*        linkStudentForm;
     LinkTextbookFormWindow*       linkTextbookForm;
     CourseManagementFacade*       courseManagementFacade;
 
     QStandardItemModel*           courseModel;
-    QStandardItemModel*           studentModel;
     QStandardItemModel*           textbookModel;
+    QStandardItemModel*           linkedTextbookModel;
 
     QList<Course*>*               courses;
     QList<Textbook*>*             assignedTextbooks;
-    QList<Student*>*              registeredStudents;
 
     QList<Textbook*>*             fakeTextbooks;
-    QList<Student*>*              fakeStudents;
+    QList<Textbook*>*             fakeLinkedTextbooks;
     QList<Course*>*               fakeCourses;
+    QList<Term*>*                 fakeTerms;
+
+    Term*                         selectedTerm;
+    Course*                       selectedCourse;
+
+
+    //0: Create
+    //1: Edit
+    int                           createCFlag;
 
     void        setCourseManagementInterfaceViewModel(QAbstractItemView*, QStandardItemModel*);
 
     void        buildCourseModel();
-    void        buildStudentModel();
     void        buildTextbookModel();
-
-    void        enrollStudentForm_buildStudentModel();
+    void        buildLinkedTextbookModel();
+    void        populateTermComboBox(QComboBox*);
 
     Course*     editCourses_getSelectedCourse();
-
-    Student*    enrollStudentForm_getSelectedStudent();
 
     Textbook*   linkTextbookForm_getSelectedTextbook();
 

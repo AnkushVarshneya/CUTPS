@@ -15,7 +15,6 @@ ModifyCourseFormWindow::~ModifyCourseFormWindow()
 
 QPushButton*    ModifyCourseFormWindow::getBackButton()             { return ui->backButton; }
 QPushButton*    ModifyCourseFormWindow::getCreateButton()           { return ui->createButton; }
-QPushButton*    ModifyCourseFormWindow::getEnrollButton()           { return ui->enrollStudentButton; }
 QPushButton*    ModifyCourseFormWindow::getLinkTextbookButton()     { return ui->linkTextbookButton; }
 
 QComboBox*      ModifyCourseFormWindow::getTermComboBox()           { return ui->termSelectOption; }

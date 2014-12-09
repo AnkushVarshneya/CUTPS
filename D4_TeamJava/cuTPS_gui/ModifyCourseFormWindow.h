@@ -20,7 +20,6 @@ public:
 
     QPushButton*    getBackButton();
     QPushButton*    getCreateButton();
-    QPushButton*    getEnrollButton();
     QPushButton*    getLinkTextbookButton();
 
     QComboBox*      getTermComboBox();

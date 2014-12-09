@@ -182,7 +182,7 @@ bool ClientCommunicatorManagementControl::checkOutShoppingCart(Student* stu) thr
     }
 
     QJsonObject api_server_call;
-    QString functionCall = "checkout()";
+    QString functionCall = "checkOutShoppingCart()";
     api_server_call["Function:"] = functionCall;
 
     QJsonObject stuObject;

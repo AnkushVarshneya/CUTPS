@@ -5,6 +5,7 @@ ContentManagementInputControl::ContentManagementInputControl()
 }
 
 
+//Validates User input whenever the update content function is called in the facade
 void ContentManagementInputControl::validateUpdateContent(Textbook* text) throw(QString){
     if(text == NULL){
         throw QString("No Textbook");
@@ -71,6 +72,7 @@ void ContentManagementInputControl::validateUpdateContent(Textbook* text) throw(
     }
 }
 
+//Validates input for deleting content whenever deleteContent is called in facade
 void ContentManagementInputControl::validateDeleteContent(PurchasableItem* item) throw(QString){
     if(item == NULL){
         throw QString("No purchasable item");

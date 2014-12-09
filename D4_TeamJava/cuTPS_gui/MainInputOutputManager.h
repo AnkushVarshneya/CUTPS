@@ -1,3 +1,8 @@
+/*An initial input output manager mediator for the user to choose the selected user role
+ *Not a part of our system design, for demo purposes only. Provides option in the form of dialog box
+ *to enter in a student number, and the IP address to connect to server
+ *
+ */
 #ifndef MAININPUTOUTPUTMANAGER_H
 #define MAININPUTOUTPUTMANAGER_H
 

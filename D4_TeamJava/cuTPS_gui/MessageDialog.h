@@ -1,3 +1,8 @@
+/*Provide a message dialog with some text for the user (used in error handling)
+ *
+ *Traceability: NR-05 (Error messages will be descriptive and suggest proper solutions)
+ *
+ */
 #ifndef MESSAGEDIALOG_H
 #define MESSAGEDIALOG_H
 

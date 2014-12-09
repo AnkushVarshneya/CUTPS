@@ -35,6 +35,9 @@
      <height>26</height>
     </rect>
    </property>
+   <property name="text">
+    <string>100853074</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="okButton">
    <property name="geometry">

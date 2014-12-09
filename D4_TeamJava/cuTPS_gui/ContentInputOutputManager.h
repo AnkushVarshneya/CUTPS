@@ -5,6 +5,8 @@
 #include "EditSectionFormWindow.h"
 #include "EditTextbookFormWindow.h"
 #include "ManageTextbooksInterfaceWindow.h"
+#include "ConfirmationDialogWindow.h"
+#include "MessageDialog.h"
 
 #include "OurStandardItem.h"
 #include <QAbstractItemView>
@@ -42,11 +44,22 @@ private slots:
     void on_manageTextbooksInterface_selectTextbook();
     void on_manageTextbooksInterface_selectChapter();
 
+    void on_deleteTextbookConfirmationForm_yesButton();
+    void on_deleteTextbookConfirmationForm_noButton();
+
+    void on_deleteChapterConfirmationForm_yesButton();
+    void on_deleteChapterConfirmationForm_noButton();
+
+    void on_deleteSectionConfirmationForm_yesButton();
+    void on_deleteSectionConfirmationForm_noButton();
 private:
     ManageTextbooksInterfaceWindow*     manageTextbooksInterface;
     EditTextbookFormWindow*             editTextbookForm;
     EditChapterFormWindow*              editChapterForm;
     EditSectionFormWindow*              editSectionForm;
+
+    ConfirmationDialogWindow*           confirmationForm;
+    MessageDialog                       messageDialog;
 
     ContentManagementFacade*            contentManagementFacade;
 
@@ -78,8 +91,14 @@ private:
     void        connect_editChapterForm();
     void        connect_editSectionForm();
 
+    void        connect_deleteTextbookConfirmationForm();
+    void        connect_deleteChapterConfirmationForm();
+    void        connect_deleteSectionConfirmationForm();
+
     void update_editChapterForm_SectionList();
     void update_editTextbookForm_ChapterList();
+
+
 
     //0: Create
     //1: Edit

@@ -10,6 +10,7 @@ QList<Textbook*>* ContentManagementUpdateControl::retrieveAllContent(){
 }
 
 bool ContentManagementUpdateControl::updateContent(Textbook* text){
+    qDebug() << "here";
     return clientComm->updateContent(text);
 }
 

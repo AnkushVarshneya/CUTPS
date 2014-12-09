@@ -35,10 +35,11 @@ private:
     ShoppingCartWidget                           *cartWidget;
     CheckoutFormDialog                           *checkoutFormDialog;
 
-    //pointers to important things
+    //important things
     ShoppingCart                                 *currentCart;
     QList<QPair <PurchasableItem*, qint32> >     currentItems;
     QList<Term*>                                  terms;
+    QStringList                                  cardTypes;
     Textbook*                                     lastTextbookDetailsOpened;
     Student                                      *currentStudent;
     QList<Course*>                               coursesAndContent;

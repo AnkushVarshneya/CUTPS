@@ -31,6 +31,11 @@ void                ShoppingManagementFacade::emptyShoppingCart(Student *student
     shopUpdateControl->emptyShoppingCart(student);
 }
 
+void                ShoppingManagementFacade::checkout(Student *student)
+{
+    shopUpdateControl->checkout(student);
+}
+
 PaymentInformation* ShoppingManagementFacade::getPaymentInformation(Student *student)
 {
     PaymentInformation* info = shopUpdateControl->retrieveStudentPaymentInformation(student);

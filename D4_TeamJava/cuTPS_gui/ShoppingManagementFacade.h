@@ -30,6 +30,7 @@ public:
     void                        addContent(Student *student, PurchasableItem *item, int quantity);
     void                        emptyShoppingCart(Student *student);
     PaymentInformation*         getPaymentInformation(Student *student);
+    void                        checkout(Student *student);
 
 private:
     ShopUpdateControl           *shopUpdateControl;

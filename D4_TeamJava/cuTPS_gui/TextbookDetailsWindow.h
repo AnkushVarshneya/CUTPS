@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QTreeView>
 #include "Textbook.h"
+#include <QSpinBox>
 #include <QDebug>
 #include <QStandardItemModel>
 #include "OurStandardItem.h"
@@ -33,6 +34,8 @@ public:
     QPushButton*                        getCloseOption();
     QToolButton*                        getAddCurrentTextbookOption();
     QTreeView*                          getChaptersAndSectionsView();
+    QSpinBox*                           getQuantityOption();
+
 private:
     Ui::TextbookDetailsWindow           *ui;
     static TextbookDetailsWindow*       instance;

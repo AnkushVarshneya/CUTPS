@@ -124,11 +124,10 @@ void CourseInputOutputManager::connect_deleteCourseConfirmationForm() {
 void CourseInputOutputManager::on_deleteCourseConfirmationForm_yesButton() {
     int selectedCourseIndex = manageCoursesInterface->getCourseListView()->currentIndex().row();
     selectedCourse = fakeCourses->at(selectedCourseIndex);
+
     fakeCourses->removeAll(selectedCourse);
 
     fakeTextbooks = courseManagementFacade->retrieveAllTextbooks();
-
-
 
     courseManagementFacade->deleteCourse(selectedCourse,selectedCourse->getTerm());
 
@@ -137,10 +136,13 @@ void CourseInputOutputManager::on_deleteCourseConfirmationForm_yesButton() {
     buildCourseModel();
     setCourseManagementInterfaceViewModel(manageCoursesInterface->getCourseListView(),courseModel);
 
+    linkedTextbookModel->clear();
+    setCourseManagementInterfaceViewModel(manageCoursesInterface->getAssignedTextbooksListView(),linkedTextbookModel);
+    manageCoursesInterface->show();
     delete confirmationForm;
 }
 void CourseInputOutputManager::on_deleteCourseConfirmationForm_noButton() {
-    //confirmationForm->setModal(false);
+    manageCoursesInterface->show();
     delete confirmationForm;
 }
 
@@ -311,6 +313,7 @@ void CourseInputOutputManager::on_manageCoursesInterface_deleteCourse_button(){
     confirmationForm = new ConfirmationDialogWindow();
     confirmationForm->getMessageTextBox()->setText("Are you sure you want to delete this course?");
     connect_deleteCourseConfirmationForm();
+    manageCoursesInterface->hide();
     confirmationForm->show();
 }
 

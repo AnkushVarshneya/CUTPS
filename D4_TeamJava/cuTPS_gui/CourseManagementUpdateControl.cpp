@@ -5,7 +5,9 @@ CourseManagementUpdateControl::CourseManagementUpdateControl()
     clientComm = ClientCommunicatorManagementControl::getInstance();
 }
 
-
+QList<Term*>* CourseManagementUpdateControl::retrieveAllTermList(){
+    return clientComm->retrieveAllTerms();
+}
 
 QList<Course*>* CourseManagementUpdateControl::retrieveCourseList(Term* term){
     return clientComm->retrieveCourseList(term);

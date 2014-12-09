@@ -9,10 +9,21 @@
 #ifndef CONTENTMANAGEMENTINPUTCONTROL_H
 #define CONTENTMANAGEMENTINPUTCONTROL_H
 
+#include "PurchasableItem.h"
+
+#include "Textbook.h"
+#include "Chapter.h"
+#include "Section.h"
+
+#include <QDebug>
+
 class ContentManagementInputControl
 {
 public:
     ContentManagementInputControl();
+    void validateUpdateContent(Textbook* text) throw(QString);
+    void validateDeleteContent(PurchasableItem* item) throw(QString);
+
 };
 
 #endif // CONTENTMANAGEMENTINPUTCONTROL_H

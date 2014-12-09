@@ -40,6 +40,7 @@ public:
     bool                deleteCourse(Course*, Term*);
     bool                registerStudentToCourse(Course*, Student*, Term*);
     bool                assignTextbookToCourse(Course*, Textbook*, Term*);
+    void                setConnectToHost(QHostAddress, int);
 private:
     ClientCommunicatorRequestManager            requestManager;
     static ClientCommunicatorManagementControl* instance;

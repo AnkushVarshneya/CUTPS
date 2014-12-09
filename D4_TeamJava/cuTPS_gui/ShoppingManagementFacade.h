@@ -25,15 +25,15 @@ class ShoppingManagementFacade
 {
 public:
     ShoppingManagementFacade();
-    QList<Course*>              viewContent(Student *student, Term *term) throw(QString);
+    QList<Course*>              viewContent(Student*, Term*) throw(QString);
     QList<Term*>                getTermList();
-    ShoppingCart*               viewShoppingCart(Student *student) throw (QString);
-    void                        addContent(Student *student, PurchasableItem *item, int quantity) throw (QString);
-    void                        emptyShoppingCart(Student *student) throw (QString);
-    PaymentInformation*         getPaymentInformation(Student *student) throw(QString);
+    ShoppingCart*               viewShoppingCart(Student*) throw (QString);
+    bool                        addContent(Student*, PurchasableItem*,int) throw (QString);
+    bool                        emptyShoppingCart(Student*) throw (QString);
+    PaymentInformation*         getPaymentInformation(Student*) throw(QString);
 
     bool                        updatePaymentInformation(Student*, PaymentInformation*) throw (QString);
-    bool                        checkOutShoppingCart(Student *student) throw(QString);
+    bool                        checkOutShoppingCart(Student *) throw(QString);
 
 
 private:

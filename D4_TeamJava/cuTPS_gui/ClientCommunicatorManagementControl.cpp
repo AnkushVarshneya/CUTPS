@@ -22,7 +22,7 @@ void ClientCommunicatorManagementControl::setConnectToHost(QHostAddress address,
 
 //Initiates communication with the server to use the API function to retrieve all terms
 // gets back a list of terms
-QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
+QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms() throw (QString){
 
     QJsonObject api_server_call;
     //Set API call to initiate on serverside
@@ -36,8 +36,7 @@ QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -61,7 +60,7 @@ QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
 
 //Initiates communication with server to retrieve a list of courses (which have the required textbooks to buy)
 //Serializes the passed in arguments Student and Term into a json object in a field
-QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *stu, Term *term){
+QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *stu, Term *term) throw (QString){
     if(stu == 0 || term == 0){
         qDebug() << "Student or Term is null";
         return 0;
@@ -86,8 +85,7 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *st
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -108,7 +106,7 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *st
 
 //Initiates communication with server to retrieve a shopping cart for the given student
 //Argument which is serialized into json
-ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student* stu){
+ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student* stu) throw (QString){
     if(stu == 0){
         return 0;
     }
@@ -127,8 +125,7 @@ ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student*
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -141,7 +138,7 @@ ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student*
 
 //Communicates with server to add an item to shopping cart, serializes the Student, PurchasableItem, and its Quantity to be added
 //Into one json object to be sent to the server, returns success flag
-bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, PurchasableItem *item, qint32 quantity){
+bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, PurchasableItem *item, qint32 quantity) throw (QString){
     if(stu == 0 || item == 0){
         return false;
     }
@@ -166,8 +163,7 @@ bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, Purch
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -180,7 +176,7 @@ bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, Purch
 //Communicates with server to order the contents in the shopping cart,
 //Serializes the passed in Student and ShoppingCart arguments into json
 //returns sucess flag
-bool ClientCommunicatorManagementControl::checkOutShoppingCart(Student* stu){
+bool ClientCommunicatorManagementControl::checkOutShoppingCart(Student* stu) throw (QString){
     if (stu == 0){
         return false;
     }
@@ -199,8 +195,7 @@ bool ClientCommunicatorManagementControl::checkOutShoppingCart(Student* stu){
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -211,7 +206,7 @@ bool ClientCommunicatorManagementControl::checkOutShoppingCart(Student* stu){
 
 //Communicates with server to empty the shopping cart for a given student (serialized into json)
 //Returns a success flag
-bool ClientCommunicatorManagementControl::emptyShoppingCart(Student* stu){
+bool ClientCommunicatorManagementControl::emptyShoppingCart(Student *stu) throw (QString){
     if(stu == 0){
         return false;
     }
@@ -229,7 +224,7 @@ bool ClientCommunicatorManagementControl::emptyShoppingCart(Student* stu){
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
+            throw QString("Client is not connected to server, can't carry out function");
             //        return 0;
         }
         res = requestManager.getResult();
@@ -241,7 +236,7 @@ bool ClientCommunicatorManagementControl::emptyShoppingCart(Student* stu){
 }
 
 //Communicates with server to update the student's payment information
-bool ClientCommunicatorManagementControl::updatePaymentInformation(Student* stu, PaymentInformation* payInfo){
+bool ClientCommunicatorManagementControl::updatePaymentInformation(Student* stu, PaymentInformation* payInfo) throw (QString){
     if(stu == 0 || payInfo == 0){
         return false;
     }
@@ -264,8 +259,7 @@ bool ClientCommunicatorManagementControl::updatePaymentInformation(Student* stu,
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -276,7 +270,7 @@ bool ClientCommunicatorManagementControl::updatePaymentInformation(Student* stu,
 }
 
 //Communicates with server to retrieve student payment information
-PaymentInformation* ClientCommunicatorManagementControl::retrieveStudentPaymentInformation(Student* stu){
+PaymentInformation* ClientCommunicatorManagementControl::retrieveStudentPaymentInformation(Student* stu) throw (QString){
     if (stu == 0){
         return 0;
     }
@@ -293,8 +287,7 @@ PaymentInformation* ClientCommunicatorManagementControl::retrieveStudentPaymentI
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -305,7 +298,7 @@ PaymentInformation* ClientCommunicatorManagementControl::retrieveStudentPaymentI
 }
 
 //Communicates with server  to retrieve all content
-QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
+QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent() throw (QString){
 
     QJsonObject api_server_call;
     QString functionCall = "retrieveAllContent()";
@@ -317,8 +310,7 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -343,7 +335,7 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
 }
 
 //Communicates with server to update the content for a given textbook
-bool ClientCommunicatorManagementControl::updateContent(Textbook* text){
+bool ClientCommunicatorManagementControl::updateContent(Textbook* text) throw (QString){
     if(text == 0){
         return false;
     }
@@ -362,8 +354,7 @@ bool ClientCommunicatorManagementControl::updateContent(Textbook* text){
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -375,7 +366,7 @@ bool ClientCommunicatorManagementControl::updateContent(Textbook* text){
 }
 
 //Communicates with server to delete the content from the database
-bool ClientCommunicatorManagementControl::deleteContent(PurchasableItem *item){
+bool ClientCommunicatorManagementControl::deleteContent(PurchasableItem *item) throw (QString){
     if(item == 0){
         return false;
     }
@@ -394,8 +385,7 @@ bool ClientCommunicatorManagementControl::deleteContent(PurchasableItem *item){
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -406,7 +396,7 @@ bool ClientCommunicatorManagementControl::deleteContent(PurchasableItem *item){
 }
 
 //Communicates with server to retrieve the course list for a given term
-QList<Course*>* ClientCommunicatorManagementControl::retrieveCourseList(Term* term){
+QList<Course*>* ClientCommunicatorManagementControl::retrieveCourseList(Term* term) throw (QString){
     if(term == 0){
         return 0;
     }
@@ -425,8 +415,7 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveCourseList(Term* te
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -448,7 +437,7 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveCourseList(Term* te
 }
 
 //Communicates with server to retrieve a list of students for a given term and course
-QList<Student*>* ClientCommunicatorManagementControl::retrieveCourseStudents(Course *course, Term *term){
+QList<Student*>* ClientCommunicatorManagementControl::retrieveCourseStudents(Course *course, Term *term) throw (QString){
 
     QJsonObject api_server_call;
     QString functionCall = "retrieveCourseStudents()";
@@ -468,7 +457,7 @@ QList<Student*>* ClientCommunicatorManagementControl::retrieveCourseStudents(Cou
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -488,7 +477,7 @@ QList<Student*>* ClientCommunicatorManagementControl::retrieveCourseStudents(Cou
 }
 
 //Communicates with server to retrieve all students
-QList<Student*>* ClientCommunicatorManagementControl::retrieveAllStudents(){
+QList<Student*>* ClientCommunicatorManagementControl::retrieveAllStudents() throw (QString){
 
     QJsonObject api_server_call;
     QString functionCall = "retrieveAllStudents()";
@@ -500,7 +489,7 @@ QList<Student*>* ClientCommunicatorManagementControl::retrieveAllStudents(){
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -520,7 +509,7 @@ QList<Student*>* ClientCommunicatorManagementControl::retrieveAllStudents(){
 }
 
 //Communicates with server to retrieve course textbooks for a given course and term
-QList<Textbook*>* ClientCommunicatorManagementControl::retrieveCourseTextbooks(Course *course, Term *term){
+QList<Textbook*>* ClientCommunicatorManagementControl::retrieveCourseTextbooks(Course *course, Term *term) throw (QString){
 
     QJsonObject api_server_call;
     QString functionCall = "retrieveCourseTextbooks()";
@@ -540,7 +529,7 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveCourseTextbooks(C
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -560,7 +549,7 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveCourseTextbooks(C
 }
 
 //Communicates with server to retrieve all textboooks
-QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllTextbooks(){
+QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllTextbooks() throw (QString){
 
     QJsonObject api_server_call;
     QString functionCall = "retrieveAllTextbooks()";
@@ -572,7 +561,7 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllTextbooks(){
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -592,7 +581,7 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllTextbooks(){
 }
 
 //Communicates with server to update the course information for a given term
-bool ClientCommunicatorManagementControl::updateCourse(Course* crs, Term* term){
+bool ClientCommunicatorManagementControl::updateCourse(Course* crs, Term* term) throw (QString){
     if(crs == 0 || term == 0){
         return false;
     }
@@ -615,8 +604,7 @@ bool ClientCommunicatorManagementControl::updateCourse(Course* crs, Term* term){
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -628,7 +616,7 @@ bool ClientCommunicatorManagementControl::updateCourse(Course* crs, Term* term){
 }
 
 //Communicates with server to delete a course for a given term
-bool ClientCommunicatorManagementControl::deleteCourse(Course* crs, Term* term){
+bool ClientCommunicatorManagementControl::deleteCourse(Course* crs, Term* term) throw (QString){
     if(crs == 0 || term == 0){
         return false;
     }
@@ -651,8 +639,7 @@ bool ClientCommunicatorManagementControl::deleteCourse(Course* crs, Term* term){
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -663,7 +650,7 @@ bool ClientCommunicatorManagementControl::deleteCourse(Course* crs, Term* term){
 }
 
 //Communicates with server to register student to course for a given term
-bool ClientCommunicatorManagementControl::registerStudentToCourse(Course* crs, Student* stu, Term* term){
+bool ClientCommunicatorManagementControl::registerStudentToCourse(Course* crs, Student* stu, Term* term) throw (QString){
     if (crs == 0|| stu == 0 || term == 0){
         return false;
     }
@@ -690,8 +677,7 @@ bool ClientCommunicatorManagementControl::registerStudentToCourse(Course* crs, S
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }
@@ -702,7 +688,7 @@ bool ClientCommunicatorManagementControl::registerStudentToCourse(Course* crs, S
 }
 
 //Communicates with server to assign textbooks to course for a given textbook, term and course argument
-bool ClientCommunicatorManagementControl::assignTextbookToCourse(Course* crs, Textbook* text, Term* term){
+bool ClientCommunicatorManagementControl::assignTextbookToCourse(Course* crs, Textbook* text, Term* term) throw (QString){
     if (crs == 0|| text == 0 || term == 0){
         return false;
     }
@@ -729,8 +715,7 @@ bool ClientCommunicatorManagementControl::assignTextbookToCourse(Course* crs, Te
         requestManager.getTcp()->waitForReadyRead();
         if(requestManager.getTcp()->state() != QAbstractSocket::ConnectedState){
             qDebug() << "Client is not connected to server, can't carry out function";
-            return 0;
-            //        return 0;
+            throw QString("Client is not connected to server, can't carry out function");
         }
         res = requestManager.getResult();
     }

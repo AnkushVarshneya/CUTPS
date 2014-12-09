@@ -155,48 +155,55 @@ void CourseInputOutputManager::on_editCourseForm_backButton() {
     delete editCourseForm;
 }
 void CourseInputOutputManager::on_editCourseForm_createButton() {
-    int newTermIndex = editCourseForm->getTermComboBox()->currentIndex();
-    Term* newTerm = fakeTerms->at(newTermIndex);
+    try{
+        int newTermIndex = editCourseForm->getTermComboBox()->currentIndex();
+        Term* newTerm = fakeTerms->at(newTermIndex);
 
-    //selectedCourse->setTerm(newTerm);
-    selectedCourse->setCourseCode(editCourseForm->getCourseCodeTextBox()->text());
-    selectedCourse->setCourseSection(editCourseForm->getCourseSectionTextBox()->text());
-    selectedCourse->setInstructor(editCourseForm->getInstructorTextBox()->text());
+        //selectedCourse->setTerm(newTerm);
+        selectedCourse->setCourseCode(editCourseForm->getCourseCodeTextBox()->text());
+        selectedCourse->setCourseSection(editCourseForm->getCourseSectionTextBox()->text());
+        selectedCourse->setInstructor(editCourseForm->getInstructorTextBox()->text());
 
-    if(createOrEditCFlag == 0) {
-        fakeCourses->push_back(selectedCourse);
-        selectedCourse->setTerm(newTerm);
+        if(createOrEditCFlag == 0) {
+            fakeCourses->push_back(selectedCourse);
+            selectedCourse->setTerm(newTerm);
 
-    }
-
-
-
-
-    courseManagementFacade->updateCourse(selectedCourse,newTerm);
-
-    if(createOrEditCFlag == 0) {
-        foreach(Textbook* linkedTextbook,selectedCourse->getRequiredTextbooks()){
-            courseManagementFacade->assignTextbookToCourse(selectedCourse,linkedTextbook,selectedCourse->getTerm());
         }
+
+
+
+
+        courseManagementFacade->updateCourse(selectedCourse,newTerm);
+
+        if(createOrEditCFlag == 0) {
+            foreach(Textbook* linkedTextbook,selectedCourse->getRequiredTextbooks()){
+                courseManagementFacade->assignTextbookToCourse(selectedCourse,linkedTextbook,selectedCourse->getTerm());
+            }
+        }
+        courseModel->clear();
+        textbookModel->clear();
+        linkedTextbookModel->clear();
+
+        fakeTextbooks = courseManagementFacade->retrieveAllTextbooks();
+        fakeTerms = courseManagementFacade->retrieveAllTermList();
+        populateTermComboBox(manageCoursesInterface->getTermSelectOption());
+
+        int selectedTermIndex = manageCoursesInterface->getTermSelectOption()->currentIndex();
+        selectedTerm = fakeTerms->at(selectedTermIndex);
+
+        fakeCourses = courseManagementFacade->retrieveCourseList(selectedTerm);
+
+        buildCourseModel();
+        setCourseManagementInterfaceViewModel(manageCoursesInterface->getCourseListView(),courseModel);
+
+        editCourseForm->hide();
+        delete editCourseForm;
+        manageCoursesInterface->show();
     }
-    courseModel->clear();
-    textbookModel->clear();
-    linkedTextbookModel->clear();
+    catch(QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+    }
 
-    fakeTextbooks = courseManagementFacade->retrieveAllTextbooks();
-    fakeTerms = courseManagementFacade->retrieveAllTermList();
-    populateTermComboBox(manageCoursesInterface->getTermSelectOption());
-
-    int selectedTermIndex = manageCoursesInterface->getTermSelectOption()->currentIndex();
-    selectedTerm = fakeTerms->at(selectedTermIndex);
-    fakeCourses = courseManagementFacade->retrieveCourseList(selectedTerm);
-
-    buildCourseModel();
-    setCourseManagementInterfaceViewModel(manageCoursesInterface->getCourseListView(),courseModel);
-
-    editCourseForm->hide();
-    delete editCourseForm;
-    manageCoursesInterface->show();
 }
 void CourseInputOutputManager::on_editCourseForm_linkTextbookButton() {
     linkTextbookForm = new LinkTextbookFormWindow();

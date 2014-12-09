@@ -7,7 +7,7 @@
  */
 
 #include "ClientCommunicatorRequestManager.h"
-#include "ClientCommunicatorSerializer.h"
+
 #include <QList>
 #include "Term.h"
 #include "Student.h"
@@ -42,7 +42,6 @@ public:
     bool                assignTextbookToCourse(Course*, Textbook*, Term*);
 private:
     ClientCommunicatorRequestManager            requestManager;
-    ClientCommunicatorSerializer                serializer;
     static ClientCommunicatorManagementControl* instance;
 };
 

@@ -16,7 +16,6 @@ SOURCES += main.cpp \
         mainwindow.cpp \
     ContentManagerInterfaceWindow.cpp \
     ManageTextbooksInterfaceWindow.cpp \
-    ManageContentControl.cpp \
     Term.cpp \
     CUtpsDataObject.cpp \
     Textbook.cpp \
@@ -37,9 +36,7 @@ SOURCES += main.cpp \
     OurStandardItem.cpp \
     ShoppingManagementFacade.cpp \
     ShopInputControl.cpp \
-    ShoppingControl.cpp \
     ShopUpdateControl.cpp \
-    Shop.cpp \
     ContentManagementFacade.cpp \
     ContentManagementInputControl.cpp \
     EditChapterFormWindow.cpp \
@@ -48,10 +45,8 @@ SOURCES += main.cpp \
     ContentManagementUpdateControl.cpp \
     CourseManagementFacade.cpp \
     CourseManagementInputControl.cpp \
-    ManageCourseControl.cpp \
     CourseManagementUpdateControl.cpp \
     ClientCommunicatorManagementControl.cpp \
-    ClientCommunicatorSerializer.cpp \
     ClientCommunicatorRequestManager.cpp \
     TextbookDetailsWindow.cpp \
     StudentShopView.cpp \
@@ -69,8 +64,6 @@ SOURCES += main.cpp \
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
     ManageTextbooksInterfaceWindow.h \
-    ManageContentControl.h \
-    types.h \
     Term.h \
     CUtpsDataObject.h \
     Textbook.h \
@@ -91,9 +84,7 @@ HEADERS  += mainwindow.h \
     OurStandardItem.h \
     ShoppingManagementFacade.h \
     ShopInputControl.h \
-    ShoppingControl.h \
     ShopUpdateControl.h \
-    Shop.h \
     ContentManagementFacade.h \
     ContentManagementInputControl.h \
     EditChapterFormWindow.h \
@@ -102,10 +93,8 @@ HEADERS  += mainwindow.h \
     ContentManagementUpdateControl.h \
     CourseManagementFacade.h \
     CourseManagementInputControl.h \
-    ManageCourseControl.h \
     CourseManagementUpdateControl.h \
     ClientCommunicatorManagementControl.h \
-    ClientCommunicatorSerializer.h \
     ClientCommunicatorRequestManager.h \
     TextbookDetailsWindow.h \
     StudentShopView.h \

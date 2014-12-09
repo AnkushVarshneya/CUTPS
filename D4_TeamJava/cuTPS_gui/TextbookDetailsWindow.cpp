@@ -52,6 +52,7 @@ TextbookDetailsWindow::TextbookDetailsWindow(Textbook &textbook, QModelIndex idx
        //todo: chaptersAndSectionsModel->setHorizontalHeaderLabels();
         ui->chaptersAndSectionsTreeView->setModel(model);
         ui->textbookTitleLabel->setText(textbook.getItemTitle());
+        ui->descriptionTextArea->insertPlainText( textbook.getDesc() );
 }
 
 TextbookDetailsWindow::~TextbookDetailsWindow()
@@ -83,9 +84,10 @@ void TextbookDetailsWindow::setTextbookAndModel(Textbook &textbook, QModelIndex 
 
 
 //getters
-QPushButton*     TextbookDetailsWindow::getAddSelectedItemOption() { return ui->addSelectedItemOption ; }
-QPushButton*     TextbookDetailsWindow::getCloseOption() { return ui->closeOption ; }
-QToolButton*     TextbookDetailsWindow::getAddCurrentTextbookOption() { return ui->addCurrentTextbookOption ; }
-QTreeView*       TextbookDetailsWindow::getChaptersAndSectionsView() { return ui->chaptersAndSectionsTreeView; }
-QSpinBox*        TextbookDetailsWindow::getQuantityOption() {   return ui->quantityOption ; }
+QPushButton*     TextbookDetailsWindow::getAddSelectedItemOption()      { return ui->addSelectedItemOption ; }
+QPushButton*     TextbookDetailsWindow::getCloseOption()                { return ui->closeOption ; }
+QToolButton*     TextbookDetailsWindow::getAddCurrentTextbookOption()   { return ui->addCurrentTextbookOption ; }
+QTreeView*       TextbookDetailsWindow::getChaptersAndSectionsView()    { return ui->chaptersAndSectionsTreeView; }
+QSpinBox*        TextbookDetailsWindow::getQuantityOption()             {   return ui->quantityOption ; }
+QPlainTextEdit*  TextbookDetailsWindow::getDescriptionTextArea()        {  return ui->descriptionTextArea ; }
 

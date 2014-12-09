@@ -23,12 +23,12 @@ class CourseManagementFacade
 {
 public:
     CourseManagementFacade();
-    QList<Term*>*       retrieveAllTermList();
+    QList<Term*>*       retrieveAllTermList() throw (QString);
     QList<Course*>*     retrieveCourseList(Term*) throw(QString);
     QList<Student*>*    retrieveCourseStudents(Course*, Term*) throw(QString);
-    QList<Student*>*    retrieveAllStudents();
+    QList<Student*>*    retrieveAllStudents() throw (QString);
     QList<Textbook*>*   retrieveCourseTextbooks(Course*, Term*) throw(QString);
-    QList<Textbook*>*   retrieveAllTextbooks();
+    QList<Textbook*>*   retrieveAllTextbooks() throw (QString);
     bool                updateCourse(Course*, Term*) throw(QString);
     bool                deleteCourse(Course*, Term*) throw(QString);
     bool                assignTextbookToCourse(Course*, Textbook*, Term*) throw(QString);

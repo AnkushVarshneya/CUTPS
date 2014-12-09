@@ -11,15 +11,15 @@ class CourseManagementUpdateControl
 {
 public:
     CourseManagementUpdateControl();
-    QList<Term*>*       retrieveAllTermList();
-    QList<Course*>*     retrieveCourseList(Term*);
-    QList<Student*>*    retrieveCourseStudents(Course*, Term*);
-    QList<Student*>*    retrieveAllStudents();
-    QList<Textbook*>*   retrieveCourseTextbooks(Course*, Term*);
-    QList<Textbook*>*   retrieveAllTextbooks();
-    bool                updateCourse(Course*, Term*);
-    bool                deleteCourse(Course*, Term*);
-    bool                assignTextbookToCourse(Course*, Textbook*, Term*);
+    QList<Term*>*       retrieveAllTermList() throw (QString);
+    QList<Course*>*     retrieveCourseList(Term*) throw (QString);
+    QList<Student*>*    retrieveCourseStudents(Course*, Term*) throw (QString);
+    QList<Student*>*    retrieveAllStudents() throw (QString);
+    QList<Textbook*>*   retrieveCourseTextbooks(Course*, Term*) throw (QString);
+    QList<Textbook*>*   retrieveAllTextbooks() throw (QString);
+    bool                updateCourse(Course*, Term*) throw (QString);
+    bool                deleteCourse(Course*, Term*) throw (QString);
+    bool                assignTextbookToCourse(Course*, Textbook*, Term*) throw (QString);
 private:
     ClientCommunicatorManagementControl* clientComm;
 };

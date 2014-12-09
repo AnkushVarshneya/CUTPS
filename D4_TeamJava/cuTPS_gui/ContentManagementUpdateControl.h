@@ -11,9 +11,9 @@ class ContentManagementUpdateControl
 {
 public:
     ContentManagementUpdateControl();
-    QList<Textbook*>* retrieveAllContent();
-    bool        updateContent(Textbook*);
-    bool        deleteContent(PurchasableItem*);
+    QList<Textbook*>* retrieveAllContent() throw (QString);
+    bool        updateContent(Textbook*) throw (QString);
+    bool        deleteContent(PurchasableItem*) throw (QString);
 private:
     ClientCommunicatorManagementControl* clientComm;
 };

@@ -14,6 +14,7 @@
 #include "StudentInterfaceWindow.h"
 #include "CourseInputOutputManager.h"
 #include "StudentNumberForm.h"
+#include "IPAddressForm.h"
 #include <QString>
 
 class MainInputOutputManager : public QObject
@@ -34,12 +35,17 @@ private slots:
     void on_stuNumForm_okButton();
     void on_stuNumForm_cancelButton();
 
+    void on_ipAddressForm_okButton();
+
 private:
     MainWindow mainWindow;
+    StudentNumberForm       *stuNumForm;
+    IPAddressForm           *ipAddressForm;
+
     ContentManagerInterfaceWindow *contentManagerInterface;
     ContentInputOutputManager *contentIOManager;
 
-    StudentNumberForm       *stuNumForm;
+
     StudentInterfaceWindow *studentInterface;
     StudentInputOutputManager *studentIOManager;
 

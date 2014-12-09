@@ -43,7 +43,7 @@ ContentManagementFacade::ContentManagementFacade()
     //fakeTextbooks.append(treeText);
 }
 
-QList<Textbook*>  ContentManagementFacade::viewAllContent() {
+QList<Textbook*>  ContentManagementFacade::viewAllContent() throw (QString) {
     qDebug() << "view all content";
 
     return *(updateControl.retrieveAllContent());

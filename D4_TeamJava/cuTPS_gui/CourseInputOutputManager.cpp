@@ -202,6 +202,7 @@ void CourseInputOutputManager::on_editCourseForm_createButton() {
     }
     catch(QString error){
         messageDialog.getMessageTextBox()->setText(error);
+        messageDialog.show();
     }
 
 }

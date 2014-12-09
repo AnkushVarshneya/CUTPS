@@ -11,7 +11,10 @@ Textbook::Textbook(QString textTitle, QString auth, QString ed,
 
 //Destructor that also destroys the chapters it has
 Textbook::~Textbook(){
-    qDeleteAll(chapters.begin(),chapters.end());
+    QList<Chapter*>::iterator i;
+    for (i = chapters.begin(); i != chapters.end(); i++) {
+        delete *i;
+    }
 }
 
 
@@ -67,6 +70,28 @@ void Textbook::addChapter(Chapter* chapter){
     //check this
 }
 
+bool Textbook::equals(Textbook* textbook){
+
+    if( !((isbn == textbook->getISBN())
+        && (author == textbook->getAuthor())
+        && (title == textbook->getItemTitle())
+        && (edition == textbook->getEdition())
+        && (publisher == textbook->getPublisher())
+        && (description == textbook->getDesc())
+        && (coverImageLoc == textbook->getCoverImageLoc()))){
+        return false;
+    }
+
+
+    if(chapters.size() != textbook->getChapterList().size())
+        return false;
+    for(int i=0;i<chapters.size();i++){
+        if(!chapters.at(i)->equals(textbook->getChapterList().at(i)))
+            return false;
+    }
+    return true;
+}
+
 //Takes a QJsonobject, extracts information about it
 //And set this textbook's attributes to it
 void Textbook::read(const QJsonObject &json){
@@ -99,7 +124,7 @@ void Textbook::write(QJsonObject &json) const{
     json["publisher"] = publisher;
     json["isbn"] = isbn;
     json["description"] = description;
-
+    json["coverImageLoc"] = coverImageLoc;
     QJsonArray chapterArray;
     foreach (const Chapter* chapter, chapters){
         QJsonObject chapterObject;

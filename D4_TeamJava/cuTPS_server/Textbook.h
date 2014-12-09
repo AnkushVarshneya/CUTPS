@@ -11,6 +11,8 @@
 #ifndef TEXTBOOK_H
 #define TEXTBOOK_H
 
+#include <QStringList>
+#include <QStringListModel>
 #include <QString>
 #include "Chapter.h"
 using namespace std;
@@ -20,7 +22,7 @@ public:
 
     Textbook(QString = "Generic Title", QString = "Generic Author", QString = "1st ed",
              QString = "A Publisher" ,QString = "978-3-16-148410-0" ,QString = "A generic description",
-             qint32 = 555, float = 80.50 , bool = false  );
+             qint32 = -1, float = 80.50 , bool = false  );
     ~Textbook();
     QString             getAuthor           () const;
     QString             getEdition          () const;
@@ -32,6 +34,8 @@ public:
     QString             getItemTitle        () const;
     QString             getCoverImageLoc    () const;
 
+
+
     void                setItemTitle    (QString);
     void                setAuthor       (QString);
     void                setPublisher    (QString);
@@ -39,7 +43,8 @@ public:
     void                setISBN         (QString);
     void                setDescription  (QString);
     void                setCoverImageLoc(QString);
-    void                addChapter(Chapter*);
+    void                addChapter      (Chapter*);
+    bool                equals          (Textbook*);
 
     void                read(const QJsonObject &json);
     void                write(QJsonObject &json) const;
@@ -55,7 +60,6 @@ private:
     QString             description;
     QList<Chapter*>     chapters;
     QString             coverImageLoc;
-
 };
 
 std::ostream& operator<<(std::ostream&,  Textbook&);

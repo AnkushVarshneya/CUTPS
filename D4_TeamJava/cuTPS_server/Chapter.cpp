@@ -17,7 +17,10 @@ Chapter::Chapter(QString chapTitle,qint32 chapNo,
 
 //Destructor
 Chapter::~Chapter(){
-    qDeleteAll(sections.begin(),sections.end());
+    QList<Section*>::iterator i;
+    for (i = sections.begin(); i != sections.end(); i++) {
+        delete *i;
+    }
 }
 
 
@@ -27,6 +30,14 @@ QList<Section*>& Chapter::getChapterSections()        {return sections;}
 qint32 Chapter::getChapterNumber()              const {return chapterNumber;}
 QString Chapter::getItemTitle()                 const {return title;}
 
+Section* Chapter::getSection(qint32 num){
+    QList<Section*>::iterator i;
+    for (i = sections.begin(); i != sections.end(); i++) {
+        if ((*i)->getSectionNumber() == num)
+            return *i;
+    }
+    return NULL;
+}
 
 //SETTERS
 void Chapter::setItemTitle(QString a){title = a;}
@@ -34,7 +45,22 @@ void Chapter::setChapterNumber(qint32 a){chapterNumber = a;}
 
 //Adds the argument Section* to the sections list
 void Chapter::addSection(Section* section){
-    sections.push_back(section);  
+    sections.push_back(section);
+}
+
+//Check if a chapter equals another chapter
+bool Chapter::equals(Chapter* chapter){
+    if( !(chapterNumber == chapter->getItemID()
+        && title == chapter->getItemTitle()))
+        return false;
+
+    if(sections.size() != chapter->sections.size())
+        return false;
+    for(int i=0;i<sections.size();i++){
+        if(!sections.at(i)->equals(chapter->getChapterSections().at(i)))
+            return false;
+    }
+    return true;
 }
 
 //Takes a QJson object, this object extracts info about it

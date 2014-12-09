@@ -124,7 +124,7 @@ void Textbook::write(QJsonObject &json) const{
     json["publisher"] = publisher;
     json["isbn"] = isbn;
     json["description"] = description;
-
+    json["coverImageLoc"] = coverImageLoc;
     QJsonArray chapterArray;
     foreach (const Chapter* chapter, chapters){
         QJsonObject chapterObject;

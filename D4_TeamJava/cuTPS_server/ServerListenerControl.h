@@ -4,7 +4,7 @@
  *
  * Traceability: SS-06 (Part of Server Subsystem) */
 
-#include "ServerSerializer.h"
+
 #include "ServerStorageControl.h"
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -50,7 +50,7 @@ private:
     void updateCourseTextbookLink(QJsonObject);
 
     void sendSuccess(bool);
-    ServerSerializer serializer;
+
     ServerStorageControl storage;
     static ServerListenerControl* instance;
     QTcpSocket *tcpConnection;

@@ -21,8 +21,8 @@ bool ShopUpdateControl::updateShoppingCart(Student* stu, PurchasableItem* item, 
     return mc->updateShoppingCart(stu, item, quantity);
 }
 
-bool ShopUpdateControl::checkout(Student* stu,ShoppingCart* cart){
-    return mc->checkout(stu, cart);
+bool ShopUpdateControl::checkOutShoppingCart(Student* stu){
+    return mc->checkOutShoppingCart(stu);
 }
 
 bool ShopUpdateControl::emptyShoppingCart(Student* stu){

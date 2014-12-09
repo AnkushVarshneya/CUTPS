@@ -349,10 +349,8 @@ void QueryControl::test(){
     }
     delete(list);
 
-    qDebug() << "\ntext for updateOrderContents\n";
-    qDebug() << updateOrderContents((PurchasableItem*) textbook, student);
-    qDebug() << updateOrderContents((PurchasableItem*) chapter, student);
-    qDebug() << updateOrderContents((PurchasableItem*) section, student);
+    qDebug() << "\ntext for checkOutShoppingCart\n";
+    qDebug() << this->checkOutShoppingCart(student);
 
     qDebug() << "\ntest for deleteSection\n";
     qDebug() << this->deleteSection(section, chapterNumber, isbn);
@@ -2625,37 +2623,45 @@ bool QueryControl::addPurchasableItemToCart(PurchasableItem *purchasableItem, St
 }
 
 /**
- * @brief QueryControl::updateOrderContents
- *  Add a PurchasableItem to a students order DB
+ * @brief QueryControl::checkOutShoppingCart
+ *  Make orders for all students cart in DB
  *  Needed for record keeping
- * @param purchasableItem
- *  purchasableItem to add to order
  * @param student
- *  the student who the order is processed for
+ *  the student who the order(s) processed for
  * @return
  *  Returns if operation was a success
  */
-bool QueryControl::updateOrderContents(PurchasableItem *purchasableItem, Student *student) {
+bool QueryControl::checkOutShoppingCart(Student *student) {
     bool noError = true;
 
-    //get the current max order id asume one for no entry condition
-    int nextOrderID = 1;
-    QSqlQuery maxOrderID("SELECT MAX(orderID)+1 AS nextOrderID FROM Orders;");
-    noError = noError && maxOrderID.exec();
-    if(maxOrderID.first()){
-        nextOrderID = maxOrderID.value(maxOrderID.record().indexOf("nextOrderID")).toInt();
-    }
-
-    //add PurchasableItem To Orders
+    //get PurchasableItem and quantity for a student
     QSqlQuery purchasableItemQuery;
-
-    purchasableItemQuery.prepare("INSERT INTO Orders(studentNumber,itemID,orderID) "
-                      "VALUES (:studentNumber,:itemID,:orderID);");
-    purchasableItemQuery.bindValue(":studentNumber", student->getStudentNum());
-    purchasableItemQuery.bindValue(":itemID", purchasableItem->getItemID());
-    purchasableItemQuery.bindValue(":orderID", nextOrderID);
+    purchasableItemQuery.prepare("SELECT PurchasableItem.itemID, ShoppingCart.quantity "
+                                 "FROM PurchasableItem "
+                                 "JOIN ShoppingCart ON "
+                                     "PurchasableItem.ItemID = ShoppingCart.ItemID "
+                                 "JOIN Student ON "
+                                     "ShoppingCart.studentNumber = Student.studentNumber "
+                                 "WHERE Student.studentNumber=:studentNumber;");
 
     noError = noError && purchasableItemQuery.exec();
 
+    // for each item and quantity count make an order
+    while (purchasableItemQuery.next()){
+        int quantity = purchasableItemQuery.value(purchasableItemQuery.record().indexOf("quantity")).toInt();
+        int itemID = purchasableItemQuery.value(purchasableItemQuery.record().indexOf("ItemID")).toInt();
+
+        for (int i=0; i<quantity; i++) {
+            //add PurchasableItem To Orders
+            QSqlQuery orderItemQuery;
+
+            orderItemQuery.prepare("INSERT INTO Orders(studentNumber,itemID,orderID) "
+                              "VALUES (:studentNumber,:itemID,(SELECT COALESCE(MAX(orderID), 0)+1 from Orders));");
+            orderItemQuery.bindValue(":studentNumber", student->getStudentNum());
+            orderItemQuery.bindValue(":itemID", itemID);
+
+            noError = noError && orderItemQuery.exec();
+        }
+    }
     return noError;
 }

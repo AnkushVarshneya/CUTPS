@@ -181,7 +181,7 @@ bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, Purch
 //Serializes the passed in Student and ShoppingCart arguments into json
 //returns sucess flag
 bool ClientCommunicatorManagementControl::checkOutShoppingCart(Student* stu){
-    if (stu == 0 || cart == 0){
+    if (stu == 0){
         return false;
     }
 

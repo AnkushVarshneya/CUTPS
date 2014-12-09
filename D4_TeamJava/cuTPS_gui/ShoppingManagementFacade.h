@@ -31,8 +31,10 @@ public:
     void                        addContent(Student *student, PurchasableItem *item, int quantity) throw (QString);
     void                        emptyShoppingCart(Student *student) throw (QString);
     PaymentInformation*         getPaymentInformation(Student *student);
-    bool                        updatePaymentInformation(Student*, PaymentInformation*);
+
+    bool                        updatePaymentInformation(Student*, PaymentInformation*) throw (QString);
     void                        checkOutShoppingCart(Student *student);
+
 
 private:
     ShopUpdateControl           *shopUpdateControl;

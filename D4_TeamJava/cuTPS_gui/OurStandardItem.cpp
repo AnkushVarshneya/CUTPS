@@ -28,7 +28,8 @@
 
   OurStandardItem::OurStandardItem(Textbook *textbook, bool makeItemsForChildren) {
      this->setData(textbook->getItemID());
-       this->setText(textbook->getItemTitle() + " $" + QString::number( textbook->getPrice() ));
+     this->setText(textbook->getItemTitle());
+    // this->setText(textbook->getItemTitle() + " $" + QString::number( textbook->getPrice() ));
 
       if (makeItemsForChildren) {
          for(int i = 0; i < textbook->getChapterList().count(); i++){
@@ -45,6 +46,8 @@
     QString  tempStr = course->getCourseCode();
     tempStr.append(": ");
     tempStr.append(textbook->getItemTitle());
+    tempStr.append(" $");
+    tempStr.append(QString::number( textbook->getPrice() ));
     this->setText(tempStr);
 
        if (makeItemsForChildren) {

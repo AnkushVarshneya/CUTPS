@@ -14,7 +14,10 @@
 #include "OurStandardItem.h"
 #include <QAbstractItemView>
 #include <ShoppingCartWidget.h>
+#include "CheckoutFormDialog.h"
 #include "Course.h"
+#include <QDate>
+#include "BillingAddress.h"
 #include <QPair>
 
 
@@ -25,42 +28,58 @@ public:
     StudentInputOutputManager();
 
 private:
-    StudentInterfaceWindow                      *studentInterface;
-    ShoppingManagementFacade                    *shopFacade;
-    TextbookDetailsWindow                       *textbookDetailsWindow;
-    ShoppingCartWidget                          *cartWidget;
+    //user interface widgets
+    StudentInterfaceWindow                       *studentInterface;
+    ShoppingManagementFacade                     *shopFacade;
+    TextbookDetailsWindow                        *textbookDetailsWindow;
+    ShoppingCartWidget                           *cartWidget;
+    CheckoutFormDialog                           *checkoutFormDialog;
 
-    ShoppingCart                                *currentCart;
+    //pointers to important things
+    ShoppingCart                                 *currentCart;
     QList<QPair <PurchasableItem*, qint32> >     currentItems;
+    QList<Term*>                                  terms;
+    Textbook*                                     lastTextbookDetailsOpened;
+    Student                                      *currentStudent;
+    QList<Course*>                               coursesAndContent;
+
+    PaymentInformation                           *paymentInfo;
+    BillingAddress                               *billingInfo;
+    CreditCardInformation                        *ccInfo;
 
 
-    QListView               *listView;
 
-    QStandardItemModel      *courseAndTextbookModel;
-    QStandardItemModel      *chaptersAndSectionsModel;
-    QStandardItemModel      *cartModel;
-    void                    setStudentInterfaceViewModel(QAbstractItemView  *view, QStandardItemModel *model);
-    void                    buildCourseAndTextbookModel();
-    void                    buildTextbookAndChildrenModel();
-    QList<Course*>            coursesAndContent;
-    Course                   *crs1;
-    Course                   *crs2;
-    void                     getTerms();
-    QList<Term*>             terms;
-    Textbook*                lastTextbookDetailsOpened;
-    Student                 *currentStudent;
+    //models
+    QStandardItemModel                           *courseAndTextbookModel;
+    QStandardItemModel                           *chaptersAndSectionsModel;
+    QStandardItemModel                           *cartModel;
+    void                                         setStudentInterfaceViewModel(QAbstractItemView  *view, QStandardItemModel *model);
+    void                                         buildCourseAndTextbookModel();
+    void                                         buildTextbookAndChildrenModel();
+    void                                          getTerms();
+
 
 
 private slots:
+    //boundary objects for student's shop view
     void    on_studentInterface_addTextbookOptionSelected();
     void    on_studentInterface_viewDetailsOptionSelected();
     void    on_studentInterface_viewCartOptionSelected();
     void    on_studentInterface_termSelected();
+
+    //boundary objects for textbook detailed view window
     void    on_textbookDetailsWindow_addSelectedItemOptionSelected();
     void    on_textbookDetailsWindow_addCurrentTextbookOptionSelected();
     void    on_textbookDetailsWindow_closeOptionSelected();
+
+    //boundary objects for shopping cart
     void    on_cartWidget_closeOptionSelected();
     void    on_cartWidget_checkoutOptionSelected();
+
+    //boundary objects for checkout form dialog
+    void    on_checkoutFormDialog_backOptionSelected();
+    void    on_checkoutFormDialog_confirmOptionSelected();
+
 };
 
 #endif // STUDENTINPUTOUTPUTMANAGER_H

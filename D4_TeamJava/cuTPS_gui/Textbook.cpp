@@ -36,11 +36,6 @@ Chapter* Textbook::getChapter(qint32 num){
     return NULL;
 }
 
-QStringList Textbook::getTextbookStringList() const {
-    QStringList theBook;
-    theBook << this->getItemTitle() << this->getAuthor() << this->getPublisher();
-    return theBook;
-}
 
 std::ostream& operator<< (std::ostream& o, Textbook & textbook){
     o << "Title: " + textbook.getItemTitle().toStdString() << endl

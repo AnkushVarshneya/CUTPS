@@ -34,9 +34,7 @@ public:
     QString             getItemTitle        () const;
     QString             getCoverImageLoc    () const;
 
-    //NEW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    QStringList         getTextbookStringList() const;
-    //END NEW
+
 
     void                setItemTitle    (QString);
     void                setAuthor       (QString);

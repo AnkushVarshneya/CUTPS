@@ -27,8 +27,9 @@ public:
     QList<Course*>              viewContent(Student *student, Term *term);
     QList<Term*>                getTermList();
     ShoppingCart*               viewShoppingCart(Student *student);
-    void                        addContent(Student *student, Textbook *item, int quantity);
+    void                        addContent(Student *student, PurchasableItem *item, int quantity);
     void                        emptyShoppingCart(Student *student);
+    PaymentInformation*         getPaymentInformation(Student *student);
 
 private:
     ShopUpdateControl           *shopUpdateControl;

@@ -61,9 +61,10 @@ SOURCES += main.cpp \
     ModifyCourseFormWindow.cpp \
     LinkTextbookFormWindow.cpp \
     LinkStudentFormWindow.cpp \
+    CourseInputOutputManager.cpp \
+    CheckoutFormDialog.cpp \
     ConfirmationDialogWindow.cpp \
-    MessageDialog.cpp \
-    CourseInputOutputManager.cpp
+    MessageDialog.cpp
 
 HEADERS  += mainwindow.h \
     ContentManagerInterfaceWindow.h \
@@ -114,9 +115,12 @@ HEADERS  += mainwindow.h \
     ModifyCourseFormWindow.h \
     LinkTextbookFormWindow.h \
     LinkStudentFormWindow.h \
+    CourseInputOutputManager.h \
+    CheckoutFormDialog.h \
     ConfirmationDialogWindow.h \
     MessageDialog.h \
-    CourseInputOutputManager.h \
+    CourseInputOutputManager.h
+
 
 FORMS    += mainwindow.ui \
     ContentManagerInterfaceWindow.ui \
@@ -133,5 +137,7 @@ FORMS    += mainwindow.ui \
     ModifyCourseFormWindow.ui \
     LinkTextbookFormWindow.ui \
     LinkStudentFormWindow.ui \
+    CheckoutFormDialog.ui \
     ConfirmationDialogWindow.ui \
     MessageDialog.ui
+

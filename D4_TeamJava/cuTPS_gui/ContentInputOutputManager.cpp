@@ -104,9 +104,10 @@ void ContentInputOutputManager::on_deleteChapterConfirmationForm_yesButton() {
         messageDialog.show();
     }
 
+    editTextbookForm->show();
 }
 void ContentInputOutputManager::on_deleteChapterConfirmationForm_noButton() {
-    //confirmationForm->setModal(false);
+    editTextbookForm->show();
     delete confirmationForm;
 }
 void ContentInputOutputManager::on_deleteSectionConfirmationForm_yesButton() {
@@ -134,9 +135,10 @@ void ContentInputOutputManager::on_deleteSectionConfirmationForm_yesButton() {
         messageDialog.show();
     }
 
+    editChapterForm->show();
 }
 void ContentInputOutputManager::on_deleteSectionConfirmationForm_noButton() {
-    //confirmationForm->setModal(false);
+    editChapterForm->show();
     delete confirmationForm;
 }
 void ContentInputOutputManager::on_deleteTextbookConfirmationForm_yesButton() {
@@ -179,7 +181,6 @@ void ContentInputOutputManager::on_deleteTextbookConfirmationForm_yesButton() {
         setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
 
 
-        //confirmationForm->setModal(false);
         delete confirmationForm;
     }
     catch(QString error){
@@ -187,10 +188,11 @@ void ContentInputOutputManager::on_deleteTextbookConfirmationForm_yesButton() {
         messageDialog.show();
     }
 
+    manageTextbooksInterface->show();
 
 }
 void ContentInputOutputManager::on_deleteTextbookConfirmationForm_noButton() {
-    //confirmationForm->setModal(false);
+    manageTextbooksInterface->show();
     delete confirmationForm;
 }
 
@@ -342,6 +344,7 @@ void ContentInputOutputManager::on_manageTextbooksInterface_deleteTextbook_butto
     connect_deleteTextbookConfirmationForm();
     confirmationForm->getMessageTextBox()->setText("Are you sure you want to delete this textbook?");
     confirmationForm->show();
+    manageTextbooksInterface->hide();
 }
 
 
@@ -496,13 +499,10 @@ void ContentInputOutputManager::on_editTextbookForm_deleteChapter_button() {
     }
 
     confirmationForm = new ConfirmationDialogWindow();
-    //confirmationForm->setModal(true);
-    connect_deleteChapterConfirmationForm();
-    confirmationForm = new ConfirmationDialogWindow();
-    //confirmationForm->setModal(true);
     connect_deleteChapterConfirmationForm();
     confirmationForm->getMessageTextBox()->setText("Are you sure you want to delete this chapter?");
     confirmationForm->show();
+    editTextbookForm->hide();
 }
 
 
@@ -601,15 +601,11 @@ void ContentInputOutputManager::on_editChapterForm_editSection_button() {
 }
 
 void ContentInputOutputManager::on_editChapterForm_deleteSection_button() {
-    /*
-    qDebug() << "Are you sure?";
-    */
-
     confirmationForm = new ConfirmationDialogWindow();
-    //confirmationForm->setModal(true);
     connect_deleteSectionConfirmationForm();
     confirmationForm->getMessageTextBox()->setText("Are you sure you want to delete this section?");
     confirmationForm->show();
+    editChapterForm->hide();
 }
 
 
@@ -657,8 +653,6 @@ void ContentInputOutputManager::on_editSectionForm_create_button() {
 
     buildSectionModel();
     setContentManagementInterfaceViewModel(editChapterForm->getSectionsListView(), sectionModel);
-
-    //fakeSections.push_back(currentSection);
 
     delete editSectionForm;
     editChapterForm->show();

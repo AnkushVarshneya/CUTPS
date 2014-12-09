@@ -4,11 +4,26 @@
 MainInputOutputManager::MainInputOutputManager()
 {
 
-    connect(mainWindow.getContentManagerButton(),SIGNAL(clicked()),this,SLOT(on_contentManager_clicked()));
-    connect(mainWindow.getStudentButton(),SIGNAL(clicked()),this,SLOT(on_student_clicked()));
+    ipAddressForm = new IPAddressForm();
+    connect(ipAddressForm->getOkButton(),SIGNAL(clicked()),this,SLOT(on_ipAddressForm_okButton()));
+    ipAddressForm->show();
 
-    mainWindow.show();
-    qDebug() << "tst";
+
+}
+
+void MainInputOutputManager::on_ipAddressForm_okButton()
+{
+    QString ipAddress = ipAddressForm->getIPAddressTextBox()->text().simplified();
+    if(ipAddress != ""){
+        ClientCommunicatorManagementControl::getInstance()->setConnectToHost(QHostAddress(ipAddress),60000);
+        connect(mainWindow.getContentManagerButton(),SIGNAL(clicked()),this,SLOT(on_contentManager_clicked()));
+        connect(mainWindow.getStudentButton(),SIGNAL(clicked()),this,SLOT(on_student_clicked()));
+
+        mainWindow.show();
+        qDebug() << "tst";
+        delete ipAddressForm;
+    }
+
 }
 
 void MainInputOutputManager::on_contentIOManager_deleted()
@@ -60,7 +75,6 @@ void MainInputOutputManager::on_stuNumForm_cancelButton() {
 void MainInputOutputManager::on_manageTextbooks_clicked()
 {
     contentManagerInterface->hide();
-    //delete contentManagerInterface;
     contentIOManager = new ContentInputOutputManager();
 
     connect(contentIOManager,SIGNAL(destroyed()),this,SLOT(on_contentIOManager_deleted()));

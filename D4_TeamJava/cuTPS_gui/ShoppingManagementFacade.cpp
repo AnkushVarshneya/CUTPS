@@ -21,17 +21,17 @@ ShoppingCart*  ShoppingManagementFacade::viewShoppingCart(Student *student) thro
     return shopUpdateControl->retrieveShoppingCart(student);
 }
 
-void ShoppingManagementFacade::addContent(Student *student, PurchasableItem *item, int quantity) throw (QString)
+bool ShoppingManagementFacade::addContent(Student *student, PurchasableItem *item, int quantity) throw (QString)
 {
     shopInputControl->validateAddContent(student,item, quantity);
-    shopUpdateControl->updateShoppingCart(student, item, quantity);
+    return shopUpdateControl->updateShoppingCart(student, item, quantity);
 }
 
 
-void ShoppingManagementFacade::emptyShoppingCart(Student *student) throw (QString)
+bool ShoppingManagementFacade::emptyShoppingCart(Student *student) throw (QString)
 {
     shopInputControl->validateEmptyShoppingCart(student);
-    shopUpdateControl->emptyShoppingCart(student);
+    return shopUpdateControl->emptyShoppingCart(student);
 }
 
 bool ShoppingManagementFacade::checkOutShoppingCart(Student *student) throw (QString)

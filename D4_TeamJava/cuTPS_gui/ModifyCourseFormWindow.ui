@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="enrollStudent">
+  <widget class="QPushButton" name="enrollStudentButton">
    <property name="geometry">
     <rect>
      <x>139</x>
@@ -26,7 +26,7 @@
     <string>Enroll Student</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="linkTextbook">
+  <widget class="QPushButton" name="linkTextbookButton">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -78,7 +78,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="courseCodeText">
+  <widget class="QLineEdit" name="courseCodeTextBox">
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -101,7 +101,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Create/Edit Course</string>
+    <string>Save Course</string>
    </property>
   </widget>
   <widget class="QLabel" name="courseCodeLabel">
@@ -152,7 +152,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="courseSectionText">
+  <widget class="QLineEdit" name="courseSectionTextBox">
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -165,7 +165,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLineEdit" name="instructorText">
+  <widget class="QLineEdit" name="instructorTextBox">
    <property name="geometry">
     <rect>
      <x>110</x>

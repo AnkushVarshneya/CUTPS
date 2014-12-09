@@ -2,6 +2,9 @@
 #define MODIFYCOURSEFORMWINDOW_H
 
 #include <QWidget>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QComboBox>
 
 namespace Ui {
 class ModifyCourseFormWindow;
@@ -14,6 +17,17 @@ class ModifyCourseFormWindow : public QWidget
 public:
     explicit ModifyCourseFormWindow(QWidget *parent = 0);
     ~ModifyCourseFormWindow();
+
+    QPushButton*    getBackButton();
+    QPushButton*    getCreateButton();
+    QPushButton*    getEnrollButton();
+    QPushButton*    getLinkTextbookButton();
+
+    QComboBox*      getTermComboBox();
+
+    QLineEdit*      getCourseCodeTextBox();
+    QLineEdit*      getCourseSectionTextBox();
+    QLineEdit*      getInstructorTextBox();
 
 private:
     Ui::ModifyCourseFormWindow *ui;

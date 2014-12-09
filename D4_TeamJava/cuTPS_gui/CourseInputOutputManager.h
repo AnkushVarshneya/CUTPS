@@ -27,7 +27,15 @@ private slots:
 
     void on_manageCoursesInterface_selectCourse();
 
+    void on_editCourseForm_backButton();
+    void on_editCourseForm_createButton();
+    void on_editCourseForm_enrollButton();
+    void on_editCourseForm_linkTextbookButton();
 
+    void on_linkTextbookForm_backButton();
+    void on_linkTextbookForm_linkTextbookButton();
+    void on_linkTextbookForm_selectTextbook();
+    void on_linkTextbookForm_selectRegisteredTextbook();
 private:
     ManageCoursesInterfaceWindow* manageCoursesInterface;
     ModifyCourseFormWindow*       editCourseForm;
@@ -62,6 +70,8 @@ private:
 
 
     void    connect_manageCoursesInterface();
+    void    connect_editCourseForm();
+    void    connect_linkTextbookForm();
 };
 
 #endif // COURSEINPUTOUTPUTMANAGER_H

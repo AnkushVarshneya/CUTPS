@@ -52,6 +52,100 @@ void ContentInputOutputManager::connect_editSectionForm() {
     connect(editSectionForm->getBackButton(), SIGNAL(clicked()),this,SLOT(on_editSectionForm_back_button()));
     connect(editSectionForm->getCreateButton(), SIGNAL(clicked()),this,SLOT(on_editSectionForm_create_button()));
 }
+void ContentInputOutputManager::connect_deleteTextbookConfirmationForm() {
+    connect(confirmationForm->getYesButton(),SIGNAL(clicked()),this,SLOT(on_deleteTextbookConfirmationForm_yesButton()));
+    connect(confirmationForm->getNoButton(),SIGNAL(clicked()),this,SLOT(on_deleteTextbookConfirmationForm_noButton()));
+}
+void ContentInputOutputManager::connect_deleteChapterConfirmationForm() {
+    connect(confirmationForm->getYesButton(),SIGNAL(clicked()),this,SLOT(on_deleteChapterConfirmationForm_yesButton()));
+    connect(confirmationForm->getNoButton(),SIGNAL(clicked()),this,SLOT(on_deleteChapterConfirmationForm_noButton()));
+}
+void ContentInputOutputManager::connect_deleteSectionConfirmationForm() {
+    connect(confirmationForm->getYesButton(),SIGNAL(clicked()),this,SLOT(on_deleteSectionConfirmationForm_yesButton()));
+    connect(confirmationForm->getNoButton(),SIGNAL(clicked()),this,SLOT(on_deleteSectiononfirmationForm_noButton()));
+}
+
+void ContentInputOutputManager::on_deleteChapterConfirmationForm_yesButton() {
+    currentChapter = editTextbookForm_getSelectedChapter();
+    fakeChapters.removeAll(currentChapter);
+    foreach (Section* sec, currentChapter->getChapterSections()){
+        contentManagementFacade->deleteContent(sec);
+        currentChapter->getChapterSections().removeAll(sec);
+        delete sec;
+    }
+    contentManagementFacade->deleteContent(currentChapter);
+    currentTextbook->getChapterList().removeAll(currentChapter);
+    fakeChapters.removeAll(currentChapter);
+//    delete currentChapter;
+//    currentChapter = 0;
+
+
+    buildChapterModel();
+    setContentManagementInterfaceViewModel(editTextbookForm->getChaptersListView(), chapterModel);
+
+
+    delete confirmationForm;
+}
+void ContentInputOutputManager::on_deleteChapterConfirmationForm_noButton() {
+    //confirmationForm->setModal(false);
+    delete confirmationForm;
+}
+void ContentInputOutputManager::on_deleteSectionConfirmationForm_yesButton() {
+    if(editChapterForm->getSectionsListView()->currentIndex().row() == -1){
+        qDebug() << "no item selected";
+        return;
+    }
+    currentSection = editChapterForm_getSelectedSection();
+    contentManagementFacade->deleteContent(currentSection);
+
+    fakeSections.removeAll(currentSection);
+    currentChapter->getChapterSections().removeAll(currentSection);
+
+    delete currentSection;
+    currentSection = 0;
+
+    buildSectionModel();
+    setContentManagementInterfaceViewModel(editChapterForm->getSectionsListView(), sectionModel);
+
+    //confirmationForm->setModal(false);
+    delete confirmationForm;
+}
+void ContentInputOutputManager::on_deleteSectionConfirmationForm_noButton() {
+    //confirmationForm->setModal(false);
+    delete confirmationForm;
+}
+void ContentInputOutputManager::on_deleteTextbookConfirmationForm_yesButton() {
+    currentTextbook = manageTextbooks_getSelectedTextbook();
+    foreach (Chapter* chap, currentTextbook->getChapterList()){
+        foreach (Section* sec, chap->getChapterSections()){
+            contentManagementFacade->deleteContent(sec);
+            chap->getChapterSections().removeAll(sec);
+            delete sec;
+        }
+        contentManagementFacade->deleteContent(chap);
+        qDebug() << "deleted chapter";
+    }
+    contentManagementFacade->deleteContent(currentTextbook);
+
+    fakeTextbooks.removeAll(currentTextbook);
+    delete currentTextbook;
+
+
+    fakeChapters.clear();
+    fakeSections.clear();
+
+
+    buildTextbookModel();
+    setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
+
+
+    //confirmationForm->setModal(false);
+    delete confirmationForm;
+}
+void ContentInputOutputManager::on_deleteTextbookConfirmationForm_noButton() {
+    //confirmationForm->setModal(false);
+    delete confirmationForm;
+}
 
 void ContentInputOutputManager::buildTextbookModel() {
     textbookModel->clear();
@@ -192,65 +286,12 @@ void ContentInputOutputManager::on_manageTextbooksInterface_deleteTextbook_butto
         qDebug() << "no item selected";
         return;
     }
-//    qDebug() << "checking managetextbooks index";
-//    qDebug() << manageTextbooksInterface->getTextbooksListView()->currentIndex().row();
 
-//    /*
-//    qDebug() << "Are you sure?";
-//    */
-
-//    currentTextbook = manageTextbooks_getSelectedTextbook();
-
-//    //qDebug() << contentManagementFacade->deleteContent(currentTextbook);
-
-//    foreach (Chapter* chap, currentTextbook->getChapterList()){
-//        foreach (Section* sec, chap->getChapterSections()){
-//            contentManagementFacade->deleteContent(sec);
-//            qDebug() << "deleted section";
-//        }
-//        contentManagementFacade->deleteContent(chap);
-//        qDebug() << "deleted chapter";
-//    }
-//    contentManagementFacade->deleteContent(currentTextbook);
-
-
-//    qDebug() << "deleted textbook";
-
-
-//    fakeTextbooks = contentManagementFacade->viewAllContent();
-//    fakeChapters.clear();
-//    fakeSections.clear();
-
-//    buildTextbookModel();
-//    setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
-
-
-    currentTextbook = manageTextbooks_getSelectedTextbook();
-    foreach (Chapter* chap, currentTextbook->getChapterList()){
-        foreach (Section* sec, chap->getChapterSections()){
-            contentManagementFacade->deleteContent(sec);
-            chap->getChapterSections().removeAll(sec);
-            delete sec;
-        }
-        contentManagementFacade->deleteContent(chap);
-        qDebug() << "deleted chapter";
-    }
-    contentManagementFacade->deleteContent(currentTextbook);
-
-    fakeTextbooks.removeAll(currentTextbook);
-    delete currentTextbook;
-
-
-    fakeChapters.clear();
-    fakeSections.clear();
-
-
-    buildTextbookModel();
-    setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
-
-
-
-
+    confirmationForm = new ConfirmationDialogWindow();
+    //confirmationForm->setModal(true);
+    connect_deleteTextbookConfirmationForm();
+    confirmationForm->getMessageTextBox()->setText("Are you sure you want to delete this textbook?");
+    confirmationForm->show();
 }
 
 
@@ -281,13 +322,8 @@ void ContentInputOutputManager::on_editTextbookForm_back_button() {
     setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
 }
 
-
 void ContentInputOutputManager::on_editTextbookForm_create_button() {
     qDebug() << "create a new textbook with the fields from the form and go back to the managetextbooksinterface";
-
-    if(currentTextbook == NULL){
-        qDebug() << "thats null son";
-    }
 
     foreach(Textbook *t,fakeTextbooks) {
         if((t->getISBN() == editTextbookForm->getISBNTextbox()->text())
@@ -338,8 +374,6 @@ void ContentInputOutputManager::on_editTextbookForm_create_button() {
     qDebug()<<"exiting edittext_create";
 }
 
-
-
 void ContentInputOutputManager::on_editTextbookForm_editChapter_button() {
     if(editTextbookForm->getChaptersListView()->currentIndex().row() == -1){
         qDebug() << "no item selected";
@@ -371,7 +405,6 @@ void ContentInputOutputManager::on_editTextbookForm_editChapter_button() {
     editChapterForm->getChapterNumberSpinBox()->setEnabled(false);
 }
 
-
 void ContentInputOutputManager::on_editTextbookForm_createChapter_button() {
     fakeSections.clear();
 
@@ -388,7 +421,6 @@ void ContentInputOutputManager::on_editTextbookForm_createChapter_button() {
     createOrEditCFlag = 0;
 }
 
-
 void ContentInputOutputManager::on_editTextbookForm_deleteChapter_button() {
     /*
     qDebug() << "Are you sure?";
@@ -399,27 +431,14 @@ void ContentInputOutputManager::on_editTextbookForm_deleteChapter_button() {
         return;
     }
 
-
-
-    currentChapter = editTextbookForm_getSelectedChapter();
-    fakeChapters.removeAll(currentChapter);
-    foreach (Section* sec, currentChapter->getChapterSections()){
-        contentManagementFacade->deleteContent(sec);
-        currentChapter->getChapterSections().removeAll(sec);
-        delete sec;
-    }
-    contentManagementFacade->deleteContent(currentChapter);
-    currentTextbook->getChapterList().removeAll(currentChapter);
-    fakeChapters.removeAll(currentChapter);
-//    delete currentChapter;
-//    currentChapter = 0;
-
-
-    buildChapterModel();
-    setContentManagementInterfaceViewModel(editTextbookForm->getChaptersListView(), chapterModel);
-
-    qDebug() << "leaving textbook delete chap";
-
+    confirmationForm = new ConfirmationDialogWindow();
+    //confirmationForm->setModal(true);
+    connect_deleteChapterConfirmationForm();
+    confirmationForm = new ConfirmationDialogWindow();
+    //confirmationForm->setModal(true);
+    connect_deleteChapterConfirmationForm();
+    confirmationForm->getMessageTextBox()->setText("Are you sure you want to delete this chapter?");
+    confirmationForm->show();
 }
 
 
@@ -521,21 +540,11 @@ void ContentInputOutputManager::on_editChapterForm_deleteSection_button() {
     qDebug() << "Are you sure?";
     */
 
-    if(editChapterForm->getSectionsListView()->currentIndex().row() == -1){
-        qDebug() << "no item selected";
-        return;
-    }
-    currentSection = editChapterForm_getSelectedSection();
-    contentManagementFacade->deleteContent(currentSection);
-
-    fakeSections.removeAll(currentSection);
-    currentChapter->getChapterSections().removeAll(currentSection);
-
-    delete currentSection;
-    currentSection = 0;
-
-    buildSectionModel();
-    setContentManagementInterfaceViewModel(editChapterForm->getSectionsListView(), sectionModel);
+    confirmationForm = new ConfirmationDialogWindow();
+    //confirmationForm->setModal(true);
+    connect_deleteSectionConfirmationForm();
+    confirmationForm->getMessageTextBox()->setText("Are you sure you want to delete this section?");
+    confirmationForm->show();
 }
 
 
@@ -597,31 +606,31 @@ void ContentInputOutputManager::on_editSectionForm_create_button() {
 
 
 
-Chapter* ContentInputOutputManager::manageTextbooks_getSelectedChapter() {
+Chapter*    ContentInputOutputManager::manageTextbooks_getSelectedChapter() {
     //if(manageTextbooksInterface->getChaptersListView()->model()->rowc;
     qDebug() << "in getselectedchapter";
     int selectedIndex = manageTextbooksInterface->getChaptersListView()->currentIndex().row();
     return manageTextbooks_getSelectedTextbook()->getChapterList().at(selectedIndex);
 }
-Textbook* ContentInputOutputManager::manageTextbooks_getSelectedTextbook() {    
+Textbook*   ContentInputOutputManager::manageTextbooks_getSelectedTextbook() {
     qDebug() << "in getselectedtextbook";
     int selectedIndex = manageTextbooksInterface->getTextbooksListView()->currentIndex().row();
     qDebug() << "got index: " << selectedIndex;
     return fakeTextbooks.at(selectedIndex);
 }
-Section* ContentInputOutputManager::manageTextbooks_getSelectedSection() {
+Section*    ContentInputOutputManager::manageTextbooks_getSelectedSection() {
     qDebug() << "in getselectedsection";
     int selectedIndex = manageTextbooksInterface->getSectionsListView()->currentIndex().row();
     //return manageTextbooks_getSelectedChapter()->getChapterSections().at(selectedIndex);
     return currentChapter->getChapterSections().at(selectedIndex);
 }
-Chapter* ContentInputOutputManager::editTextbookForm_getSelectedChapter() {
+Chapter*    ContentInputOutputManager::editTextbookForm_getSelectedChapter() {
     qDebug() << "getselectedchap";
     int selectedIndex = editTextbookForm->getChaptersListView()->currentIndex().row();
     //Textbook* t = manageTextbooks_getSelectedTextbook();
     return currentTextbook->getChapterList().at(selectedIndex);
 }
-Section* ContentInputOutputManager::editChapterForm_getSelectedSection() {
+Section*    ContentInputOutputManager::editChapterForm_getSelectedSection() {
     qDebug() << "getselectedsect";
     int selectedIndex = editChapterForm->getSectionsListView()->currentIndex().row();
     //return editTextbookForm_getSelectedChapter()->getChapterSections().at(selectedIndex);

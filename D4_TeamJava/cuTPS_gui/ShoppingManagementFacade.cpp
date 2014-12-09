@@ -33,7 +33,7 @@ void ShoppingManagementFacade::emptyShoppingCart(Student *student) throw (QStrin
 
 void ShoppingManagementFacade::checkOutShoppingCart(Student *student)
 {
-    shopUpdateControl->checkout(student);
+    shopUpdateControl->checkOutShoppingCart(student);
 }
 
 PaymentInformation* ShoppingManagementFacade::getPaymentInformation(Student *student)

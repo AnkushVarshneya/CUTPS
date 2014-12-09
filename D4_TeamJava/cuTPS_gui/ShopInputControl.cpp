@@ -58,6 +58,12 @@ void ShopInputControl::validateEmptyShoppingCart(Student* student) throw(QString
 
 }
 
+void ShopInputControl::validateRetrieveStudentPaymentInformation(Student* stu) throw (QString){
+    if(stu == NULL){
+        throw QString("No Student, reset the application");
+    }
+}
+
 void ShopInputControl::validateUpdatePaymentInformation(Student* student, PaymentInformation* payInfo) throw (QString){
     if(student == NULL){
         throw QString("Error: No Student, Reset the program");
@@ -95,4 +101,10 @@ void ShopInputControl::validateUpdatePaymentInformation(Student* student, Paymen
         throw QString("Error: Expired Date: %1, Enter a credit card with a valid expiry date").arg(payInfo->getCreditCardInfo().getExpDate().toString("yyyyMMdd"));
     }
 
+}
+
+void ShopInputControl::validateCheckOut(Student* student) throw (QString){
+    if(student == NULL){
+        throw QString("Error: No Student, Reset the program");
+    }
 }

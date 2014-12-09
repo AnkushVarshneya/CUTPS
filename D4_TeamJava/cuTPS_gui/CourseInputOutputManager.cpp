@@ -170,9 +170,6 @@ void CourseInputOutputManager::on_editCourseForm_createButton() {
 
         }
 
-
-
-
         courseManagementFacade->updateCourse(selectedCourse,newTerm);
 
         if(createOrEditCFlag == 0) {

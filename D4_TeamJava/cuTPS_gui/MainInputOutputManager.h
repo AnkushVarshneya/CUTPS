@@ -17,7 +17,7 @@ public:
 
 private slots:
     void on_contentIOManager_deleted();
-
+    void on_courseIOManager_deleted();
     void on_contentManager_clicked();
     void on_student_clicked();
 

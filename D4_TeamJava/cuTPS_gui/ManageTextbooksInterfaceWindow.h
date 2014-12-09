@@ -38,7 +38,7 @@ public:
 
 private:
     Ui::ManageTextbooksInterfaceWindow *ui;
-    EditTextbookFormWindow editTextbookForm;
+
 };
 
 #endif // MANAGETEXTBOOKSINTERFACEWINDOW_H

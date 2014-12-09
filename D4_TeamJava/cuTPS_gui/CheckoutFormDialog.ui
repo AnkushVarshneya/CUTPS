@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>352</width>
-    <height>602</height>
+    <height>452</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -16,8 +22,8 @@
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>550</y>
+     <x>80</x>
+     <y>410</y>
      <width>178</width>
      <height>41</height>
     </rect>
@@ -42,372 +48,265 @@
   <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>211</width>
-     <height>131</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout"/>
-  </widget>
-  <widget class="QLabel" name="nameLabel">
-   <property name="geometry">
-    <rect>
      <x>30</x>
-     <y>160</y>
-     <width>58</width>
-     <height>16</height>
+     <y>20</y>
+     <width>299</width>
+     <height>377</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Name: </string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="nameLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>160</y>
-     <width>113</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="placeholderText">
-    <string>[jane student]</string>
-   </property>
-   <property name="cursorMoveStyle">
-    <enum>Qt::VisualMoveStyle</enum>
-   </property>
-  </widget>
-  <widget class="QLabel" name="unitNumberLabel">
-   <property name="geometry">
-    <rect>
-     <x>-10</x>
-     <y>190</y>
-     <width>101</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Unit Number</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="unitNumberLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>190</y>
-     <width>113</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="placeholderText">
-    <string>[1125]</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="streetNameLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>230</y>
-     <width>91</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Street Name</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="streetNameLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>220</y>
-     <width>113</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>[Colonel By. Dr.]</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="cityLabel">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>260</y>
-     <width>58</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>City</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="cityLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>260</y>
-     <width>113</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="placeholderText">
-    <string>[Ottawa]</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="provinceLabel">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>300</y>
-     <width>71</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Province</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="postalCodeLabel">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>330</y>
-     <width>91</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Postal Code</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="provinceLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>300</y>
-     <width>113</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="placeholderText">
-    <string>[Ontario]</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="postalCodeLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>330</y>
-     <width>113</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="placeholderText">
-    <string>[K1S5B6]</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="ccNumberLabel">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>380</y>
-     <width>121</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Credit Card Number</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="cvvLabel">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>410</y>
-     <width>31</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CVV</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="expDateLabel">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>440</y>
-     <width>101</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Expiry Date</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="cardTypeLabel">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>500</y>
-     <width>81</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Card Type</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="cardTypeComboBox">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>480</y>
-     <width>78</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <item>
-    <property name="text">
-     <string>Master Card</string>
+   <layout class="QFormLayout" name="formLayout">
+    <property name="fieldGrowthPolicy">
+     <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
     </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Visa</string>
+    <property name="labelAlignment">
+     <set>Qt::AlignCenter</set>
     </property>
-   </item>
+    <property name="formAlignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="horizontalSpacing">
+     <number>0</number>
+    </property>
+    <property name="verticalSpacing">
+     <number>4</number>
+    </property>
+    <item row="1" column="0">
+     <widget class="QLabel" name="nameLabel">
+      <property name="text">
+       <string>Name: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="nameLineEdit">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>[jane student]</string>
+      </property>
+      <property name="cursorMoveStyle">
+       <enum>Qt::VisualMoveStyle</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="unitNumberLabel">
+      <property name="text">
+       <string>Unit Number</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="unitNumberLineEdit">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>[1125]</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="streetNameLabel">
+      <property name="text">
+       <string>Street Name</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="streetNameLineEdit">
+      <property name="placeholderText">
+       <string>[Colonel By. Dr.]</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="cityLabel">
+      <property name="text">
+       <string>City</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="cityLineEdit">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>[Ottawa]</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="provinceLabel">
+      <property name="text">
+       <string>Province</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="provinceLineEdit">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>[Ontario]</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="postalCodeLabel">
+      <property name="text">
+       <string>Postal Code</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="postalCodeLineEdit">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>[K1S5B6]</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QLabel" name="ccNumberLabel">
+      <property name="text">
+       <string>Credit Card Number</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QLineEdit" name="ccNumberLineEdit">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>[1234567890]</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0">
+     <widget class="QLabel" name="cardholderNameLabel">
+      <property name="text">
+       <string>Cardholder's name</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QLineEdit" name="cardholderNameLineEdit">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>[jane student]</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="cvvLabel">
+      <property name="text">
+       <string>CVV</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QLineEdit" name="cvvLineEdit">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="placeholderText">
+       <string>[123]</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="expDateLabel">
+        <property name="text">
+         <string>Expiry Date</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="expDateFormatLabel">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+          <italic>true</italic>
+         </font>
+        </property>
+        <property name="text">
+         <string>yyyy/MM</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="11" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLineEdit" name="expYearLineEdit">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>2014</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="expMonthLineEdit">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="placeholderText">
+         <string>12</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="12" column="0">
+     <widget class="QLabel" name="cardTypeLabel">
+      <property name="text">
+       <string>Card Type</string>
+      </property>
+     </widget>
+    </item>
+    <item row="12" column="1">
+     <widget class="QComboBox" name="cardTypeComboBox">
+      <item>
+       <property name="text">
+        <string>Visa</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="orderTotalLabel">
+      <property name="text">
+       <string>Order Total:</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QLabel" name="cardholderNameLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>530</y>
-     <width>121</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Cardholder's name</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="cardholderNameLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>520</y>
-     <width>113</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="placeholderText">
-    <string>[jane student]</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="ccNumberLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>380</y>
-     <width>113</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="placeholderText">
-    <string>[1234567890]</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="cvvLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>410</y>
-     <width>113</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="placeholderText">
-    <string>[123]</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="expYearLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>440</y>
-     <width>41</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="placeholderText">
-    <string>2014</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="expMonthLineEdit">
-   <property name="geometry">
-    <rect>
-     <x>220</x>
-     <y>440</y>
-     <width>41</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <property name="placeholderText">
-    <string>12</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="expDateFormatLabel">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>460</y>
-     <width>58</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>8</pointsize>
-     <italic>true</italic>
-    </font>
-   </property>
-   <property name="text">
-    <string>yyyy/MM</string>
-   </property>
-  </widget>
+  <zorder>horizontalLayoutWidget</zorder>
+  <zorder>expYearLineEdit</zorder>
+  <zorder>expMonthLineEdit</zorder>
+  <zorder>formLayoutWidget</zorder>
+  <zorder>expDateFormatLabel</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -46,6 +46,7 @@ PaymentInformation* ShoppingManagementFacade::getPaymentInformation(Student *stu
     return info;
 }
 
-bool ShoppingManagementFacade::updatePaymentInformation(Student* stu, PaymentInformation* payInfo){
+bool ShoppingManagementFacade::updatePaymentInformation(Student* stu, PaymentInformation* payInfo) throw (QString){
+    shopInputControl->validateUpdatePaymentInformation(stu,payInfo);
     return shopUpdateControl->updatePaymentInformation(stu,payInfo);
 }

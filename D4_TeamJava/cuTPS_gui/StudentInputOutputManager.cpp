@@ -1,11 +1,11 @@
 #include "StudentInputOutputManager.h"
 
-StudentInputOutputManager::StudentInputOutputManager()
+StudentInputOutputManager::StudentInputOutputManager(QString s)
 {
 
     //initialize current student, models
     currentStudent = new Student();
-    currentStudent->setStudentNum("100853074");
+    currentStudent->setStudentNum(s);
 
     courseAndTextbookModel = new QStandardItemModel(this);
     chaptersAndSectionsModel = new QStandardItemModel(this);

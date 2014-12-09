@@ -7,7 +7,17 @@ CourseInputOutputManager::CourseInputOutputManager()
 
     connect_manageCoursesInterface();
 
+    courseModel = new QStandardItemModel(this);
+    //studentModel = new QStandardItemModel(this);
+    textbookModel = new QStandardItemModel(this);
+
     courseManagementFacade = new CourseManagementFacade();
+    //fakeTextbooks = courseManagementFacade->retrieveAllTextbooks();
+    //fakeTextbooks = courseManagementFacade->
+    //buildTextbookModel();
+
+//    setCourseManagementInterfaceViewModel(manageCoursesInterface->get);
+
 
 }
 

@@ -51,14 +51,15 @@ private:
     QList<Textbook*>*             assignedTextbooks;
     QList<Student*>*              registeredStudents;
 
-    QList<Textbook*>*             allTextbooks;
-    QList<Student*>*              allStudents;
+    QList<Textbook*>*             fakeTextbooks;
+    QList<Student*>*              fakeStudents;
+    QList<Course*>*               fakeCourses;
 
     void        setCourseManagementInterfaceViewModel(QAbstractItemView*, QStandardItemModel*);
 
     void        buildCourseModel();
     void        buildStudentModel();
-    void        buildSectionModel();
+    void        buildTextbookModel();
 
     void        enrollStudentForm_buildStudentModel();
 

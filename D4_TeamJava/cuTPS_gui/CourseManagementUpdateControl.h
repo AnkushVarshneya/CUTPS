@@ -11,6 +11,7 @@ class CourseManagementUpdateControl
 {
 public:
     CourseManagementUpdateControl();
+    QList<Term*>*       retrieveAllTermList();
     QList<Course*>*     retrieveCourseList(Term*);
     QList<Student*>*    retrieveCourseStudents(Course*, Term*);
     QList<Student*>*    retrieveAllStudents();

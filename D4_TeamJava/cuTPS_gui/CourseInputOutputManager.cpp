@@ -172,11 +172,11 @@ void CourseInputOutputManager::on_editCourseForm_createButton() {
 
         courseManagementFacade->updateCourse(selectedCourse,newTerm);
 
-        if(createOrEditCFlag == 0) {
-            foreach(Textbook* linkedTextbook,selectedCourse->getRequiredTextbooks()){
-                courseManagementFacade->assignTextbookToCourse(selectedCourse,linkedTextbook,selectedCourse->getTerm());
-            }
+
+        foreach(Textbook* linkedTextbook,selectedCourse->getRequiredTextbooks()){
+            courseManagementFacade->assignTextbookToCourse(selectedCourse,linkedTextbook,selectedCourse->getTerm());
         }
+
         courseModel->clear();
         textbookModel->clear();
         linkedTextbookModel->clear();

@@ -66,7 +66,7 @@ public:
     QList<PurchasableItem*>*                    retrieveAllPurchasableItemList(bool);
     bool                                        emptyShoppingCart(Student*);
     bool                                        addPurchasableItemToCart(PurchasableItem*, Student*);
-    bool                                        updateOrderContents(PurchasableItem*, Student*);
+    bool                                        checkOutShoppingCart(Student*);
 
 private:
     QSqlDatabase db;

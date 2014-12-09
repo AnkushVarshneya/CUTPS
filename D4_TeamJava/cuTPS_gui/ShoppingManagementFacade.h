@@ -16,6 +16,7 @@
 #include "Term.h"
 #include "Student.h"
 #include "ShopUpdateControl.h"
+#include "ShopInputControl.h"
 #include <QDebug>
 #include <QList>
 
@@ -31,10 +32,11 @@ public:
     void                        emptyShoppingCart(Student *student) throw (QString);
     PaymentInformation*         getPaymentInformation(Student *student);
     bool                        updatePaymentInformation(Student*, PaymentInformation*);
-    void                        checkout(Student *student);
+    void                        checkOutShoppingCart(Student *student);
 
 private:
     ShopUpdateControl           *shopUpdateControl;
+    ShopInputControl            *shopInputControl;
 
 
 };

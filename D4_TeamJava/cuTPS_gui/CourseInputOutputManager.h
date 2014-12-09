@@ -10,7 +10,7 @@
 
 #include <QAbstractItemView>
 #include "OurStandardItem.h"
-
+#include "MessageDialog.h"
 class CourseInputOutputManager : public QObject
 {
     Q_OBJECT
@@ -43,7 +43,7 @@ private:
     LinkTextbookFormWindow*       linkTextbookForm;
 
     ConfirmationDialogWindow*     confirmationForm;
-
+    MessageDialog                 messageDialog;
     CourseManagementFacade*       courseManagementFacade;
 
     QStandardItemModel*           courseModel;

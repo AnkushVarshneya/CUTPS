@@ -16,6 +16,7 @@
 #include <ShoppingCartWidget.h>
 #include "CheckoutFormDialog.h"
 #include "Course.h"
+#include <QMessageBox>
 #include <QDate>
 #include "BillingAddress.h"
 #include <QPair>

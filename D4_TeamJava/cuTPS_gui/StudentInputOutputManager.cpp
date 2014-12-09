@@ -254,5 +254,20 @@ void StudentInputOutputManager::on_checkoutFormDialog_backOptionSelected()
 
 void StudentInputOutputManager::on_checkoutFormDialog_confirmOptionSelected()
 {
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(checkoutFormDialog, "Proceed?", "Are you sure you wish to checkout?", QMessageBox::Yes|QMessageBox::No );
+
+//      reply = QMessageBox::question(this, "Test", "Quit?",
+//                                    QMessageBox::Yes|QMessageBox::No);
+
+      if (reply == QMessageBox::Yes) {
+        qDebug() << "Yes was clicked";
+        checkoutFormDialog->hide();
+        studentInterface->show();
+      } else {
+        qDebug() << "Yes was *not* clicked";
+        checkoutFormDialog->hide();
+        cartWidget->show();
+      }
 
 }

@@ -41,9 +41,7 @@ int main(int argc, char *argv[])
 
 
 
-    ClientCommunicatorManagementControl* client = ClientCommunicatorManagementControl::getInstance();
 
-    client->setConnectToHost(QHostAddress("10.0.2.15"), 60000);
 
 
 //    qDebug() << "Test for Retrieving all content for student";

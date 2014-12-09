@@ -39,6 +39,7 @@ StudentInputOutputManager::StudentInputOutputManager()
     cartWidget = ShoppingCartWidget::getInstance();
     connect(cartWidget->getCheckoutOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_checkoutOptionSelected()));
     connect(cartWidget->getCloseOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_closeOptionSelected()));
+    connect(cartWidget->getEmptyCartOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_emptyCartOptionSelected()));
 
     //connects for textbook details window
     textbookDetailsWindow = TextbookDetailsWindow::getInstance();
@@ -252,20 +253,21 @@ void StudentInputOutputManager::on_checkoutFormDialog_backOptionSelected()
     this->on_studentInterface_viewCartOptionSelected();
 }
 
+void StudentInputOutputManager::on_cartWidget_emptyCartOptionSelected() {
+    shopFacade->emptyShoppingCart(currentStudent);
+    this->on_studentInterface_viewCartOptionSelected();
+}
+
+
 void StudentInputOutputManager::on_checkoutFormDialog_confirmOptionSelected()
 {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(checkoutFormDialog, "Proceed?", "Are you sure you wish to checkout?", QMessageBox::Yes|QMessageBox::No );
 
-//      reply = QMessageBox::question(this, "Test", "Quit?",
-//                                    QMessageBox::Yes|QMessageBox::No);
-
       if (reply == QMessageBox::Yes) {
-        qDebug() << "Yes was clicked";
         checkoutFormDialog->hide();
         studentInterface->show();
       } else {
-        qDebug() << "Yes was *not* clicked";
         checkoutFormDialog->hide();
         cartWidget->show();
       }

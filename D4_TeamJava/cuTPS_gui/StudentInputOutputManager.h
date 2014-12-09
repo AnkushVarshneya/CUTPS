@@ -75,6 +75,7 @@ private slots:
     //boundary objects for shopping cart
     void    on_cartWidget_closeOptionSelected();
     void    on_cartWidget_checkoutOptionSelected();
+    void    on_cartWidget_emptyCartOptionSelected();
 
     //boundary objects for checkout form dialog
     void    on_checkoutFormDialog_backOptionSelected();

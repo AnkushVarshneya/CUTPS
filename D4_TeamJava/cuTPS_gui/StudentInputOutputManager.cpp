@@ -10,6 +10,9 @@ StudentInputOutputManager::StudentInputOutputManager()
     courseAndTextbookModel = new QStandardItemModel(this);
     chaptersAndSectionsModel = new QStandardItemModel(this);
 
+    cardTypes.append("MasterCard");
+    cardTypes.append("Visa");
+
     cartModel = new QStandardItemModel(this);
     studentInterface = new StudentInterfaceWindow();
     studentInterface->show();
@@ -61,6 +64,7 @@ void    StudentInputOutputManager::getTerms() {
     for (i = terms.begin(); i != terms.end(); i++) {
         qDebug() << "iterating over term list";
         studentInterface->getTermSelectOption()->addItem((*i)->getTermName(), (*i)->getTermName() );
+        studentInterface->getTermSelectOption()->setCurrentIndex(-1);
     }
     //todo: what if it fails etc
 }
@@ -92,7 +96,21 @@ view->setModel(model);
 }
 
 void StudentInputOutputManager::on_studentInterface_addTextbookOptionSelected() {
+    if( studentInterface->getCourseView()->currentIndex().isValid() ) {
+        QVariant item_id = courseAndTextbookModel->itemFromIndex(studentInterface->getCourseView()->currentIndex())->data();
+        Textbook *item = new Textbook();
+        item->setItemID( item_id.toInt() );
+        shopFacade->addContent(currentStudent, (PurchasableItem*) item, studentInterface->getQuantityOption()->value());
+    }
+    else studentInterface->statusBar()->showMessage("No textbook selected!", 3000 );
 
+
+//    QVariant  an_id = chaptersAndSectionsModel->itemFromIndex(textbookDetailsWindow->getChaptersAndSectionsView()->currentIndex())->data();
+//    Section *item =  new Section();
+//    item->setItemID(  an_id.toInt() );
+
+//    shopFacade->addContent(currentStudent, (PurchasableItem*) item, 1  );
+//    currentCart = shopFacade->viewShoppingCart(currentStudent);
 }
 
 void StudentInputOutputManager::on_studentInterface_viewCartOptionSelected() {
@@ -183,11 +201,13 @@ void StudentInputOutputManager::on_textbookDetailsWindow_addCurrentTextbookOptio
 
 void StudentInputOutputManager::on_textbookDetailsWindow_addSelectedItemOptionSelected() {
 
-    QVariant  an_id = chaptersAndSectionsModel->itemFromIndex(textbookDetailsWindow->getChaptersAndSectionsView()->currentIndex())->data();
-    Section *item =  new Section();
-    item->setItemID(  an_id.toInt() );
-
-    shopFacade->addContent(currentStudent, (PurchasableItem*) item, 1  );
+    if ( textbookDetailsWindow->getChaptersAndSectionsView()->currentIndex().isValid() ) {
+        QVariant item_id = chaptersAndSectionsModel->itemFromIndex( textbookDetailsWindow->getChaptersAndSectionsView()->currentIndex() )->data();
+        Textbook *item = new Textbook(); //doesnt matter, casting to purchasableitem anyway no matter what it is.
+        item->setItemID( item_id.toInt() );
+        shopFacade->addContent(currentStudent, (PurchasableItem*) item, textbookDetailsWindow->getQuantityOption()->value());
+    }
+    else studentInterface->statusBar()->showMessage("No item selected!", 3000 );
     currentCart = shopFacade->viewShoppingCart(currentStudent);
 }
 

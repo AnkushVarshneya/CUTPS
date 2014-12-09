@@ -87,4 +87,5 @@ QPushButton*     TextbookDetailsWindow::getAddSelectedItemOption() { return ui->
 QPushButton*     TextbookDetailsWindow::getCloseOption() { return ui->closeOption ; }
 QToolButton*     TextbookDetailsWindow::getAddCurrentTextbookOption() { return ui->addCurrentTextbookOption ; }
 QTreeView*       TextbookDetailsWindow::getChaptersAndSectionsView() { return ui->chaptersAndSectionsTreeView; }
+QSpinBox*        TextbookDetailsWindow::getQuantityOption() {   return ui->quantityOption ; }
 

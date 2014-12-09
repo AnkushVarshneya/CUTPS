@@ -1,3 +1,8 @@
+/*Standard Item for populating a model
+ *
+ *Traceability: SS-01-01, SS-02-02 (Used in both the Student and Content Manager Interfaces)
+ *
+ */
 #ifndef OURSTANDARDITEM_H
 #define OURSTANDARDITEM_H
 

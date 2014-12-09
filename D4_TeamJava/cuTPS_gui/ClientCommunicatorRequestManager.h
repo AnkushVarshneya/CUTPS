@@ -1,4 +1,5 @@
-/*
+/*Purpose of class: Garden variety Client TCP connection handling with a server
+ *
  *Traceability: SS-05 (Part of Client Communicator Subsystem)
  */
 #include <QObject>

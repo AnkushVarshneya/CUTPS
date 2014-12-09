@@ -1,3 +1,8 @@
+/*Purpose: Provide a window to edit a section. A form to fill out section information
+ *Is presented.
+ *
+ *Traceability: SS-02-01 (Part of Content Manager Interface Subsystem)
+ */
 #ifndef CREATESECTIONFORMWINDOW_H
 #define CREATESECTIONFORMWINDOW_H
 

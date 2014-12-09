@@ -1,5 +1,6 @@
 #include "ClientCommunicatorRequestManager.h"
 
+//Constructor
 ClientCommunicatorRequestManager::ClientCommunicatorRequestManager(QObject *parent) :
     QObject(parent),
     tcpConnection(new QTcpSocket(this))
@@ -9,6 +10,7 @@ ClientCommunicatorRequestManager::ClientCommunicatorRequestManager(QObject *pare
     connectToHost(QHostAddress(), 60000);
 }
 
+//Client connect to host for a given host and port argument
 void ClientCommunicatorRequestManager::connectToHost(QHostAddress host, int port) {
 
     const QString & testaddress = "10.0.2.15";
@@ -18,13 +20,22 @@ void ClientCommunicatorRequestManager::connectToHost(QHostAddress host, int port
 
 }
 
+//Get the Server message result as a QJsonDocument
 QJsonDocument ClientCommunicatorRequestManager::getResult() { return result ; }
+
+//Gets the TCP connection
 QTcpSocket* ClientCommunicatorRequestManager::getTcp() { return this->tcpConnection ; }
+
+//Get the number of bytes
 qint64 ClientCommunicatorRequestManager::getBytes() { return this->bytes ; }
 
+//Resets the Buffer
 void ClientCommunicatorRequestManager::resetBuffer(){buffer = QByteArray();}
+
+//Sets the number of bytes
 void ClientCommunicatorRequestManager::setBytes(qint64 bytes) {this->bytes = bytes ; }
 
+//Sends the json message to the server
 void ClientCommunicatorRequestManager::send(QJsonObject &json){
     QJsonDocument jdoc = QJsonDocument(json);
     bytes = this->tcpConnection->write(jdoc.toJson()); //write function returns number of bytes written or -1 if an error occurred.
@@ -32,6 +43,7 @@ void ClientCommunicatorRequestManager::send(QJsonObject &json){
     qDebug() << "bytes written: " << bytes << "\n";
 }
 
+//Reads data from server
 void ClientCommunicatorRequestManager::readyRead(){
     qDebug() << "ready to read stuff from server \n";
     qDebug() << "bytes avail: " << this->tcpConnection->bytesAvailable();

@@ -1,3 +1,7 @@
+/*Purpose: Window that provides the option to manage textbooks or manage courses
+ *
+ *Traceability: SS-02-01 (Part of Content Manager Interface Subsystem)
+ */
 #ifndef CONTENTMANAGERINTERFACEWINDOW_H
 #define CONTENTMANAGERINTERFACEWINDOW_H
 

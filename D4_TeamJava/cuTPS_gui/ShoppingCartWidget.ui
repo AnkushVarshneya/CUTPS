@@ -14,7 +14,10 @@
    <enum>Qt::ActionsContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string notr="true">cuTPS</string>
+   <string notr="true">cuTPS Shopping Cart</string>
+  </property>
+  <property name="statusTip">
+   <string>Shopping Cart</string>
   </property>
   <widget class="QListView" name="cartListView">
    <property name="geometry">

@@ -16,6 +16,10 @@ ClientCommunicatorManagementControl*  ClientCommunicatorManagementControl::getIn
     return instance;
 }
 
+void ClientCommunicatorManagementControl::setConnectToHost(QHostAddress address,int port){
+    requestManager.connectToHost(address,port);
+}
+
 //Initiates communication with the server to use the API function to retrieve all terms
 // gets back a list of terms
 QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){

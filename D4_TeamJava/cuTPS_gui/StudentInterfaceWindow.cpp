@@ -18,6 +18,7 @@ StudentInterfaceWindow::StudentInterfaceWindow(QMainWindow *parent) :
      this->resize(shopView->frameSize());
 
     createStatusBar();
+    this->statusBar()->setSizeGripEnabled(false);
 
     dock = new QDockWidget(tr("Textbook"), this);
     dock->setAllowedAreas(Qt::RightDockWidgetArea);

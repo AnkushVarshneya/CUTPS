@@ -51,7 +51,7 @@
      <x>30</x>
      <y>20</y>
      <width>299</width>
-     <height>377</height>
+     <height>392</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
@@ -70,14 +70,14 @@
     <property name="verticalSpacing">
      <number>4</number>
     </property>
-    <item row="1" column="0">
+    <item row="2" column="0">
      <widget class="QLabel" name="nameLabel">
       <property name="text">
        <string>Name: </string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="2" column="1">
      <widget class="QLineEdit" name="nameLineEdit">
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -90,14 +90,14 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="3" column="0">
      <widget class="QLabel" name="unitNumberLabel">
       <property name="text">
        <string>Unit Number</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
+    <item row="3" column="1">
      <widget class="QLineEdit" name="unitNumberLineEdit">
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -107,28 +107,31 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0">
+    <item row="4" column="0">
      <widget class="QLabel" name="streetNameLabel">
       <property name="text">
        <string>Street Name</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
+    <item row="4" column="1">
      <widget class="QLineEdit" name="streetNameLineEdit">
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
       <property name="placeholderText">
        <string>[Colonel By. Dr.]</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
+    <item row="5" column="0">
      <widget class="QLabel" name="cityLabel">
       <property name="text">
        <string>City</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
+    <item row="5" column="1">
      <widget class="QLineEdit" name="cityLineEdit">
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -138,14 +141,14 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="0">
+    <item row="6" column="0">
      <widget class="QLabel" name="provinceLabel">
       <property name="text">
        <string>Province</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="1">
+    <item row="6" column="1">
      <widget class="QLineEdit" name="provinceLineEdit">
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -155,14 +158,14 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="0">
+    <item row="7" column="0">
      <widget class="QLabel" name="postalCodeLabel">
       <property name="text">
        <string>Postal Code</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
+    <item row="7" column="1">
      <widget class="QLineEdit" name="postalCodeLineEdit">
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -172,14 +175,14 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="0">
+    <item row="8" column="0">
      <widget class="QLabel" name="ccNumberLabel">
       <property name="text">
        <string>Credit Card Number</string>
       </property>
      </widget>
     </item>
-    <item row="7" column="1">
+    <item row="8" column="1">
      <widget class="QLineEdit" name="ccNumberLineEdit">
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -189,14 +192,14 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="0">
+    <item row="9" column="0">
      <widget class="QLabel" name="cardholderNameLabel">
       <property name="text">
        <string>Cardholder's name</string>
       </property>
      </widget>
     </item>
-    <item row="8" column="1">
+    <item row="9" column="1">
      <widget class="QLineEdit" name="cardholderNameLineEdit">
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -206,14 +209,14 @@
       </property>
      </widget>
     </item>
-    <item row="9" column="0">
+    <item row="10" column="0">
      <widget class="QLabel" name="cvvLabel">
       <property name="text">
        <string>CVV</string>
       </property>
      </widget>
     </item>
-    <item row="9" column="1">
+    <item row="10" column="1">
      <widget class="QLineEdit" name="cvvLineEdit">
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -223,7 +226,7 @@
       </property>
      </widget>
     </item>
-    <item row="11" column="0">
+    <item row="12" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QLabel" name="expDateLabel">
@@ -253,7 +256,7 @@
       </item>
      </layout>
     </item>
-    <item row="11" column="1">
+    <item row="12" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QLineEdit" name="expYearLineEdit">
@@ -277,27 +280,28 @@
       </item>
      </layout>
     </item>
-    <item row="12" column="0">
+    <item row="13" column="0">
      <widget class="QLabel" name="cardTypeLabel">
       <property name="text">
        <string>Card Type</string>
       </property>
      </widget>
     </item>
-    <item row="12" column="1">
+    <item row="13" column="1">
      <widget class="QComboBox" name="cardTypeComboBox">
+      <property name="currentText">
+       <string>Visa</string>
+      </property>
       <item>
        <property name="text">
         <string>Visa</string>
        </property>
       </item>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="orderTotalLabel">
-      <property name="text">
-       <string>Order Total:</string>
-      </property>
+      <item>
+       <property name="text">
+        <string>MasterCard</string>
+       </property>
+      </item>
      </widget>
     </item>
    </layout>

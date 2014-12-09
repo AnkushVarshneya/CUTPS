@@ -16,7 +16,7 @@ class Section : public PurchasableItem{
 public:
 
     Section(QString = "a section title",qint32 = 13,
-            qint32 = 9, float = 5.0, bool = false);
+            qint32 = -1, float = 5.0, bool = false);
 
     ~Section();
 

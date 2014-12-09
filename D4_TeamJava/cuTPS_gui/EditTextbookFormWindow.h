@@ -34,6 +34,7 @@ public:
     QPushButton* getViewEditChaptersButton();
     QPushButton* getAddChapterButton();
     QPushButton* getCreateButton();
+    QPushButton* getDeleteChapterButton();
 
     QLineEdit*      getTitleTextbox();
     QLineEdit*      getAuthorTextbox();

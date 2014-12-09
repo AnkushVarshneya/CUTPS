@@ -103,6 +103,9 @@
    <property name="prefix">
     <string>$</string>
    </property>
+   <property name="maximum">
+    <double>9999999.000000000000000</double>
+   </property>
   </widget>
   <widget class="QLineEdit" name="coverImageTextbox">
    <property name="geometry">
@@ -289,6 +292,19 @@
      <width>191</width>
      <height>26</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="deleteChapterButton">
+   <property name="geometry">
+    <rect>
+     <x>257</x>
+     <y>390</y>
+     <width>101</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Delete Chapter</string>
    </property>
   </widget>
  </widget>

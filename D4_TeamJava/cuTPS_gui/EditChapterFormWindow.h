@@ -29,6 +29,7 @@ public:
     QPushButton* getCreateButton();
     QPushButton* getCreateSectionButton();
     QPushButton* getEditSectionButton();
+    QPushButton* getDeleteSectionButton();
 
     QLineEdit*      getTitleTextbox();
     QSpinBox*       getChapterNumberSpinBox();

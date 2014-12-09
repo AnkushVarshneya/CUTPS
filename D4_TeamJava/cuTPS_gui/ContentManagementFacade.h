@@ -26,17 +26,12 @@ public:
     ContentManagementFacade();
     QList<Textbook*>    viewAllContent();
 
-    bool                updateContent(Textbook*);
-    /*
-    bool                modifyTextbook(Textbook*);
-    bool                modifyContentAvailability(PurchasableItem*, bool);
-    bool                modifyContentPrices(PurchasableItem*,int);
-    bool                modifyContentBasicInfo(PurchasableItem*);
-    bool                deleteContent(PurchasableItem*);
-    */
+
+    bool                updateContent(Textbook*) throw(QString);
+    bool                deleteContent(PurchasableItem*) throw(QString);
 
 private:
-    QList<Textbook*>                fakeTextbooks;
+    //QList<Textbook*>                fakeTextbooks;
     ContentManagementInputControl   inputControl;
     ContentManagementUpdateControl  updateControl;
 };

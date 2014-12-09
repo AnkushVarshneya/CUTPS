@@ -20,6 +20,7 @@ QPushButton* EditChapterFormWindow::getBackButton()             { return ui->bac
 QPushButton* EditChapterFormWindow::getCreateButton()           { return ui->createButton; }
 QPushButton* EditChapterFormWindow::getEditSectionButton()      { return ui->viewEditSectionButton; }
 QPushButton* EditChapterFormWindow::getCreateSectionButton()    { return ui->createSectionButton; }
+QPushButton* EditChapterFormWindow::getDeleteSectionButton()    { return ui->deleteSectionButton; }
 
 //Field getters
 QLineEdit*      EditChapterFormWindow::getTitleTextbox()        { return ui->titleTextbox; }

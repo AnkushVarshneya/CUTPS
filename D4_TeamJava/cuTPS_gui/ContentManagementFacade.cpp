@@ -49,6 +49,12 @@ QList<Textbook*>  ContentManagementFacade::viewAllContent() {
     return *(updateControl.retrieveAllContent());
 }
 
-bool ContentManagementFacade::updateContent(Textbook* text){
+bool ContentManagementFacade::updateContent(Textbook* text) throw(QString){
+    inputControl.validateUpdateContent(text);
     return updateControl.updateContent(text);
+}
+
+bool ContentManagementFacade::deleteContent(PurchasableItem* item) throw(QString){
+    inputControl.validateDeleteContent(item);
+    return updateControl.deleteContent(item);
 }

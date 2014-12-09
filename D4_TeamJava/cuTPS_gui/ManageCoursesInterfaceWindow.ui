@@ -36,7 +36,7 @@
     <string>Term</string>
    </property>
   </widget>
-  <widget class="QListView" name="CourseListView">
+  <widget class="QListView" name="courseListView">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -72,7 +72,7 @@
     <string>Back</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="editCourseOption">
+  <widget class="QPushButton" name="createCourseOption">
    <property name="geometry">
     <rect>
      <x>480</x>
@@ -85,7 +85,7 @@
     <string>Create Course</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="modifyCourseOption">
+  <widget class="QPushButton" name="editCourseOption">
    <property name="geometry">
     <rect>
      <x>160</x>
@@ -111,7 +111,7 @@
     <string>Courses</string>
    </property>
   </widget>
-  <widget class="QListView" name="StudentListView">
+  <widget class="QListView" name="registeredStudentListView">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -121,7 +121,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QListView" name="TextbookListView">
+  <widget class="QListView" name="assignedTextbookListView">
    <property name="geometry">
     <rect>
      <x>410</x>
@@ -136,12 +136,12 @@
     <rect>
      <x>210</x>
      <y>50</y>
-     <width>61</width>
+     <width>121</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Students</string>
+    <string>Registered Students</string>
    </property>
   </widget>
   <widget class="QLabel" name="TextbookLabel">
@@ -149,15 +149,15 @@
     <rect>
      <x>410</x>
      <y>50</y>
-     <width>61</width>
+     <width>121</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Textbook</string>
+    <string>Assigned Textbooks</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="enrollStudent">
+  <widget class="QPushButton" name="enrollStudentOption">
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -170,7 +170,7 @@
     <string>Enroll Student</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="linkTextbook">
+  <widget class="QPushButton" name="linkTextbookOption">
    <property name="geometry">
     <rect>
      <x>490</x>

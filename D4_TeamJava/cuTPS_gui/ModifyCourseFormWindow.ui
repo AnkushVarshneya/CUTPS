@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>270</width>
-    <height>243</height>
+    <width>282</width>
+    <height>250</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,7 +78,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="titleTextbox">
+  <widget class="QLineEdit" name="courseCodeText">
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -152,7 +152,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="titleTextbox_2">
+  <widget class="QLineEdit" name="courseSectionText">
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -165,7 +165,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLineEdit" name="titleTextbox_3">
+  <widget class="QLineEdit" name="instructorText">
    <property name="geometry">
     <rect>
      <x>110</x>

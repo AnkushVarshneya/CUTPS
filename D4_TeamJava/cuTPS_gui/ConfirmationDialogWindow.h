@@ -1,3 +1,8 @@
+/*
+ *A Confirmation Dialog window that displays the message text for a given situation
+ *
+ *Traceability: NR-05
+ */
 #ifndef CONFIRMATIONDIALOGWINDOW_H
 #define CONFIRMATIONDIALOGWINDOW_H
 

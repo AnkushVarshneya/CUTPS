@@ -1,3 +1,11 @@
+/*
+ *The Mediator Class for the ContentManager Interface subsystem
+ *Purpose: to mediate behavior/state between forms and windows, and to call the contentmanagement facade to
+ *Indirectly communicate with the database
+ *
+ *Traceability: SS-02-01 (Content Manager Interface Subsystem in D3 doc)
+ *
+ */
 #ifndef CONTENTINPUTOUTPUTMANAGER_H
 #define CONTENTINPUTOUTPUTMANAGER_H
 

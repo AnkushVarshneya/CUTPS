@@ -16,6 +16,8 @@ ClientCommunicatorManagementControl*  ClientCommunicatorManagementControl::getIn
     return instance;
 }
 
+//Initiates communication with the server to use the API function to retrieve all terms
+// gets back a list of terms
 QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
 
     QJsonObject api_server_call;
@@ -53,6 +55,8 @@ QList<Term*>* ClientCommunicatorManagementControl::retrieveAllTerms(){
     return result;
 }
 
+//Initiates communication with server to retrieve a list of courses (which have the required textbooks to buy)
+//Serializes the passed in arguments Student and Term into a json object in a field
 QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *stu, Term *term){
     if(stu == 0 || term == 0){
         qDebug() << "Student or Term is null";
@@ -98,6 +102,8 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveContent(Student *st
     return result;
 }
 
+//Initiates communication with server to retrieve a shopping cart for the given student
+//Argument which is serialized into json
 ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student* stu){
     if(stu == 0){
         return 0;
@@ -129,6 +135,8 @@ ShoppingCart* ClientCommunicatorManagementControl::retrieveShoppingCart(Student*
     return result;
 }
 
+//Communicates with server to add an item to shopping cart, serializes the Student, PurchasableItem, and its Quantity to be added
+//Into one json object to be sent to the server, returns success flag
 bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, PurchasableItem *item, qint32 quantity){
     if(stu == 0 || item == 0){
         return false;
@@ -165,6 +173,9 @@ bool ClientCommunicatorManagementControl::updateShoppingCart(Student *stu, Purch
     return result;
 }
 
+//Communicates with server to order the contents in the shopping cart,
+//Serializes the passed in Student and ShoppingCart arguments into json
+//returns sucess flag
 bool ClientCommunicatorManagementControl::checkout(Student* stu,ShoppingCart* cart){
     if (stu == 0 || cart == 0){
         return false;
@@ -197,6 +208,8 @@ bool ClientCommunicatorManagementControl::checkout(Student* stu,ShoppingCart* ca
     return result;
 }
 
+//Communicates with server to empty the shopping cart for a given student (serialized into json)
+//Returns a success flag
 bool ClientCommunicatorManagementControl::emptyShoppingCart(Student* stu){
     if(stu == 0){
         return false;
@@ -226,6 +239,7 @@ bool ClientCommunicatorManagementControl::emptyShoppingCart(Student* stu){
     return result;
 }
 
+//Communicates with server to update the student's payment information
 bool ClientCommunicatorManagementControl::updatePaymentInformation(Student* stu, PaymentInformation* payInfo){
     if(stu == 0 || payInfo == 0){
         return false;
@@ -260,6 +274,7 @@ bool ClientCommunicatorManagementControl::updatePaymentInformation(Student* stu,
     return result;
 }
 
+//Communicates with server to retrieve student payment information
 PaymentInformation* ClientCommunicatorManagementControl::retrieveStudentPaymentInformation(Student* stu){
     if (stu == 0){
         return 0;
@@ -288,6 +303,7 @@ PaymentInformation* ClientCommunicatorManagementControl::retrieveStudentPaymentI
     return resultPayInfo;
 }
 
+//Communicates with server  to retrieve all content
 QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
 
     QJsonObject api_server_call;
@@ -325,6 +341,7 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllContent(){
 
 }
 
+//Communicates with server to update the content for a given textbook
 bool ClientCommunicatorManagementControl::updateContent(Textbook* text){
     if(text == 0){
         return false;
@@ -356,6 +373,7 @@ bool ClientCommunicatorManagementControl::updateContent(Textbook* text){
 
 }
 
+//Communicates with server to delete the content from the database
 bool ClientCommunicatorManagementControl::deleteContent(PurchasableItem *item){
     if(item == 0){
         return false;
@@ -386,6 +404,7 @@ bool ClientCommunicatorManagementControl::deleteContent(PurchasableItem *item){
     return result;
 }
 
+//Communicates with server to retrieve the course list for a given term
 QList<Course*>* ClientCommunicatorManagementControl::retrieveCourseList(Term* term){
     if(term == 0){
         return 0;
@@ -427,7 +446,7 @@ QList<Course*>* ClientCommunicatorManagementControl::retrieveCourseList(Term* te
 
 }
 
-
+//Communicates with server to retrieve a list of students for a given term and course
 QList<Student*>* ClientCommunicatorManagementControl::retrieveCourseStudents(Course *course, Term *term){
 
     QJsonObject api_server_call;
@@ -467,6 +486,7 @@ QList<Student*>* ClientCommunicatorManagementControl::retrieveCourseStudents(Cou
     return result;
 }
 
+//Communicates with server to retrieve all students
 QList<Student*>* ClientCommunicatorManagementControl::retrieveAllStudents(){
 
     QJsonObject api_server_call;
@@ -498,6 +518,7 @@ QList<Student*>* ClientCommunicatorManagementControl::retrieveAllStudents(){
     return result;
 }
 
+//Communicates with server to retrieve course textbooks for a given course and term
 QList<Textbook*>* ClientCommunicatorManagementControl::retrieveCourseTextbooks(Course *course, Term *term){
 
     QJsonObject api_server_call;
@@ -537,6 +558,7 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveCourseTextbooks(C
     return result;
 }
 
+//Communicates with server to retrieve all textboooks
 QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllTextbooks(){
 
     QJsonObject api_server_call;
@@ -568,6 +590,7 @@ QList<Textbook*>* ClientCommunicatorManagementControl::retrieveAllTextbooks(){
     return result;
 }
 
+//Communicates with server to update the course information for a given term
 bool ClientCommunicatorManagementControl::updateCourse(Course* crs, Term* term){
     if(crs == 0 || term == 0){
         return false;
@@ -603,6 +626,7 @@ bool ClientCommunicatorManagementControl::updateCourse(Course* crs, Term* term){
 
 }
 
+//Communicates with server to delete a course for a given term
 bool ClientCommunicatorManagementControl::deleteCourse(Course* crs, Term* term){
     if(crs == 0 || term == 0){
         return false;
@@ -637,6 +661,7 @@ bool ClientCommunicatorManagementControl::deleteCourse(Course* crs, Term* term){
     return result;
 }
 
+//Communicates with server to register student to course for a given term
 bool ClientCommunicatorManagementControl::registerStudentToCourse(Course* crs, Student* stu, Term* term){
     if (crs == 0|| stu == 0 || term == 0){
         return false;
@@ -675,6 +700,7 @@ bool ClientCommunicatorManagementControl::registerStudentToCourse(Course* crs, S
     return result;
 }
 
+//Communicates with server to assign textbooks to course for a given textbook, term and course argument
 bool ClientCommunicatorManagementControl::assignTextbookToCourse(Course* crs, Textbook* text, Term* term){
     if (crs == 0|| text == 0 || term == 0){
         return false;

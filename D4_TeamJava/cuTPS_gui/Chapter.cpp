@@ -48,6 +48,7 @@ void Chapter::addSection(Section* section){
     sections.push_back(section);
 }
 
+//Check if a chapter equals another chapter
 bool Chapter::equals(Chapter* chapter){
     if( !(chapterNumber == chapter->getItemID()
         && title == chapter->getItemTitle()))

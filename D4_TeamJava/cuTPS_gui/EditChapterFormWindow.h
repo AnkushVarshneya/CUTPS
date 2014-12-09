@@ -1,3 +1,8 @@
+/*Purpose: Provide a window to edit a chapter, options to add sections,
+ *Delete sections from the list, and filling out a chapter information form are present
+ *
+ *Traceability: SS-02-01 (Part of Content Manager Interface Subsystem)
+ */
 #ifndef CREATECHAPTERFORMWINDOW_H
 #define CREATECHAPTERFORMWINDOW_H
 

@@ -1,3 +1,7 @@
+/*Main window that provides option to be a student or a content manager
+ *Traceability: None, for demo purposes only
+ *
+ */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

@@ -3,6 +3,13 @@
 
 #include "ManageCoursesInterfaceWindow.h"
 #include "CourseManagementFacade.h"
+#include "ModifyCourseFormWindow.h"
+#include "LinkStudentFormWindow.h"
+#include "LinkTextbookFormWindow.h"
+
+#include <QAbstractItemView>
+#include "OurStandardItem.h"
+
 class CourseInputOutputManager : public QObject
 {
     Q_OBJECT
@@ -23,7 +30,36 @@ private slots:
 
 private:
     ManageCoursesInterfaceWindow* manageCoursesInterface;
+    ModifyCourseFormWindow*       editCourseForm;
+    LinkStudentFormWindow*        linkStudentForm;
+    LinkTextbookFormWindow*       linkTextbookForm;
     CourseManagementFacade*       courseManagementFacade;
+
+    QStandardItemModel*           courseModel;
+    QStandardItemModel*           studentModel;
+    QStandardItemModel*           textbookModel;
+
+    QList<Course*>*               courses;
+    QList<Textbook*>*             assignedTextbooks;
+    QList<Student*>*              registeredStudents;
+
+    QList<Textbook*>*             allTextbooks;
+    QList<Student*>*              allStudents;
+
+    void        setCourseManagementInterfaceViewModel(QAbstractItemView*, QStandardItemModel*);
+
+    void        buildCourseModel();
+    void        buildStudentModel();
+    void        buildSectionModel();
+
+    void        enrollStudentForm_buildStudentModel();
+
+    Course*     editCourses_getSelectedCourse();
+
+    Student*    enrollStudentForm_getSelectedStudent();
+
+    Textbook*   linkTextbookForm_getSelectedTextbook();
+
 
     void    connect_manageCoursesInterface();
 };

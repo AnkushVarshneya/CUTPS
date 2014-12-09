@@ -8,15 +8,6 @@ ManageCoursesInterfaceWindow::ManageCoursesInterfaceWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-ManageCoursesInterfaceWindow* ManageCoursesInterfaceWindow::instance = 0;
-
-ManageCoursesInterfaceWindow* ManageCoursesInterfaceWindow::getInstance(){
-    if(instance == 0){
-        instance = new ManageCoursesInterfaceWindow();
-    }
-    return instance;
-}
-
 ManageCoursesInterfaceWindow::~ManageCoursesInterfaceWindow()
 {
     delete ui;

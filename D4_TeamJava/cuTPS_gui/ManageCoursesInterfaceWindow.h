@@ -15,7 +15,7 @@ class ManageCoursesInterfaceWindow : public QWidget
 public:
     explicit ManageCoursesInterfaceWindow(QWidget *parent = 0);
     ~ManageCoursesInterfaceWindow();
-    static ManageCoursesInterfaceWindow* getInstance();
+
 
     QPushButton* getBackButton();
     QPushButton* getCreateCourseButton();
@@ -31,7 +31,7 @@ public:
 
 private:
     Ui::ManageCoursesInterfaceWindow *ui;
-    static ManageCoursesInterfaceWindow* instance;
+
 };
 
 #endif // MANAGECOURSESINTERFACEWINDOW_H

@@ -22,6 +22,7 @@ void MainInputOutputManager::on_contentIOManager_deleted()
 }
 
 void MainInputOutputManager::on_courseIOManager_deleted(){
+
     contentManagerInterface->show();
 }
 
@@ -54,10 +55,11 @@ void MainInputOutputManager::on_manageTextbooks_clicked()
 
 void MainInputOutputManager::on_manageCourses_clicked()
 {
+
     contentManagerInterface->hide();
 
     courseIOManager = new CourseInputOutputManager();
     connect(courseIOManager,SIGNAL(destroyed()),this, SLOT(on_courseIOManager_deleted()));
 
-    delete contentManagerInterface;
+
 }

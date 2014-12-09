@@ -51,7 +51,6 @@ SOURCES += main.cpp \
     TextbookDetailsWindow.cpp \
     StudentShopView.cpp \
     ShoppingCartWidget.cpp \
-    CheckoutDialogWidget.cpp \
     ManageCoursesInterfaceWindow.cpp \
     ModifyCourseFormWindow.cpp \
     LinkTextbookFormWindow.cpp \
@@ -100,7 +99,6 @@ HEADERS  += mainwindow.h \
     TextbookDetailsWindow.h \
     StudentShopView.h \
     ShoppingCartWidget.h \
-    CheckoutDialogWidget.h \
     ManageCoursesInterfaceWindow.h \
     ModifyCourseFormWindow.h \
     LinkTextbookFormWindow.h \
@@ -122,7 +120,6 @@ FORMS    += mainwindow.ui \
     TextbookDetailsWindow.ui \
     StudentShopView.ui \
     ShoppingCartWidget.ui \
-    CheckoutDialogWidget.ui \
     ManageCoursesInterfaceWindow.ui \
     ModifyCourseFormWindow.ui \
     LinkTextbookFormWindow.ui \

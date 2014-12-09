@@ -37,10 +37,6 @@ bool CourseManagementUpdateControl::deleteCourse(Course* crs, Term* term){
 
 }
 
-bool CourseManagementUpdateControl::registerStudentToCourse(Course* crs, Student* stu, Term* term){
-    return clientComm->registerStudentToCourse(crs,stu,term);
-}
-
 bool CourseManagementUpdateControl::assignTextbookToCourse(Course* crs, Textbook* text, Term* term){
     return clientComm->assignTextbookToCourse(crs,text,term);
 }

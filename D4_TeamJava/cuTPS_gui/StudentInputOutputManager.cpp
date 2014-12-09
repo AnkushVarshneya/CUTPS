@@ -117,25 +117,31 @@ void StudentInputOutputManager::on_studentInterface_viewCartOptionSelected() {
     cartModel->clear();
     OurStandardItem *temp;
     float orderTotal = 0;
-    currentCart = shopFacade->viewShoppingCart(currentStudent);
-    currentItems = currentCart->getItems();
+    try{
+        currentCart = shopFacade->viewShoppingCart(currentStudent);
+        currentItems = currentCart->getItems();
 
-    QList<QPair<PurchasableItem*, qint32> >::iterator it;
+        QList<QPair<PurchasableItem*, qint32> >::iterator it;
 
-    for (it = currentItems.begin(); it != currentItems.end(); it ++ )
-    {
-        temp = new OurStandardItem((*it).first,(*it).second);
-        cartModel->appendRow(temp);
-        orderTotal = orderTotal + ( (*it).first->getPrice() *
-                                    (*it).second);
+        for (it = currentItems.begin(); it != currentItems.end(); it ++ )
+        {
+            temp = new OurStandardItem((*it).first,(*it).second);
+            cartModel->appendRow(temp);
+            orderTotal = orderTotal + ( (*it).first->getPrice() *
+                                        (*it).second);
+        }
+
+            cartWidget->setCartViewModel(cartModel );
+            cartWidget->setOrderTotalText( QString::number(orderTotal) );
+           // cartWidget->setUserCartLabelText( currentStudent->getFirstName())
+            connect(cartWidget->getCloseOption(),SIGNAL(clicked()), this, SLOT(on_cartWidget_closeOptionSelected()));
+            connect(cartWidget->getCheckoutOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_checkoutOptionSelected()));
+            cartWidget->show();
+
     }
-
-        cartWidget->setCartViewModel(cartModel );
-        cartWidget->setOrderTotalText( QString::number(orderTotal) );
-       // cartWidget->setUserCartLabelText( currentStudent->getFirstName())
-        connect(cartWidget->getCloseOption(),SIGNAL(clicked()), this, SLOT(on_cartWidget_closeOptionSelected()));
-        connect(cartWidget->getCheckoutOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_checkoutOptionSelected()));
-        cartWidget->show();
+    catch (QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+    }
 
 }
 
@@ -178,12 +184,17 @@ void StudentInputOutputManager::on_studentInterface_termSelected()
 {
     qDebug() << "a term has been selected";
     qDebug() << terms.value( studentInterface->getTermSelectOption()->currentIndex() )->getTermName();
+    try{
+        coursesAndContent = shopFacade->viewContent(currentStudent,
+                                terms.at( studentInterface->getTermSelectOption()->currentIndex() ));
 
-   coursesAndContent = shopFacade->viewContent(currentStudent,
-                            terms.at( studentInterface->getTermSelectOption()->currentIndex() ));
+        buildCourseAndTextbookModel();
+        this->setStudentInterfaceViewModel(studentInterface->getCourseView(), courseAndTextbookModel);
+    }
+    catch (QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+    }
 
-    buildCourseAndTextbookModel();
-    this->setStudentInterfaceViewModel(studentInterface->getCourseView(), courseAndTextbookModel);
 }
 
 void StudentInputOutputManager::on_textbookDetailsWindow_closeOptionSelected()
@@ -194,21 +205,33 @@ void StudentInputOutputManager::on_textbookDetailsWindow_closeOptionSelected()
 
 void StudentInputOutputManager::on_textbookDetailsWindow_addCurrentTextbookOptionSelected()
 {
-    qDebug() << "add current textbook attempted";
-    shopFacade->addContent(currentStudent, (PurchasableItem*) lastTextbookDetailsOpened, 1);
-    currentCart = shopFacade->viewShoppingCart(currentStudent);
+    try{
+        qDebug() << "add current textbook attempted";
+        shopFacade->addContent(currentStudent, (PurchasableItem*) lastTextbookDetailsOpened, 1);
+        currentCart = shopFacade->viewShoppingCart(currentStudent);
+    }
+    catch (QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+    }
+
 }
 
 void StudentInputOutputManager::on_textbookDetailsWindow_addSelectedItemOptionSelected() {
 
-    if ( textbookDetailsWindow->getChaptersAndSectionsView()->currentIndex().isValid() ) {
-        QVariant item_id = chaptersAndSectionsModel->itemFromIndex( textbookDetailsWindow->getChaptersAndSectionsView()->currentIndex() )->data();
-        Textbook *item = new Textbook(); //doesnt matter, casting to purchasableitem anyway no matter what it is.
-        item->setItemID( item_id.toInt() );
-        shopFacade->addContent(currentStudent, (PurchasableItem*) item, textbookDetailsWindow->getQuantityOption()->value());
+    try{
+        if ( textbookDetailsWindow->getChaptersAndSectionsView()->currentIndex().isValid() ) {
+            QVariant item_id = chaptersAndSectionsModel->itemFromIndex( textbookDetailsWindow->getChaptersAndSectionsView()->currentIndex() )->data();
+            Textbook *item = new Textbook(); //doesnt matter, casting to purchasableitem anyway no matter what it is.
+            item->setItemID( item_id.toInt() );
+            shopFacade->addContent(currentStudent, (PurchasableItem*) item, textbookDetailsWindow->getQuantityOption()->value());
+        }
+        else studentInterface->statusBar()->showMessage("No item selected!", 3000 );
+        currentCart = shopFacade->viewShoppingCart(currentStudent);
     }
-    else studentInterface->statusBar()->showMessage("No item selected!", 3000 );
-    currentCart = shopFacade->viewShoppingCart(currentStudent);
+    catch (QString error){
+        messageDialog.getMessageTextBox()->setText(error);
+    }
+
 }
 
 void StudentInputOutputManager::on_cartWidget_closeOptionSelected()

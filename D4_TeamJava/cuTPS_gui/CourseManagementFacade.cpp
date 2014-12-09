@@ -4,7 +4,7 @@ CourseManagementFacade::CourseManagementFacade()
 {
 }
 
-QList<Term*>* CourseManagementFacade::retrieveAllTermList(){
+QList<Term*>* CourseManagementFacade::retrieveAllTermList() throw (QString){
     return updateControl.retrieveAllTermList();
 }
 
@@ -18,7 +18,7 @@ QList<Student*>* CourseManagementFacade::retrieveCourseStudents(Course* course, 
     return updateControl.retrieveCourseStudents(course, term);
 }
 
-QList<Student*>* CourseManagementFacade::retrieveAllStudents(){
+QList<Student*>* CourseManagementFacade::retrieveAllStudents() throw (QString){
     return updateControl.retrieveAllStudents();
 }
 
@@ -27,7 +27,7 @@ QList<Textbook*>* CourseManagementFacade::retrieveCourseTextbooks(Course* course
     return updateControl.retrieveCourseTextbooks(course, term);
 }
 
-QList<Textbook*>* CourseManagementFacade::retrieveAllTextbooks(){
+QList<Textbook*>* CourseManagementFacade::retrieveAllTextbooks() throw (QString){
     return updateControl.retrieveAllTextbooks();
 }
 

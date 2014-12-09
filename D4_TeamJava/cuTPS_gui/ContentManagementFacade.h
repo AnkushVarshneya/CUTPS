@@ -24,7 +24,7 @@ class ContentManagementFacade
 {
 public:
     ContentManagementFacade();
-    QList<Textbook*>    viewAllContent();
+    QList<Textbook*>    viewAllContent() throw(QString);
 
 
     bool                updateContent(Textbook*) throw(QString);

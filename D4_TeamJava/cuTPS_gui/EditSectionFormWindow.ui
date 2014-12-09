@@ -72,7 +72,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Create</string>
+    <string>Save</string>
    </property>
   </widget>
   <widget class="QPushButton" name="backButton">

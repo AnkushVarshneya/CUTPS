@@ -6,9 +6,11 @@
 #include <QToolButton>
 #include <QWidget>
 #include <QTreeView>
+#include <QAbstractItemModel>
 #include "Textbook.h"
 #include <QSpinBox>
 #include <QDebug>
+#include <QPlainTextEdit>
 #include <QStandardItemModel>
 #include "OurStandardItem.h"
 
@@ -35,6 +37,8 @@ public:
     QToolButton*                        getAddCurrentTextbookOption();
     QTreeView*                          getChaptersAndSectionsView();
     QSpinBox*                           getQuantityOption();
+    QPlainTextEdit*                     getDescriptionTextArea();
+
 
 private:
     Ui::TextbookDetailsWindow           *ui;

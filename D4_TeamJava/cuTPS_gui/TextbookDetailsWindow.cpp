@@ -52,6 +52,7 @@ TextbookDetailsWindow::TextbookDetailsWindow(Textbook &textbook, QModelIndex idx
        //todo: chaptersAndSectionsModel->setHorizontalHeaderLabels();
         ui->chaptersAndSectionsTreeView->setModel(model);
         ui->textbookTitleLabel->setText(textbook.getItemTitle());
+
 }
 
 TextbookDetailsWindow::~TextbookDetailsWindow()
@@ -77,15 +78,22 @@ void TextbookDetailsWindow::setTextbookAndModel(Textbook &textbook, QModelIndex 
     ui->textbookEditionLabel->setText("Edition: " +textbook.getEdition());
     ui->textbookPublisherLabel->setText(textbook.getPublisher());
     ui->textbookPriceLabel->setText( QString::number(textbook.getPrice()) );
-    ui->textbookDescriptionLabel->setText(textbook.getDesc());
+    //ui->textbookDescriptionLabel->setText(textbook.getDesc());
+
+     ui->descriptionTextArea->clear();
+     ui->descriptionTextArea->insertPlainText( textbook.getDesc() );
+
+     ui->chaptersAndSectionsTreeView->header()->setStretchLastSection(false);
+     ui->chaptersAndSectionsTreeView->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents );
 
 }
 
 
 //getters
-QPushButton*     TextbookDetailsWindow::getAddSelectedItemOption() { return ui->addSelectedItemOption ; }
-QPushButton*     TextbookDetailsWindow::getCloseOption() { return ui->closeOption ; }
-QToolButton*     TextbookDetailsWindow::getAddCurrentTextbookOption() { return ui->addCurrentTextbookOption ; }
-QTreeView*       TextbookDetailsWindow::getChaptersAndSectionsView() { return ui->chaptersAndSectionsTreeView; }
-QSpinBox*        TextbookDetailsWindow::getQuantityOption() {   return ui->quantityOption ; }
+QPushButton*     TextbookDetailsWindow::getAddSelectedItemOption()      { return ui->addSelectedItemOption ; }
+QPushButton*     TextbookDetailsWindow::getCloseOption()                { return ui->closeOption ; }
+QToolButton*     TextbookDetailsWindow::getAddCurrentTextbookOption()   { return ui->addCurrentTextbookOption ; }
+QTreeView*       TextbookDetailsWindow::getChaptersAndSectionsView()    { return ui->chaptersAndSectionsTreeView; }
+QSpinBox*        TextbookDetailsWindow::getQuantityOption()             {   return ui->quantityOption ; }
+QPlainTextEdit*  TextbookDetailsWindow::getDescriptionTextArea()        {  return ui->descriptionTextArea ; }
 

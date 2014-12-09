@@ -134,9 +134,8 @@ void StudentInputOutputManager::on_studentInterface_viewCartOptionSelected() {
 
             cartWidget->setCartViewModel(cartModel );
             cartWidget->setOrderTotalText( QString::number(orderTotal) );
-           // cartWidget->setUserCartLabelText( currentStudent->getFirstName())
             connect(cartWidget->getCloseOption(),SIGNAL(clicked()), this, SLOT(on_cartWidget_closeOptionSelected()));
-            connect(cartWidget->getCheckoutOption(), SIGNAL(clicked()), this, SLOT(on_cartWidget_checkoutOptionSelected()));
+            //studentInterface->setCentralWidget(cartWidget);
             cartWidget->show();
 
     }

@@ -28,7 +28,7 @@
 
   OurStandardItem::OurStandardItem(Textbook *textbook, bool makeItemsForChildren) {
      this->setData(textbook->getItemID());
-     this->setText(textbook->getItemTitle());
+       this->setText(textbook->getItemTitle() + " $" + QString::number( textbook->getPrice() ));
 
       if (makeItemsForChildren) {
          for(int i = 0; i < textbook->getChapterList().count(); i++){
@@ -65,7 +65,7 @@
           qDebug() << "NULL";
      this->setData(chapter->getItemID());
       qDebug() << "making1";
-     this->setText(chapter->getItemTitle());
+       this->setText(chapter->getItemTitle() + " $" + QString::number( chapter->getPrice() ));
       qDebug() << "Passed setting data and set text";
      for(int i = 0; i < chapter->getChapterSections().count(); i ++) {
          qDebug() << chapter->getChapterSections()[i]->getItemTitle();
@@ -80,7 +80,7 @@
 
   OurStandardItem::OurStandardItem(Section *section, OurStandardItem *parent) {
       this->setData(section->getItemID());
-      this->setText(section->getItemTitle());
+      this->setText(section->getItemTitle() + " $" + QString::number( section->getPrice() ));
       qDebug() << "text" << this->text();
       qDebug() << "data" << this->data();
 

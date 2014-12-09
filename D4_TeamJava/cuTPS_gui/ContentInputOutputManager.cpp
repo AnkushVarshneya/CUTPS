@@ -192,37 +192,64 @@ void ContentInputOutputManager::on_manageTextbooksInterface_deleteTextbook_butto
         qDebug() << "no item selected";
         return;
     }
-    qDebug() << "checking managetextbooks index";
-    qDebug() << manageTextbooksInterface->getTextbooksListView()->currentIndex().row();
+//    qDebug() << "checking managetextbooks index";
+//    qDebug() << manageTextbooksInterface->getTextbooksListView()->currentIndex().row();
 
-    /*
-    qDebug() << "Are you sure?";
-    */
+//    /*
+//    qDebug() << "Are you sure?";
+//    */
+
+//    currentTextbook = manageTextbooks_getSelectedTextbook();
+
+//    //qDebug() << contentManagementFacade->deleteContent(currentTextbook);
+
+//    foreach (Chapter* chap, currentTextbook->getChapterList()){
+//        foreach (Section* sec, chap->getChapterSections()){
+//            contentManagementFacade->deleteContent(sec);
+//            qDebug() << "deleted section";
+//        }
+//        contentManagementFacade->deleteContent(chap);
+//        qDebug() << "deleted chapter";
+//    }
+//    contentManagementFacade->deleteContent(currentTextbook);
+
+
+//    qDebug() << "deleted textbook";
+
+
+//    fakeTextbooks = contentManagementFacade->viewAllContent();
+//    fakeChapters.clear();
+//    fakeSections.clear();
+
+//    buildTextbookModel();
+//    setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
+
 
     currentTextbook = manageTextbooks_getSelectedTextbook();
-
-    //qDebug() << contentManagementFacade->deleteContent(currentTextbook);
-
     foreach (Chapter* chap, currentTextbook->getChapterList()){
         foreach (Section* sec, chap->getChapterSections()){
             contentManagementFacade->deleteContent(sec);
-            qDebug() << "deleted section";
+            chap->getChapterSections().removeAll(sec);
+            delete sec;
         }
         contentManagementFacade->deleteContent(chap);
         qDebug() << "deleted chapter";
     }
     contentManagementFacade->deleteContent(currentTextbook);
 
+    fakeTextbooks.removeAll(currentTextbook);
+    delete currentTextbook;
 
-    qDebug() << "deleted textbook";
 
-
-    fakeTextbooks = contentManagementFacade->viewAllContent();
     fakeChapters.clear();
     fakeSections.clear();
 
+
     buildTextbookModel();
     setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
+
+
+
 
 }
 
@@ -238,6 +265,7 @@ void ContentInputOutputManager::on_manageTextbooksInterface_deleteTextbook_butto
 
 
 
+
 void ContentInputOutputManager::on_editTextbookForm_back_button() {
     delete editTextbookForm;
     manageTextbooksInterface->show();
@@ -246,10 +274,20 @@ void ContentInputOutputManager::on_editTextbookForm_back_button() {
         delete currentTextbook;
     fakeChapters.clear();
     currentTextbook = 0;
+
+    fakeTextbooks = contentManagementFacade->viewAllContent();
+
+    buildTextbookModel();
+    setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
 }
+
 
 void ContentInputOutputManager::on_editTextbookForm_create_button() {
     qDebug() << "create a new textbook with the fields from the form and go back to the managetextbooksinterface";
+
+    if(currentTextbook == NULL){
+        qDebug() << "thats null son";
+    }
 
     foreach(Textbook *t,fakeTextbooks) {
         if((t->getISBN() == editTextbookForm->getISBNTextbox()->text())
@@ -260,7 +298,7 @@ void ContentInputOutputManager::on_editTextbookForm_create_button() {
         }
     }
 
-
+    qDebug() << "setting currenttextbook vals";
 
     currentTextbook->setItemTitle(editTextbookForm->getTitleTextbox()->text());
     currentTextbook->setAuthor(editTextbookForm->getAuthorTextbox()->text());
@@ -272,21 +310,26 @@ void ContentInputOutputManager::on_editTextbookForm_create_button() {
     currentTextbook->setAvailability(editTextbookForm->getAvailabilityCheckBox()->isChecked());
     currentTextbook->setDescription(editTextbookForm->getDescriptionTextbox()->toPlainText());
 
+
 //    if(createOrEditTFlag==0){
 //        fakeTextbooks.push_back(currentTextbook);
 //        //contentManagementFacade->fakeTextbooks.push_back(currentTextbook);
 //    }
-
     QJsonObject json;
-    currentTextbook->write(json);
-    qDebug()<< json;
+    //currentTextbook->write(json);
+    //qDebug()<< json;
+
+
+
     qDebug() << contentManagementFacade->updateContent(currentTextbook);
 
-    fakeTextbooks = contentManagementFacade->viewAllContent();
 
+    fakeChapters.clear();
+    currentTextbook = 0;
+
+    fakeTextbooks = contentManagementFacade->viewAllContent();
     buildTextbookModel();
     setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
-
     delete editTextbookForm;
     manageTextbooksInterface->show();
 
@@ -294,6 +337,7 @@ void ContentInputOutputManager::on_editTextbookForm_create_button() {
 
     qDebug()<<"exiting edittext_create";
 }
+
 
 
 void ContentInputOutputManager::on_editTextbookForm_editChapter_button() {
@@ -344,6 +388,7 @@ void ContentInputOutputManager::on_editTextbookForm_createChapter_button() {
     createOrEditCFlag = 0;
 }
 
+
 void ContentInputOutputManager::on_editTextbookForm_deleteChapter_button() {
     /*
     qDebug() << "Are you sure?";
@@ -355,34 +400,28 @@ void ContentInputOutputManager::on_editTextbookForm_deleteChapter_button() {
     }
 
 
-    if(createOrEditTFlag == 0) {
-
-    }
-
-
 
     currentChapter = editTextbookForm_getSelectedChapter();
+    fakeChapters.removeAll(currentChapter);
     foreach (Section* sec, currentChapter->getChapterSections()){
         contentManagementFacade->deleteContent(sec);
+        currentChapter->getChapterSections().removeAll(sec);
+        delete sec;
     }
     contentManagementFacade->deleteContent(currentChapter);
-    fakeTextbooks = contentManagementFacade->viewAllContent();
-    buildTextbookModel();
-    setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
+    currentTextbook->getChapterList().removeAll(currentChapter);
+    fakeChapters.removeAll(currentChapter);
+//    delete currentChapter;
+//    currentChapter = 0;
 
-    manageTextbooksInterface->show();
-//    delete editTextbookForm;
-    editTextbookForm->hide();
 
-    fakeSections.clear();
-    fakeChapters.clear();
-    currentChapter = 0;
-    currentTextbook = 0;
-    manageTextbooksInterface->show();
+    buildChapterModel();
+    setContentManagementInterfaceViewModel(editTextbookForm->getChaptersListView(), chapterModel);
 
     qDebug() << "leaving textbook delete chap";
 
 }
+
 
 
 
@@ -486,27 +525,17 @@ void ContentInputOutputManager::on_editChapterForm_deleteSection_button() {
         qDebug() << "no item selected";
         return;
     }
-
     currentSection = editChapterForm_getSelectedSection();
     contentManagementFacade->deleteContent(currentSection);
 
+    fakeSections.removeAll(currentSection);
+    currentChapter->getChapterSections().removeAll(currentSection);
 
-    fakeTextbooks = contentManagementFacade->viewAllContent();
+    delete currentSection;
+    currentSection = 0;
 
-    buildTextbookModel();
-    setContentManagementInterfaceViewModel(manageTextbooksInterface->getTextbooksListView(), textbookModel);
-
-
-//    delete editChapterForm;
-//    delete editTextbookForm;
-    editChapterForm->hide();
-    editTextbookForm->hide();
-
-    fakeSections.clear();
-    fakeChapters.clear();
-    currentChapter = 0;
-    currentTextbook = 0;
-    manageTextbooksInterface->show();
+    buildSectionModel();
+    setContentManagementInterfaceViewModel(editChapterForm->getSectionsListView(), sectionModel);
 }
 
 

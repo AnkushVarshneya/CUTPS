@@ -115,17 +115,15 @@ bool ServerStorageControl::updateShoppingCart(Student* student, PurchasableItem*
 }
 
 /**
- * @brief ServerStorageControl::updateOrderContents
- *  go through all PurchasableItem(s) in ShoppingCart for a student and make a order log
- *  delete shooping cart on success
+ * @brief ServerStorageControl::checkOutShoppingCart
+ *  Make orders for all students cart in DB
+ *  Needed for record keeping
  * @param student
- *  student shopping cart belongs to
- * @param shoppingcart
- *  shopping carts contaning PurchasableItem to order
+ *  the student who the order(s) processed for
  * @return
  *  returns if orders were made successfully
  */
-bool ServerStorageControl::updateOrderContents(Student *student, ShoppingCart *shoppingcart){
+bool ServerStorageControl::checkOutShoppingCart(Student *student){
     //Check for null
     if(student == NULL){
         return false;
@@ -133,13 +131,7 @@ bool ServerStorageControl::updateOrderContents(Student *student, ShoppingCart *s
     QueryControl* q = new QueryControl();
     bool noError = true;
 
-    // make a order for each PurchasableItem in cart
-    for(int i = 0; i<shoppingcart->getItems().length(); i++) {
-        // fot the amount of quantity amount of times
-        for(int j = 0; j<shoppingcart->getItems().at(i).second; j++ ) {
-            noError = noError && q->updateOrderContents(shoppingcart->getItems().at(i).first, student);
-        }
-    }
+    noError = noError && q->checkOutShoppingCart(student);
 
     // if all orders processed empty shoppingcart
     if(noError){

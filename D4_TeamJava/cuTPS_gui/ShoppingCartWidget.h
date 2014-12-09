@@ -19,7 +19,7 @@ public:
     ~ShoppingCartWidget();
     QPushButton*                    getCloseOption();
     QPushButton*                    getCheckoutOption();
-
+    QPushButton*                    getEmptyCartOption();
     void                            setOrderTotalText(QString);
     void                            setCartViewModel(QStandardItemModel *mod);
 

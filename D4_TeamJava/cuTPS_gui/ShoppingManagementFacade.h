@@ -33,7 +33,7 @@ public:
     PaymentInformation*         getPaymentInformation(Student *student);
 
     bool                        updatePaymentInformation(Student*, PaymentInformation*) throw (QString);
-    void                        checkOutShoppingCart(Student *student);
+    bool                        checkOutShoppingCart(Student *student);
 
 
 private:

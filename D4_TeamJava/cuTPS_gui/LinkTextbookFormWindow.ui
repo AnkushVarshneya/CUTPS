@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>209</width>
-    <height>198</height>
+    <width>452</width>
+    <height>221</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="linkTextbook">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>240</x>
      <y>10</y>
      <width>101</width>
      <height>27</height>
@@ -26,11 +26,11 @@
     <string>Link Textbook</string>
    </property>
   </widget>
-  <widget class="QListView" name="TextbookListView">
+  <widget class="QListView" name="allTextbookListView">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>60</y>
+     <x>240</x>
+     <y>80</y>
      <width>191</width>
      <height>131</height>
     </rect>
@@ -39,14 +39,14 @@
   <widget class="QLabel" name="TextbookLabel">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>40</y>
-     <width>61</width>
+     <x>240</x>
+     <y>50</y>
+     <width>81</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Textbook</string>
+    <string>All Textbooks</string>
    </property>
   </widget>
   <widget class="QPushButton" name="backButton">
@@ -60,6 +60,29 @@
    </property>
    <property name="text">
     <string>Back</string>
+   </property>
+  </widget>
+  <widget class="QListView" name="registeredTextbookListView">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>80</y>
+     <width>191</width>
+     <height>131</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="TextbookLabel_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>50</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Registered Textbooks</string>
    </property>
   </widget>
  </widget>
